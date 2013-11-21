@@ -21,15 +21,10 @@
     "http://www.youtube.com/",
     "https://www.youtube.com/",
     "http://youtube.com/",
-    "webRequest",
     "https://youtube.com/",
     "http://www.reddit.com/",
     "https://pay.reddit.com/"
   ],
-    
-  "background": {
-    "scripts": ["jquery-1.9.1.min.js", "background.js"]
-  },
 
   "web_accessible_resources": [
     "jquery-1.9.1.min.js",

@@ -75,63 +75,60 @@ var RYouTube = {
         }
         //Create the real comment.
         comment += String.format('<article style="{0}"><div class="comment"><span class="info"><a class="collapseButton" href="#">[-]</a> <a href="http://www.reddit.com/user/{1}" rel="author" target="_blank">{1}</a> {2} {3} points <time datetime="{4}">{5}</time> (<span class="upvotes">{6}</span>|<span class="downvotes">{7}</span>)</span>{8}</div>',
-                                (data.ups - data.downs) <= -4 ? 'display: none;' : "",
-                                data.author,
-                                data.author_flair_text !== null ? '<span class="flair">'+data.author_flair_text+'</span>' : "",
-                                data.ups - data.downs,
-                                new Date(data.created_utc * 1000).toISOString(),
-                                time,
-                                data.ups,
-                                data.downs,
-                                $("<div/>").html(data.body_html).text());
+                                 (data.ups - data.downs) <= -4 ? 'display: none;' : "",
+                                 data.author,
+                                 data.author_flair_text !== null ? '<span class="flair">'+data.author_flair_text+'</span>' : "",
+                                 data.ups - data.downs,
+                                 new Date(data.created_utc * 1000).toISOString(),
+                                 time,
+                                 data.ups,
+                                 data.downs,
+                                 $("<div/>").html(data.body_html).text());
         return comment;
     },
     
     //Generates the reddit comment box
-    getRedditComments : function(link, results) {
-        chrome.extension.sendRequest({action:'getJSON',url:link}, function(json) { 
-            var output = '<section id="reddit">';
-            //Create tabs for all available threads.
-            output += String.format('<div id="redditTabs"><button class="redditTab active border" data-value="{0}">/r/{0}</button>', json[0].data.children[0].data.subreddit);
-            if (results !== undefined) {
-                if (results.length > 1) {
-                    for (var i = 1; i < results.length; i++) {
-                        output += String.format('<button class="redditTab" data-value="{0}">/r/{0}</button>', results[i].subreddit);
-                    }
+    getRedditComments : function(result, results) {
+        var output = '<section id="reddit">';
+        //Create tabs for all available threads.
+        output += String.format('<div id="redditTabs"><button class="redditTab active border" data-value="{0}">/r/{0}</button>', result[0].data.children[0].data.subreddit);
+        if (results !== undefined) {
+            if (results.length > 1) {
+                for (var i = 1; i < results.length; i++) {
+                    output += String.format('<button class="redditTab" data-value="{0}">/r/{0}</button>', results[i].subreddit);
                 }
             }
-            output += '</div><div id="rcomments">';
-            //Loop through top level comments, validate them, and start down the tree.
-            $.each(json[1].data.children, function(index, value) {
-                if (value.data.body !== undefined) { output += RYouTube.traverseComment(value.data); }
-            });
-            output += '</div></section>';
-            //Bye Bye Google+, removing the comment section and adding our own.
-            $('#watch-discussion').remove();
-            $('#watch7-content').append(output);
-            RYouTube.bindCollapseExpandEvents();
-            //Handle changing of tabs.
-            $('#redditTabs button').click(function(e){
-                var target = e.target;
-                var targetid = $(this).attr("data-value");
-                //User may have clicked the text inside, instead of the button, check if it is parent we want instead.
-                if (targetid === undefined) {
-                    targetid = $(this).parent().attr('data-value');
-                    target = $(e.target).parent();
-                }
-                if (!$(target).hasClass('active')) {
-                    //Set the clicked button as active and start loading the comments for this tab.
-                    $('#redditTabs').children('button').each(function () {
-                        if ($(this).hasClass('active')) {$(this).removeClass('active');}
-                    });
-                    $(target).addClass('active');
-                    var data = results.filter(function(e) {
-                        return e.subreddit == targetid;
-                    });
-                    RYouTube.loadCommentsForSubreddit(data[0]);
-                }
-            });
-            
+        }
+        output += '</div><div id="rcomments">';
+        //Loop through top level comments, validate them, and start down the tree.
+        $.each(result[1].data.children, function(index, value) {
+            if (value.data.body !== undefined) { output += RYouTube.traverseComment(value.data); }
+        });
+        output += '</div></section>';
+        //Bye Bye Google+, removing the comment section and adding our own.
+        $('#watch-discussion').remove();
+        $('#watch7-content').append(output);
+        RYouTube.bindCollapseExpandEvents();
+        //Handle changing of tabs.
+        $('#redditTabs button').click(function(e){
+            var target = e.target;
+            var targetid = $(this).attr("data-value");
+            //User may have clicked the text inside, instead of the button, check if it is parent we want instead.
+            if (targetid === undefined) {
+                targetid = $(this).parent().attr('data-value');
+                target = $(e.target).parent();
+            }
+            if (!$(target).hasClass('active')) {
+                //Set the clicked button as active and start loading the comments for this tab.
+                $('#redditTabs').children('button').each(function () {
+                    if ($(this).hasClass('active')) {$(this).removeClass('active');}
+                });
+                $(target).addClass('active');
+                var data = results.filter(function(e) {
+                    return e.subreddit == targetid;
+                });
+                RYouTube.loadCommentsForSubreddit(data[0]);
+            }
         });
     },
     
@@ -139,10 +136,20 @@ var RYouTube = {
         /* Reddit's search function distinguishes between the http and https version of a youtube link and does not suport wildcards.
            Unfortunately this means we will have to check both, this function performs the second search. */
         var link = 'https://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-        chrome.extension.sendRequest({action:'getJSON',url:"https://pay.reddit.com/submit.json?jsonp=?&url=" + encodeURIComponent(link)}, function(result) {
-            RYouTube.searchResults = RYouTube.searchResults.concat(result.data.children);
-            RYouTube.processSearchResults();
-        });
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                try {
+                    var result = JSON.parse(xhr.responseText);
+                    RYouTube.searchResults = RYouTube.searchResults.concat(result.data.children);
+                    RYouTube.processSearchResults();
+                } catch (e) {
+                    //TODO: Error handling
+                }
+            }
+        };
+        xhr.send();
     },
     
     //Processes the results of both searches.
@@ -156,27 +163,51 @@ var RYouTube = {
         numArray = _.groupBy(numArray, 'subreddit'); 
         var topItemOfSubreddits = [];
         $.each(numArray, function(index, value) {
-                        topItemOfSubreddits.push(value.reduce(function(a, b) { return (a.score + a.num_comments) > (b.score + b.num_comments) ? a : b; }));
-                    });
+            topItemOfSubreddits.push(value.reduce(function(a, b) { return (a.score + a.num_comments) > (b.score + b.num_comments) ? a : b; }));
+        });
         //Sort the result accordingly with the top being the highest score, and select the item with the highest score and comment accumelence as the default thread.
         topItemOfSubreddits.sort(function(a,b){return (b.score + b.num_comments) - (a.score + a.num_comments); });
         var subReddit = topItemOfSubreddits[0].subreddit;
         var article = topItemOfSubreddits[0].id;
         //Generate Comment box
-        RYouTube.getRedditComments(String.format("https://pay.reddit.com/r/{0}/comments/{1}.json?jsonp=?", subReddit, article), topItemOfSubreddits);
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                try {
+                    var result = JSON.parse(xhr.responseText);
+                    RYouTube.getRedditComments(result, topItemOfSubreddits);
+                }
+                catch (e) {
+                    //TODO: Handle errors
+                }
+            }
+        };
+        xhr.send();
     },
     
     //Loads the content of alternate tabs.
     loadCommentsForSubreddit : function (data) {
-        var link = String.format("https://pay.reddit.com/r/{0}/comments/{1}.json?jsonp=?", data.subreddit, data.id);
-        chrome.extension.sendRequest({action:'getJSON',url:link}, function(json) {
-            var output = "";
-            $.each(json[1].data.children, function(index, value) {
-                if (value.data.body !== undefined) { output += RYouTube.traverseComment(value.data); }
-            });
-            $('#rcomments').html(output);
-            RYouTube.bindCollapseExpandEvents();
-        });
+        var link = String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", data.subreddit, data.id);
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", link, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                try {
+                    var result = JSON.parse(xhr.responseText);
+                    var output = "";
+                    $.each(result[1].data.children, function(index, value) {
+                        if (value.data.body !== undefined) { output += RYouTube.traverseComment(value.data); }
+                    });
+                    $('#rcomments').html(output);
+                    RYouTube.bindCollapseExpandEvents();
+                } catch (e) {
+                    //TODO: Error handling
+                }
+            }
+        };
+        xhr.send();
     },
     
     bindCollapseExpandEvents : function() {
@@ -197,26 +228,30 @@ var RYouTube = {
 $(document).ready(function() {
     //Generate a youtube url from the browser window and perform a search for the video.
     var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-    chrome.extension.sendRequest({action:'getJSON',url:"https://pay.reddit.com/submit.json?jsonp=?&url=" + encodeURIComponent(link)}, function(result) {
-        RYouTube.searchResults = result.data.children;
-        RYouTube.searchState = true;
-        RYouTube.secondSearch();
-    });
-});
-
-//Listen for Chrome letting us know a redirect happened.
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.redditRedirectUrl) {
-        if (request.redditRedirectUrl.indexOf("/comments/") !== -1) {
-            //Reddit has returned a single article page, let's fetch it.
-            RYouTube.searchState = true;
-            RYouTube.getRedditComments(request.redditRedirectUrl.replace('?already_submitted=true',''));
-        } else {
-            //Reddit is trying to redirect us to the login page. This means there were no articles found. Let's try again with an https link if we have not already done so.
-            if (!RYouTube.searchState) {
-                RYouTube.searchState = true;
-                RYouTube.secondSearch();
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            try {
+                var result = JSON.parse(xhr.responseText);
+                if (result == '{}') {
+                    //There is absolutely nothing. In the future we will palce a submit box here but for now just hide the YouTube comments.
+                    $('#watch-discussion').remove();
+                } else {
+                    //If this is a search result process the search result, if it is a direct link to a single page, process it.
+                    if (result.kind == 'Listing') {
+                        RYouTube.searchResults = result.data.children;
+                        RYouTube.searchState = true;
+                        RYouTube.secondSearch();
+                    } else {
+                        RYouTube.searchState = true;
+                        RYouTube.getRedditComments(result);
+                    }
+                }
+            } catch (e) {
+                //TODO: Error handling
             }
         }
-    }
+    };
+    xhr.send();
 });
