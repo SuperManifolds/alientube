@@ -1,5 +1,5 @@
 /* jslint browser: true */
-/* global _,$,jQuery, safari */
+/* global _,$,jQuery,safari,chrome */
 
 // String.Format equivlency function for Javascript
 String.format = function() {
@@ -28,6 +28,28 @@ var RYouTube = {
         }
         output += '</article>';
         return output;
+    },
+    
+    //Universal XHTML Callback between browsers
+    xhtmlRequest : function(url, callback) {
+        if (typeof(safari) !== 'undefined') {
+            var uuid = RYouTube.makeUUID();
+            safari.self.addEventListener('message', function(event) {
+                if (event.name == uuid) {
+                    callback(event.message);
+                }
+            }, false);
+            safari.self.tab.dispatchMessage(uuid, url);
+        } else if (typeof(chrome) !== 'undefined') {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    callback(xhr.responseText);
+                }
+            };
+            xhr.send();
+        }
     },
     
     makeUUID : function() {
@@ -143,10 +165,9 @@ var RYouTube = {
         /* Reddit's search function distinguishes between the http and https version of a youtube link and does not suport wildcards.
            Unfortunately this means we will have to check both, this function performs the second search. */
         var link = 'https://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-        var uuid = RYouTube.makeUUID();
-        safari.self.addEventListener('message', function(event) {
+        RYouTube.xhtmlRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
             try {
-                var result = JSON.parse(event.message);
+                var result = JSON.parse(requestData);
                 if (result == '{}') {
                     if (RYouTube.searhResults.length > 0) {
                         RYouTube.processSearchResults();
@@ -166,8 +187,7 @@ var RYouTube = {
             } catch (e) {
                 //TODO: Error handling
             }
-        }, false);
-        safari.self.tab.dispatchMessage(uuid, "https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link));
+        });
     },
     
     //Processes the results of both searches.
@@ -188,27 +208,23 @@ var RYouTube = {
         var subReddit = topItemOfSubreddits[0].subreddit;
         var article = topItemOfSubreddits[0].id;
         //Generate Comment box
-        var uuid = RYouTube.makeUUID();
-        safari.self.addEventListener('message', function(event) {
+        RYouTube.xhtmlRequest(String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), function(requestData) {
             try {
-                var result = JSON.parse(event.message);
+                var result = JSON.parse(requestData);
                 RYouTube.getRedditComments(result, topItemOfSubreddits);
             }
             catch (e) {
                 //TODO: Handle errors
             }
-        }, false);
-        
-        safari.self.tab.dispatchMessage(uuid, String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article));
+        });
     },
     
     //Loads the content of alternate tabs.
     loadCommentsForSubreddit : function (data) {
         var link = String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", data.subreddit, data.id);
-        var uuid = RYouTube.makeUUID();
-        safari.self.addEventListener('message', function(event) {
+        RYouTube.xhtmlRequest(link, function(requestData) {
             try {
-                var result = JSON.parse(event.message);
+                var result = JSON.parse(requestData);
                 var output = "";
                 $.each(result[1].data.children, function(index, value) {
                     if (value.data.body !== undefined) { output += RYouTube.traverseComment(value.data); }
@@ -218,8 +234,7 @@ var RYouTube = {
             } catch (e) {
                 //TODO: Error handling
             }
-        }, false);
-        safari.self.tab.dispatchMessage(uuid, link);
+        });
     },
     
     bindCollapseExpandEvents : function() {
@@ -240,12 +255,9 @@ $(document).ready(function() {
     if (window.top === window) {
         //Generate a youtube url from the browser window and perform a search for the video.
         var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-        var uuid = RYouTube.makeUUID();
-        // Safari only lets us make cross domain XHR requests from a background page so we need to call a function in the background page and ask for the data.
-        safari.self.addEventListener('message', function(event) {
-            if (event.name == uuid) {
+        RYouTube.xhtmlRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
                 try {
-                    var result = JSON.parse(event.message);
+                    var result = JSON.parse(requestData);
                     if (result == '{}') {
                         RYouTube.searchState = true;
                         RYouTube.secondSearch();
@@ -263,8 +275,6 @@ $(document).ready(function() {
                 } catch (e) {
                     //TODO: Error handling
                 }
-            }
-        }, false);
-        safari.self.tab.dispatchMessage(uuid, "https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link));
+        });
     }
 });

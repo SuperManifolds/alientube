@@ -1,5 +1,5 @@
 /* jslint browser: true */
-/* global _,$,jQuery, chrome */
+/* global _,$,jQuery,safari,chrome */
 
 // String.Format equivlency function for Javascript
 String.format = function() {
@@ -28,6 +28,35 @@ var RYouTube = {
         }
         output += '</article>';
         return output;
+    },
+    
+    //Universal XHTML Callback between browsers
+    xhtmlRequest : function(url, callback) {
+        if (typeof(safari) !== 'undefined') {
+            var uuid = RYouTube.makeUUID();
+            safari.self.addEventListener('message', function(event) {
+                if (event.name == uuid) {
+                    callback(event.message);
+                }
+            }, false);
+            safari.self.tab.dispatchMessage(uuid, url);
+        } else if (typeof(chrome) !== 'undefined') {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    callback(xhr.responseText);
+                }
+            };
+            xhr.send();
+        }
+    },
+    
+    makeUUID : function() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+            return v.toString(16);
+        });
     },
     
     //Convert Unix Timestamp to a Reddit-style elapsed time timestamp.
@@ -136,34 +165,29 @@ var RYouTube = {
         /* Reddit's search function distinguishes between the http and https version of a youtube link and does not suport wildcards.
            Unfortunately this means we will have to check both, this function performs the second search. */
         var link = 'https://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4) {
-                try {
-                    var result = JSON.parse(xhr.responseText);
-                    if (result == '{}') {
-                        if (RYouTube.searhResults.length > 0) {
-                            RYouTube.processSearchResults();
-                        } else {
-                            $('#watch-discussion').remove();
-                        }
+        RYouTube.xhtmlRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
+            try {
+                var result = JSON.parse(requestData);
+                if (result == '{}') {
+                    if (RYouTube.searhResults.length > 0) {
+                        RYouTube.processSearchResults();
                     } else {
-                        //If this is a search result process the search result, if it is a direct link to a single page, process it.
-                        if (result.kind == 'Listing') {
-                            RYouTube.searchResults = RYouTube.searchResults.concat(result.data.children);
-                            RYouTube.processSearchResults();
-                        } else {
-                            RYouTube.searchState = true;
-                            RYouTube.getRedditComments(result);
-                        }
+                        $('#watch-discussion').remove();
                     }
-                } catch (e) {
-                    //TODO: Error handling
+                } else {
+                    //If this is a search result process the search result, if it is a direct link to a single page, process it.
+                    if (result.kind == 'Listing') {
+                        RYouTube.searchResults = RYouTube.searchResults.concat(result.data.children);
+                        RYouTube.processSearchResults();
+                    } else {
+                        RYouTube.searchState = true;
+                        RYouTube.getRedditComments(result);
+                    }
                 }
+            } catch (e) {
+                //TODO: Error handling
             }
-        };
-        xhr.send();
+        });
     },
     
     //Processes the results of both searches.
@@ -184,44 +208,33 @@ var RYouTube = {
         var subReddit = topItemOfSubreddits[0].subreddit;
         var article = topItemOfSubreddits[0].id;
         //Generate Comment box
-        
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4) {
-                try {
-                    var result = JSON.parse(xhr.responseText);
-                    RYouTube.getRedditComments(result, topItemOfSubreddits);
-                }
-                catch (e) {
-                    //TODO: Handle errors
-                }
+        RYouTube.xhtmlRequest(String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), function(requestData) {
+            try {
+                var result = JSON.parse(requestData);
+                RYouTube.getRedditComments(result, topItemOfSubreddits);
             }
-        };
-        xhr.send();
+            catch (e) {
+                //TODO: Handle errors
+            }
+        });
     },
     
     //Loads the content of alternate tabs.
     loadCommentsForSubreddit : function (data) {
         var link = String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", data.subreddit, data.id);
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", link, true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4) {
-                try {
-                    var result = JSON.parse(xhr.responseText);
-                    var output = "";
-                    $.each(result[1].data.children, function(index, value) {
-                        if (value.data.body !== undefined) { output += RYouTube.traverseComment(value.data); }
-                    });
-                    $('#rcomments').html(output);
-                    RYouTube.bindCollapseExpandEvents();
-                } catch (e) {
-                    //TODO: Error handling
-                }
+        RYouTube.xhtmlRequest(link, function(requestData) {
+            try {
+                var result = JSON.parse(requestData);
+                var output = "";
+                $.each(result[1].data.children, function(index, value) {
+                    if (value.data.body !== undefined) { output += RYouTube.traverseComment(value.data); }
+                });
+                $('#rcomments').html(output);
+                RYouTube.bindCollapseExpandEvents();
+            } catch (e) {
+                //TODO: Error handling
             }
-        };
-        xhr.send();
+        });
     },
     
     bindCollapseExpandEvents : function() {
@@ -238,34 +251,30 @@ var RYouTube = {
     }
 };
 
-
 $(document).ready(function() {
-    //Generate a youtube url from the browser window and perform a search for the video.
-    var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            try {
-                var result = JSON.parse(xhr.responseText);
-                if (result == '{}') {
-                    RYouTube.searchState = true;
-                    RYouTube.secondSearch();
-                } else {
-                    //If this is a search result process the search result, if it is a direct link to a single page, process it.
-                    if (result.kind == 'Listing' || result == '{}') {
-                        RYouTube.searchResults = result.data.children;
+    if (window.top === window) {
+        //Generate a youtube url from the browser window and perform a search for the video.
+        var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
+        RYouTube.xhtmlRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
+                try {
+                    var result = JSON.parse(requestData);
+                    if (result == '{}') {
                         RYouTube.searchState = true;
                         RYouTube.secondSearch();
                     } else {
-                        RYouTube.searchState = true;
-                        RYouTube.getRedditComments(result);
+                        //If this is a search result process the search result, if it is a direct link to a single page, process it.
+                        if (result.kind == 'Listing' || result == '{}') {
+                            RYouTube.searchResults = result.data.children;
+                            RYouTube.searchState = true;
+                            RYouTube.secondSearch();
+                        } else {
+                            RYouTube.searchState = true;
+                            RYouTube.getRedditComments(result);
+                        }
                     }
+                } catch (e) {
+                    //TODO: Error handling
                 }
-            } catch (e) {
-                //TODO: Error handling
-            }
-        }
-    };
-    xhr.send();
+        });
+    }
 });
