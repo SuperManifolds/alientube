@@ -79,6 +79,7 @@ article a:hover {
     padding-left: 10px !important;
     padding-right: 10px !important;
     margin: 0 !important;
+    margin-bottom: -1px !important;
     height: 32px !important;
     background-color: #f8f8f8 !important;
     background-image: linear-gradient(to bottom,#fcfcfc 0,#f8f8f8 100%) !important;
@@ -92,8 +93,9 @@ article a:hover {
 }
 
 .redditTab.active {
-    background-color: #e9e9e9 !important;
+    background-color: #fff !important;
     border: 1px solid #c6c6c6 !important;
+    border-bottom: 1px solid #fff !important;
     box-shadow: inset 0 1px 0 #ddd !important;
     background-image: none !important;
 }
@@ -112,6 +114,7 @@ article a:hover {
 
 #redditTabs {
     padding-left: 20px !important;
+    border-bottom: 1px solid #d3d3d3 !important;
 }
 
 .flair {
@@ -128,8 +131,8 @@ article a:hover {
     font-family: verdana, sans-serif !important;
     font-size: 10px !important;
     padding-left: 20px !important;
-    display: none;
-    color: gray;
+    display: none !important;
+    color: gray !important;
     font-style: italic !important;
     padding-top: 10px !important;
     padding-bottom: 5px !important;

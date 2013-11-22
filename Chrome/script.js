@@ -12,7 +12,6 @@ String.format = function() {
 };
 
 var RYouTube = {
-    searchState : false,
     searchResults : [],
     //Looping function used to traverse down the tree of replies
     traverseComment : function(data) {
@@ -180,7 +179,6 @@ var RYouTube = {
                         RYouTube.searchResults = RYouTube.searchResults.concat(result.data.children);
                         RYouTube.processSearchResults();
                     } else {
-                        RYouTube.searchState = true;
                         RYouTube.getRedditComments(result);
                     }
                 }
@@ -259,16 +257,13 @@ $(document).ready(function() {
                 try {
                     var result = JSON.parse(requestData);
                     if (result == '{}') {
-                        RYouTube.searchState = true;
                         RYouTube.secondSearch();
                     } else {
                         //If this is a search result process the search result, if it is a direct link to a single page, process it.
                         if (result.kind == 'Listing' || result == '{}') {
                             RYouTube.searchResults = result.data.children;
-                            RYouTube.searchState = true;
                             RYouTube.secondSearch();
                         } else {
-                            RYouTube.searchState = true;
                             RYouTube.getRedditComments(result);
                         }
                     }
