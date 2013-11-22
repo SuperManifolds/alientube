@@ -31,7 +31,7 @@ var RYouTube = {
     },
     
     //Universal XHTML Callback between browsers
-    xhtmlRequest : function(url, callback) {
+    xhrRequest : function(url, callback) {
         if (typeof(safari) !== 'undefined') {
             var uuid = RYouTube.makeUUID();
             safari.self.addEventListener('message', function(event) {
@@ -165,7 +165,7 @@ var RYouTube = {
         /* Reddit's search function distinguishes between the http and https version of a youtube link and does not suport wildcards.
            Unfortunately this means we will have to check both, this function performs the second search. */
         var link = 'https://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-        RYouTube.xhtmlRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
+        RYouTube.xhrRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
             try {
                 var result = JSON.parse(requestData);
                 if (result == '{}') {
@@ -208,7 +208,7 @@ var RYouTube = {
         var subReddit = topItemOfSubreddits[0].subreddit;
         var article = topItemOfSubreddits[0].id;
         //Generate Comment box
-        RYouTube.xhtmlRequest(String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), function(requestData) {
+        RYouTube.xhrRequest(String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), function(requestData) {
             try {
                 var result = JSON.parse(requestData);
                 RYouTube.getRedditComments(result, topItemOfSubreddits);
@@ -222,7 +222,7 @@ var RYouTube = {
     //Loads the content of alternate tabs.
     loadCommentsForSubreddit : function (data) {
         var link = String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", data.subreddit, data.id);
-        RYouTube.xhtmlRequest(link, function(requestData) {
+        RYouTube.xhrRequest(link, function(requestData) {
             try {
                 var result = JSON.parse(requestData);
                 var output = "";
@@ -255,7 +255,7 @@ $(document).ready(function() {
     if (window.top === window) {
         //Generate a youtube url from the browser window and perform a search for the video.
         var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-        RYouTube.xhtmlRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
+        RYouTube.xhrRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
                 try {
                     var result = JSON.parse(requestData);
                     if (result == '{}') {

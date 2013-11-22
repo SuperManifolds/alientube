@@ -12,7 +12,6 @@ String.format = function() {
 };
 
 var RYouTube = {
-    searchState : false,
     searchResults : [],
     //Looping function used to traverse down the tree of replies
     traverseComment : function(data) {
@@ -31,7 +30,7 @@ var RYouTube = {
     },
     
     //Universal XHTML Callback between browsers
-    xhtmlRequest : function(url, callback) {
+    xhrRequest : function(url, callback) {
         if (typeof(safari) !== 'undefined') {
             var uuid = RYouTube.makeUUID();
             safari.self.addEventListener('message', function(event) {
@@ -165,7 +164,7 @@ var RYouTube = {
         /* Reddit's search function distinguishes between the http and https version of a youtube link and does not suport wildcards.
            Unfortunately this means we will have to check both, this function performs the second search. */
         var link = 'https://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-        RYouTube.xhtmlRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
+        RYouTube.xhrRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
             try {
                 var result = JSON.parse(requestData);
                 if (result == '{}') {
@@ -180,7 +179,6 @@ var RYouTube = {
                         RYouTube.searchResults = RYouTube.searchResults.concat(result.data.children);
                         RYouTube.processSearchResults();
                     } else {
-                        RYouTube.searchState = true;
                         RYouTube.getRedditComments(result);
                     }
                 }
@@ -208,7 +206,7 @@ var RYouTube = {
         var subReddit = topItemOfSubreddits[0].subreddit;
         var article = topItemOfSubreddits[0].id;
         //Generate Comment box
-        RYouTube.xhtmlRequest(String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), function(requestData) {
+        RYouTube.xhrRequest(String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), function(requestData) {
             try {
                 var result = JSON.parse(requestData);
                 RYouTube.getRedditComments(result, topItemOfSubreddits);
@@ -222,7 +220,7 @@ var RYouTube = {
     //Loads the content of alternate tabs.
     loadCommentsForSubreddit : function (data) {
         var link = String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", data.subreddit, data.id);
-        RYouTube.xhtmlRequest(link, function(requestData) {
+        RYouTube.xhrRequest(link, function(requestData) {
             try {
                 var result = JSON.parse(requestData);
                 var output = "";
@@ -255,20 +253,17 @@ $(document).ready(function() {
     if (window.top === window) {
         //Generate a youtube url from the browser window and perform a search for the video.
         var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-        RYouTube.xhtmlRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
+        RYouTube.xhrRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
                 try {
                     var result = JSON.parse(requestData);
                     if (result == '{}') {
-                        RYouTube.searchState = true;
                         RYouTube.secondSearch();
                     } else {
                         //If this is a search result process the search result, if it is a direct link to a single page, process it.
                         if (result.kind == 'Listing' || result == '{}') {
                             RYouTube.searchResults = result.data.children;
-                            RYouTube.searchState = true;
                             RYouTube.secondSearch();
                         } else {
-                            RYouTube.searchState = true;
                             RYouTube.getRedditComments(result);
                         }
                     }
