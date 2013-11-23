@@ -14,10 +14,6 @@ article span a {
     font-weight: bold !important;
 }
 
-#watch7-content {
-    width: 854px !important;
-}
-
 sup {
     color: #979797 !important;
     font-size: 11px !important;
@@ -60,7 +56,7 @@ article span .downvotes {
 #reddit {
     margin-top: 40px !important;
     padding-bottom: 40px !important;
-    width: 854px !important;
+    width: 628px !important;
     padding-right: 20px !important;
     box-sizing: border-box !important;
 }

@@ -121,7 +121,7 @@ var RYouTube = {
         var output = String.format('<div id="redditTabs"><button class="redditTab active border" data-value="{0}">/r/{0}</button>', result[0].data.children[0].data.subreddit);
         if (results !== undefined) {
             if (results.length > 1) {
-                for (var i = 1; i < results.length; i++) {
+                for (var i = 1; (i < results.length && i <= 4); i++) {
                     output += String.format('<button class="redditTab" data-value="{0}">/r/{0}</button>', results[i].subreddit);
                 }
             }
@@ -246,6 +246,16 @@ var RYouTube = {
         });
     },
     
+    //Check whether regular YouTube or YouTube feather is being used and apply the comment section appropriately.
+    setCommentSection : function(html) {
+        if ($('#watch7-content').length) {
+            $('#watch-discussion').remove();
+            $('#watch7-content').append(html);
+        } else {
+            $('#ded').append(html);
+        }
+    },
+    
     getLoadingSpinnerHTML : function() {
         return '<div class="redditSpinner"><div class="wBall" id="wBall_1"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_2"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_3"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_4"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_5"><div class="wInnerBall"></div></div> <p class="loading">Loading</p></div>';
     }
@@ -254,8 +264,7 @@ var RYouTube = {
 $(document).ready(function() {
     if (window.top === window) {
         //Bye Bye Google+, removing the comment section and adding our own.
-        $('#watch-discussion').remove();
-        $('#watch7-content').append('<section id="reddit">' + RYouTube.getLoadingSpinnerHTML() + '</section>');
+        RYouTube.setCommentSection('<section id="reddit">' + RYouTube.getLoadingSpinnerHTML() + '</section>');
         
         //Generate a youtube url from the browser window and perform a search for the video.
         var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
@@ -276,6 +285,6 @@ $(document).ready(function() {
                 } catch (e) {
                     //TODO: Error handling
                 }
-        });
+            });
     }
 });
