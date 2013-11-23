@@ -117,9 +117,8 @@ var RYouTube = {
     
     //Generates the reddit comment box
     getRedditComments : function(result, results) {
-        var output = '<section id="reddit">';
         //Create tabs for all available threads.
-        output += String.format('<div id="redditTabs"><button class="redditTab active border" data-value="{0}">/r/{0}</button>', result[0].data.children[0].data.subreddit);
+        var output = String.format('<div id="redditTabs"><button class="redditTab active border" data-value="{0}">/r/{0}</button>', result[0].data.children[0].data.subreddit);
         if (results !== undefined) {
             if (results.length > 1) {
                 for (var i = 1; i < results.length; i++) {
@@ -133,9 +132,7 @@ var RYouTube = {
             if (value.data.body !== undefined) { output += RYouTube.traverseComment(value.data); }
         });
         output += '</div></section>';
-        //Bye Bye Google+, removing the comment section and adding our own.
-        $('#watch-discussion').remove();
-        $('#watch7-content').append(output);
+        $('#reddit').html(output);
         RYouTube.bindCollapseExpandEvents();
         //Handle changing of tabs.
         $('#redditTabs button').click(function(e){
@@ -171,7 +168,7 @@ var RYouTube = {
                     if (RYouTube.searhResults.length > 0) {
                         RYouTube.processSearchResults();
                     } else {
-                        $('#watch-discussion').remove();
+                        $('.redditSpinner').remove();
                     }
                 } else {
                     //If this is a search result process the search result, if it is a direct link to a single page, process it.
@@ -222,6 +219,7 @@ var RYouTube = {
         var link = String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", data.subreddit, data.id);
         RYouTube.xhrRequest(link, function(requestData) {
             try {
+                $('#rcomments').html(RYouTube.getLoadingSpinnerHTML());
                 var result = JSON.parse(requestData);
                 var output = "";
                 $.each(result[1].data.children, function(index, value) {
@@ -246,11 +244,19 @@ var RYouTube = {
             $(this).closest('.collapse').next().show();
             e.preventDefault();
         });
+    },
+    
+    getLoadingSpinnerHTML : function() {
+        return '<div class="redditSpinner"><div class="wBall" id="wBall_1"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_2"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_3"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_4"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_5"><div class="wInnerBall"></div></div> <p class="loading">Loading</p></div>';
     }
 };
 
 $(document).ready(function() {
     if (window.top === window) {
+        //Bye Bye Google+, removing the comment section and adding our own.
+        $('#watch-discussion').remove();
+        $('#watch7-content').append('<section id="reddit">' + RYouTube.getLoadingSpinnerHTML() + '</section>');
+        
         //Generate a youtube url from the browser window and perform a search for the video.
         var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
         RYouTube.xhrRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
