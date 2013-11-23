@@ -92,6 +92,10 @@ article a:hover {
     color: #333 !important;
 }
 
+.redditTab:focus {
+    outline: 0;
+}
+
 .redditTab.active {
     background-color: #fff !important;
     border: 1px solid #c6c6c6 !important;
@@ -105,7 +109,7 @@ article a:hover {
 }
 
 .redditTab .active:hover {
-    border: 1px solid ##c6c6c6 !important;
+    border-bottom: 1px solid #fff;
 }
 
 .redditTab:hover {
