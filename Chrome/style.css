@@ -61,6 +61,16 @@ article span .downvotes {
     box-sizing: border-box;
 }
 
+#reddit header {
+    font-size: 16px;
+    padding: 20px;
+    padding-bottom: 5px;
+}
+
+#reddit header a {
+    color: blue;
+}
+
 article a {
     color: #336699;
     text-decoration: none;

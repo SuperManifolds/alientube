@@ -133,6 +133,11 @@ var AlienTube = {
             }
             output += '</div>';
         }
+        
+        if (!AlienTube.preferences.disablePostHeader) {
+            output += String.format('<header><a href="http://reddit.com/{0}" target="_blank">{1}</a></header>', result[0].data.children[0].data.permalink, result[0].data.children[0].data.title);
+        }
+        
         output += '<div id="rcomments">';
         //Loop through top level comments, validate them, and start down the tree.
         $.each(result[1].data.children, function(index, value) {

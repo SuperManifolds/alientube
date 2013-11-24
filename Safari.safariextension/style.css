@@ -41,7 +41,6 @@ article span .downvotes {
     border-left: dotted 1px #cacaca !important;
 }
 
-
 .md blockquote {
     border-left: 2px solid rgb(51, 102, 153) !important;
     margin-bottom: 5px !important;
@@ -62,6 +61,16 @@ article span .downvotes {
     width: 628px !important;
     padding-right: 20px !important;
     box-sizing: border-box !important;
+}
+
+#reddit header {
+    font-size: 16px !important;
+    padding: 20px !important;
+    padding-bottom: 5px !important;
+}
+
+#reddit header a {
+    color: blue !important;
 }
 
 article a {
