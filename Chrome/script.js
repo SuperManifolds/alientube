@@ -194,7 +194,7 @@ var AlienTube = {
                             AlienTube.getRedditComments(result);
                         } else {
                             $('.redditSpinner').remove();
-                            AlienTube.setCommentSection('<p class="redditSingleMessage">No posts with comments found</p>');
+                            AlienTube.setCommentSection('<section id="reddit"><p class="redditSingleMessage">No posts with comments found</p></section>');
                         }
                     }
                 }
@@ -214,7 +214,7 @@ var AlienTube = {
         });
         if (numArray.length === 0) {
             $('.redditSpinner').remove();
-            AlienTube.setCommentSection('<p class="redditSingleMessage">No posts with comments found</p>');
+            AlienTube.setCommentSection('<section id="reddit"><p class="redditSingleMessage">No posts with comments found</p></section>');
         }
         //Retrieve the best thread from each subreddit by adding together the comments and scores then comparing.
         numArray = _.groupBy(numArray, 'subreddit'); 

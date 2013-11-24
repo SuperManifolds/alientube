@@ -73,6 +73,10 @@ article span .downvotes {
     color: blue !important;
 }
 
+#reddit .redditSingleMessage {
+    text-align: center;
+}
+
 article a {
     color: #336699 !important;
     text-decoration: none !important;
