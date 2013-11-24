@@ -252,7 +252,7 @@ var RYouTube = {
             $('#watch-discussion').remove();
             $('#watch7-content').append(html);
         } else {
-            $('#ded').append(html);
+            $('#cm').append(html);
         }
     },
     
