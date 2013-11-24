@@ -178,10 +178,11 @@ var AlienTube = {
             try {
                 var result = JSON.parse(requestData);
                 if (result == '{}') {
-                    if (AlienTube.searhResults.length > 0) {
+                    if (AlienTube.searhResults.length !== undefined) {
                         AlienTube.processSearchResults();
                     } else {
                         $('.redditSpinner').remove();
+                        AlienTube.setCommentSection('<p class="redditSingleMessage">No posts found</p>');
                     }
                 } else {
                     //If this is a search result process the search result, if it is a direct link to a single page, process it.
@@ -189,7 +190,12 @@ var AlienTube = {
                         AlienTube.searchResults = AlienTube.searchResults.concat(result.data.children);
                         AlienTube.processSearchResults();
                     } else {
-                        AlienTube.getRedditComments(result);
+                        if (result[1].data.children.length > 0) {
+                            AlienTube.getRedditComments(result);
+                        } else {
+                            $('.redditSpinner').remove();
+                            AlienTube.setCommentSection('<p class="redditSingleMessage">No posts with commands found</p>');
+                        }
                     }
                 }
             } catch (e) {
@@ -206,6 +212,10 @@ var AlienTube = {
         $.each(AlienTube.searchResults, function(index, value){
             if (value.data.num_comments > 0) { numArray.push(value.data); }
         });
+        if (numArray.length === 0) {
+            $('.redditSpinner').remove();
+            AlienTube.setCommentSection('<p class="redditSingleMessage">No posts with commands found</p>');
+        }
         //Retrieve the best thread from each subreddit by adding together the comments and scores then comparing.
         numArray = _.groupBy(numArray, 'subreddit'); 
         var topItemOfSubreddits = [];
