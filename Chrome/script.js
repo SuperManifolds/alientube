@@ -1,5 +1,5 @@
 /* jslint browser: true */
-/* global _,$,jQuery,safari,chrome */
+/* global _,$,jQuery,safari,chrome, Raven */
 
 // String.Format equivlency function for Javascript
 String.format = function() {
@@ -13,6 +13,9 @@ String.format = function() {
 
 var AlienTube = {
     preferences : {},
+    
+    //Url for sending error reports via Raven.
+    ravenLoggingUrl : 'https://5d52061ad0524f8daf86ecf273594cfd@app.getsentry.com/16103',
     
     searchResults : [],
     //Looping function used to traverse down the tree of replies
@@ -179,7 +182,7 @@ var AlienTube = {
             try {
                 var result = JSON.parse(requestData);
                 if (result == '{}') {
-                    if (AlienTube.searchResults.length !== undefined) {
+                    if (AlienTube.searcResults.length !== undefined) {
                         AlienTube.processSearchResults();
                     } else {
                         $('.redditSpinner').remove();
@@ -200,6 +203,7 @@ var AlienTube = {
                     }
                 }
             } catch (e) {
+                if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) { Raven.captureException(e); }
                 AlienTube.postErrorMessage(e);
                 console.log(e);
             }
@@ -234,6 +238,7 @@ var AlienTube = {
                 AlienTube.getRedditComments(result, topItemOfSubreddits);
             }
             catch (e) {
+                if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) { Raven.captureException(e); }
                 AlienTube.postErrorMessage(e);
                 console.log(e);
             }
@@ -254,6 +259,7 @@ var AlienTube = {
                 $('#rcomments').html(output);
                 AlienTube.bindCollapseExpandEvents();
             } catch (e) {
+                if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) { Raven.captureException(e); }
                 AlienTube.postErrorMessage(e);
                 console.log(e);
             }
@@ -317,6 +323,7 @@ var AlienTube = {
                     }
                 }
             } catch (e) {
+                if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) { Raven.captureException(e); }
                 AlienTube.postErrorMessage(e);
                 console.log(e);
             }
@@ -329,6 +336,9 @@ var AlienTube = {
 
 $(document).ready(function() {
     if (window.top === window) {
+        if (AlienTube.ravenLoggingUrl.length > 0) {
+            Raven.config(AlienTube.ravenLoggingUrl).install();
+        }
         if (typeof(safari) !== 'undefined') {
             safari.self.addEventListener('message', function(event) {
                 if (event.name == 'settings') {
@@ -339,7 +349,7 @@ $(document).ready(function() {
                     AlienTube.preferences.featherDescriptionPlacement = safariPref.featherDescriptionPlacement ? safariPref.featherDescriptionPlacement : false;
                     AlienTube.preferences.disablePostHeader = safariPref.disablePostHeader ? safariPref.disablePostHeader : false;
                     AlienTube.preferences.disableTabs = safariPref.disableTabs ? safariPref.disableTabs : false;
-                    
+                    AlienTube.preferences.enableAutomaticErrorReporting = safariPref.enableAutomaticErrorReporting ? safariPref.enableAutomaticErrorReporting : false;
                     AlienTube.startAlienTube();
                 }
             }, false);

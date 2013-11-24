@@ -13,9 +13,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.2.2</string>
+	<string>0.2.3</string>
 	<key>CFBundleVersion</key>
-	<string>0.2.2</string>
+	<string>0.2.3</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Global Page</key>
@@ -30,6 +30,7 @@
 				<string>jquery-1.9.1.min.js</string>
 				<string>purl.js</string>
 				<string>underscore-min.js</string>
+				<string>raven.min.js</string>
 				<string>script.js</string>
 			</array>
 		</dict>
