@@ -51,6 +51,16 @@ var RYouTube = {
         }
     },
     
+    //Cross browser preferences interface.
+    getPreferencesItem : function(id) {
+        if (typeof(safari) !== 'undefined') {
+            return safari.extension.settings.getItem(id);
+        } else if (typeof(chrome) !== 'undefined') {
+            chrome.storage.sync.get('', function (items) { return items[id]; });
+        }
+        return null;
+    },
+    
     makeUUID : function() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
@@ -87,11 +97,12 @@ var RYouTube = {
     //Generate a single comment as HTML. Because reddit does for some reason only the heavens know not provide us with a score we must calculate it ourselves.
     getCommentAsHTML : function(data) {
         var time = RYouTube.timeAgoFromEpochTime(data.created_utc);
-        
         var comment = "";
+        var threshold = RYouTube.getPreferencesItem('hiddenCommentScoreThreshold');
+        if (!threshold) { threshold = -4; }
         
         //Create replacement item for collapsed comments. Check if a comment is below the treshold and should be hidden by default.
-        if ((data.ups - data.downs) <= -4) {
+        if ((data.ups - data.downs) <= threshold) {
             comment = String.format('<div class="collapse" style="display: block;"><span class="info"><a class="expandButton" href="#">[+]</a> <a href="http://www.reddit.com/user/{0}" rel="author" target="_blank">{0}</a>   comment score below threshold</span></div>', 
                                     data.author);
         } else {

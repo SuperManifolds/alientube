@@ -9,6 +9,7 @@
           "128": "icon128.png" },
   "minimum_chrome_version": "22.0",
   "content_security_policy": "script-src 'self' https://pay.reddit.com; object-src 'self'",
+  "options_page": "options.html",
 
   "content_scripts": [
     {
@@ -23,7 +24,8 @@
     "http://youtube.com/",
     "https://youtube.com/",
     "http://www.reddit.com/",
-    "https://pay.reddit.com/"
+    "https://pay.reddit.com/",
+    "storage"
   ],
 
   "web_accessible_resources": [
@@ -32,6 +34,9 @@
     "underscore-min.js",
     "jquery.min.map",
     "underscore-min.map",
-    "style.css"
+    "style.css",
+    "chrome_shared.css",
+    "widgets.css",
+    "options.js"
   ]
 }
