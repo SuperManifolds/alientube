@@ -316,7 +316,7 @@ var AlienTube = {
         });
         
         //Bye Bye Google+, removing the comment section and adding our own.
-        AlienTube.setCommentSection('<section id="reddit"><div class="redditSpinner"></div>></section>');
+        AlienTube.setCommentSection('<section id="reddit"><div class="redditSpinner"></div></section>');
     }
 };
 
