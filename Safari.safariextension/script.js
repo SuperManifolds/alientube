@@ -178,7 +178,7 @@ var AlienTube = {
             try {
                 var result = JSON.parse(requestData);
                 if (result == '{}') {
-                    if (AlienTube.searhResults.length !== undefined) {
+                    if (AlienTube.searchResults.length !== undefined) {
                         AlienTube.processSearchResults();
                     } else {
                         $('.redditSpinner').remove();
@@ -194,7 +194,7 @@ var AlienTube = {
                             AlienTube.getRedditComments(result);
                         } else {
                             $('.redditSpinner').remove();
-                            AlienTube.setCommentSection('<p class="redditSingleMessage">No posts with commands found</p>');
+                            AlienTube.setCommentSection('<p class="redditSingleMessage">No posts with comments found</p>');
                         }
                     }
                 }
@@ -214,7 +214,7 @@ var AlienTube = {
         });
         if (numArray.length === 0) {
             $('.redditSpinner').remove();
-            AlienTube.setCommentSection('<p class="redditSingleMessage">No posts with commands found</p>');
+            AlienTube.setCommentSection('<p class="redditSingleMessage">No posts with comments found</p>');
         }
         //Retrieve the best thread from each subreddit by adding together the comments and scores then comparing.
         numArray = _.groupBy(numArray, 'subreddit'); 
