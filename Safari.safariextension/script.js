@@ -272,8 +272,14 @@ var AlienTube = {
         }
     },
     
-    getLoadingSpinnerHTML : function() {
-        return '<div class="redditSpinner"><div class="wBall" id="wBall_1"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_2"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_3"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_4"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_5"><div class="wInnerBall"></div></div> <p class="loading">Loading</p></div>';
+    getExtensionFolderRessource : function (path) {
+        if (typeof(safari) !== 'undefined') {
+            return safari.extension.baseURI +  path;
+        } else if (typeof(chrome) !== 'undefined') {
+            return chrome.extension.getURL(path);
+        } else {
+            return null;
+        }
     },
     
     startAlienTube : function() {
@@ -300,7 +306,7 @@ var AlienTube = {
         });
         
         //Bye Bye Google+, removing the comment section and adding our own.
-        AlienTube.setCommentSection('<section id="reddit">' + AlienTube.getLoadingSpinnerHTML() + '</section>');
+        AlienTube.setCommentSection('<section id="reddit"><div class="redditSpinner"></div>></section>');
     }
 };
 

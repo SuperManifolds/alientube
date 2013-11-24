@@ -167,237 +167,31 @@ article a:hover {
 }
 
 .redditSpinner {
+    height: 45px;
+    width: 45px;
+    margin: 0px auto;
     position: relative;
-    width: 30px;
-    height:30px;
-    margin-top: 75px;
-    margin-left: calc(50% - 60px);
+    -webkit-animation: rotation .6s infinite linear;
+    -moz-animation: rotation .6s infinite linear;
+    animation: rotation .6s infinite linear;
+    border-left: 6px solid #ffcda9;
+    border-right: 6px solid #ffcda9;
+    border-bottom: 6px solid #ffcda9;
+    border-top: 6px solid #ff6c00;
+    border-radius: 100%;
 }
 
-.redditSpinner .loading {
-    margin-left: 60px;
-    font-size: 120%;
-    color: #777777;
-    line-height: 30px;
+@-webkit-keyframes rotation {
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(359deg);}
 }
 
-.redditSpinner .wBall {
-    position: absolute;
-    width: 29px;
-    height: 29px;
-    opacity: 0;
-    -moz-transform: rotate(225deg);
-    -moz-animation: orbit 4.95s infinite;
-    -webkit-transform: rotate(225deg);
-    -webkit-animation: orbit 4.95s infinite;
-    transform: rotate(225deg);
-    animation: orbit 4.95s infinite;
+@-moz-keyframes rotation {
+    from {-moz-transform: rotate(0deg);}
+    to {-moz-transform: rotate(359deg);}
 }
 
-.redditSpinner .wBall .wInnerBall{
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: #FF5900;
-    background-color: #FF5900;
-    left:0px !important;
-    top:0px !important;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-}
-
-.redditSpinner #wBall_1 {
-    -moz-animation-delay: 1.08s;
-    -webkit-animation-delay: 1.08s;
-    animation-delay: 1.08s;
-}
-
-.redditSpinner #wBall_2 {
-    -moz-animation-delay: 0.22s;
-    -webkit-animation-delay: 0.22s;
-    animation-delay: 0.22s;
-}
-
-.redditSpinner #wBall_3 {
-    -moz-animation-delay: 0.43s;
-    -webkit-animation-delay: 0.43s;
-    animation-delay: 0.43s;
-}
-
-.redditSpinner #wBall_4 {
-    -moz-animation-delay: 0.65s;
-    -webkit-animation-delay: 0.65s;
-    animation-delay: 0.65s;
-}
-
-.redditSpinner #wBall_5 {
-    -moz-animation-delay: 0.86s;
-    -webkit-animation-delay: 0.86s;
-    animation-delay: 0.86s;
-}
-
-@-moz-keyframes orbit {
-    0% {
-        opacity: 1;
-        z-index:99;
-        -moz-transform: rotate(180deg);
-        -moz-animation-timing-function: ease-out;
-    }
-    
-    7% {
-        opacity: 1;
-        -moz-transform: rotate(300deg);
-        -moz-animation-timing-function: linear;
-        -moz-origin:0%;
-    }
-    
-    30% {
-        opacity: 1;
-        -moz-transform:rotate(410deg);
-        -moz-animation-timing-function: ease-in-out;
-        -moz-origin:7%;
-    }
-    
-    39% {
-        opacity: 1;
-        -moz-transform: rotate(645deg);
-        -moz-animation-timing-function: linear;
-        -moz-origin:30%;
-    }
-    
-    70% {
-        opacity: 1;
-        -moz-transform: rotate(770deg);
-        -moz-animation-timing-function: ease-out;
-        -moz-origin:39%;
-    }
-    
-    75% {
-        opacity: 1;
-        -moz-transform: rotate(900deg);
-        -moz-animation-timing-function: ease-out;
-        -moz-origin:70%;
-    }
-    
-    76% {
-        opacity: 0;
-        -moz-transform:rotate(900deg);
-    }
-    
-    100% {
-        opacity: 0;
-        -moz-transform: rotate(900deg);
-    }
-    
-}
-
-@-webkit-keyframes orbit {
-    0% {
-        opacity: 1;
-        z-index:99;
-        -webkit-transform: rotate(180deg);
-        -webkit-animation-timing-function: ease-out;
-    }
-    
-    7% {
-        opacity: 1;
-        -webkit-transform: rotate(300deg);
-        -webkit-animation-timing-function: linear;
-        -webkit-origin:0%;
-    }
-    
-    30% {
-        opacity: 1;
-        -webkit-transform:rotate(410deg);
-        -webkit-animation-timing-function: ease-in-out;
-        -webkit-origin:7%;
-    }
-    
-    39% {
-        opacity: 1;
-        -webkit-transform: rotate(645deg);
-        -webkit-animation-timing-function: linear;
-        -webkit-origin:30%;
-    }
-    
-    70% {
-        opacity: 1;
-        -webkit-transform: rotate(770deg);
-        -webkit-animation-timing-function: ease-out;
-        -webkit-origin:39%;
-    }
-    
-    75% {
-        opacity: 1;
-        -webkit-transform: rotate(900deg);
-        -webkit-animation-timing-function: ease-out;
-        -webkit-origin:70%;
-    }
-    
-    76% {
-        opacity: 0;
-        -webkit-transform:rotate(900deg);
-    }
-    
-    100% {
-        opacity: 0;
-        -webkit-transform: rotate(900deg) ;
-    }
-    
-}
-
-@keyframes orbit {
-    0% {
-        opacity: 1;
-        z-index:99;
-        transform: rotate(180deg);
-        animation-timing-function: ease-out;
-    }
-    
-    7% {
-        opacity: 1;
-        transform: rotate(300deg);
-        animation-timing-function: linear;
-        origin:0%;
-    }
-    
-    30% {
-        opacity: 1;
-        transform:rotate(410deg);
-        animation-timing-function: ease-in-out;
-        origin:7%;
-    }
-    
-    39% {
-        opacity: 1;
-        transform: rotate(645deg);
-        animation-timing-function: linear;
-        origin:30%;
-    }
-    
-    70% {
-        opacity: 1;
-        transform: rotate(770deg);
-        animation-timing-function: ease-out;
-        origin:39%;
-    }
-    
-    75% {
-        opacity: 1;
-        transform: rotate(900deg);
-        animation-timing-function: ease-out;
-        origin:70%;
-    }
-    
-    76% {
-        opacity: 0;
-        transform:rotate(900deg);
-    }
-    
-    100% {
-        opacity: 0;
-        transform: rotate(900deg);
-    }
-    
+@keyframes rotation {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(359deg);}
 }
