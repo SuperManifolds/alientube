@@ -1,3 +1,6 @@
+/* This ahem, liberal use of !important is due to the backwards way Safari prioritises user stylesheets
+https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/AddingStyles/AddingStyles.html */
+
 article {
     font-family: verdana, sans-serif !important;
     word-wrap:break-word !important;
