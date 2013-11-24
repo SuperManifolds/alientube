@@ -11,17 +11,19 @@ String.format = function() {
     return s;
 };
 
-var RYouTube = {
+var AlienTube = {
+    preferences : {},
+    
     searchResults : [],
     //Looping function used to traverse down the tree of replies
     traverseComment : function(data) {
-        var output = RYouTube.getCommentAsHTML(data);
+        var output = AlienTube.getCommentAsHTML(data);
         //Does this comment have replies? 
         if (data.replies !== null && data.replies.length !== 0 && data.replies !== undefined) {
             output += '<div class="replies">';
             //Loop through replies, validate them and continue down the tree.
             $.each(data.replies.data.children, function(index, value) {
-                if (value.data.body !== undefined) { output += RYouTube.traverseComment(value.data); }
+                if (value.data.body !== undefined) { output += AlienTube.traverseComment(value.data); }
             });
             output += '</div>';
         }
@@ -32,7 +34,7 @@ var RYouTube = {
     //Universal XHTML Callback between browsers
     xhrRequest : function(url, callback) {
         if (typeof(safari) !== 'undefined') {
-            var uuid = RYouTube.makeUUID();
+            var uuid = AlienTube.makeUUID();
             safari.self.addEventListener('message', function(event) {
                 if (event.name == uuid) {
                     callback(event.message);
@@ -49,16 +51,6 @@ var RYouTube = {
             };
             xhr.send();
         }
-    },
-    
-    //Cross browser preferences interface.
-    getPreferencesItem : function(id) {
-        if (typeof(safari) !== 'undefined') {
-            return safari.extension.settings.getItem(id);
-        } else if (typeof(chrome) !== 'undefined') {
-            chrome.storage.sync.get('', function (items) { return items[id]; });
-        }
-        return null;
     },
     
     makeUUID : function() {
@@ -96,9 +88,9 @@ var RYouTube = {
     
     //Generate a single comment as HTML. Because reddit does for some reason only the heavens know not provide us with a score we must calculate it ourselves.
     getCommentAsHTML : function(data) {
-        var time = RYouTube.timeAgoFromEpochTime(data.created_utc);
+        var time = AlienTube.timeAgoFromEpochTime(data.created_utc);
         var comment = "";
-        var threshold = RYouTube.getPreferencesItem('hiddenCommentScoreThreshold');
+        var threshold = AlienTube.preferences.hiddenCommentScoreThreshold;
         if (!threshold) { threshold = -4; }
         
         //Create replacement item for collapsed comments. Check if a comment is below the treshold and should be hidden by default.
@@ -129,22 +121,26 @@ var RYouTube = {
     //Generates the reddit comment box
     getRedditComments : function(result, results) {
         //Create tabs for all available threads.
-        var output = String.format('<div id="redditTabs"><button class="redditTab active border" data-value="{0}">/r/{0}</button>', result[0].data.children[0].data.subreddit);
-        if (results !== undefined) {
-            if (results.length > 1) {
-                for (var i = 1; (i < results.length && i <= 4); i++) {
-                    output += String.format('<button class="redditTab" data-value="{0}">/r/{0}</button>', results[i].subreddit);
+        var output = '';
+        if (!AlienTube.preferences.disableTabs) {
+            output += String.format('<div id="redditTabs"><button class="redditTab active border" data-value="{0}">/r/{0}</button>', result[0].data.children[0].data.subreddit);
+            if (results !== undefined) {
+                if (results.length > 1) {
+                    for (var i = 1; (i < results.length && i <= 4); i++) {
+                        output += String.format('<button class="redditTab" data-value="{0}">/r/{0}</button>', results[i].subreddit);
+                    }
                 }
             }
+            output += '</div>';
         }
-        output += '</div><div id="rcomments">';
+        output += '<div id="rcomments">';
         //Loop through top level comments, validate them, and start down the tree.
         $.each(result[1].data.children, function(index, value) {
-            if (value.data.body !== undefined) { output += RYouTube.traverseComment(value.data); }
+            if (value.data.body !== undefined) { output += AlienTube.traverseComment(value.data); }
         });
         output += '</div></section>';
         $('#reddit').html(output);
-        RYouTube.bindCollapseExpandEvents();
+        AlienTube.bindCollapseExpandEvents();
         //Handle changing of tabs.
         $('#redditTabs button').click(function(e){
             var target = e.target;
@@ -163,7 +159,7 @@ var RYouTube = {
                 var data = results.filter(function(e) {
                     return e.subreddit == targetid;
                 });
-                RYouTube.loadCommentsForSubreddit(data[0]);
+                AlienTube.loadCommentsForSubreddit(data[0]);
             }
         });
     },
@@ -172,22 +168,22 @@ var RYouTube = {
         /* Reddit's search function distinguishes between the http and https version of a youtube link and does not suport wildcards.
            Unfortunately this means we will have to check both, this function performs the second search. */
         var link = 'https://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-        RYouTube.xhrRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
+        AlienTube.xhrRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
             try {
                 var result = JSON.parse(requestData);
                 if (result == '{}') {
-                    if (RYouTube.searhResults.length > 0) {
-                        RYouTube.processSearchResults();
+                    if (AlienTube.searhResults.length > 0) {
+                        AlienTube.processSearchResults();
                     } else {
                         $('.redditSpinner').remove();
                     }
                 } else {
                     //If this is a search result process the search result, if it is a direct link to a single page, process it.
                     if (result.kind == 'Listing') {
-                        RYouTube.searchResults = RYouTube.searchResults.concat(result.data.children);
-                        RYouTube.processSearchResults();
+                        AlienTube.searchResults = AlienTube.searchResults.concat(result.data.children);
+                        AlienTube.processSearchResults();
                     } else {
-                        RYouTube.getRedditComments(result);
+                        AlienTube.getRedditComments(result);
                     }
                 }
             } catch (e) {
@@ -200,7 +196,7 @@ var RYouTube = {
     processSearchResults: function() {
         var numArray = [];
         //Remove threads with no comments. In the future we will handle this by suggesting the user makes a comment.
-        $.each(RYouTube.searchResults, function(index, value){
+        $.each(AlienTube.searchResults, function(index, value){
             if (value.data.num_comments > 0) { numArray.push(value.data); }
         });
         //Retrieve the best thread from each subreddit by adding together the comments and scores then comparing.
@@ -214,10 +210,10 @@ var RYouTube = {
         var subReddit = topItemOfSubreddits[0].subreddit;
         var article = topItemOfSubreddits[0].id;
         //Generate Comment box
-        RYouTube.xhrRequest(String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), function(requestData) {
+        AlienTube.xhrRequest(String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), function(requestData) {
             try {
                 var result = JSON.parse(requestData);
-                RYouTube.getRedditComments(result, topItemOfSubreddits);
+                AlienTube.getRedditComments(result, topItemOfSubreddits);
             }
             catch (e) {
                 //TODO: Handle errors
@@ -228,16 +224,16 @@ var RYouTube = {
     //Loads the content of alternate tabs.
     loadCommentsForSubreddit : function (data) {
         var link = String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", data.subreddit, data.id);
-        RYouTube.xhrRequest(link, function(requestData) {
+        AlienTube.xhrRequest(link, function(requestData) {
             try {
-                $('#rcomments').html(RYouTube.getLoadingSpinnerHTML());
+                $('#rcomments').html(AlienTube.getLoadingSpinnerHTML());
                 var result = JSON.parse(requestData);
                 var output = "";
                 $.each(result[1].data.children, function(index, value) {
-                    if (value.data.body !== undefined) { output += RYouTube.traverseComment(value.data); }
+                    if (value.data.body !== undefined) { output += AlienTube.traverseComment(value.data); }
                 });
                 $('#rcomments').html(output);
-                RYouTube.bindCollapseExpandEvents();
+                AlienTube.bindCollapseExpandEvents();
             } catch (e) {
                 //TODO: Error handling
             }
@@ -263,39 +259,63 @@ var RYouTube = {
             $('#watch-discussion').remove();
             $('#watch7-content').append(html);
         } else {
-            $('#cm').append(html);
+            $(AlienTube.preferences.featherDescriptionPlacement ? '#ded' : '#cm').append(html);
         }
     },
     
     getLoadingSpinnerHTML : function() {
         return '<div class="redditSpinner"><div class="wBall" id="wBall_1"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_2"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_3"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_4"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_5"><div class="wInnerBall"></div></div> <p class="loading">Loading</p></div>';
+    },
+    
+    startAlienTube : function() {
+        //Generate a youtube url from the browser window and perform a search for the video.
+        var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
+        AlienTube.xhrRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
+            try {
+                var result = JSON.parse(requestData);
+                if (result == '{}') {
+                    AlienTube.secondSearch();
+                } else {
+                    //If this is a search result process the search result, if it is a direct link to a single page, process it.
+                    if (result.kind == 'Listing' || result == '{}') {
+                        AlienTube.searchResults = result.data.children;
+                        AlienTube.secondSearch();
+                    } else {
+                        AlienTube.getRedditComments(result);
+                    }
+                }
+            } catch (e) {
+                //TODO: Error handling
+            }
+        });
+        
+        //Bye Bye Google+, removing the comment section and adding our own.
+        AlienTube.setCommentSection('<section id="reddit">' + AlienTube.getLoadingSpinnerHTML() + '</section>');
     }
 };
 
 $(document).ready(function() {
     if (window.top === window) {
-        //Bye Bye Google+, removing the comment section and adding our own.
-        RYouTube.setCommentSection('<section id="reddit">' + RYouTube.getLoadingSpinnerHTML() + '</section>');
-        
-        //Generate a youtube url from the browser window and perform a search for the video.
-        var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-        RYouTube.xhrRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
-                try {
-                    var result = JSON.parse(requestData);
-                    if (result == '{}') {
-                        RYouTube.secondSearch();
-                    } else {
-                        //If this is a search result process the search result, if it is a direct link to a single page, process it.
-                        if (result.kind == 'Listing' || result == '{}') {
-                            RYouTube.searchResults = result.data.children;
-                            RYouTube.secondSearch();
-                        } else {
-                            RYouTube.getRedditComments(result);
-                        }
-                    }
-                } catch (e) {
-                    //TODO: Error handling
+        if (typeof(safari) !== 'undefined') {
+            safari.self.addEventListener('message', function(event) {
+                if (event.name == 'settings') {
+                    var safariPref = JSON.parse(event.message);
+                    //Safari doesn't actually give us the default values for some bloody reason so this is a workaround.
+                    AlienTube.preferences.hiddenCommentScoreThreshold = safariPref.hiddenCommentScoreThreshold ? safariPref.hiddenCommentScoreThreshold : -4;
+                    AlienTube.preferences.wideCommentBox = safariPref.wideCommentBox ? safariPref.wideCommentBox : false;
+                    AlienTube.preferences.featherDescriptionPlacement = safariPref.featherDescriptionPlacement ? safariPref.featherDescriptionPlacement : false;
+                    AlienTube.preferences.disablePostHeader = safariPref.disablePostHeader ? safariPref.disablePostHeader : false;
+                    AlienTube.preferences.disableTabs = safariPref.disableTabs ? safariPref.disableTabs : false;
+                    
+                    AlienTube.startAlienTube();
                 }
+            }, false);
+            safari.self.tab.dispatchMessage('settings', '');
+        } else if (typeof(chrome) !== 'undefined') {
+            return chrome.storage.sync.get(null, function (settings) {
+                AlienTube.preferences = settings;
+                AlienTube.startAlienTube();
             });
+        }
     }
 });

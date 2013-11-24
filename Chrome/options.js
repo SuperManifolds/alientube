@@ -7,19 +7,23 @@ function save_options() {
     var hiddenCommentScoreThreshold = document.getElementById("hiddenCommentScoreThreshold");
     var wideCommentBox = document.getElementById("wideCommentBox");
     var featherDescriptionPlacement = document.getElementById("featherDescriptionPlacement");
+    var disablePostHeader = document.getElementById("disablePostHeader");
+    var disableTabs = document.getElementById("disableTabs");
     if (!hiddenCommentScoreThreshold.value.match(/[0-9]+/)) {
         hiddenCommentScoreThreshold.value = -4;
     }
-    
-    chrome.storage.sync.set(
-        {'hiddenCommentScoreThreshold': hiddenCommentScoreThreshold.value},
-        {'wideCommentBox': wideCommentBox.checked},
-        {'featherDescriptionPlacement': featherDescriptionPlacement.checked}, function() {
+    chrome.storage.sync.set({
+        'hiddenCommentScoreThreshold': hiddenCommentScoreThreshold.value,
+        'wideCommentBox': wideCommentBox.checked,
+        'featherDescriptionPlacement': featherDescriptionPlacement.checked,
+        'disablePostHeader': disablePostHeader.checked,
+        'disableTabs': disableTabs.checked
+    }, function() {
             var status = document.getElementById("status");
             status.innerHTML = "Options Saved.";
             setTimeout(function() {
                 status.innerHTML = "";
-            }, 750);
+            }, 1000);
         });
 }
 
@@ -28,11 +32,16 @@ function restore_options() {
     var hiddenCommentScoreThreshold = document.getElementById("hiddenCommentScoreThreshold");
     var wideCommentBox = document.getElementById("wideCommentBox");
     var featherDescriptionPlacement = document.getElementById("featherDescriptionPlacement");
-    chrome.storage.sync.get('', function (items) {
-		hiddenCommentScoreThreshold.value = items.hiddenCommentScoreThreshold ? parseInt(items.hiddenCommentScoreThreshold, -1) : -4;
+    var disablePostHeader = document.getElementById("disablePostHeader");
+    var disableTabs = document.getElementById("disableTabs");
+    chrome.storage.sync.get(null, function (items) {
+        console.log(items);
+        hiddenCommentScoreThreshold.value = items.hiddenCommentScoreThreshold ? items.hiddenCommentScoreThreshold : -4;
         wideCommentBox.checked = items.wideCommentBox;
         featherDescriptionPlacement.checked = items.featherDescriptionPlacement;
-	});
+        disablePostHeader.checked = items.disablePostHeader;
+        disableTabs.checked = items.disableTabs;
+    });
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);

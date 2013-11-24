@@ -2,14 +2,18 @@
     <head>
         <script>
             function onRequest(event) {
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", event.message, true);
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState == 4) {
-                        event.target.page.dispatchMessage(event.name, xhr.responseText);
+                if (event.name == 'settings') {
+                    event.target.page.dispatchMessage('settings', JSON.stringify(safari.extension.settings));
+                } else {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", event.message, true);
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            event.target.page.dispatchMessage(event.name, xhr.responseText);
+                        }
                     }
+                    xhr.send();
                 }
-                xhr.send();
             };
             safari.application.addEventListener("message", onRequest, false);
         </script>
