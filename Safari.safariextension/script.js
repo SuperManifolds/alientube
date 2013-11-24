@@ -91,6 +91,7 @@ var AlienTube = {
         var time = AlienTube.timeAgoFromEpochTime(data.created_utc);
         var comment = "";
         var threshold = AlienTube.preferences.hiddenCommentScoreThreshold;
+        var html = $("<div/>").html(data.body_html).text().replace('href="/r/', 'href="http://reddit.com/r/');
         if (!threshold) { threshold = -4; }
         
         //Create replacement item for collapsed comments. Check if a comment is below the treshold and should be hidden by default.
@@ -114,7 +115,7 @@ var AlienTube = {
                                  time,
                                  data.ups,
                                  data.downs,
-                                 $("<div/>").html(data.body_html).text());
+                                 html);
         return comment;
     },
     
@@ -193,6 +194,7 @@ var AlienTube = {
                 }
             } catch (e) {
                 //TODO: Error handling
+                console.log(e);
             }
         });
     },
@@ -222,6 +224,7 @@ var AlienTube = {
             }
             catch (e) {
                 //TODO: Handle errors
+                console.log(e);
             }
         });
     },
@@ -241,6 +244,7 @@ var AlienTube = {
                 AlienTube.bindCollapseExpandEvents();
             } catch (e) {
                 //TODO: Error handling
+                console.log(e);
             }
         });
     },
@@ -291,6 +295,7 @@ var AlienTube = {
                 }
             } catch (e) {
                 //TODO: Error handling
+                console.log(e);
             }
         });
         
