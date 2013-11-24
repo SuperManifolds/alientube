@@ -134,7 +134,7 @@ article a:hover {
     font-family: verdana, sans-serif !important;
     font-size: 10px !important;
     padding-left: 20px !important;
-    display: none !important;
+    display: none;
     color: gray !important;
     font-style: italic !important;
     padding-top: 10px !important;
