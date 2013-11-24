@@ -182,7 +182,7 @@ var AlienTube = {
             try {
                 var result = JSON.parse(requestData);
                 if (result == '{}') {
-                    if (AlienTube.searcResults.length !== undefined) {
+                    if (AlienTube.searchResults.length !== undefined) {
                         AlienTube.processSearchResults();
                     } else {
                         $('.redditSpinner').remove();
