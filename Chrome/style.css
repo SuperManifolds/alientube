@@ -75,6 +75,36 @@ article span .downvotes {
     text-align: center;
 }
 
+#reddit .redditError {
+    padding-left: 20px;
+    display: table;
+}
+
+#reddit .redditError img {
+    display: table-cell;
+    width: 120px;
+    height: auto;
+    vertical-align: middle;
+}
+
+#reddit .redditError div {
+    box-sizing: border-box;
+    width: 430px;
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 20px;
+}
+
+#reddit .redditError div h1 {
+    font-size: 120%;
+    margin: 0;
+}
+
+#reddit .redditError div p {
+    display: inline-block;
+    color: #c92323;
+}
+
 article a {
     color: #336699;
     text-decoration: none;

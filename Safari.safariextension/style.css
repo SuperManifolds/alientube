@@ -74,7 +74,37 @@ article span .downvotes {
 }
 
 #reddit .redditSingleMessage {
-    text-align: center;
+    text-align: center !important;
+}
+
+#reddit .redditError {
+    padding-left: 20px !important;
+    display: table !important;
+}
+
+#reddit .redditError img {
+    display: table-cell !important;
+    width: 120px !important;
+    height: auto !important;
+    vertical-align: middle !important;
+}
+
+#reddit .redditError div {
+    box-sizing: border-box !important;
+    width: 430px !important;
+    display: table-cell !important;
+    vertical-align: middle !important;
+    padding-left: 20px !important;
+}
+
+#reddit .redditError div h1 {
+    font-size: 120% !important;
+    margin: 0 !important;
+}
+
+#reddit .redditError div p {
+    display: inline-block !important;
+    color: #c92323 !important;
 }
 
 article a {

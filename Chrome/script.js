@@ -166,6 +166,7 @@ var AlienTube = {
                     return e.subreddit == targetid;
                 });
                 AlienTube.loadCommentsForSubreddit(data[0]);
+                
             }
         });
     },
@@ -199,7 +200,7 @@ var AlienTube = {
                     }
                 }
             } catch (e) {
-                //TODO: Error handling
+                AlienTube.postErrorMessage(e);
                 console.log(e);
             }
         });
@@ -233,7 +234,7 @@ var AlienTube = {
                 AlienTube.getRedditComments(result, topItemOfSubreddits);
             }
             catch (e) {
-                //TODO: Handle errors
+                AlienTube.postErrorMessage(e);
                 console.log(e);
             }
         });
@@ -253,7 +254,7 @@ var AlienTube = {
                 $('#rcomments').html(output);
                 AlienTube.bindCollapseExpandEvents();
             } catch (e) {
-                //TODO: Error handling
+                AlienTube.postErrorMessage(e);
                 console.log(e);
             }
         });
@@ -293,6 +294,11 @@ var AlienTube = {
         }
     },
     
+    
+    postErrorMessage : function(message) {
+        AlienTube.setCommentSection(String.format('<section id="reddit"><div class="redditError"><img src="{0}" alt="An error has occured" /><div><h1>A fatal error occured.</h1><p>{1}</p></div></div></section>', AlienTube.getExtensionFolderRessource('error.png'), message));
+    },
+    
     startAlienTube : function() {
         //Generate a youtube url from the browser window and perform a search for the video.
         var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
@@ -311,7 +317,7 @@ var AlienTube = {
                     }
                 }
             } catch (e) {
-                //TODO: Error handling
+                AlienTube.postErrorMessage(e);
                 console.log(e);
             }
         });

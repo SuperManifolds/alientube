@@ -37,6 +37,7 @@
     "style.css",
     "chrome_shared.css",
     "widgets.css",
-    "options.js"
+    "options.js",
+    "error.png"
   ]
 }
