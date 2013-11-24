@@ -274,6 +274,7 @@ var AlienTube = {
     
     //Check whether regular YouTube or YouTube feather is being used and apply the comment section appropriately.
     setCommentSection : function(html) {
+        $('#reddit').remove();
         if ($('#watch7-content').length) {
             $('#watch-discussion').remove();
             $('#watch7-content').append(html);
