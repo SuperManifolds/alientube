@@ -7,6 +7,7 @@ article {
 
 .comment {
     padding-top: 10px;
+    margin-left: 20px;
     padding-bottom: 5px;
 }
 
@@ -198,6 +199,49 @@ article a:hover {
 .expandButton:hover,
 .collapseButton:hover {
     text-decoration: underline;
+}
+
+.vote {
+    margin-top: 12px;
+    float: left;
+    width: 15px;
+}
+
+.arrow {
+    width: 100%;
+    height: 14px;
+    display: inline-block;
+    cursor: pointer;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    outline: none;
+}
+
+.up {
+    background-image: url(http://www.redditstatic.com/sprite-reddit.u1Nao8_niV4.png);
+    background-position: -84px -799px;
+    background-repeat: no-repeat;
+}
+
+.down {
+    background-image: url(http://www.redditstatic.com/sprite-reddit.u1Nao8_niV4.png);
+    background-position: -42px -799px;
+    background-repeat: no-repeat;
+}
+
+.upmod {
+    background-image: url(http://www.redditstatic.com/sprite-reddit.u1Nao8_niV4.png);
+    background-position: -105px -799px;
+    background-repeat: no-repeat;
+}
+
+.downmod {
+    background-image: url(http://www.redditstatic.com/sprite-reddit.u1Nao8_niV4.png);
+    background-position: -63px -799px;
+    background-repeat: no-repeat;
 }
 
 .redditSpinner {

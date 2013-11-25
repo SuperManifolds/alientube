@@ -15,7 +15,7 @@ var AlienTube = {
     preferences : {},
     
     //Url for sending error reports via Raven.
-    ravenLoggingUrl : 'https://5d52061ad0524f8daf86ecf273594cfd@app.getsentry.com/16103',
+    ravenLoggingUrl : '',
     
     searchResults : [],
     //Looping function used to traverse down the tree of replies
@@ -35,7 +35,7 @@ var AlienTube = {
     },
     
     //Universal XHTML Callback between browsers
-    xhrRequest : function(url, callback) {
+    GETRequest : function(url, callback) {
         if (typeof(safari) !== 'undefined') {
             var uuid = AlienTube.makeUUID();
             safari.self.addEventListener('message', function(event) {
@@ -43,16 +43,40 @@ var AlienTube = {
                     callback(event.message);
                 }
             }, false);
-            safari.self.tab.dispatchMessage(uuid, url);
+            safari.self.tab.dispatchMessage(uuid, {type: 'GETRequest', url: url});
         } else if (typeof(chrome) !== 'undefined') {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
+            xhr.withCredentials = true;
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
                     callback(xhr.responseText);
                 }
             };
             xhr.send();
+        }
+    },
+    
+    POSTRequest : function(url, data, callback) {
+        if (typeof(safari) !== 'undefined') {
+            var uuid = AlienTube.makeUUID();
+            safari.self.addEventListener('message', function(event) {
+                if (event.name == uuid) {
+                    callback(event.message);
+                }
+            }, false);
+            safari.self.tab.dispatchMessage(uuid, {type: 'POSTRequest', url: url, data: $.param(data)});
+        } else if (typeof(chrome) !== 'undefined') {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);
+            xhr.withCredentials = true;
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    callback(xhr.responseText);
+                }
+            };
+            xhr.send($.param(data));
         }
     },
     
@@ -109,8 +133,9 @@ var AlienTube = {
                                     time);
         }
         //Create the real comment.
-        comment += String.format('<article style="{0}"><div class="comment"><span class="info"><a class="collapseButton" href="#">[-]</a> <a href="http://www.reddit.com/user/{1}" rel="author" target="_blank">{1}</a> {2} {3} points <time datetime="{4}">{5}</time> (<span class="upvotes">{6}</span>|<span class="downvotes">{7}</span>)</span>{8}</div>',
+        comment += String.format('<article style="{0}"><div class="vote">{1}</div><div class="comment"><span class="info"><a class="collapseButton" href="#">[-]</a> <a href="http://www.reddit.com/user/{2}" rel="author" target="_blank">{2}</a> {3} {4} points <time datetime="{5}">{6}</time> (<span class="upvotes">{7}</span>|<span class="downvotes">{8}</span>)</span>{9}</div>',
                                  (data.ups - data.downs) <= -4 ? 'display: none;' : "",
+                                 AlienTube.getVotingHTML(data),
                                  data.author,
                                  data.author_flair_text !== null ? '<span class="flair">'+data.author_flair_text+'</span>' : "",
                                  data.ups - data.downs,
@@ -122,8 +147,16 @@ var AlienTube = {
         return comment;
     },
     
+    getVotingHTML : function(data) {
+        var output = '';
+        output += data.likes === true ? '<div class="arrow upmod"></div>' : '<div class="arrow up"></div>';
+        output += data.likes === false ? '<div class="arrow downmod"></div>' : '<div class="arrow down"></div>';
+        return output;
+    },
+    
     //Generates the reddit comment box
     getRedditComments : function(result, results) {
+        console.log(result);
         //Create tabs for all available threads.
         var output = '';
         if (!AlienTube.preferences.disableTabs) {
@@ -178,7 +211,7 @@ var AlienTube = {
         /* Reddit's search function distinguishes between the http and https version of a youtube link and does not suport wildcards.
            Unfortunately this means we will have to check both, this function performs the second search. */
         var link = 'https://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-        AlienTube.xhrRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
+        AlienTube.GETRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
             try {
                 var result = JSON.parse(requestData);
                 if (result == '{}') {
@@ -232,7 +265,7 @@ var AlienTube = {
         var subReddit = topItemOfSubreddits[0].subreddit;
         var article = topItemOfSubreddits[0].id;
         //Generate Comment box
-        AlienTube.xhrRequest(String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), function(requestData) {
+        AlienTube.GETRequest(String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), function(requestData) {
             try {
                 var result = JSON.parse(requestData);
                 AlienTube.getRedditComments(result, topItemOfSubreddits);
@@ -248,7 +281,7 @@ var AlienTube = {
     //Loads the content of alternate tabs.
     loadCommentsForSubreddit : function (data) {
         var link = String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", data.subreddit, data.id);
-        AlienTube.xhrRequest(link, function(requestData) {
+        AlienTube.GETRequest(link, function(requestData) {
             try {
                 $('#rcomments').html('<div class="redditSpinner"></div>');
                 var result = JSON.parse(requestData);
@@ -308,7 +341,7 @@ var AlienTube = {
     startAlienTube : function() {
         //Generate a youtube url from the browser window and perform a search for the video.
         var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
-        AlienTube.xhrRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
+        AlienTube.GETRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
             try {
                 var result = JSON.parse(requestData);
                 if (result == '{}') {
@@ -340,8 +373,9 @@ $(document).ready(function() {
             Raven.config(AlienTube.ravenLoggingUrl).install();
         }
         if (typeof(safari) !== 'undefined') {
+            var uuid = AlienTube.makeUUID();
             safari.self.addEventListener('message', function(event) {
-                if (event.name == 'settings') {
+                if (event.name == uuid) {
                     var safariPref = JSON.parse(event.message);
                     //Safari doesn't actually give us the default values for some bloody reason so this is a workaround.
                     AlienTube.preferences.hiddenCommentScoreThreshold = safariPref.hiddenCommentScoreThreshold ? safariPref.hiddenCommentScoreThreshold : -4;
@@ -353,7 +387,7 @@ $(document).ready(function() {
                     AlienTube.startAlienTube();
                 }
             }, false);
-            safari.self.tab.dispatchMessage('settings', '');
+            safari.self.tab.dispatchMessage(uuid, {type: 'settings'});
         } else if (typeof(chrome) !== 'undefined') {
             return chrome.storage.sync.get(null, function (settings) {
                 AlienTube.preferences = settings;

@@ -10,6 +10,7 @@ article {
 
 .comment {
     padding-top: 10px !important;
+    margin-left: 20px !important;
     padding-bottom: 5px !important;
 }
 
@@ -200,6 +201,49 @@ article a:hover {
 .expandButton:hover,
 .collapseButton:hover {
     text-decoration: underline !important;
+}
+
+.vote {
+    margin-top: 12px !important;
+    float: left !important;
+    width: 15px !important;
+}
+
+.arrow {
+    width: 100% !important;
+    height: 14px !important;
+    display: inline-block !important;
+    cursor: pointer !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    width: 15px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    outline: none !important;
+}
+
+.up {
+    background-image: url(http://www.redditstatic.com/sprite-reddit.u1Nao8_niV4.png) !important;
+    background-position: -84px -799px !important;
+    background-repeat: no-repeat !important;
+}
+
+.down {
+    background-image: url(http://www.redditstatic.com/sprite-reddit.u1Nao8_niV4.png) !important;
+    background-position: -42px -799px !important;
+    background-repeat: no-repeat !important;
+}
+
+.upmod {
+    background-image: url(http://www.redditstatic.com/sprite-reddit.u1Nao8_niV4.png) !important;
+    background-position: -105px -799px !important;
+    background-repeat: no-repeat !important;
+}
+
+.downmod {
+    background-image: url(http://www.redditstatic.com/sprite-reddit.u1Nao8_niV4.png) !important;
+    background-position: -63px -799px !important;
+    background-repeat: no-repeat !important;
 }
 
 .redditSpinner {
