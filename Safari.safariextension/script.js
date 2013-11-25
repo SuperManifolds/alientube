@@ -250,7 +250,7 @@ var AlienTube = {
         var link = String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", data.subreddit, data.id);
         AlienTube.xhrRequest(link, function(requestData) {
             try {
-                $('#rcomments').html(AlienTube.getLoadingSpinnerHTML());
+                $('#rcomments').html('<div class="redditSpinner"></div>');
                 var result = JSON.parse(requestData);
                 var output = "";
                 $.each(result[1].data.children, function(index, value) {
