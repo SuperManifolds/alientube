@@ -257,31 +257,32 @@ var AlienTube = {
         if (numArray.length === 0) {
             $('.redditSpinner').remove();
             AlienTube.setCommentSection('<section id="reddit"><p class="redditSingleMessage">No posts with comments found</p></section>');
-        }
-        //Retrieve the best thread from each subreddit by adding together the comments and scores then comparing.
-        numArray = _.groupBy(numArray, 'subreddit'); 
-        var topItemOfSubreddits = [];
-        $.each(numArray, function(index, value) {
-            topItemOfSubreddits.push(value.reduce(function(a, b) { return (a.score + a.num_comments) > (b.score + b.num_comments) ? a : b; }));
-        });
-        //Sort the result accordingly with the top being the highest score, and select the item with the highest score and comment accumelence as the default thread.
-        topItemOfSubreddits.sort(function(a,b){return (b.score + b.num_comments) - (a.score + a.num_comments); });
-        var subReddit = topItemOfSubreddits[0].subreddit;
-        var article = topItemOfSubreddits[0].id;
-        //Generate Comment box
-        AlienTube.GETRequest(String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), function(requestData) {
-            try {
-                var result = JSON.parse(requestData);
-                AlienTube.getRedditComments(result, topItemOfSubreddits);
-            }
-            catch (e) {
-                if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) {
-                    Raven.captureException(e);
+        } else {
+            //Retrieve the best thread from each subreddit by adding together the comments and scores then comparing.
+            numArray = _.groupBy(numArray, 'subreddit'); 
+            var topItemOfSubreddits = [];
+            $.each(numArray, function(index, value) {
+                topItemOfSubreddits.push(value.reduce(function(a, b) { return (a.score + a.num_comments) > (b.score + b.num_comments) ? a : b; }));
+            });
+            //Sort the result accordingly with the top being the highest score, and select the item with the highest score and comment accumelence as the default thread.
+            topItemOfSubreddits.sort(function(a,b){return (b.score + b.num_comments) - (a.score + a.num_comments); });
+            var subReddit = topItemOfSubreddits[0].subreddit;
+            var article = topItemOfSubreddits[0].id;
+            //Generate Comment box
+            AlienTube.GETRequest(String.format("https://pay.reddit.com/r/{0}/comments/{1}.json", subReddit, article), function(requestData) {
+                try {
+                    var result = JSON.parse(requestData);
+                    AlienTube.getRedditComments(result, topItemOfSubreddits);
                 }
-                AlienTube.postErrorMessage(e);
-                console.log(e);
-            }
-        });
+                catch (e) {
+                    if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) {
+                        Raven.captureException(e);
+                    }
+                    AlienTube.postErrorMessage(e);
+                    console.log(e);
+                }
+            });
+        }
     },
     
     //Loads the content of alternate tabs.
@@ -360,7 +361,7 @@ var AlienTube = {
                 $(e.target).prev().addClass('up');
                 $(e.target).prev().removeClass('upmod');
             }
-        });
+                });
     },
     
     //Check whether regular YouTube or YouTube feather is being used and apply the comment section appropriately.
