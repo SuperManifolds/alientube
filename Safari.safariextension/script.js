@@ -296,6 +296,9 @@ var AlienTube = {
                     if (value.data.body !== undefined) { output += AlienTube.traverseComment(value.data); }
                 });
                 $('#rcomments').html(output);
+                if (!AlienTube.preferences.disablePostHeader) {
+                    $('#reddit header').html(String.format('<a href="http://reddit.com/{0}" target="_blank">{1}</a>', result[0].data.children[0].data.permalink, result[0].data.children[0].data.title));
+                }
                 AlienTube.bindCommentEvents();
             } catch (e) {
                 if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) {
