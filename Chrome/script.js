@@ -136,7 +136,7 @@ var AlienTube = {
         comment += String.format('<article style="{0}" data-id="{1}"><div class="vote">{2}</div><div class="comment"><span class="info"><a class="collapseButton" href="#">[-]</a> <a href="http://www.reddit.com/user/{3}" rel="author" target="_blank">{3}</a> {4} {5} points <time datetime="{6}">{7}</time> (<span class="upvotes">{8}</span>|<span class="downvotes">{9}</span>)</span>{10}</div>',
                                  (data.ups - data.downs) <= -4 ? 'display: none;' : "",
                                  data.name,
-                                 AlienTube.getVotingHTML(data),
+                                 AlienTube.getCommentVotingHTML(data),
                                  data.author,
                                  data.author_flair_text !== null ? '<span class="flair">'+data.author_flair_text+'</span>' : "",
                                  data.ups - data.downs,
@@ -148,10 +148,28 @@ var AlienTube = {
         return comment;
     },
     
-    getVotingHTML : function(data) {
+    getCommentVotingHTML : function(data) {
         var output = '';
         output += data.likes === true ? '<div class="arrow upmod"></div>' : '<div class="arrow up"></div>';
         output += data.likes === false ? '<div class="arrow downmod"></div>' : '<div class="arrow down"></div>';
+        return output;
+    },
+    
+    getPostVotingHTML : function(data) {
+        var output = '';
+        if (data.likes === true) {
+            output += '<div class="arrow upmod"></div>';
+            output += '<div class="postScore liked">' + data.score + '</div>';
+            output += '<div class="arrow down"></div>';
+        } else if (data.likes === false) {
+            output += '<div class="arrow up"></div>';
+            output += '<div class="postScore disliked">' + data.score + '</div>';
+            output += '<div class="arrow downmod"></div>';
+        } else {
+            output += '<div class="arrow up"></div>';
+            output += '<div class="postScore">' + data.score + '</div>';
+            output += '<div class="arrow down"></div>';
+        }
         return output;
     },
     
@@ -174,7 +192,11 @@ var AlienTube = {
         }
         
         if (!AlienTube.preferences.disablePostHeader) {
-            output += String.format('<header><a href="http://reddit.com/{0}" target="_blank">{1}</a></header>', result[0].data.children[0].data.permalink, result[0].data.children[0].data.title);
+            output += String.format('<header data-id="{0}"><div class="vote">{1}</div><a href="http://reddit.com/{2}" target="_blank">{3}</a></header>',
+                                    result[0].data.children[0].data.name,
+                                    AlienTube.getPostVotingHTML(result[0].data.children[0].data),
+                                    result[0].data.children[0].data.permalink,
+                                    result[0].data.children[0].data.title);
         }
         
         output += '<div id="rcomments">';
@@ -298,7 +320,11 @@ var AlienTube = {
                 });
                 $('#rcomments').html(output);
                 if (!AlienTube.preferences.disablePostHeader) {
-                    $('#reddit header').html(String.format('<a href="http://reddit.com/{0}" target="_blank">{1}</a>', result[0].data.children[0].data.permalink, result[0].data.children[0].data.title));
+                    $('#reddit header').replaceWith(String.format('<header data-id="{0}"><div class="vote">{1}</div><a href="http://reddit.com/{2}" target="_blank">{3}</a></header>',
+                                    result[0].data.children[0].data.name,
+                                    AlienTube.getPostVotingHTML(result[0].data.children[0].data),
+                                    result[0].data.children[0].data.permalink,
+                                    result[0].data.children[0].data.title));
                 }
                 AlienTube.bindCommentEvents();
             } catch (e) {
@@ -311,13 +337,13 @@ var AlienTube = {
         });
     },
     
-    castVote : function(id, vote) {
+    castVote : function(id, vote, callback) {
         try {
             AlienTube.POSTRequest('https://pay.reddit.com/api/vote', {
                 id: id,
                 dir: vote,
                 uh: AlienTube.preferences.modhash
-            });
+            }, callback);
         } catch (e) {
             if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) {
                 Raven.captureException(e);
@@ -340,28 +366,70 @@ var AlienTube = {
         });
         $('.arrow').click(function (e) {
             var id = $(e.target).closest('article').attr('data-id');
-            if ($(e.target).hasClass('upmod')) {
-                AlienTube.castVote(id, 0);
-                $(e.target).addClass('up');
-                $(e.target).removeClass('upmod');
-            } else if ($(e.target).hasClass('downmod')) {
-                AlienTube.castVote(id, 0);
-                $(e.target).addClass('down');
-                $(e.target).removeClass('downmod');
-            } else if ($(e.target).hasClass('up')) {
-                AlienTube.castVote(id, +1);
-                $(e.target).addClass('upmod');
-                $(e.target).removeClass('up');
-                $(e.target).next().addClass('down');
-                $(e.target).next().removeClass('downmod');
-            } else if ($(e.target).hasClass('down')) {
-                AlienTube.castVote(id, -1);
-                $(e.target).addClass('downmod');
-                $(e.target).removeClass('down');
-                $(e.target).prev().addClass('up');
-                $(e.target).prev().removeClass('upmod');
+            var isPost = false;
+            var isModified = false;
+            if (id === undefined) {
+                id = $('#reddit header').attr('data-id');
+                isPost = true;
             }
+            if ($(e.target).hasClass('upmod')) {
+                AlienTube.castVote(id, 0, function() {
+                    $(e.target).addClass('up');
+                    $(e.target).removeClass('upmod');
+                    if (isPost) {
+                        $(e.target).next().removeClass('liked');
+                        $(e.target).next().html(parseInt($(e.target).next().text(), 10) - 1);
+                    } else {
+                    
+                    }
                 });
+            } else if ($(e.target).hasClass('downmod')) {
+                AlienTube.castVote(id, 0, function() {
+                    $(e.target).addClass('down');
+                    $(e.target).removeClass('downmod');
+                    if (isPost) {
+                        $(e.target).prev().removeClass('disliked');
+                        $(e.target).prev().html(parseInt($(e.target).prev().text(), 10) + 1);
+                    } else {
+                    
+                    }
+                });
+            } else if ($(e.target).hasClass('up')) {
+                AlienTube.castVote(id, +1, function() {
+                    if ($(e.target).nextAll('.arrow').hasClass('downmod')) {
+                        isModified = true;
+                    }
+                    $(e.target).addClass('upmod');
+                    $(e.target).removeClass('up');
+                    $(e.target).nextAll('.arrow').addClass('down');
+                    $(e.target).nextAll('.arrow').removeClass('downmod');
+                    if (isPost) {
+                        $(e.target).next().addClass('liked');
+                        $(e.target).next().removeClass('disliked');
+                        $(e.target).next().html(parseInt($(e.target).next().text(), 10) + (isModified ? 2 : 1));
+                    } else {
+                    
+                    }
+                });
+            } else if ($(e.target).hasClass('down')) {
+                AlienTube.castVote(id, -1, function() {
+                    if ($(e.target).prevAll('.arrow').hasClass('upmod')) {
+                        isModified = true;
+                    }
+                    $(e.target).addClass('downmod');
+                    $(e.target).removeClass('down');
+                    $(e.target).prevAll('.arrow').addClass('up');
+                    $(e.target).prevAll('.arrow').removeClass('upmod');
+                    if (isPost) {
+                        $(e.target).prev().addClass('disliked');
+                        $(e.target).prev().removeClass('liked');
+                        $(e.target).prev().html(parseInt($(e.target).prev().text(), 10) - (isModified ? 2 : 1));
+                    } else {
+                    
+                    }
+                });
+            }
+        });
     },
     
     //Check whether regular YouTube or YouTube feather is being used and apply the comment section appropriately.

@@ -7,15 +7,15 @@
 	<key>Builder Version</key>
 	<string>9537.71</string>
 	<key>CFBundleDisplayName</key>
-	<string>AlienTube</string>
+	<string>AlienTube (Alpha)</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.delexious.alientube</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.2.3</string>
+	<string>0.5</string>
 	<key>CFBundleVersion</key>
-	<string>0.2.3</string>
+	<string>0.3</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Global Page</key>

@@ -67,6 +67,7 @@ article span .downvotes {
 #reddit header {
     font-size: 16px !important;
     padding: 20px !important;
+    line-height: 50px !important;
     padding-bottom: 5px !important;
 }
 
@@ -207,6 +208,27 @@ article a:hover {
     margin-top: 12px !important;
     float: left !important;
     width: 15px !important;
+}
+header .vote {
+    margin: 0 !important;
+    line-height: normal !important;
+    margin-right: 10px !important;
+}
+
+.postScore {
+    text-align: center !important;
+    color: #c6c6c6 !important;
+    font-weight: bold !important;
+    font-size: small !important;
+    padding-bottom: 5px !important;
+}
+
+.liked {
+    color: #FF8B60 !important;
+}
+
+.disliked {
+    color: #9494FF !important;
 }
 
 .arrow {

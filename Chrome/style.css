@@ -65,6 +65,7 @@ article span .downvotes {
 #reddit header {
     font-size: 16px;
     padding: 20px;
+    line-height: 50px;
     padding-bottom: 5px;
 }
 
@@ -205,6 +206,27 @@ article a:hover {
     margin-top: 12px;
     float: left;
     width: 15px;
+}
+header .vote {
+    margin: 0;
+    line-height: normal;
+    margin-right: 10px;
+}
+
+.postScore {
+    text-align: center;
+    color: #c6c6c6;
+    font-weight: bold;
+    font-size: small;
+    padding-bottom: 5px;
+}
+
+.liked {
+    color: #FF8B60;
+}
+
+.disliked {
+    color: #9494FF;
 }
 
 .arrow {

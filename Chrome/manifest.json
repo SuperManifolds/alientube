@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
-  "name": "AlienTube (Pre-Alpha)",
+  "name": "AlienTube (Alpha)",
   "short_name": "AlienTube",
   "description": "Reddit Comments for YouTube",
-  "version": "0.2.4",
+  "version": "0.5",
   "icons": { "16": "icon16.png",
            "48": "icon48.png",
           "128": "icon128.png" },
