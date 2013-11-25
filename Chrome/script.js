@@ -133,8 +133,9 @@ var AlienTube = {
                                     time);
         }
         //Create the real comment.
-        comment += String.format('<article style="{0}"><div class="vote">{1}</div><div class="comment"><span class="info"><a class="collapseButton" href="#">[-]</a> <a href="http://www.reddit.com/user/{2}" rel="author" target="_blank">{2}</a> {3} {4} points <time datetime="{5}">{6}</time> (<span class="upvotes">{7}</span>|<span class="downvotes">{8}</span>)</span>{9}</div>',
+        comment += String.format('<article style="{0}" data-id="{1}"><div class="vote">{2}</div><div class="comment"><span class="info"><a class="collapseButton" href="#">[-]</a> <a href="http://www.reddit.com/user/{3}" rel="author" target="_blank">{3}</a> {4} {5} points <time datetime="{6}">{7}</time> (<span class="upvotes">{8}</span>|<span class="downvotes">{9}</span>)</span>{10}</div>',
                                  (data.ups - data.downs) <= -4 ? 'display: none;' : "",
+                                 data.name,
                                  AlienTube.getVotingHTML(data),
                                  data.author,
                                  data.author_flair_text !== null ? '<span class="flair">'+data.author_flair_text+'</span>' : "",
@@ -157,6 +158,7 @@ var AlienTube = {
     //Generates the reddit comment box
     getRedditComments : function(result, results) {
         console.log(result);
+        AlienTube.preferences.modhash = result[0].data.modhash;
         //Create tabs for all available threads.
         var output = '';
         if (!AlienTube.preferences.disableTabs) {
@@ -182,7 +184,7 @@ var AlienTube = {
         });
         output += '</div></section>';
         $('#reddit').html(output);
-        AlienTube.bindCollapseExpandEvents();
+        AlienTube.bindCommentEvents();
         //Handle changing of tabs.
         $('#redditTabs button').click(function(e){
             var target = e.target;
@@ -290,7 +292,7 @@ var AlienTube = {
                     if (value.data.body !== undefined) { output += AlienTube.traverseComment(value.data); }
                 });
                 $('#rcomments').html(output);
-                AlienTube.bindCollapseExpandEvents();
+                AlienTube.bindCommentEvents();
             } catch (e) {
                 if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) { Raven.captureException(e); }
                 AlienTube.postErrorMessage(e);
@@ -299,7 +301,22 @@ var AlienTube = {
         });
     },
     
-    bindCollapseExpandEvents : function() {
+    castVote : function(id, vote) {
+        try {
+            AlienTube.POSTRequest('https://pay.reddit.com/api/vote', {
+                id: id,
+                dir: vote,
+                uh: AlienTube.preferences.modhash
+            },function(response) {
+            });
+        } catch (e) {
+            if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) { Raven.captureException(e); }
+            AlienTube.postErrorMessage(e);
+            console.log(e);
+        }
+    },
+    
+    bindCommentEvents : function() {
         $('.collapseButton').click(function (e) {
             $(this).closest('article').hide();
             $(this).closest('article').prev().show();
@@ -309,6 +326,30 @@ var AlienTube = {
             $(this).closest('.collapse').hide();
             $(this).closest('.collapse').next().show();
             e.preventDefault();
+        });
+        $('.arrow').click(function (e) {
+            var id = $(e.target).closest('article').attr('data-id');
+            if ($(e.target).hasClass('upmod')) {
+                AlienTube.castVote(id, 0);
+                $(e.target).addClass('up');
+                $(e.target).removeClass('upmod');
+            } else if ($(e.target).hasClass('downmod')) {
+                AlienTube.castVote(id, 0);
+                $(e.target).addClass('down');
+                $(e.target).removeClass('downmod');
+            } else if ($(e.target).hasClass('up')) {
+                AlienTube.castVote(id, +1);
+                $(e.target).addClass('upmod');
+                $(e.target).removeClass('up');
+                $(e.target).next().addClass('down');
+                $(e.target).next().removeClass('downmod');
+            } else if ($(e.target).hasClass('down')) {
+                AlienTube.castVote(id, -1);
+                $(e.target).addClass('downmod');
+                $(e.target).removeClass('down');
+                $(e.target).prev().addClass('up');
+                $(e.target).prev().removeClass('upmod');
+            }
         });
     },
     
