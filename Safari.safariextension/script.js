@@ -94,7 +94,7 @@ var AlienTube = {
         var time = AlienTube.timeAgoFromEpochTime(data.created_utc);
         var comment = "";
         var threshold = AlienTube.preferences.hiddenCommentScoreThreshold;
-        var html = $("<div/>").html(data.body_html).text().replace('href="/r/', 'href="http://reddit.com/r/');
+        var html = $("<div/>").html(data.body_html).text().replace('href="/', 'target="_blank" href="http://reddit.com/');
         if (!threshold) { threshold = -4; }
         
         //Create replacement item for collapsed comments. Check if a comment is below the treshold and should be hidden by default.
