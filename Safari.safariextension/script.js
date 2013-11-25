@@ -238,7 +238,9 @@ var AlienTube = {
                     }
                 }
             } catch (e) {
-                if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) { Raven.captureException(e); }
+                if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) {
+                    Raven.captureException(e);
+                }
                 AlienTube.postErrorMessage(e);
                 console.log(e);
             }
@@ -273,7 +275,9 @@ var AlienTube = {
                 AlienTube.getRedditComments(result, topItemOfSubreddits);
             }
             catch (e) {
-                if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) { Raven.captureException(e); }
+                if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) {
+                    Raven.captureException(e);
+                }
                 AlienTube.postErrorMessage(e);
                 console.log(e);
             }
@@ -294,7 +298,9 @@ var AlienTube = {
                 $('#rcomments').html(output);
                 AlienTube.bindCommentEvents();
             } catch (e) {
-                if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) { Raven.captureException(e); }
+                if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) {
+                    Raven.captureException(e);
+                }
                 AlienTube.postErrorMessage(e);
                 console.log(e);
             }
@@ -307,10 +313,11 @@ var AlienTube = {
                 id: id,
                 dir: vote,
                 uh: AlienTube.preferences.modhash
-            },function(response) {
             });
         } catch (e) {
-            if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) { Raven.captureException(e); }
+            if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) {
+                Raven.captureException(e);
+            }
             AlienTube.postErrorMessage(e);
             console.log(e);
         }
@@ -397,7 +404,9 @@ var AlienTube = {
                     }
                 }
             } catch (e) {
-                if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) { Raven.captureException(e); }
+                if (AlienTube.ravenLoggingUrl.length > 0 && AlienTube.preferences.enableAutomaticErrorReporting) {
+                    Raven.captureException(e);
+                }
                 AlienTube.postErrorMessage(e);
                 console.log(e);
             }
