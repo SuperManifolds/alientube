@@ -203,6 +203,7 @@ article a:hover {
 }
 
 .vote {
+    text-align: center;
     margin-top: 12px;
     float: left;
     width: 15px;
@@ -211,6 +212,7 @@ header .vote {
     margin: 0;
     line-height: normal;
     margin-right: 10px;
+    width: auto;
 }
 
 .postScore {
@@ -230,6 +232,7 @@ header .vote {
 }
 
 .arrow {
+    display: inline-block;
     width: 100%;
     height: 14px;
     display: inline-block;
