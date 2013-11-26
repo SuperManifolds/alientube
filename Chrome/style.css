@@ -63,14 +63,16 @@ article span .downvotes {
 }
 
 #reddit header {
+    overflow: auto;
     font-size: 16px;
     padding: 20px;
-    line-height: 50px;
     padding-bottom: 5px;
 }
 
 #reddit header a {
+    display: inline-block;
     color: #0066aa;
+    width: 480px;
 }
 
 #reddit .redditSingleMessage {
