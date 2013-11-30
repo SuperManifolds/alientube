@@ -182,8 +182,20 @@ var AlienTube = {
         if (!AlienTube.preferences.disableTabs) {
             output += String.format('<div id="redditTabs"><button class="redditTab active border" data-value="{0}">/r/{0}</button>', result[0].data.children[0].data.subreddit);
             if (results !== undefined) {
+                /* Calculate the number of tabs we can display by adding the width of the chrome (43px) with the average width of a text character times subreddit length. */
+                var width = 0;
+                var numTabs = 0;
+                for (var u = 0; u < results.length; u++) {
+                    width = width + (43 + (results[u].subreddit.length * 7));
+                    if (width >= 500) {
+                        console.log(width);
+                        break;
+                    }
+                    numTabs++;
+                }
+                console.log(results.length);
                 if (results.length > 1) {
-                    for (var i = 1; (i < results.length && i <= 4); i++) {
+                    for (var i = 1; (i < results.length && i <= numTabs); i++) {
                         output += String.format('<button class="redditTab" data-value="{0}">/r/{0}</button>', results[i].subreddit);
                     }
                 }
@@ -380,7 +392,7 @@ var AlienTube = {
                         $(e.target).next().removeClass('liked');
                         $(e.target).next().html(parseInt($(e.target).next().text(), 10) - 1);
                     } else {
-                    
+                        
                     }
                 });
             } else if ($(e.target).hasClass('downmod')) {
@@ -391,7 +403,7 @@ var AlienTube = {
                         $(e.target).prev().removeClass('disliked');
                         $(e.target).prev().html(parseInt($(e.target).prev().text(), 10) + 1);
                     } else {
-                    
+                        
                     }
                 });
             } else if ($(e.target).hasClass('up')) {
@@ -408,7 +420,7 @@ var AlienTube = {
                         $(e.target).next().removeClass('disliked');
                         $(e.target).next().html(parseInt($(e.target).next().text(), 10) + (isModified ? 2 : 1));
                     } else {
-                    
+                        
                     }
                 });
             } else if ($(e.target).hasClass('down')) {
@@ -425,7 +437,7 @@ var AlienTube = {
                         $(e.target).prev().removeClass('liked');
                         $(e.target).prev().html(parseInt($(e.target).prev().text(), 10) - (isModified ? 2 : 1));
                     } else {
-                    
+                        
                     }
                 });
             }
