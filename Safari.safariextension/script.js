@@ -182,17 +182,13 @@ var AlienTube = {
             output += String.format('<div id="redditTabs"><button class="redditTab active border" data-value="{0}">/r/{0}</button>', result[0].data.children[0].data.subreddit);
             if (results !== undefined) {
                 /* Calculate the number of tabs we can display by adding the width of the chrome (43px) with the average width of a text character times subreddit length. */
-                var width = 0;
-                var numTabs = 0;
-                for (var u = 0; u < results.length; u++) {
-                    width = width + (43 + (results[u].subreddit.length * 7));
-                    if (width >= 500) {
-                        break;
-                    }
-                    numTabs++;
-                }
+                var width = (43 + results[0].subreddit.length * 7);
                 if (results.length > 1) {
-                    for (var i = 1; (i < results.length && i <= numTabs); i++) {
+                    for (var i = 1; i < results.length; i++) {
+                        width = width + (43 + (results[i].subreddit.length * 7));
+                        if (width >= 550) {
+                            break;
+                        }
                         output += String.format('<button class="redditTab" data-value="{0}">/r/{0}</button>', results[i].subreddit);
                     }
                 }
