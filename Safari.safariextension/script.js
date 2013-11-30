@@ -175,7 +175,6 @@ var AlienTube = {
     
     //Generates the reddit comment box
     getRedditComments : function(result, results) {
-        console.log(result);
         AlienTube.preferences.modhash = result[0].data.modhash;
         //Create tabs for all available threads.
         var output = '';
@@ -188,12 +187,10 @@ var AlienTube = {
                 for (var u = 0; u < results.length; u++) {
                     width = width + (43 + (results[u].subreddit.length * 7));
                     if (width >= 500) {
-                        console.log(width);
                         break;
                     }
                     numTabs++;
                 }
-                console.log(results.length);
                 if (results.length > 1) {
                     for (var i = 1; (i < results.length && i <= numTabs); i++) {
                         output += String.format('<button class="redditTab" data-value="{0}">/r/{0}</button>', results[i].subreddit);
