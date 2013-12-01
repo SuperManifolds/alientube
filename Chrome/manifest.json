@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": ["*://youtube.com/watch*", "*://www.youtube.com/watch*"],
-      "js": ["jquery-1.9.1.min.js", "raven.min.js", "purl.js", "underscore-min.js", "script.js"],
+      "js": ["jquery-1.9.1.min.js", "raven.min.js", "purl.js", "snuownd.js", "underscore-min.js", "script.js"],
       "css": ["style.css"]
     }
   ],
@@ -31,7 +31,7 @@
   "web_accessible_resources": [
     "jquery-1.9.1.min.js",
     "purl.js",
-    "purl.js",
+    "snuownd.js",
     "underscore-min.js",
     "jquery.min.map",
     "underscore-min.map",

@@ -1,5 +1,5 @@
 /* jslint browser: true */
-/* global _,$,jQuery,safari,chrome, Raven */
+/* global _, $, jQuery, safari, chrome, Raven */
 
 // String.Format equivlency function for Javascript
 String.format = function() {
@@ -184,12 +184,16 @@ var AlienTube = {
                 /* Calculate the number of tabs we can display by adding the width of the chrome (43px) with the average width of a text character times subreddit length. */
                 var width = (43 + results[0].subreddit.length * 7);
                 if (results.length > 1) {
-                    for (var i = 1; i < results.length; i++) {
+                    var i;
+                    for (i = 1; i < results.length; i++) {
                         width = width + (43 + (results[i].subreddit.length * 7));
                         if (width >= 550) {
                             break;
                         }
                         output += String.format('<button class="redditTab" data-value="{0}">/r/{0}</button>', results[i].subreddit);
+                    }
+                    if (i < results.length) {
+                        //TODO: Overflow
                     }
                 }
             }

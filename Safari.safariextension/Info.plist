@@ -29,6 +29,7 @@
 			<array>
 				<string>jquery-1.9.1.min.js</string>
 				<string>purl.js</string>
+				<string>snuownd.js</string>
 				<string>underscore-min.js</string>
 				<string>raven.min.js</string>
 				<string>script.js</string>
