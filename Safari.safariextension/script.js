@@ -1,5 +1,5 @@
 /* jslint browser: true */
-/* global _, $, jQuery, safari, chrome, Raven */
+/* global _, $, jQuery, safari, chrome, Raven, self, Components */
 
 // String.Format equivlency function for Javascript
 String.format = function() {
@@ -44,7 +44,7 @@ var AlienTube = {
                 }
             }, false);
             safari.self.tab.dispatchMessage(uuid, {type: 'GETRequest', url: url});
-        } else if (typeof(chrome) !== 'undefined') {
+        } else if (typeof(chrome) !== 'undefined' || typeof(self.on) === 'function') {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
             xhr.withCredentials = true;
@@ -66,7 +66,7 @@ var AlienTube = {
                 }
             }, false);
             safari.self.tab.dispatchMessage(uuid, {type: 'POSTRequest', url: url, data: $.param(data)});
-        } else if (typeof(chrome) !== 'undefined') {
+        } else if (typeof(chrome) !== 'undefined' || typeof(self.on) === 'function') {
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url, true);
             xhr.withCredentials = true;
@@ -472,6 +472,8 @@ var AlienTube = {
             return safari.extension.baseURI +  path;
         } else if (typeof(chrome) !== 'undefined') {
             return chrome.extension.getURL(path);
+        } else if (typeof(self.on) === 'function') {
+            return 'resource://alientube/' + path;
         } else {
             return null;
         }
@@ -487,6 +489,7 @@ var AlienTube = {
         var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
         AlienTube.GETRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
             try {
+                window.alert(requestData);
                 var result = JSON.parse(requestData);
                 if (result == '{}') {
                     AlienTube.secondSearch();
@@ -540,5 +543,15 @@ $(document).ready(function() {
                 AlienTube.startAlienTube();
             });
         }
+    }
+});
+
+//Wait to get our preferences from Firefox before we can continue
+self.on("message", function(prefs) {
+    if (window.top === window) {
+        //Firefox doesn't have any functions for loading css into DOM so we have to do it ourselves..
+        $('head').append('<link rel="stylesheet" type="text/css" href="resource://alientube/style.css">');
+        AlienTube.preferences = prefs;
+        AlienTube.startAlienTube();
     }
 });

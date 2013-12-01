@@ -1,0 +1,56 @@
+{
+  "name": "alientube",
+  "fullName": "AlienTube (Alpha)",
+  "id": "jid1-0GRQcsmyXNQRlg",
+  "description": "Reddit comments, in your YouTube!",
+  "author": "Delexious",
+  "license": "BSD 3",
+  "version": "0.5",
+    
+    "permissions": {
+        "cross-domain-content": ["http://www.reddit.com/", "https://pay.reddit.com/"]
+    },
+    
+    "preferences": [{
+        "name": "hiddenCommentScoreThreshold",
+        "title": "Don't show me comments with a score less than",
+        "description": "",
+        "type": "integer",
+        "value": -4
+    },
+    {
+        "name": "wideCommentBox",
+        "title": "Use a wider comment box layout",
+        "description": "",
+        "type": "bool",
+        "value": false
+    },
+    {
+        "name": "featherDescriptionPlacement",
+        "title": "Collapse comment box into description in YouTube Feather",
+        "description": "",
+        "type": "bool",
+        "value": false
+    },
+    {
+        "name": "disablePostHeader",
+        "title": "Hide the post header",
+        "description": "",
+        "type": "bool",
+        "value": false
+    },           
+    {
+        "name": "disableTabs",
+        "title": "Hide the tab bar",
+        "description": "",
+        "type": "bool",
+        "value": false
+    },           
+    {
+        "name": "enableAutomaticErrorReporting",
+        "title": "Enable automatic error reporting",
+        "description": "",
+        "type": "bool",
+        "value": false
+    }]
+}
