@@ -281,9 +281,24 @@ var AlienTube = {
     //Processes the results of both searches.
     processSearchResults: function() {
         var numArray = [];
+        
+        //If there is a link to a subreddit or a reddit post in the video description we will prioritise it.
+        var preferedSubreddit = null;
+        var preferedPost = null;
+        $('#eow-description').children('a').each(function () {
+            var url = $.url($(this).attr('href'));
+            if (url.host === 'www.reddit.com' && url.segment(1) == 'r' && url.segment(2) !== undefined) {
+                preferedSubreddit = url.segment(2);
+                if (url.segment(3) == 'comments' && url.segment(4) !== undefined) {
+                    preferedPost = url.segment(4);
+                }
+            }
+        });
         //Remove threads with no comments. In the future we will handle this by suggesting the user makes a comment.
         $.each(AlienTube.searchResults, function(index, value){
-            if (value.data.num_comments > 0) { numArray.push(value.data); }
+            if (value.data.num_comments > 0 || value.subreddit == preferedSubreddit || (value.subreddit == preferedSubreddit&& value.id == preferedPost)) {
+                numArray.push(value.data);
+            }
         });
         if (numArray.length === 0) {
             $('.redditSpinner').remove();
@@ -293,10 +308,10 @@ var AlienTube = {
             numArray = _.groupBy(numArray, 'subreddit'); 
             var topItemOfSubreddits = [];
             $.each(numArray, function(index, value) {
-                topItemOfSubreddits.push(value.reduce(function(a, b) { return (a.score + a.num_comments) > (b.score + b.num_comments) ? a : b; }));
+                topItemOfSubreddits.push(value.reduce(function(a, b) { return ((a.score + a.num_comments) > (b.score + b.num_comments) || a.id === preferedPost) ? a : b; }));
             });
             //Sort the result accordingly with the top being the highest score, and select the item with the highest score and comment accumelence as the default thread.
-            topItemOfSubreddits.sort(function(a,b){return (b.score + b.num_comments) - (a.score + a.num_comments); });
+            topItemOfSubreddits.sort(function(a,b){return ((b.score + b.num_comments) || b.subreddit == preferedSubreddit || (b.subreddit == preferedSubreddit&& b.id == preferedPost)) - (a.score + a.num_comments); });
             var subReddit = topItemOfSubreddits[0].subreddit;
             var article = topItemOfSubreddits[0].id;
             //Generate Comment box
