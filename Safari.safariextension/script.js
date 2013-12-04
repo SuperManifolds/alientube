@@ -34,13 +34,27 @@ var AlienTube = {
         return output;
     },
     
+    //Browser checking
+    getCurrentBrowserAPI : function() {
+        if (typeof(safari) !== 'undefined') {
+            return 'safari';
+        } else if (typeof(chrome) !== 'undefined') {
+            return 'chrome';
+        } else if (typeof(self.on) === 'function') {
+            return 'firefox';
+        } else {
+            return null;
+        }
+    },
+    
     //Universal XHTML Callback between browsers
     GETRequest : function(url, callback) {
         if (typeof(safari) !== 'undefined') {
             var uuid = AlienTube.makeUUID();
             safari.self.addEventListener('message', function(event) {
                 if (event.name == uuid) {
-                    callback(event.message);
+                    var xhr = JSON.parse(event.message);
+                    AlienTube.handleXhrCallbacks(xhr, xhr.responseText, callback);
                 }
             }, false);
             safari.self.tab.dispatchMessage(uuid, {type: 'GETRequest', url: url});
@@ -50,7 +64,7 @@ var AlienTube = {
             xhr.withCredentials = true;
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
-                    callback(xhr.responseText);
+                    AlienTube.handleXhrCallbacks(xhr, xhr.responseText, callback);
                 }
             };
             xhr.send();
@@ -62,7 +76,8 @@ var AlienTube = {
             var uuid = AlienTube.makeUUID();
             safari.self.addEventListener('message', function(event) {
                 if (event.name == uuid) {
-                    callback(event.message);
+                    var xhr = JSON.parse(event.message);
+                    AlienTube.handleXhrCallbacks(xhr, xhr.responseText, callback);
                 }
             }, false);
             safari.self.tab.dispatchMessage(uuid, {type: 'POSTRequest', url: url, data: $.param(data)});
@@ -73,10 +88,53 @@ var AlienTube = {
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
-                    callback(xhr.responseText);
+                    AlienTube.handleXhrCallbacks(xhr, xhr.responseText, callback);
                 }
             };
             xhr.send($.param(data));
+        }
+    },
+    
+    handleXhrCallbacks : function(xhr, response, callback) {
+        console.log(xhr.status);
+        switch(xhr.status) {
+        case 200:
+        case 201:
+        case 202:
+        case 301:
+        case 302:
+        case 303:
+            callback(response);
+            break;
+        case 400:
+            AlienTube.postErrorMessage(AlienTube.formatHTTPErrorMessage(xhr.status, xhr.statusText, "Reddit was unable to understand the request and could not complete it. If this persists please contact support."));
+        case 401:
+        case 403:
+            if (AlienTube.getCurrentBrowserAPI() === 'safari') {
+                AlienTube.postErrorMessage(AlienTube.formatHTTPErrorMessage(xhr.status, xhr.statusText, "The request could not be completed because Reddit says it was unauthorised. Make sure you are logged in to Reddit in this browser and that have you have \"Remember me \" enabled if you are trying to vote, publish or comment."));
+            } else {
+                AlienTube.postErrorMessage(AlienTube.formatHTTPErrorMessage(xhr.status, xhr.statusText, "The request could not be completed because Reddit says it was unauthorised. Make sure you are logged in to Reddit in this browser if you are trying to vote, publish or comment."));
+            }
+            break;
+        case 404:
+            AlienTube.postErrorMessage(AlienTube.formatHTTPErrorMessage(xhr.status, xhr.statusText, "The request could not be completed because the page could not be found."));
+            break;
+        case 500:
+            AlienTube.postErrorMessage(AlienTube.formatHTTPErrorMessage(xhr.status, xhr.statusText, "The request could not be completed because Reddit experienced an internal server error."));
+            break;
+        case 503:
+            AlienTube.postErrorMessage(AlienTube.formatHTTPErrorMessage(xhr.status, xhr.statusText, "The request could not be completed because Reddit is overloaded or under maintainence."));
+            break;
+        default:
+            AlienTube.postErrorMessage(AlienTube.formatHTTPErrorMessage(xhr.status, xhr.statusText));
+        }
+    },
+    
+    formatHTTPErrorMessage : function(code, error, message) {
+        if (typeof(message) !== 'undefined') {
+            return '<b>' + code + '</b> (' + error + '): ' + message;
+        } else {
+            return '<b>' + code + '</b> (' + error + ')';
         }
     },
     
@@ -481,7 +539,7 @@ var AlienTube = {
     
     
     postErrorMessage : function(message) {
-        AlienTube.setCommentSection(String.format('<section id="reddit"><div class="redditError"><img src="{0}" alt="An error has occured" /><div><h1>A fatal error occured.</h1><p>{1}</p></div></div></section>', AlienTube.getExtensionFolderRessource('error.png'), message));
+        AlienTube.setCommentSection(String.format('<section id="reddit"><div class="redditError"><img src="{0}" alt="An error has occured" /><div><h1>An error occured.</h1><p>{1}</p></div></div></section>', AlienTube.getExtensionFolderRessource('error.png'), message));
     },
     
     startAlienTube : function() {
