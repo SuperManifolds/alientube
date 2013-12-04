@@ -247,7 +247,7 @@ var AlienTube = {
         AlienTube.GETRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
             try {
                 var result = JSON.parse(requestData);
-                if (result == '{}') {
+                if (jQuery.isPlainObject(result)) {
                     if (AlienTube.searchResults.length !== undefined) {
                         AlienTube.processSearchResults();
                     } else {
