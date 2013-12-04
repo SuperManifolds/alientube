@@ -546,9 +546,11 @@ $(document).ready(function() {
 });
 
 //Wait to get our preferences from Firefox before we can continue
-self.on("message", function(prefs) {
-    if (window.top === window) {
-        AlienTube.preferences = prefs;
-        AlienTube.startAlienTube();
-    }
-});
+if (typeof(self.on) === 'function') {
+    self.on("message", function(prefs) {
+        if (window.top === window) {
+            AlienTube.preferences = prefs;
+            AlienTube.startAlienTube();
+        }
+    });
+}
