@@ -328,7 +328,7 @@ var AlienTube = {
                         AlienTube.searchResults = AlienTube.searchResults.concat(result.data.children);
                         AlienTube.processSearchResults();
                     } else {
-                        if (result[1].data.children.length > 0) {
+                        if (typeof(result[1].data) !== 'undefined' && result[1].data.children.length > 0) {
                             AlienTube.getRedditComments(result);
                         } else {
                             $('.redditSpinner').remove();
@@ -537,7 +537,7 @@ var AlienTube = {
     
     // Get a resource in the extension folder. For this to work in Firefox the resource must also be defined in main.js
     getExtensionFolderResource : function (path) {
-        switch (AlienTube.getCurrentBrowserAPI) {
+        switch (AlienTube.getCurrentBrowserAPI()) {
         case AlienTube.browser.Safari:
             return safari.extension.baseURI +  path;
         case AlienTube.browser.Chrome:
@@ -553,6 +553,9 @@ var AlienTube = {
     },
     
     startAlienTube : function() {
+        //Bye Bye Google+, removing the comment section and adding our own.
+        AlienTube.setCommentSection('<section id="reddit"><div class="redditSpinner"></div></section>');
+        
         //Generate a youtube url from the browser window and perform a search for the video.
         var link = 'http://www.youtube.com/watch?v=' + $.url(window.location.href).param('v');
         AlienTube.GETRequest("https://pay.reddit.com/submit.json?url=" + encodeURIComponent(link), function(requestData) {
@@ -577,9 +580,6 @@ var AlienTube = {
                 console.log(e);
             }
         });
-        
-        //Bye Bye Google+, removing the comment section and adding our own.
-        AlienTube.setCommentSection('<section id="reddit"><div class="redditSpinner"></div></section>');
     }
 };
 
@@ -588,7 +588,7 @@ $(document).ready(function() {
         if (AlienTube.ravenLoggingUrl.length > 0) {
             Raven.config(AlienTube.ravenLoggingUrl).install();
         }
-        if (AlienTube.getCurrentBrowserAPI === AlienTube.browser.Safari) {
+        if (AlienTube.getCurrentBrowserAPI() === AlienTube.browser.Safari) {
             var uuid = AlienTube.makeUUID();
             safari.self.addEventListener('message', function(event) {
                 if (event.name == uuid) {
@@ -604,7 +604,7 @@ $(document).ready(function() {
                 }
             }, false);
             safari.self.tab.dispatchMessage(uuid, {type: 'settings'});
-        } else if (AlienTube.getCurrentBrowserAPI === AlienTube.browser.Chrome) {
+        } else if (AlienTube.getCurrentBrowserAPI() === AlienTube.browser.Chrome) {
             return chrome.storage.sync.get(null, function (settings) {
                 AlienTube.preferences = settings;
                 AlienTube.startAlienTube();
