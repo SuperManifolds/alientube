@@ -11,7 +11,7 @@ __OS X/Linux:__
 Run chmod +x setup.sh in terminal to give the file executable rights.  
 Run setup.sh to create hardlinks for javascript files commonly shared between browser extensions.  
   
-__Windows:__:
+__Windows:__  
 Run setup.cmd to create symlinks for javascript files commonly shared between browser extensions.  
 
   
