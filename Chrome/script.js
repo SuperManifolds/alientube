@@ -19,7 +19,7 @@ var AlienTube = {
     
     searchResults : [],
     
-    browser : { "Safari": 0, "Chrome": 1, "Firefox": 2 },
+    browser : { "Safari": 0, "Chrome": 1, "Firefox": 2, "Opera": 3 },
     
     //Looping function used to traverse down the tree of replies
     traverseComment : function(data) {
@@ -45,6 +45,8 @@ var AlienTube = {
             return 1;
         } else if (typeof(self.on) === 'function') {
             return 2;
+        } else if (typeof(opera) !== 'undefined') {
+            return 3;
         } else {
             return null;
         }
