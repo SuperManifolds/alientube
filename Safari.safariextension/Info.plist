@@ -27,12 +27,12 @@
 		<dict>
 			<key>End</key>
 			<array>
-				<string>jquery-1.9.1.min.js</string>
-				<string>purl.js</string>
-				<string>snuownd.js</string>
-				<string>underscore-min.js</string>
-				<string>raven.min.js</string>
-				<string>script.js</string>
+				<string>js/jquery-1.9.1.min.js</string>
+				<string>js/purl.js</string>
+				<string>js/snuownd.js</string>
+				<string>js/underscore-min.js</string>
+				<string>js/raven.min.js</string>
+				<string>js/script.js</string>
 			</array>
 		</dict>
 		<key>Stylesheets</key>

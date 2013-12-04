@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": ["*://youtube.com/watch*", "*://www.youtube.com/watch*"],
-      "js": ["jquery-1.9.1.min.js", "raven.min.js", "purl.js", "snuownd.js", "underscore-min.js", "script.js"],
+      "js": ["js/jquery-1.9.1.min.js", "js/raven.min.js", "js/purl.js", "js/snuownd.js", "js/underscore-min.js", "js/script.js"],
       "css": ["style.css"]
     }
   ],
@@ -29,13 +29,13 @@
   ],
 
   "web_accessible_resources": [
-    "jquery.min.map",
-    "raven.min.map",
-    "underscore-min.map",
+    "js/jquery.min.map",
+    "js/raven.min.map",
+    "js/underscore-min.map",
     "style.css",
     "chrome_shared.css",
     "widgets.css",
-    "options.js",
+    "js/options.js",
     "error.png"
   ]
 }
