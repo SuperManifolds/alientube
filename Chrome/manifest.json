@@ -29,11 +29,8 @@
   ],
 
   "web_accessible_resources": [
-    "jquery-1.9.1.min.js",
-    "purl.js",
-    "snuownd.js",
-    "underscore-min.js",
     "jquery.min.map",
+    "raven.min.map",
     "underscore-min.map",
     "style.css",
     "chrome_shared.css",
