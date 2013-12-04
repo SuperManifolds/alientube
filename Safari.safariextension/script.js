@@ -18,6 +18,9 @@ var AlienTube = {
     ravenLoggingUrl : '',
     
     searchResults : [],
+    
+    browser : { "Safari": 0, "Chrome": 1, "Firefox": 2 },
+    
     //Looping function used to traverse down the tree of replies
     traverseComment : function(data) {
         var output = AlienTube.getCommentAsHTML(data);
@@ -37,11 +40,11 @@ var AlienTube = {
     //Browser checking
     getCurrentBrowserAPI : function() {
         if (typeof(safari) !== 'undefined') {
-            return 'safari';
+            return 0;
         } else if (typeof(chrome) !== 'undefined') {
-            return 'chrome';
+            return 1;
         } else if (typeof(self.on) === 'function') {
-            return 'firefox';
+            return 2;
         } else {
             return null;
         }
@@ -49,7 +52,8 @@ var AlienTube = {
     
     //Universal XHTML Callback between browsers
     GETRequest : function(url, callback) {
-        if (typeof(safari) !== 'undefined') {
+        switch (AlienTube.getCurrentBrowserAPI()) {
+        case AlienTube.browser.Safari:
             var uuid = AlienTube.makeUUID();
             safari.self.addEventListener('message', function(event) {
                 if (event.name == uuid) {
@@ -58,7 +62,9 @@ var AlienTube = {
                 }
             }, false);
             safari.self.tab.dispatchMessage(uuid, {type: 'GETRequest', url: url});
-        } else if (typeof(chrome) !== 'undefined' || typeof(self.on) === 'function') {
+            break;
+        case AlienTube.browser.Chrome:
+        case AlienTube.browser.Firefox:
             var xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
             xhr.withCredentials = true;
@@ -68,11 +74,13 @@ var AlienTube = {
                 }
             };
             xhr.send();
+            break;
         }
     },
     
     POSTRequest : function(url, data, callback) {
-        if (typeof(safari) !== 'undefined') {
+        switch (AlienTube.getCurrentBrowserAPI()) {
+        case AlienTube.browser.Safari:
             var uuid = AlienTube.makeUUID();
             safari.self.addEventListener('message', function(event) {
                 if (event.name == uuid) {
@@ -81,7 +89,9 @@ var AlienTube = {
                 }
             }, false);
             safari.self.tab.dispatchMessage(uuid, {type: 'POSTRequest', url: url, data: $.param(data)});
-        } else if (typeof(chrome) !== 'undefined' || typeof(self.on) === 'function') {
+            break;
+        case AlienTube.browser.Chrome:
+        case AlienTube.browser.Firefox:
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url, true);
             xhr.withCredentials = true;
@@ -110,7 +120,7 @@ var AlienTube = {
             AlienTube.postErrorMessage(AlienTube.formatHTTPErrorMessage(xhr.status, xhr.statusText, "Reddit was unable to understand the request and could not complete it. If this persists please contact support."));
         case 401:
         case 403:
-            if (AlienTube.getCurrentBrowserAPI() === 'safari') {
+            if (AlienTube.getCurrentBrowserAPI() === AlienTube.browser.Safari) {
                 AlienTube.postErrorMessage(AlienTube.formatHTTPErrorMessage(xhr.status, xhr.statusText, "The request could not be completed because Reddit says it was unauthorised. Make sure you are logged in to Reddit in this browser and that have you have \"Remember me \" enabled if you are trying to vote, publish or comment."));
             } else {
                 AlienTube.postErrorMessage(AlienTube.formatHTTPErrorMessage(xhr.status, xhr.statusText, "The request could not be completed because Reddit says it was unauthorised. Make sure you are logged in to Reddit in this browser if you are trying to vote, publish or comment."));
@@ -403,10 +413,10 @@ var AlienTube = {
                 $('#rcomments').html(output);
                 if (!AlienTube.preferences.disablePostHeader) {
                     $('#reddit header').replaceWith(String.format('<header data-id="{0}"><div class="vote">{1}</div><a href="http://reddit.com/{2}" target="_blank">{3}</a></header>',
-                                    result[0].data.children[0].data.name,
-                                    AlienTube.getPostVotingHTML(result[0].data.children[0].data),
-                                    result[0].data.children[0].data.permalink,
-                                    result[0].data.children[0].data.title));
+                                                                  result[0].data.children[0].data.name,
+                                                                  AlienTube.getPostVotingHTML(result[0].data.children[0].data),
+                                                                  result[0].data.children[0].data.permalink,
+                                                                  result[0].data.children[0].data.title));
                 }
                 AlienTube.bindCommentEvents();
             } catch (e) {
@@ -525,21 +535,21 @@ var AlienTube = {
         }
     },
     
-    getExtensionFolderRessource : function (path) {
-        if (typeof(safari) !== 'undefined') {
+    // Get a resource in the extension folder. For this to work in Firefox the resource must also be defined in main.js
+    getExtensionFolderResource : function (path) {
+        switch (AlienTube.getCurrentBrowserAPI) {
+        case AlienTube.browser.Safari:
             return safari.extension.baseURI +  path;
-        } else if (typeof(chrome) !== 'undefined') {
+        case AlienTube.browser.Chrome:
             return chrome.extension.getURL(path);
-        } else if (typeof(self.on) === 'function') {
+        case AlienTube.browser.Firefox:
             return self.options[path];
-        } else {
-            return null;
         }
     },
     
     
     postErrorMessage : function(message) {
-        AlienTube.setCommentSection(String.format('<section id="reddit"><div class="redditError"><img src="{0}" alt="An error has occured" /><div><h1>An error occured.</h1><p>{1}</p></div></div></section>', AlienTube.getExtensionFolderRessource('error.png'), message));
+        AlienTube.setCommentSection(String.format('<section id="reddit"><div class="redditError"><img src="{0}" alt="An error has occured" /><div><h1>An error occured.</h1><p>{1}</p></div></div></section>', AlienTube.getExtensionFolderResource('error.png'), message));
     },
     
     startAlienTube : function() {
@@ -578,7 +588,7 @@ $(document).ready(function() {
         if (AlienTube.ravenLoggingUrl.length > 0) {
             Raven.config(AlienTube.ravenLoggingUrl).install();
         }
-        if (typeof(safari) !== 'undefined') {
+        if (AlienTube.getCurrentBrowserAPI === AlienTube.browser.Safari) {
             var uuid = AlienTube.makeUUID();
             safari.self.addEventListener('message', function(event) {
                 if (event.name == uuid) {
@@ -594,7 +604,7 @@ $(document).ready(function() {
                 }
             }, false);
             safari.self.tab.dispatchMessage(uuid, {type: 'settings'});
-        } else if (typeof(chrome) !== 'undefined') {
+        } else if (AlienTube.getCurrentBrowserAPI === AlienTube.browser.Chrome) {
             return chrome.storage.sync.get(null, function (settings) {
                 AlienTube.preferences = settings;
                 AlienTube.startAlienTube();
