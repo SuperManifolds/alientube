@@ -5,12 +5,13 @@ A Chrome, Firefox and Safari extension that embeds Reddit comments, in your YouT
 
 This is a _work in progress_ and there may be issues. It will eventually support voting and commenting.  
   
-_Instructions:_  
-OS X/Linux:  
+Instructions
+-------------
+__OS X/Linux:__  
 Run chmod +x setup.sh in terminal to give the file executable rights.  
 Run setup.sh to create hardlinks for javascript files commonly shared between browser extensions.  
   
-Windows:  
+__Windows:__:
 Run setup.cmd to create symlinks for javascript files commonly shared between browser extensions.  
 
   
