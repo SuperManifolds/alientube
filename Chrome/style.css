@@ -127,7 +127,6 @@ article a:hover {
     height: 33px;
     background-color: #f8f8f8;
     background-image: linear-gradient(to bottom,#fcfcfc 0,#f8f8f8 100%);
-    vertical-align: middle;
     overflow: hidden;
     font-size: 12px;
     text-shadow: 0 1px 0 rgba(255,255,255,.5);
