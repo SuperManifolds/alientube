@@ -35,10 +35,6 @@
 				<string>js/script.js</string>
 			</array>
 		</dict>
-		<key>Stylesheets</key>
-		<array>
-			<string>style.css</string>
-		</array>
 		<key>Whitelist</key>
 		<array>
 			<string>http://www.youtube.com/watch*</string>
