@@ -15,7 +15,7 @@
     {
       "matches": ["*://youtube.com/watch*", "*://www.youtube.com/watch*"],
       "js": ["js/jquery-1.9.1.min.js", "js/raven.min.js", "js/purl.js", "js/snuownd.js", "js/underscore-min.js", "js/script.js"],
-      "css": ["style.css"]
+      "css": ["res/style.css"]
     }
   ],
   "permissions": [
@@ -32,10 +32,10 @@
     "js/jquery.min.map",
     "js/raven.min.map",
     "js/underscore-min.map",
-    "style.css",
+    "res/style.css",
     "chrome_shared.css",
     "widgets.css",
     "js/options.js",
-    "error.png"
+    "res/error.png"
   ]
 }
