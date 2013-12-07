@@ -45,12 +45,5 @@
         "description": "",
         "type": "bool",
         "value": false
-    },           
-    {
-        "name": "enableAutomaticErrorReporting",
-        "title": "Enable automatic error reporting",
-        "description": "",
-        "type": "bool",
-        "value": false
     }]
 }

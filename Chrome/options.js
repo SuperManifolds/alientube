@@ -9,7 +9,6 @@ function save_options() {
     var featherDescriptionPlacement = document.getElementById("featherDescriptionPlacement");
     var disablePostHeader = document.getElementById("disablePostHeader");
     var disableTabs = document.getElementById("disableTabs");
-    var enableAutomaticErrorReporting = document.getElementById("enableAutomaticErrorReporting");
     if (!hiddenCommentScoreThreshold.value.match(/[0-9]+/)) {
         hiddenCommentScoreThreshold.value = -4;
     }
@@ -18,8 +17,7 @@ function save_options() {
         'wideCommentBox': wideCommentBox.checked,
         'featherDescriptionPlacement': featherDescriptionPlacement.checked,
         'disablePostHeader': disablePostHeader.checked,
-        'disableTabs': disableTabs.checked,
-        'enableAutomaticErrorReporting' : enableAutomaticErrorReporting.checked
+        'disableTabs': disableTabs.checked
     }, function() {
             var status = document.getElementById("status");
             status.innerHTML = "Options Saved.";
@@ -36,7 +34,6 @@ function restore_options() {
     var featherDescriptionPlacement = document.getElementById("featherDescriptionPlacement");
     var disablePostHeader = document.getElementById("disablePostHeader");
     var disableTabs = document.getElementById("disableTabs");
-    var enableAutomaticErrorReporting = document.getElementById("enableAutomaticErrorReporting");
     chrome.storage.sync.get(null, function (items) {
         console.log(items);
         hiddenCommentScoreThreshold.value = items.hiddenCommentScoreThreshold ? items.hiddenCommentScoreThreshold : -4;
@@ -44,7 +41,6 @@ function restore_options() {
         featherDescriptionPlacement.checked = items.featherDescriptionPlacement;
         disablePostHeader.checked = items.disablePostHeader;
         disableTabs.checked = items.disableTabs;
-        enableAutomaticErrorReporting.checked = items.enableAutomaticErrorReporting;
     });
 }
 
