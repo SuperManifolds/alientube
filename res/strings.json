@@ -1,0 +1,23 @@
+{
+    "localisation": {
+        "en-GB": {
+            "error400": "Reddit was unable to understand the request and could not complete it. If this persists please contact support.",
+            "error403Safari": "The request could not be completed because Reddit says it was unauthorised. Make sure you are logged in to Reddit in this browser and that have you have \"Remember me \" enabled if you are trying to vote, publish or comment.",
+            "error403": "The request could not be completed because Reddit says it was unauthorised. Make sure you are logged in to Reddit in this browser if you are trying to vote, publish or comment.",
+            "error404": "The request could not be completed because the page could not be found.",
+            "error500": "The request could not be completed because Reddit experienced an internal server error.",
+            "error503": "The request could not be completed because Reddit is overloaded or under maintainence."
+        }
+    },
+    "html": {
+        "collapsedCommentBelowThreshold": "<div class=\"collapse\" style=\"display: block;\"><span class=\"info\"><a class=\"expandButton\" href=\"#\">[+]</a> <a href=\"http://www.reddit.com/user/{0}\" rel=\"author\" target=\"_blank\">{0}</a>   comment score below threshold</span></div>",
+        "collapsedComment": "<div class=\"collapse\"><span class=\"info\"><a class=\"expandButton\" href=\"#\">[+]</a> <a href=\"http://www.reddit.com/user/{0}\" rel=\"author\" target=\"_blank\">{0}</a> {1} points <time datetime=\"{2}\">{3}</time></span></div>",
+        "comment": "<article style=\"{0}\" data-id=\"{1}\"><div class=\"vote\">{2}</div><div class=\"comment\"><span class=\"info\"><a class=\"collapseButton\" href=\"#\">[-]</a> <a href=\"http://www.reddit.com/user/{3}\" rel=\"author\" target=\"_blank\">{3}</a> {4} {5} points <time datetime=\"{6}\">{7}</time> (<span class=\"upvotes\">{8}</span>|<span class=\"downvotes\">{9}</span>)</span>{10}</div>",
+        "activeTab": "<div id=\"redditTabs\"><button class=\"redditTab active border\" data-value=\"{0}\">{0}</button>",
+        "tab": "<button class=\"redditTab\" data-value=\"{0}\">{0}</button>",
+        "overflowButton": "<button id=\"redditOverflow\"><img class=\"yt-uix-button-arrow\" src=\"http://s.ytimg.com/yts/img/pixel-vfl3z5WfW.gif\" alt=\"\" title=\"\"><ul>",
+        "header": "<header data-id=\"{0}\"><div class=\"vote\">{1}</div><a href=\"http://reddit.com/{2}\" target=\"_blank\">{3}</a></header>",
+        "mainCommentBox": "<form action=\"#\" id=\"comment_main\" class=\"commentBox\"><div class=\"markdownFunctions\"></div><textarea rows=\"1\" cols=\"1\" id=\"textarea_comment_main\"></textarea><button class=\"commentSubmit\" id=\"submit_comment_main\">save</button><div class=\"commentPreview\" id=\"commentPreview_main\"></div></form>",
+        "errorMessage": "<section id=\"reddit\"><div class=\"redditError\"><img src=\"{0}\" alt=\"An error has occured\" /><div><h1>An error occured.</h1><p>{1}</p></div></div></section>"
+    }
+}
