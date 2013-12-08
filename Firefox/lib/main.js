@@ -6,8 +6,7 @@ var data = require("sdk/self").data;
 var simplePrefs = require("simple-prefs");
 
 var localFiles = {
-    "error.png" : data.url("res/error.png"),
-    "strings.json" : data.url("res/strings.json")
+    "error.png" : data.url("res/error.png")
 };
 
 pageMod.PageMod({

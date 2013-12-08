@@ -35,7 +35,6 @@
     "chrome_shared.css",
     "widgets.css",
     "js/options.js",
-    "res/error.png",
-    "res/strings.json"
+    "res/error.png"
   ]
 }
