@@ -14,7 +14,7 @@ Run setup.sh to create hardlinks for files commonly shared between browser exten
 __Windows:__  
 Run setup.cmd to create symlinks for files commonly shared between browser extensions.  
 
-  
-If you have no idea what I just said then you probably shouldn't be here.
+
+Running compile.py will automatically generate a minified production version for release.
 
 ![Image of the extension in action](http://i.imgur.com/Vc8P3CQ.png)

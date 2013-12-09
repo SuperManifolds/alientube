@@ -27,7 +27,7 @@ shutil.copytree(os.path.join(path, 'Safari.Firefox'), os.path.join(path, 'gen', 
 code = open(os.path.join(path, 'lib/script.js'), 'r').read()
 params = urllib.urlencode([
     ('js_code', code),
-    ('compilation_level', 'WHITESPACE_ONLY'),
+    ('compilation_level', 'SIMPLE OPTIMIZATIONS'),
     ('output_format', 'text'),
     ('output_info', 'compiled_code')
 ])
