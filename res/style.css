@@ -334,6 +334,53 @@ header .vote {
     background-repeat: no-repeat;
 }
 
+#comment_main {
+    padding-left: 20px;
+}
+
+.textarea_comment {
+    width: 100%;
+    min-height: 100px;
+}
+
+.commentSubmit {
+    border: 1px solid #d3d3d3;
+    background: #f8f8f8;
+    height: 29px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.commentSubmit:hover {
+    border-color: #c6c6c6;
+    background: #f0f0f0;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.10);
+}
+
+.commentPreview {
+    display: none;
+    position: relative;
+    min-height: 85px;
+    width: 100%;
+    background-color: rgb(240, 243, 252);
+    margin-top: 20px;
+}
+.commentPreview b {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+}
+.commentPreviewContents {
+    box-sizing: border-box;
+    padding: 10px;
+    position: absolute;
+    background: repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(166,166,166,.07) 40px, rgba(166,166,166,.07) 80px);
+    background-color: #fff;
+    min-height: 50px;
+    width: 100%;
+    bottom: 0
+}
+
 .redditSpinner {
     height: 45px;
     width: 45px;
