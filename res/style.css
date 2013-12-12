@@ -364,21 +364,31 @@ header .vote {
     width: 100%;
     background-color: rgb(240, 243, 252);
     margin-top: 20px;
+    overflow: auto;
 }
+
 .commentPreview b {
     position: absolute;
     top: 10px;
     left: 5px;
 }
+
+.commentPreview h3 {
+    color: #656565;
+    font-size: 16px;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+}
+
 .commentPreviewContents {
     box-sizing: border-box;
     padding: 10px;
-    position: absolute;
     background: repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(166,166,166,.07) 40px, rgba(166,166,166,.07) 80px);
     background-color: #fff;
     min-height: 50px;
     width: 100%;
-    bottom: 0
+    margin-top: 30px;
 }
 
 .redditSpinner {
