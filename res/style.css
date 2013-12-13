@@ -297,6 +297,10 @@ header .vote {
     padding-bottom: 5px;
 }
 
+.commentOptions a {
+    color: #888;
+}
+
 .liked {
     color: #FF8B60;
 }
