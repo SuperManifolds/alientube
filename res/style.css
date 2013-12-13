@@ -406,6 +406,10 @@ header .vote {
     border-radius: 100%;
 }
 
+.redditUsername {
+    padding-left: 10px;
+}
+
 @-webkit-keyframes rotation {
     from {-webkit-transform: rotate(0deg);}
     to {-webkit-transform: rotate(359deg);}
