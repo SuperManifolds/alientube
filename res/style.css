@@ -63,6 +63,7 @@ article span .downvotes {
 }
 
 #reddit header {
+    display: table;
     overflow: auto;
     font-size: 16px;
     padding: 20px;
@@ -70,9 +71,10 @@ article span .downvotes {
 }
 
 #reddit header a {
-    display: inline-block;
+    display: table-cell;
     color: #0066aa;
     width: 480px;
+    vertical-align: middle;
 }
 
 #reddit .redditSingleMessage {
@@ -407,7 +409,8 @@ header .vote {
 }
 
 .redditUsername {
-    padding-left: 10px;
+    padding-top: 5px;
+    float: right;
 }
 
 @-webkit-keyframes rotation {
