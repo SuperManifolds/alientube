@@ -70,11 +70,18 @@ article span .downvotes {
     padding-bottom: 5px;
 }
 
-#reddit header a {
-    display: table-cell;
+#reddit header .info a {
     color: #0066aa;
     width: 480px;
+}
+
+#reddit header .info {
+    display: table-cell;
     vertical-align: middle;
+}
+#reddit header .info .tagline {
+    color: rgb(136, 136, 136);
+    font-size: 11px;
 }
 
 #reddit .redditSingleMessage {
