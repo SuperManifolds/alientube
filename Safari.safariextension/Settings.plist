@@ -52,5 +52,13 @@
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
+	<dict>
+		<key>Key</key>
+		<string>modhash</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>username</string>
+	</dict>
 </array>
 </plist>
