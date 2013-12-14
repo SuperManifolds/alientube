@@ -324,6 +324,15 @@ header .vote {
     outline: none;
 }
 
+.replyTo {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.replyTo:hover {
+    text-decoration: underline;
+}
+
 .up {
     background-image: url(http://www.redditstatic.com/sprite-reddit.u1Nao8_niV4.png);
     background-position: -84px -799px;
