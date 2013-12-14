@@ -4,6 +4,8 @@
             function onRequest(event) {
                 if (event.message.type == 'settings') {
                     event.target.page.dispatchMessage(event.name, JSON.stringify(safari.extension.settings));
+                } else if (event.message.type == 'setSettingsValue') { 
+                    safari.extensions.settings[event.message.key] = event.message.value;
                 } else if (event.message.type == 'GETRequest') {
                     var xhr = new XMLHttpRequest();
                     xhr.open("GET", event.message.url, true);

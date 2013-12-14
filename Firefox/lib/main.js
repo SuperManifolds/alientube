@@ -4,7 +4,14 @@
 var pageMod = require("sdk/page-mod");
 var data = require("sdk/self").data;
 var simplePrefs = require("simple-prefs");
-
+require("sdk/panel").Panel({
+    onMessage: function(message) {
+    // Handle message from the content script
+        if (message.type == 'setSettingsValue') {
+            simplePrefs[message.key] = message.value;   
+        }
+    }
+});
 var localFiles = {
     "error.png" : data.url("res/error.png")
 };
