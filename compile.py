@@ -1,4 +1,7 @@
 #!/usr/bin/python2.4
+
+# Script for compiling (minifying) javascript files with Google Closure compiler
+
 import httplib, urllib, sys, os, shutil, platform, subprocess
 closureList = ["Firefox/data/script.js", "Safari.safariextension/js/script.js", "Chrome/js/script.js"]
 
