@@ -360,6 +360,9 @@ header .vote {
 #comment_main {
     padding-left: 20px;
 }
+#comment_reply {
+    padding-top: 10px;
+}
 
 .textarea_comment {
     width: 100%;
