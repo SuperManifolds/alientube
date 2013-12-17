@@ -38,10 +38,17 @@
         "description": "",
         "type": "bool",
         "value": false
-    },           
+    },
     {
         "name": "disableTabs",
         "title": "Hide the tab bar",
+        "description": "",
+        "type": "bool",
+        "value": false
+    },
+    {
+        "name": "minimiseCommentBox",
+        "title": "Minimise the comment box",
         "description": "",
         "type": "bool",
         "value": false

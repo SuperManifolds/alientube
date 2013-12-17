@@ -53,6 +53,16 @@
 		<string>CheckBox</string>
 	</dict>
 	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>minimiseCommentBox</string>
+		<key>Title</key>
+		<string>Minimise the comment box</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
 		<key>Key</key>
 		<string>modhash</string>
 	</dict>
