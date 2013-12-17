@@ -38,7 +38,6 @@ function restore_options() {
     var disableTabs = document.getElementById("disableTabs");
     var minimiseCommentBox = document.getElementById("minimiseCommentBox");
     chrome.storage.sync.get(null, function (items) {
-        console.log(items);
         hiddenCommentScoreThreshold.value = items.hiddenCommentScoreThreshold ? items.hiddenCommentScoreThreshold : -4;
         wideLayout.checked = items.wideLayout;
         featherDescriptionPlacement.checked = items.featherDescriptionPlacement;
@@ -48,5 +47,19 @@ function restore_options() {
     });
 }
 
+// Show about dialog
+function show_about() {
+    document.getElementById('about').style.visibility="visible";
+    document.getElementById('cover').style.visibility="visible";
+    document.getElementById('version').innerHTML = chrome.app.getDetails().version;
+}
+
+function close_about() {
+    document.getElementById('about').style.visibility="collapse";
+    document.getElementById('cover').style.visibility="collapse";
+}
+
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById("saveButton").addEventListener("click", save_options);
+document.getElementById("aboutButton").addEventListener("click", show_about);
+document.getElementById("close").addEventListener("click", close_about);
