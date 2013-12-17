@@ -16,9 +16,9 @@
 		<key>DefaultValue</key>
 		<false/>
 		<key>Key</key>
-		<string>wideCommentBox</string>
+		<string>wideLayout</string>
 		<key>Title</key>
-		<string>Use a wider comment box layout</string>
+		<string>Use a wider layout</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>

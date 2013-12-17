@@ -299,7 +299,9 @@ header .vote {
 }
 
 .commentOptions a {
-    color: #888;
+    color: #888 !important;
+    font-weight: bold;
+    font-size: 10px;
 }
 
 .liked {
@@ -324,11 +326,15 @@ header .vote {
     outline: none;
 }
 
+.commentTo,
 .replyTo {
+    color: rgb(136, 136, 136);
+    font-size: 10px;
     cursor: pointer;
     font-weight: bold;
 }
 
+.commentTo:hover,
 .replyTo:hover {
     text-decoration: underline;
 }

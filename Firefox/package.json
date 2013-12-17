@@ -19,8 +19,8 @@
         "value": -4
     },
     {
-        "name": "wideCommentBox",
-        "title": "Use a wider comment box layout",
+        "name": "wideLayout",
+        "title": "Use a wider layout",
         "description": "",
         "type": "bool",
         "value": false

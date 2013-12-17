@@ -5,7 +5,7 @@
 
 function save_options() {
     var hiddenCommentScoreThreshold = document.getElementById("hiddenCommentScoreThreshold");
-    var wideCommentBox = document.getElementById("wideCommentBox");
+    var wideLayout = document.getElementById("wideLayout");
     var featherDescriptionPlacement = document.getElementById("featherDescriptionPlacement");
     var disablePostHeader = document.getElementById("disablePostHeader");
     var disableTabs = document.getElementById("disableTabs");
@@ -15,7 +15,7 @@ function save_options() {
     }
     chrome.storage.sync.set({
         'hiddenCommentScoreThreshold': hiddenCommentScoreThreshold.value,
-        'wideCommentBox': wideCommentBox.checked,
+        'wideLayout': wideLayout.checked,
         'featherDescriptionPlacement': featherDescriptionPlacement.checked,
         'disablePostHeader': disablePostHeader.checked,
         'disableTabs': disableTabs.checked,
@@ -32,7 +32,7 @@ function save_options() {
 //Restore options when option page is loaded
 function restore_options() {
     var hiddenCommentScoreThreshold = document.getElementById("hiddenCommentScoreThreshold");
-    var wideCommentBox = document.getElementById("wideCommentBox");
+    var wideLayout = document.getElementById("wideLayout");
     var featherDescriptionPlacement = document.getElementById("featherDescriptionPlacement");
     var disablePostHeader = document.getElementById("disablePostHeader");
     var disableTabs = document.getElementById("disableTabs");
@@ -40,7 +40,7 @@ function restore_options() {
     chrome.storage.sync.get(null, function (items) {
         console.log(items);
         hiddenCommentScoreThreshold.value = items.hiddenCommentScoreThreshold ? items.hiddenCommentScoreThreshold : -4;
-        wideCommentBox.checked = items.wideCommentBox;
+        wideLayout.checked = items.wideLayout;
         featherDescriptionPlacement.checked = items.featherDescriptionPlacement;
         disablePostHeader.checked = items.disablePostHeader;
         disableTabs.checked = items.disableTabs;
