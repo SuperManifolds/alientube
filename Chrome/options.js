@@ -2,7 +2,7 @@
 /* global chrome */
 // Saves options to localStorage.
 
-
+//Save options
 function save_options() {
     var hiddenCommentScoreThreshold = document.getElementById("hiddenCommentScoreThreshold");
     var wideLayout = document.getElementById("wideLayout");
@@ -51,9 +51,9 @@ function restore_options() {
 function show_about() {
     document.getElementById('about').style.visibility="visible";
     document.getElementById('cover').style.visibility="visible";
-    document.getElementById('version').innerHTML = chrome.app.getDetails().version;
 }
 
+// Hide about dialog
 function close_about() {
     document.getElementById('about').style.visibility="collapse";
     document.getElementById('cover').style.visibility="collapse";
@@ -63,3 +63,4 @@ document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById("saveButton").addEventListener("click", save_options);
 document.getElementById("aboutButton").addEventListener("click", show_about);
 document.getElementById("close").addEventListener("click", close_about);
+document.getElementById('version').innerHTML = chrome.app.getDetails().version;
