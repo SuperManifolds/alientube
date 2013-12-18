@@ -63,4 +63,5 @@ document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById("saveButton").addEventListener("click", save_options);
 document.getElementById("aboutButton").addEventListener("click", show_about);
 document.getElementById("close").addEventListener("click", close_about);
+document.getElementById("cover").addEventListener("click", close_about);
 document.getElementById('version').innerHTML = chrome.app.getDetails().version;
