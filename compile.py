@@ -4,6 +4,7 @@
 
 import httplib, urllib, sys, os, shutil, platform, subprocess
 closureList = ["Firefox/data/script.js", "Safari.safariextension/js/script.js", "Chrome/js/script.js"]
+cssList = ["Firefox/data/style.css", "Safari.safariextension/res/style.css", "Chrome/res/style.css"]
 
 # Get path to perform operation, if none default to working directory.
 if (len(sys.argv) > 1):
@@ -41,7 +42,7 @@ print "-- Compressing script.js --"
 code = open(os.path.join(path, "lib/script.js"), "r").read()
 params = urllib.urlencode([
     ("js_code", code),
-    ("compilation_level", "SIMPLE OPTIMIZATIONS"),
+    ("compilation_level", "SIMPLE_OPTIMIZATIONS"),
     ("output_format", "text"),
     ("output_info", "compiled_code")
 ])
@@ -58,4 +59,16 @@ for file in closureList:
     minified.close()
     print "-- " + os.path.join(path, "gen", file) + " has been saved --"
 
+print "-- Minifying style.css --"
+params = urllib.urlencode({'file1': open('res/style.css').read()})
+conn = httplib.HTTPConnection('reducisaurus.appspot.com')
+conn.request('POST', '/css', params, headers)
+response = conn.getresponse()
+data = response.read()
+conn.close()
+for file in cssList:
+    minified = open(os.path.join(path, "gen", file), "w")
+    minified.write(data)
+    minified.close()
+    print "-- " + os.path.join(path, "gen", file) + " has been saved --"
 print "Compiling complete"
