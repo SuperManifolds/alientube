@@ -132,8 +132,8 @@ article a:hover {
     padding-left: 10px;
     padding-right: 10px;
     margin: 0;
+    margin-bottom: -1px;
     margin-left: -3px;
-    margin-bottom: -2px;
     height: 33px;
     background-color: #f8f8f8;
     background-image: linear-gradient(to bottom,#fcfcfc 0,#f8f8f8 100%);
@@ -155,6 +155,7 @@ article a:hover {
     border-bottom: 1px solid #fff;
     box-shadow: inset 0 1px 0 #ddd;
     background-image: none;
+    margin-top: 1px;
 }
 
 .redditTab.border {
