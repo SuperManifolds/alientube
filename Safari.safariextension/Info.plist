@@ -28,6 +28,7 @@
 			<key>End</key>
 			<array>
 				<string>js/jquery-1.9.1.min.js</string>
+                <string>js/mustache.js</string>
 				<string>js/purl.js</string>
 				<string>js/snuownd.js</string>
 				<string>js/underscore-min.js</string>

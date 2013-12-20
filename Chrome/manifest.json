@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": ["*://youtube.com/watch*", "*://www.youtube.com/watch*"],
-      "js": ["js/jquery-1.9.1.min.js", "js/purl.js", "js/snuownd.js", "js/underscore-min.js", "js/script.js"],
+      "js": ["js/jquery-1.9.1.min.js", "js/mustache.js", "js/purl.js", "js/snuownd.js", "js/underscore-min.js", "js/script.js"],
       "css": ["res/style.css"]
     }
   ],
@@ -33,6 +33,7 @@
     "widgets.css",
     "js/options.js",
     "res/error.png",
+    "res/templates.mustache",
     "icon128.png"
   ]
 }

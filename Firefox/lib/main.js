@@ -13,7 +13,9 @@ require("sdk/panel").Panel({
     }
 });
 var localFiles = {
-    "error.png" : data.url("res/error.png")
+    "error.png" : data.url("res/error.png"),
+    "strings.json" : data.url("res/strings.json"),
+    "templates.mustache" : data.url("res/templates.mustache")
 };
 
 pageMod.PageMod({
@@ -24,6 +26,7 @@ pageMod.PageMod({
     ],
     contentScriptFile: [
         data.url("jquery-1.9.1.min.js"),
+        data.url("mustache.js"),
         data.url("purl.js"),
         data.url("snuownd.js"),
         data.url("underscore-min.js"),

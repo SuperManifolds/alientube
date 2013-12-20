@@ -1,5 +1,5 @@
-lfiles=( jquery-1.9.1.min.js purl.js snuownd.js underscore-min.js script.js )
-rfiles=( style.css error.png )
+lfiles=( jquery-1.9.1.min.js mustache.js purl.js snuownd.js underscore-min.js script.js )
+rfiles=( style.css error.png templates.mustache strings.json)
 
 for file in ${lfiles[@]}
 do

@@ -1,0 +1,137 @@
+{{#replies}}
+{{#hiddenByDefault}}
+<div class="collapse" style="display: block;">
+    <span class="info">
+        <a class="expandButton" href="#">[+]</a>
+        <a href="http://www.reddit.com/user/{{author}}" rel="author" target="_blank">{{author}}</a>  comment score below threshold
+    </span>
+</div>
+<article style="display: none" data-id="{{name}}">
+{{/hiddenByDefault}}
+{{^hiddenByDefault}}
+<div class="collapse">
+    <span class="info">
+        <a class="expandButton" href="#">[+]</a>
+        <a href="http://www.reddit.com/user/{{author}}" rel="author" target="_blank">{{author}}</a>{{points}} points
+        <time datetime="{{datetime}}">{{timestamp}}</time>
+    </span>
+</div>
+<article data-id="{{name}}">
+{{/hiddenByDefault}}
+    <div class="vote">{{{votinghtml}}}</div>
+    <div class="comment">
+        <span class="info">
+            <a class="collapseButton" href="#">[-]</a>
+            {{#author_flair_text}}
+            <a href="http://www.reddit.com/user/{{author}}" rel="author" target="_blank">{{author}}</a><span class="flair">{{flair}}</span> {{score}} points
+            {{/author_flair_text}}
+            {{^author_flair_text}}
+                <a href="http://www.reddit.com/user/{{author}}" rel="author" target="_blank">{{author}}</a> {{score}} points
+            {{/author_flair_text}} 
+            <time datetime="{{datetime}}">{{timestamp}}</time>
+            (<span class="upvotes">{{ups}}</span>|<span class="downvotes">{{downs}}</span>)
+        </span>
+        {{{html}}}
+        <span class="commentOptions">
+            <a href="http://www.reddit.com{{permalink}}/{{id}}" target="_blank">permalink</a>
+            <a href="http://www.reddit.com{{permalink}}/{{parentid}}" target="_blank">parent</a>
+            {{^preserved}}
+                {{#signedin}}
+                    <span class="replyTo">reply</span>
+                {{/signedin}}
+            {{/preserved}}
+            <a href="https://getpocket.com/save?url={{encodedPermalink}}" target="_blank">pocket</a>
+        </span>
+    </div>
+    <div class="replies">
+        {{>traverse}}
+    </div>
+</article>
+{{/replies}}
+
+{{#header}}
+<header data-id="{{name}}">
+    <div class="vote">{{{votinghtml}}}</div>
+    <div class="info">
+        <a href="http://reddit.com/{{permalink}}" target="_blank">{{title}}</a>
+        <br />
+        <span class="tagline">submitted {{timestamp}} by
+            <a href="http://reddit.com/u/{{author}}" target="_blank">{{author}}</a>
+        </span>
+        <br />
+        <span class="commentOptions">
+            {{#signedin}}
+                <span class="commentTo">comment</span> 
+            {{/signedin}}
+            <a href="https://getpocket.com/save?url={{encodedPermalink}}" target="_blank">pocket</a>
+        </span>
+    </div>
+</header>
+{{/header}}
+
+{{#commentBox}}
+    {{#reply}}
+    <div id="comment_reply" class="commentBox">
+        <div class="markdownFunctions"></div>
+        <textarea rows="1" cols="1" class="textarea_comment" id="textarea_comment_reply" maxlength="10000"></textarea>
+        <button class="commentSubmit" id="submit_comment_reply">save</button>
+        <button class="commentCancel" id="submit_comment_cancel">cancel</button>
+        <span class="redditUsername">Commenting as:</span>
+        <div class="commentPreview" id="commentPreview_reply">
+            <b>Live Preview</b>
+            <h3>
+                <span class="commentPreview_count" id="commentPreview_count_reply">0</span>/10000</h3>
+            <div class="commentPreviewContents"></div>
+        </div>
+    </div>
+    {{/reply}}
+    {{^reply}}
+    <div id="comment_main" class="commentBox">
+        <div class="markdownFunctions"></div>
+        <textarea rows="1" cols="1" class="textarea_comment" id="textarea_comment_main" maxlength="10000"></textarea>
+        <button class="commentSubmit" id="submit_comment_main">save</button>
+        <span class="redditUsername">Commenting as:</span>
+        <div class="commentPreview" id="commentPreview_main">
+            <b>Live Preview</b>
+            <h3>
+                <span class="commentPreview_count" id="commentPreview_count_main">0</span>/10000
+            </h3>
+            <div class="commentPreviewContents"></div>
+        </div>
+    </div>
+    {{/reply}}
+{{/commentBox}}
+
+{{#tab}}
+    {{#active}}
+    <button class="redditTab active border" data-value="{{subreddit}}">{{subreddit}}</button>
+    {{/active}}
+    {{^active}}
+    <button class="redditTab" data-value="{{subreddit}}">{{subreddit}}</button>
+    {{/active}}
+{{/tab}}    
+
+{{#overflow}}
+    <button id="redditOverflow">
+        <img class="yt-uix-button-arrow" src="http://s.ytimg.com/yts/img/pixel-vfl3z5WfW.gif" alt="" title="">
+        <ul>
+            {{{items}}}
+        </ul>
+    </button>
+{{/overflow}}
+    
+{{#overflowItem}}
+    <li data-value="{{subreddit}}">{{subreddit}}</li>
+{{/overflowItem}}
+    
+{{#error}}
+    <section id="reddit">
+        <div class="redditError">
+            <img src="{{imagelink}}" alt="An error has occured" />
+            <div>
+                <h1>An error occured.</h1>
+                <p>{{errormsg}}</p>
+            </div>
+        </div>
+    </section>
+{{/error}}
