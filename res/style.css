@@ -385,7 +385,7 @@ header .vote {
     height: 29px;
     padding-left: 15px;
     padding-right: 15px;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .commentCancel:hover,
@@ -411,6 +411,10 @@ header .vote {
     left: 5px;
 }
 
+.commentPreview span {
+    color: #656565;
+    font-size: 16px;
+}
 .commentPreview h3 {
     color: #656565;
     font-size: 16px;
