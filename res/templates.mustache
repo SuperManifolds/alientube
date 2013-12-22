@@ -18,7 +18,24 @@
 </div>
 <article data-id="{{name}}">
 {{/hiddenByDefault}}
-    <div class="vote">{{{votinghtml}}}</div>
+    <div class="vote" data-preserved="{{preserved}}">
+        {{#signedin}}
+            {{#voted}}
+                {{#likes}}
+                <div class="arrow upmod"></div>
+                <div class="arrow down"></div>
+                {{/likes}}
+                {{^likes}}
+                <div class="arrow up"></div>
+                <div class="arrow downmod"></div>
+                {{/likes}}
+            {{/voted}}
+            {{^voted}}
+                <div class="arrow up"></div>
+                <div class="arrow down"></div>
+            {{/voted}}
+        {{/signedin}}
+    </div>
     <div class="comment">
         <span class="info">
             <a class="collapseButton" href="#">[-]</a>
@@ -51,9 +68,29 @@
 
 {{#header}}
 <header data-id="{{name}}">
-    <div class="vote">{{{votinghtml}}}</div>
+    <div class="vote" data-preserved="{{preserved}}">
+        {{#signedin}}
+            {{#voted}}
+                {{#likes}}
+                <div class="arrow upmod"></div>
+                <div class="postScore liked">{{score}}</div>
+                <div class="arrow down"></div>
+                {{/likes}}
+                {{^likes}}
+                <div class="arrow up"></div>
+                <div class="postScore disliked">{{score}}</div>
+                <div class="arrow downmod"></div>
+                {{/likes}}
+            {{/voted}}
+            {{^voted}}
+                <div class="arrow up"></div>
+                <div class="postScore">{{score}}</div>
+                <div class="arrow down"></div>
+            {{/voted}}
+        {{/signedin}}
+    </div>
     <div class="info">
-        <a href="http://reddit.com/{{permalink}}" target="_blank">{{title}}</a>
+        <a href="http://reddit.com{{permalink}}" target="_blank">{{title}}</a>
         <br />
         <span class="tagline">submitted {{timestamp}} by
             <a href="http://reddit.com/u/{{author}}" target="_blank">{{author}}</a>
@@ -61,7 +98,9 @@
         <br />
         <span class="commentOptions">
             {{#signedin}}
+            {{^preserved}}
                 <span class="commentTo">comment</span> 
+            {{/preserved}}
             {{/signedin}}
             <a href="https://getpocket.com/save?url={{encodedPermalink}}" target="_blank">pocket</a>
         </span>
