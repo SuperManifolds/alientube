@@ -3,7 +3,13 @@
 <div class="collapse" style="display: block;">
     <span class="info">
         <a class="expandButton" href="#">[+]</a>
-        <a href="http://www.reddit.com/user/{{author}}" rel="author" target="_blank">{{author}}</a>  comment score below threshold
+        {{#authorDeleted}}
+        {{author}}
+        {{/authorDeleted}}
+        {{^authorDeleted}}
+        <a href="http://www.reddit.com/user/{{author}}" rel="author" target="_blank">{{author}}</a>
+        {{/authorDeleted}}
+          comment score below threshold
     </span>
 </div>
 <article style="display: none" data-id="{{name}}">
@@ -12,7 +18,13 @@
 <div class="collapse">
     <span class="info">
         <a class="expandButton" href="#">[+]</a>
-        <a href="http://www.reddit.com/user/{{author}}" rel="author" target="_blank">{{author}}</a>{{points}} points
+        {{#authorDeleted}}
+        <b>{{author}}</b>
+        {{/authorDeleted}}
+        {{^authorDeleted}}
+        <a href="http://www.reddit.com/user/{{author}}" rel="author" target="_blank">{{author}}</a>
+        {{/authorDeleted}}
+        {{points}} points
         <time datetime="{{datetime}}">{{timestamp}}</time>
     </span>
 </div>
@@ -39,12 +51,16 @@
     <div class="comment">
         <span class="info">
             <a class="collapseButton" href="#">[-]</a>
+            {{#authorDeleted}}
+            <b>{{author}}</b>
+            {{/authorDeleted}}
+            {{^authorDeleted}}
+            <a href="http://www.reddit.com/user/{{author}}" rel="author" target="_blank">{{author}}</a>
+            {{/authorDeleted}}
             {{#author_flair_text}}
-            <a href="http://www.reddit.com/user/{{author}}" rel="author" target="_blank">{{author}}</a><span class="flair">{{flair}}</span> {{score}} points
+            <span class="flair">{{flair}}</span>
             {{/author_flair_text}}
-            {{^author_flair_text}}
-                <a href="http://www.reddit.com/user/{{author}}" rel="author" target="_blank">{{author}}</a> {{score}} points
-            {{/author_flair_text}} 
+                {{score}} points
             <time datetime="{{datetime}}">{{timestamp}}</time>
             (<span class="upvotes">{{ups}}</span>|<span class="downvotes">{{downs}}</span>)
         </span>
@@ -93,7 +109,12 @@
         <a href="http://reddit.com{{permalink}}" target="_blank">{{title}}</a>
         <br />
         <span class="tagline">submitted {{timestamp}} by
+            {{#authorDeleted}}
+            <b>{{author}}</b>
+            {{/authorDeleted}}
+            {{^authorDeleted}}
             <a href="http://reddit.com/u/{{author}}" target="_blank">{{author}}</a>
+            {{/authorDeleted}}
         </span>
         <br />
         <span class="commentOptions">
