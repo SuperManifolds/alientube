@@ -385,7 +385,7 @@ header .vote {
     height: 29px;
     padding-left: 15px;
     padding-right: 15px;
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
 .commentCancel:hover,
@@ -411,10 +411,6 @@ header .vote {
     left: 5px;
 }
 
-.commentPreview span {
-    color: #656565;
-    font-size: 16px;
-}
 .commentPreview h3 {
     color: #656565;
     font-size: 16px;
@@ -452,6 +448,10 @@ header .vote {
 	-webkit-animation: spin .6s infinite linear;
 	-moz-animation: spin .6s infinite linear;
 	animation: spin .6s infinite linear;
+}
+
+#rcomments .redditSpinner {
+    margin-top: 30px !important;
 }
 
 @keyframes "spin" {
