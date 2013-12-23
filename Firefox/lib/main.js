@@ -14,6 +14,7 @@ require("sdk/panel").Panel({
 });
 var localFiles = {
     "error.png" : data.url("res/error.png"),
+    "overload.png" : data.url("res/overload.png"),
     "strings.json" : data.url("res/strings.json"),
     "templates.mustache" : data.url("res/templates.mustache")
 };
