@@ -19,13 +19,6 @@
         "value": -4
     },
     {
-        "name": "wideLayout",
-        "title": "Use a wider layout",
-        "description": "",
-        "type": "bool",
-        "value": false
-    },
-    {
         "name": "featherDescriptionPlacement",
         "title": "Collapse comment box into description in YouTube Feather",
         "description": "",

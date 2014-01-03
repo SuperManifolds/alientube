@@ -5,7 +5,6 @@
 //Save options
 function save_options() {
     var hiddenCommentScoreThreshold = document.getElementById("hiddenCommentScoreThreshold");
-    var wideLayout = document.getElementById("wideLayout");
     var featherDescriptionPlacement = document.getElementById("featherDescriptionPlacement");
     var disablePostHeader = document.getElementById("disablePostHeader");
     var disableTabs = document.getElementById("disableTabs");
@@ -15,7 +14,6 @@ function save_options() {
     }
     chrome.storage.sync.set({
         'hiddenCommentScoreThreshold': hiddenCommentScoreThreshold.value,
-        'wideLayout': wideLayout.checked,
         'featherDescriptionPlacement': featherDescriptionPlacement.checked,
         'disablePostHeader': disablePostHeader.checked,
         'disableTabs': disableTabs.checked,
@@ -32,14 +30,12 @@ function save_options() {
 //Restore options when option page is loaded
 function restore_options() {
     var hiddenCommentScoreThreshold = document.getElementById("hiddenCommentScoreThreshold");
-    var wideLayout = document.getElementById("wideLayout");
     var featherDescriptionPlacement = document.getElementById("featherDescriptionPlacement");
     var disablePostHeader = document.getElementById("disablePostHeader");
     var disableTabs = document.getElementById("disableTabs");
     var minimiseCommentBox = document.getElementById("minimiseCommentBox");
     chrome.storage.sync.get(null, function (items) {
         hiddenCommentScoreThreshold.value = items.hiddenCommentScoreThreshold ? items.hiddenCommentScoreThreshold : -4;
-        wideLayout.checked = items.wideLayout;
         featherDescriptionPlacement.checked = items.featherDescriptionPlacement;
         disablePostHeader.checked = items.disablePostHeader;
         disableTabs.checked = items.disableTabs;
