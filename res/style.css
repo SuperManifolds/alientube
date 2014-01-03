@@ -175,6 +175,7 @@ article a:hover {
 }
 
 #redditTabs {
+    position: relative;
     padding-left: 20px;
     border-bottom: 1px solid #d3d3d3;
 }
@@ -241,6 +242,33 @@ article a:hover {
 #redditOverflow ul li:hover {
     background: #333;
     color: #fff;
+}
+
+.at_gplus {
+    position: absolute;
+    right: 0;
+    margin-top: 5px;
+}
+
+.at_gplus img {
+    width: 24px;
+    height: 24px;
+}
+
+.at_gplus:hover {
+    -webkit-filter: brightness(120%);
+    -moz-filter: brightness(120%);
+    filter: brightness(120%);
+}
+
+.at_gplus:focus {
+    outline: 0;
+}
+
+.at_gplus:active {
+    -webkit-filter: brightness(80%);
+    -moz-filter: brightness(80%);
+    filter: brightness(80%);
 }
 
 .flair {

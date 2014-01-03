@@ -33,6 +33,7 @@
     "widgets.css",
     "js/options.js",
     "res/error.png",
+    "res/gplus.png",
     "res/templates.mustache",
     "res/strings.json",
     "icon128.png"
