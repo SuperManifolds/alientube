@@ -281,7 +281,7 @@ article a:hover {
     border-radius: 2px;
 }
 
-.collapse {
+#rcomments .collapse {
     font-family: verdana, sans-serif;
     font-size: 10px;
     padding-left: 20px;
@@ -292,12 +292,12 @@ article a:hover {
     padding-bottom: 5px;
 }
 
-.collapse a {
+#rcomments .collapse a {
     font-weight: bold;
     color: gray;
 }
 
-.collapse a:hover {
+#rcomments .collapse a:hover {
     text-decoration: none;
 }
 
