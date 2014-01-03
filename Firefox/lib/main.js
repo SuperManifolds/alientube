@@ -4,6 +4,7 @@
 var pageMod = require("sdk/page-mod");
 var data = require("sdk/self").data;
 var simplePrefs = require("simple-prefs");
+
 require("sdk/panel").Panel({
     onMessage: function(message) {
     // Handle message from the content script
@@ -13,10 +14,8 @@ require("sdk/panel").Panel({
     }
 });
 var localFiles = {
-    "error.png" : data.url("res/error.png"),
-    "overload.png" : data.url("res/overload.png"),
-    "strings.json" : data.url("res/strings.json"),
-    "templates.mustache" : data.url("res/templates.mustache")
+    "error.png" : data.url("error.png"),
+    "overload.png" : data.url("overload.png")
 };
 
 pageMod.PageMod({
@@ -35,6 +34,10 @@ pageMod.PageMod({
         data.url("script.js"), 
     ],
     onAttach: function(worker) {
-        worker.postMessage(simplePrefs);
+        worker.postMessage({
+            preferences: simplePrefs,
+            template: data.load('templates.mustache'),
+            localisation: data.load('strings.json')
+        });
     }
 });
