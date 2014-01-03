@@ -86,6 +86,7 @@ article span .downvotes {
 
 #reddit .redditSingleMessage {
     text-align: center;
+    padding-left: 30px;
 }
 
 #reddit .redditError {
