@@ -1,11 +1,11 @@
 {
   "name": "alientube",
-  "fullName": "AlienTube (Alpha)",
+  "fullName": "AlienTube (Beta)",
   "id": "jid1-0GRQcsmyXNQRlg",
   "description": "Reddit comments, in your YouTube!",
   "author": "Delexious",
   "license": "BSD 3",
-  "version": "0.7",
+  "version": "0.9",
     
     "permissions": {
         "cross-domain-content": ["http://www.reddit.com/", "https://pay.reddit.com/"]
