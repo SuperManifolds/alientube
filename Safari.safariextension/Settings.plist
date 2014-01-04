@@ -52,6 +52,16 @@
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
+    <dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>dontShowGplus</string>
+		<key>Title</key>
+		<string>Do not display the Google Plus comment section when no results are found.</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
 	<dict>
 		<key>Key</key>
 		<string>modhash</string>

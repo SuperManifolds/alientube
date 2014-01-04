@@ -45,5 +45,12 @@
         "description": "",
         "type": "bool",
         "value": false
+    },
+    {
+        "name": "dontShowGplus",
+        "title": "Do not display the Google Plus comment section when no results are found.",
+        "description": "",
+        "type": "bool",
+        "value": false
     }]
 }

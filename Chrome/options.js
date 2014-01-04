@@ -9,6 +9,7 @@ function save_options() {
     var disablePostHeader = document.getElementById("disablePostHeader");
     var disableTabs = document.getElementById("disableTabs");
     var minimiseCommentBox = document.getElementById("minimiseCommentBox");
+    var dontShowGplus = document.getElementById("dontShowGplus");
     if (!hiddenCommentScoreThreshold.value.match(/[0-9]+/)) {
         hiddenCommentScoreThreshold.value = -4;
     }
@@ -17,7 +18,8 @@ function save_options() {
         'featherDescriptionPlacement': featherDescriptionPlacement.checked,
         'disablePostHeader': disablePostHeader.checked,
         'disableTabs': disableTabs.checked,
-        'minimiseCommentBox' : minimiseCommentBox.checked
+        'minimiseCommentBox' : minimiseCommentBox.checked,
+        'dontShowGplus' : dontShowGplus.checked
     }, function() {
             var status = document.getElementById("status");
             status.innerHTML = "Options Saved.";
@@ -34,12 +36,14 @@ function restore_options() {
     var disablePostHeader = document.getElementById("disablePostHeader");
     var disableTabs = document.getElementById("disableTabs");
     var minimiseCommentBox = document.getElementById("minimiseCommentBox");
+    var dontShowGplus = document.getElementById("dontShowGplus");
     chrome.storage.sync.get(null, function (items) {
         hiddenCommentScoreThreshold.value = items.hiddenCommentScoreThreshold ? items.hiddenCommentScoreThreshold : -4;
         featherDescriptionPlacement.checked = items.featherDescriptionPlacement;
         disablePostHeader.checked = items.disablePostHeader;
         disableTabs.checked = items.disableTabs;
         minimiseCommentBox.checked = items.minimiseCommentBox;
+        dontShowGplus.checked = items.dontShowGplus;
     });
 }
 
