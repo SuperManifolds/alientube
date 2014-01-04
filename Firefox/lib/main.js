@@ -16,7 +16,8 @@ require("sdk/panel").Panel({
 var localFiles = {
     "error.png" : data.url("error.png"),
     "overload.png" : data.url("overload.png"),
-    "gplus.png" : data.url("gplus.png")
+    "gplus.png" : data.url("gplus.png"),
+    "duck.png": data.url("duck.png")
 };
 
 pageMod.PageMod({

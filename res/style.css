@@ -485,6 +485,33 @@ header .vote {
     float: right;
 }
 
+.duck {
+    z-index: 100;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    -webkit-animation:duckinvasion 10s 1 linear;
+       -moz-animation: duckinvasion 10s 1 linear;
+            animation: duckinvasion 10s 1 linear;
+}
+
+@-webkit-keyframes duckinvasion {
+    0%   { left: -100px; }
+    100% { left: 100%; } 
+}
+@-moz-keyframes duckinvasion {
+    0%   { left: -100px; }
+    100% { left: 100%; }
+}
+@-o-keyframes duckinvasion {
+    0%   { left: -100px; }
+    100% { left: 100%; }
+}
+@keyframes duckinvasion {
+    0%   { left: -100px; }
+    100% { left: 100%; } 
+}
+
 .redditSpinner {
     height: 45px !important;
     width: 45px !important;

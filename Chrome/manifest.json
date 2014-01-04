@@ -34,6 +34,7 @@
     "js/options.js",
     "res/error.png",
     "res/gplus.png",
+    "res/duck.png",
     "res/templates.mustache",
     "res/strings.json",
     "icon128.png"
