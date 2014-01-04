@@ -54,6 +54,26 @@ article span .downvotes {
     margin-bottom: 5px;
 }
 
+.md table {
+    margin: 5px 10px;
+    border-spacing: 2px;
+    border-color: gray;
+}
+
+.md thead {
+    vertical-align: middle;
+}
+
+.md tbody {
+    display: table-row-group;
+    vertical-align: middle;
+}
+
+.md td, .md th {
+    border: 1px solid #9d9d9d;
+    padding: 1px 3px;
+}
+
 #reddit {
     margin-top: 40px;
     padding-bottom: 40px;
