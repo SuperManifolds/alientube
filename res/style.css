@@ -265,8 +265,8 @@ article a:hover {
 }
 
 .at_gplus {
-    position: absolute;
-    right: 0;
+    float: right;
+    margin-right: -30px;
     margin-top: 5px;
 }
 
