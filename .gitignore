@@ -4,3 +4,6 @@ Firefox/data/*
 Safari.safariextension/res/*
 Chrome/res/*
 gen/*
+*.xpi
+*.crx
+*.safariextz
