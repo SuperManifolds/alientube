@@ -253,6 +253,10 @@ article a:hover {
     transition: opacity 1s ease-in;
 }
 
+#watch7-sidebar {
+    margin-left: 655px !important;
+}
+
 #redditOverflow ul li {
     line-height: 1.8;
     padding-left: 10px;
