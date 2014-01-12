@@ -297,9 +297,12 @@ input[type='submit']):not(.custom-appearance):not(.link-button)) {
 label > input:disabled:-webkit-any([type='checkbox'], [type='radio']) ~ span {
     color: #999;
 }
-
+#hiddenPostsScoreThreshold,
 #hiddenCommentScoreThreshold {
-    width: 75px;
+    width: 50px;
+    height: 22px;
+    line-height: 20px;
+    font-size: 13px;
 }
 
 #saveButton {
