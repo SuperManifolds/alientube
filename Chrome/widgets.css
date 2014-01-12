@@ -305,6 +305,11 @@ label > input:disabled:-webkit-any([type='checkbox'], [type='radio']) ~ span {
     font-size: 13px;
 }
 
+label[for=hiddenPostsScoreThreshold],
+label[for=hiddenCommentScoreThreshold] {
+    padding-left: 0;
+}
+
 #saveButton {
     margin-top: 10px;
 }
