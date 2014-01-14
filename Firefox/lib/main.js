@@ -3,7 +3,7 @@
 
 var pageMod = require("sdk/page-mod");
 var data = require("sdk/self").data;
-var simplePrefs = require("simple-prefs");
+var simplePrefs = require("sdk/simple-prefs");
 
 require("sdk/panel").Panel({
     onMessage: function(message) {

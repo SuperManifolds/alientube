@@ -15,15 +15,15 @@
         "name": "hiddenPostsScoreThreshold",
         "title": "Don't show me submissions with a score less than",
         "description": "",
-        "type": "integer",
-        "value": -5
+        "type": "string",
+        "value": "-5"
     },
     {
         "name": "hiddenCommentScoreThreshold",
         "title": "Don't show me comments with a score less than",
         "description": "",
-        "type": "integer",
-        "value": -4
+        "type": "string",
+        "value": "-4"
     },
     {
         "name": "featherDescriptionPlacement",
