@@ -3,7 +3,7 @@
   "name": "AlienTube (Beta)",
   "short_name": "AlienTube",
   "description": "Reddit Comments for YouTube",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "icons": { "16": "icon16.png",
            "48": "icon48.png",
           "128": "icon128.png" },
@@ -13,7 +13,7 @@
 
   "content_scripts": [
     {
-      "matches": ["*://youtube.com/watch*", "*://www.youtube.com/watch*"],
+      "matches": ["*://youtube.com/*", "*://www.youtube.com/*"],
       "js": ["js/jquery-1.9.1.min.js", "js/mustache.js", "js/purl.js", "js/snuownd.js", "js/underscore-min.js", "js/script.js"],
       "css": ["res/style.css"]
     }

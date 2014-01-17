@@ -13,9 +13,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.9.6</string>
+	<string>0.9.7</string>
 	<key>CFBundleVersion</key>
-	<string>0.9.6</string>
+	<string>0.9.7</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Global Page</key>
@@ -38,8 +38,8 @@
 		</dict>
 		<key>Whitelist</key>
 		<array>
-			<string>http://www.youtube.com/watch*</string>
-			<string>https://www.youtube.com/watch*</string>
+			<string>http://www.youtube.com/*</string>
+			<string>https://www.youtube.com/*</string>
 		</array>
 	</dict>
 	<key>Description</key>

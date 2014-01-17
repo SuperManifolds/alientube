@@ -21,7 +21,7 @@ var localFiles = {
 };
 
 pageMod.PageMod({
-    include: ["https://www.youtube.com/watch*", "http://www.youtube.com/watch*"],
+    include: ["https://www.youtube.com/*", "http://www.youtube.com/*"],
     contentScriptOptions : localFiles,
     contentStyleFile: [
         data.url('style.css')
