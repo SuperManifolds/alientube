@@ -13,9 +13,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.9.7</string>
+	<string>0.9.8</string>
 	<key>CFBundleVersion</key>
-	<string>0.9.7</string>
+	<string>0.9.8</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Global Page</key>
@@ -28,7 +28,7 @@
 			<key>End</key>
 			<array>
 				<string>js/jquery-1.9.1.min.js</string>
-                <string>js/mustache.js</string>
+				<string>js/mustache.js</string>
 				<string>js/purl.js</string>
 				<string>js/snuownd.js</string>
 				<string>js/underscore-min.js</string>
@@ -40,7 +40,7 @@
 		<array>
 			<string>http://www.youtube.com/*</string>
 			<string>https://www.youtube.com/*</string>
-            <string>http://alientube.co/</string>
+			<string>http://alientube.co/</string>
 		</array>
 	</dict>
 	<key>Description</key>
@@ -56,6 +56,7 @@
 				<string>www.youtube.com</string>
 				<string>pay.reddit.com</string>
 				<string>www.reddit.com</string>
+				<string>alientube.co</string>
 			</array>
 			<key>Include Secure Pages</key>
 			<true/>
