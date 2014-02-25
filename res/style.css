@@ -538,6 +538,30 @@ header .vote {
     margin-top: 30px !important;
 }
 
+a[href$="/s"],
+a[href$="/spoiler"] {
+    background: #000!important;
+    color: #000!important;
+    line-height: 1.4;
+    border: 1px solid black;
+    padding-right: 1px;
+}
+
+a[href$="/s"]:hover,
+a[href$="/spoiler"]:hover {
+    color: #fff !important;
+}
+
+a[href$="/s"]::before,
+a[href$="/spoiler"]::before {
+    background: #FFF!important;
+    color: #000!important;
+    padding: 0px 1px;
+    margin: 0px;
+    margin-right: 1px;
+    content: "Spoiler";
+}
+
 @keyframes "spin" {
     from {
         -webkit-transform: rotate(0deg);
