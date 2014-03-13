@@ -540,6 +540,7 @@ header .vote {
 
 a[href$="/s"],
 a[href$="/spoiler"] {
+    cursor: default;
     background: #000!important;
     color: #000!important;
     line-height: 1.4;
