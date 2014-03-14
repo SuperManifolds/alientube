@@ -187,11 +187,13 @@
     
 {{#error}}
     <section id="reddit">
+    	<button class="at_gplus"><img src="{{gplus_imageurl}}" alt="Google Plus Comments" /></button>
         <div class="redditError">
             <img src="{{imagelink}}" alt="An error has occured" />
             <div>
                 <h1>An error occured.</h1>
                 <p>{{{errormsg}}}</p>
+			<button id="at_retry">Retry</button>
             </div>
         </div>
     </section>

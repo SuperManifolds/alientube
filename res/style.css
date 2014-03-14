@@ -430,6 +430,34 @@ header .vote {
     padding-top: 10px;
 }
 
+#at_retry {
+	margin-top: 10px;
+	border: solid 1px #d3d3d3;
+	background: #f8f8f8;
+	color: #333;
+	padding: 10px 15px;
+	box-sizing: border-box;
+	font-weight: 600;
+	font-size: 11px;
+	white-space: nowrap;
+	word-wrap: normal;
+	line-height: normal;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+#at_retry:hover {
+	border-color: #c6c6c6;
+	background: #f0f0f0;
+	box-shadow: 0 1px 0 rgba(0,0,0,0.10);
+}
+
+#at_retry:active {
+	border-color: #c6c6c6;
+	background: #e9e9e9;
+	box-shadow: inset 0 1px 0 #ddd;
+}
+
 .textarea_comment {
     width: 100%;
     min-height: 100px;
