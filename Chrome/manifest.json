@@ -16,7 +16,7 @@
   "content_scripts": [
     {
       "matches": ["*://youtube.com/*", "*://www.youtube.com/*", "*://alientube.co/"],
-      "js": ["js/jquery-1.9.1.min.js", "js/mustache.js", "js/snuownd.js", "js/underscore-min.js", "js/script.js"],
+      "js": ["js/jquery-1.9.1.min.js", "js/mustache.js", "js/snuownd.js", "js/script.js"],
       "css": ["res/style.css"]
     }
   ],
