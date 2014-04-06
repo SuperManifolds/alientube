@@ -29,7 +29,6 @@ pageMod.PageMod({
     contentScriptFile: [
         data.url("jquery-1.9.1.min.js"),
         data.url("mustache.js"),
-        data.url("purl.js"),
         data.url("snuownd.js"),
         data.url("underscore-min.js"),
         data.url("raven.min.js"),

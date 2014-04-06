@@ -1,4 +1,4 @@
-lfiles=( jquery-1.9.1.min.js mustache.js purl.js snuownd.js underscore-min.js script.js )
+lfiles=( jquery-1.9.1.min.js mustache.js snuownd.js underscore-min.js script.js )
 rfiles=( style.css error.png overload.png gplus.png duck.png templates.mustache strings.json)
 
 for file in ${lfiles[@]}

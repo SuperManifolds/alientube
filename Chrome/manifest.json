@@ -1,11 +1,11 @@
 {
   "manifest_version": 2,
-  "name": "AlienTube for YouTube™ (Beta)",
+  "name": "AlienTube for YouTube™",
   "short_name": "AlienTube",
   "description": "Reddit Comments for YouTube",
   "author": "Delexious",
   "homepage_url": "http://alientube.co/",
-  "version": "0.9.9",
+  "version": "1.0",
   "icons": { "16": "icon16.png",
            "48": "icon48.png",
           "128": "icon128.png" },
@@ -16,7 +16,7 @@
   "content_scripts": [
     {
       "matches": ["*://youtube.com/*", "*://www.youtube.com/*", "*://alientube.co/"],
-      "js": ["js/jquery-1.9.1.min.js", "js/mustache.js", "js/purl.js", "js/snuownd.js", "js/underscore-min.js", "js/script.js"],
+      "js": ["js/jquery-1.9.1.min.js", "js/mustache.js", "js/snuownd.js", "js/underscore-min.js", "js/script.js"],
       "css": ["res/style.css"]
     }
   ],

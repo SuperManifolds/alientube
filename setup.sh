@@ -1,6 +1,6 @@
 #!/bin/bash
 
-lfiles=("jquery-1.9.1.min.js" "mustache.js" "purl.js" "snuownd.js" "underscore-min.js" "script.js")
+lfiles=("jquery-1.9.1.min.js" "mustache.js" "snuownd.js" "underscore-min.js" "script.js")
 rfiles=("style.css" "error.png" "gplus.png" "overload.png" "duck.png" "templates.mustache" "strings.json")
 
 mkdir ./Chrome/js/
