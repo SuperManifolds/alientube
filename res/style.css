@@ -201,6 +201,7 @@ article a:hover {
 }
 
 #redditOverflow {
+    display: inline-block;
     position: relative;
     box-sizing: border-box;
     vertical-align: bottom;
