@@ -6,12 +6,12 @@
   <Description about="urn:mozilla:install-manifest">
 
     <em:id>alex@delexious.com</em:id>
-    <em:version>1.0</em:version>
+    <em:version>1.1</em:version>
     <em:type>2</em:type>
-    
+
 	<!-- Front End Metadata -->
 
-    <em:name>AlienTube (Beta)</em:name>
+    <em:name>AlienTube</em:name>
     <em:description>Reddit comments, in your YouTube!</em:description>
     <em:creator>Delexious</em:creator>
     <em:homepageURL>http://alientube.co/</em:homepageURL>

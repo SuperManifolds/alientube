@@ -1,16 +1,16 @@
 {
   "name": "alientube",
-  "fullName": "AlienTube (Beta)",
+  "fullName": "AlienTube",
   "id": "jid1-0GRQcsmyXNQRlg",
   "description": "Reddit comments, in your YouTube!",
   "author": "Delexious",
   "license": "BSD 3",
-  "version": "1.0",
-    
+  "version": "1.1",
+
     "permissions": {
         "cross-domain-content": ["http://www.reddit.com/", "https://pay.reddit.com/"]
     },
-    
+
     "preferences": [{
         "name": "hiddenPostsScoreThreshold",
         "title": "Don't show me submissions with a score less than",
