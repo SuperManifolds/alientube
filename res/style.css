@@ -151,7 +151,7 @@ article a:hover {
 .redditTab {
     position: relative;
     z-index: 1;
-    font-family: verdana, sans-serif;
+    font-family: Verdana, sans-serif !important;
     padding-left: 10px;
     padding-right: 10px;
     margin: 0;
@@ -161,11 +161,17 @@ article a:hover {
     background-color: #f8f8f8;
     background-image: linear-gradient(to bottom,#fcfcfc 0,#f8f8f8 100%);
     overflow: hidden;
-    font-size: 12px;
+    font-size: 12px !important;
     text-shadow: 0 1px 0 rgba(255,255,255,.5);
     border: 1px solid #d3d3d3;
-    /*border-left: none;*/
     color: #333;
+}
+
+@-moz-document url-prefix() {
+    .redditTab {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
 }
 
 .redditTab:focus {
