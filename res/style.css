@@ -538,7 +538,7 @@ header .vote {
 
 @-webkit-keyframes duckinvasion {
     0%   { left: -100px; }
-    100% { left: 100%; } 
+    100% { left: 100%; }
 }
 @-moz-keyframes duckinvasion {
     0%   { left: -100px; }
@@ -550,10 +550,10 @@ header .vote {
 }
 @keyframes duckinvasion {
     0%   { left: -100px; }
-    100% { left: 100%; } 
+    100% { left: 100%; }
 }
 
-.redditSpinner {
+.loading {
     height: 45px !important;
     width: 45px !important;
     margin: 0px auto !important;
@@ -569,7 +569,7 @@ header .vote {
 	animation: spin .6s infinite linear;
 }
 
-#rcomments .redditSpinner {
+#rcomments .loading {
     margin-top: 30px !important;
 }
 

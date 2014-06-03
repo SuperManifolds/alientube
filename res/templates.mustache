@@ -120,7 +120,7 @@
         <span class="commentOptions">
             {{^preserved}}
             {{#signedin}}
-                <span class="commentTo">comment</span> 
+                <span class="commentTo">comment</span>
             {{/signedin}}
             {{/preserved}}
             <a href="https://getpocket.com/save?url={{encodedPermalink}}" target="_blank">pocket</a>
@@ -170,7 +170,7 @@
     {{^active}}
     <button class="redditTab" data-value="{{subreddit}}">{{subreddit}}</button>
     {{/active}}
-{{/tab}}    
+{{/tab}}
 
 {{#overflow}}
     <div id="redditOverflow">
@@ -180,11 +180,11 @@
         </ul>
     </div>
 {{/overflow}}
-    
+
 {{#overflowItem}}
     <li data-value="{{subreddit}}">{{subreddit}}</li>
 {{/overflowItem}}
-    
+
 {{#error}}
     <section id="reddit">
     	<button class="at_gplus"><img src="{{gplus_imageurl}}" alt="Google Plus Comments" /></button>
@@ -202,3 +202,7 @@
 {{#googleplus}}
     <button class="at_gplus"><img src="{{imageurl}}" alt="Google Plus Comments" /></button>
 {{/googleplus}}
+
+{{#loading}}
+<div class="redditSpinner"></div>
+{{/loading}}

@@ -16,8 +16,9 @@
   "content_scripts": [
     {
       "matches": ["*://youtube.com/*", "*://www.youtube.com/*", "*://alientube.co/"],
-      "js": ["js/jquery-1.9.1.min.js", "js/mustache.js", "js/snuownd.js", "js/script.js"],
-      "css": ["res/style.css"]
+      "js": ["js/script.js"],
+      "css": ["res/style.css"],
+      "run_at": "document_start"
     }
   ],
   "permissions": [
@@ -28,8 +29,6 @@
   ],
 
   "web_accessible_resources": [
-    "js/jquery.min.map",
-    "js/underscore-min.map",
     "res/style.css",
     "chrome_shared.css",
     "widgets.css",
@@ -37,8 +36,7 @@
     "res/error.png",
     "res/gplus.png",
     "res/duck.png",
-    "res/templates.mustache",
-    "res/strings.json",
+    "res/templates.html",
     "icon128.png"
   ]
 }
