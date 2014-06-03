@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Delexious</string>
 	<key>Builder Version</key>
-	<string>9537.74.9</string>
+	<string>10538.35.8</string>
 	<key>CFBundleDisplayName</key>
 	<string>AlienTube</string>
 	<key>CFBundleIdentifier</key>
@@ -43,6 +43,8 @@
 	</dict>
 	<key>Description</key>
 	<string>Reddit comments on YouTube</string>
+	<key>DeveloperIdentifier</key>
+	<string>9X89US848J</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>
