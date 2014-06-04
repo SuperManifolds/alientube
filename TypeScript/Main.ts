@@ -17,12 +17,6 @@ module AlienTube {
 		currentVideoIdentifier : string;
         constructor() {
             Main.Preferences = new BrowserPreferenceManager();
-			var template = document.createElement("link");
-			template.setAttribute("href", Main.getExtensionRessourcePath("templates.html"));
-			template.id = "alientubeTemplate";
-			template.setAttribute("rel", "import");
-			document.head.appendChild(template);
-
             if (Main.getCurrentBrowser() == Browser.SAFARI) {
                 var stylesheet = document.createElement("link");
                 stylesheet.setAttribute("href", Main.getExtensionRessourcePath("style.css"));

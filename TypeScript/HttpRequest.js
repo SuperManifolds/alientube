@@ -2,19 +2,18 @@
 /// <reference path="typings/chrome/chrome.d.ts" />
 /// <reference path="typings/firefox/firefox.d.ts" />
 /// <reference path="typings/safari/safari.d.ts" />
-
-module AlienTube {
-    export class HttpRequest {
-        private acceptableResponseTypes = [200, 201, 202, 301, 302, 303, 0];
-
-        constructor(url: string, type: RequestType, callback: any, postData?: Array<string>) {
-            if (Main.getCurrentBrowser() == Browser.SAFARI) {
+var AlienTube;
+(function (AlienTube) {
+    var HttpRequest = (function () {
+        function HttpRequest(url, type, callback, postData) {
+            this.acceptableResponseTypes = [200, 201, 202, 301, 302, 303, 0];
+            if (AlienTube.Main.getCurrentBrowser() == 2 /* SAFARI */) {
                 // TODO
             } else {
                 var xhr = new XMLHttpRequest();
                 xhr.open(RequestType[type], url, true);
                 xhr.withCredentials = true;
-                xhr.onreadystatechange = () => {
+                xhr.onreadystatechange = function () {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
                         if (this.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
                             callback(xhr.responseText);
@@ -22,8 +21,8 @@ module AlienTube {
                             // TODO Error handling
                         }
                     }
-                }
-                if (type == RequestType.POST) {
+                };
+                if (type == 1 /* POST */) {
                     var query = [];
                     for (var key in postData) {
                         query.push(encodeURIComponent(key) + '=' + encodeURIComponent(postData[key]));
@@ -34,10 +33,13 @@ module AlienTube {
                 }
             }
         }
-    }
+        return HttpRequest;
+    })();
+    AlienTube.HttpRequest = HttpRequest;
 
-    export enum RequestType {
-        GET,
-        POST
-    }
-}
+    (function (RequestType) {
+        RequestType[RequestType["GET"] = 0] = "GET";
+        RequestType[RequestType["POST"] = 1] = "POST";
+    })(AlienTube.RequestType || (AlienTube.RequestType = {}));
+    var RequestType = AlienTube.RequestType;
+})(AlienTube || (AlienTube = {}));
