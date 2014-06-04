@@ -7,7 +7,7 @@ module AlienTube {
     export class HttpRequest {
         private acceptableResponseTypes = [200, 201, 202, 301, 302, 303, 0];
 
-        constructor(url: string, type: RequestType, callback: any, postData?: Array<string>) {
+        constructor(url : string, type : RequestType, callback : any, postData? : Array<string>) {
             if (Main.getCurrentBrowser() == Browser.SAFARI) {
                 // TODO
             } else {

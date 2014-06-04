@@ -25,14 +25,14 @@ module AlienTube {
                 document.head.appendChild(stylesheet);
             }
 			var observer = new MutationObserver(this.mutationObserver);
-			var config = { attributes: true, childList: true, characterData: true };
+			var config = { attributes : true, childList : true, characterData : true };
 			observer.observe(document.getElementById("content"), config);
 
 			this.currentVideoIdentifier = Main.getCurrentVideoId();
 			this.commentSection = new CommentSection(this.currentVideoIdentifier);
         }
 
-		private mutationObserver(mutations: Array<MutationRecord>) {
+		private mutationObserver(mutations : Array<MutationRecord>) {
 			mutations.forEach(function(mutation) {
 				var target = <HTMLElement>mutation.target;
 				if (target.classList.contains("yt-card")) {
@@ -45,7 +45,7 @@ module AlienTube {
 			});
 		}
 
-		static getCurrentVideoId():string {
+		static getCurrentVideoId() : string {
 			if (window.location.search.length > 0) {
 				var s = window.location.search.substring(1);
 				var requestObjects = s.split('&');
@@ -59,7 +59,7 @@ module AlienTube {
 			return null;
 		}
 
-        static getCurrentBrowser():Browser {
+        static getCurrentBrowser() : Browser {
             if (chrome) return Browser.CHROME;
             else if (self.on) return Browser.FIREFOX;
             else if (safari) return Browser.SAFARI;
@@ -68,7 +68,7 @@ module AlienTube {
             }
         }
 
-        static getExtensionRessourcePath(path :string):string {
+        static getExtensionRessourcePath(path : string) : string {
             switch (Main.getCurrentBrowser()) {
                 case Browser.SAFARI:
                     return safari.extension.baseURI + 'res/' + path;
@@ -81,7 +81,7 @@ module AlienTube {
             }
         }
 
-        static generateUUID():string {
+        static generateUUID() : string {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                 var r = Math.random() * 16 | 0,
                     v = c === 'x' ? r : (r & 0x3 | 0x8);

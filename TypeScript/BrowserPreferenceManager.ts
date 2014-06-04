@@ -5,8 +5,15 @@
 
 module AlienTube {
 	export class BrowserPreferenceManager {
-        private preferences :Object;
+        private preferences : Object;
         private evt;
+
+		private defaults = {
+			hiddenPostScoreThreshold: -4,
+			hiddenCommentScoreThreshold: -4,
+			showGooglePlus: true
+		}
+
         constructor() {
             switch (Main.getCurrentBrowser()) {
                 case Browser.CHROME:
@@ -37,14 +44,14 @@ module AlienTube {
         }
 
 
-        get(key :string):any {
+        get(key : string):any {
             return this.preferences[key] || this.defaults[key];
         }
 
-        set(key :string, value :any):void {
+        set(key : string, value : any):void {
             this.preferences[key] = value;
             switch (Main.getCurrentBrowser()) {
-                case Browser.CHROME: 
+                case Browser.CHROME:
                     chrome.storage.sync.set({
                         key: value
                     });
@@ -67,11 +74,5 @@ module AlienTube {
                     break;
             }
         }
-
-		private defaults = {
-			hiddenPostScoreThreshold: -4,
-			hiddenCommentScoreThreshold: -4,
-			showGooglePlus: true
-		}
     }
 }
