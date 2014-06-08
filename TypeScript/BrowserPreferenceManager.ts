@@ -3,7 +3,15 @@
 /// <reference path="typings/firefox/firefox.d.ts" />
 /// <reference path="typings/safari/safari.d.ts" />
 
+/**
+	Namespace for All AlienTube operations.
+	@namespace AlienTube
+*/
 module AlienTube {
+	/**
+		Manages the Preferences across browsers.
+		@class BrowserPreferenceManager
+	*/
 	export class BrowserPreferenceManager {
         private preferences : Object;
         private evt;
