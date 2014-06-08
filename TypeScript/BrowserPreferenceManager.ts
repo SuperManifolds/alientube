@@ -11,7 +11,9 @@ module AlienTube {
 		private defaults = {
 			hiddenPostScoreThreshold: -4,
 			hiddenCommentScoreThreshold: -4,
-			showGooglePlus: true
+			showGooglePlus: false,
+			rememberTabsOnViewChange: true,
+			userIdentifier: ""
 		}
 
         constructor() {

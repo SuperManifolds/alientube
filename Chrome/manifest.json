@@ -17,7 +17,7 @@
     {
       "matches": ["*://youtube.com/*", "*://www.youtube.com/*", "*://alientube.co/"],
       "js": ["js/script.js"],
-      "css": ["res/style.css"],
+      "css": ["res/style.css", "res/dots.css"],
       "run_at": "document_start"
     }
   ],

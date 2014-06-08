@@ -1,4 +1,5 @@
 /// <reference path="Main.ts" />
+/// <reference path="CommentThread.ts" />
 /// <reference path="HttpRequest.ts" />
 /// <reference path="typings/handlebars/handlebars.d.ts" />
 /// <reference path="BrowserPreferenceManager.ts" />
@@ -9,6 +10,9 @@
 module AlienTube {
     export class CommentSection {
         template : HTMLDocument;
+        threadCollection : Array<any>;
+        storedTabCollection : Array<CommentThread>;
+
         constructor(currentVideoIdentifier:string) {
             if (currentVideoIdentifier) {
                 var templateLink = document.createElement("link");
@@ -66,15 +70,15 @@ module AlienTube {
                                     if (!sortedResultCollection.hasOwnProperty(thread.subreddit)) sortedResultCollection[thread.subreddit] = [];
                                     sortedResultCollection[thread.subreddit].push(thread);
                                 });
-                                var threadCollection = [];
+                                this.threadCollection = [];
                                 for (var subreddit in sortedResultCollection) {
                                     if (sortedResultCollection.hasOwnProperty(subreddit)) {
-                                        threadCollection.push(sortedResultCollection[subreddit].reduce(function (a, b) {
+                                        this.threadCollection.push(sortedResultCollection[subreddit].reduce(function (a, b) {
                                             return ((a.score + (a.num_comments*3)) > (b.score + (b.num_comments*3)) || b.id === preferredPost) ? a : b;
                                         }));
                                     }
                                 }
-                                threadCollection.sort(function (a, b) {
+                                this.threadCollection.sort(function (a, b) {
                                     if (b.subreddit == preferredSubreddit && b.id == preferredPost) {
                                         return 1;
                                     } else if (b.subreddit == preferredSubreddit) {
@@ -87,26 +91,26 @@ module AlienTube {
                                 var tabContainer = this.template.getElementById("tabcontainer").content.cloneNode(true);
                                 var actualTabContainer = tabContainer.querySelector("#at_tabcontainer");
                                 var overflowContainer = tabContainer.querySelector("#at_overflow");
-                                var tlen = threadCollection.length;
+                                var tlen = this.threadCollection.length;
                                 var c;
                                 var width = 0;
                                 for (c = 0; c < tlen; c++) {
-                                    width = width + (21 + (threadCollection[c].subreddit.length * 7));
+                                    width = width + (21 + (this.threadCollection[c].subreddit.length * 7));
                                     if (width >= 560) {
                                         break;
                                     }
                                     var tab = document.createElement("button");
                                     tab.className = "at_tab";
-                                    tab.setAttribute("data-value", threadCollection[c].subreddit);
-                                    var tabName = document.createTextNode(threadCollection[c].subreddit);
+                                    tab.setAttribute("data-value", this.threadCollection[c].subreddit);
+                                    var tabName = document.createTextNode(this.threadCollection[c].subreddit);
                                     tab.appendChild(tabName);
                                     actualTabContainer.insertBefore(tab, overflowContainer);
                                 }
                                 if (c < tlen) {
                                     for (c = c; c < tlen; c++) {
                                         var menuItem = document.createElement("li");
-                                        menuItem.setAttribute("data-value", threadCollection[c].subreddit);
-                                        var itemName = document.createTextNode(threadCollection[c].subreddit);
+                                        menuItem.setAttribute("data-value", this.threadCollection[c].subreddit);
+                                        var itemName = document.createTextNode(this.threadCollection[c].subreddit);
                                         menuItem.appendChild(itemName);
                                         overflowContainer.children[1].appendChild(menuItem);
                                     }
@@ -127,16 +131,28 @@ module AlienTube {
             }
         }
 
-        set (contents :Node) {
+        downloadThread (threadData : any, callback? : any) {
+            var requestUrl = "https://pay.reddit.com/r/" + threadData.subreddit + "/comments/" + threadData.id + ".json";
+            new HttpRequest(requestUrl, RequestType.GET, (response) => {
+                var responseObject = JSON.parse(response);
+                // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
+                if (!Main.Preferences.get("rememberTabsOnViewChange")) {
+                    this.storedTabCollection.length = 0;
+                }
+                this.storedTabCollection.push(new CommentThread(responseObject));
+            });
+        }
+
+        set (contents : Node) {
             var commentsContainer = document.getElementById("watch7-content");
-            var previousRedditInstance = document.getElementById("reddit");
+            var previousRedditInstance = document.getElementById("alientube");
             if (previousRedditInstance) {
-                commentsContainer.removeChild(document.getElementById("reddit"));
+                commentsContainer.removeChild(document.getElementById("alientube"));
             }
             var googlePlusContainer = document.getElementById("watch-discussion");
             googlePlusContainer.style.display = "none";
             var redditContainer = document.createElement("section");
-            redditContainer.id = "reddit";
+            redditContainer.id = "alientube";
             redditContainer.appendChild(contents);
             commentsContainer.insertBefore(redditContainer, googlePlusContainer);
         }

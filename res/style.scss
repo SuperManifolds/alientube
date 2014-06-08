@@ -1,0 +1,225 @@
+@import 'bourbon/bourbon';
+
+#watch7-sidebar {
+    margin-left: 655px !important;
+}
+
+#alientube {
+    margin-top: 40px;
+    padding-bottom: 40px;
+    width: 628px;
+    padding-right: 20px;
+    box-sizing: border-box;
+
+    & .single_line {
+        text-align: center;
+        padding-left: 30px;
+    }
+
+    & .error {
+        padding-left: 20px;
+        display: table;
+
+        & img {
+            display: table-cell;
+            width: 120px;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        & div {
+            box-sizing: border-box;
+            width: 430px;
+            display: table-cell;
+            vertical-align: middle;
+            padding-left: 20px;
+
+            & h1 {
+                font-size: 120%;
+                margin: 0;
+            }
+
+            & p {
+                display: inline-block;
+                color: #c92323;
+            }
+        }
+    }
+}
+
+.at_tab {
+    position: relative;
+    z-index: 1;
+    font-family: Verdana, sans-serif !important;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
+    margin-bottom: -1px;
+    margin-left: -5px;
+    height: 33px;
+    background-color: #f8f8f8;
+    background-image: linear-gradient(to bottom,#fcfcfc 0,#f8f8f8 100%);
+    overflow: hidden;
+    font-size: 12px !important;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    border: 1px solid #d3d3d3;
+    color: #333;
+
+    &:hover {
+        border: 1px solid #9c9c9c;
+        z-index: 50;
+    }
+
+    &:focus {
+        outline: 0;
+    }
+
+    &.active {
+        background-color: #fff;
+        border: 1px solid #c6c6c6;
+        border-bottom: 1px solid #fff;
+        box-shadow: inset 0 1px 0 #ddd;
+        background-image: none;
+        z-index: 50;
+
+        &:hover {
+            border-bottom: 1px solid #fff;
+        }
+    }
+
+    &.border {
+        border-left: 1px solid #d3d3d3;
+    }
+}
+
+#at_tabcontainer {
+    padding-left: 20px;
+    position: relative;
+}
+
+@-moz-document url-prefix() {
+    .at_tab {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
+
+#at_overflow {
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    vertical-align: bottom;
+    margin-left: -5px;
+    width: 33px;
+    height: 32px;
+    background-color: #f8f8f8;
+    background-image: linear-gradient(to bottom,#fcfcfc 0,#f8f8f8 100%);
+    opacity: 0.5;
+    border: 1px solid #d3d3d3;
+    border-left: none;
+    border-bottom: none;
+
+    &:focus {
+        outline: 0;
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+
+    & img {
+        position: absolute;
+        top: 50%;
+        left: 8px;
+    }
+
+    & ul {
+        min-width: 130px;
+        max-width: 250px;
+        text-overflow: ellipsis;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        box-sizing: border-box;
+        opacity: 1;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        background: #fff;
+        margin-top: 30px;
+        display: none;
+        position: relative;
+        white-space: nowrap;
+        float: left;
+        z-index: 100;
+        @include transition(opacity 1s easy-in);
+
+        & li {
+            line-height: 1.8;
+            padding-left: 10px;
+            padding-right: 10px;
+
+            &:hover {
+                background: #333;
+                color: #fff;
+            }
+        }
+    }
+}
+
+.at_gplus {
+    float: right;
+    margin-right: -30px;
+    margin-top: 1px;
+
+    &:focus {
+        outline: 0;
+    }
+
+    &:hover {
+        @include filter(brightness(120%));
+    }
+
+    &:active {
+        @include filter(brightness(80%));
+    }
+
+    & img {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+a[href$="/s"],
+a[href$="/spoiler"] {
+    cursor: default;
+    background: #000!important;
+    color: #000!important;
+    line-height: 1.4;
+    border: 1px solid black;
+    padding-right: 1px;
+}
+
+a[href$="/s"]:hover,
+a[href$="/spoiler"]:hover {
+    color: #fff !important;
+}
+
+a[href$="/s"]::before,
+a[href$="/spoiler"]::before {
+    background: #FFF!important;
+    color: #000!important;
+    padding: 0px 1px;
+    margin: 0px;
+    margin-right: 1px;
+    content: "Spoiler";
+}
+
+.loading {
+    position: relative;
+    padding-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20px;
+    height: 20px;
+}

@@ -1,5 +1,4 @@
 /// <reference path="BrowserPreferenceManager.ts" />
-/// <reference path="Reddit.ts" />
 /// <reference path="CommentSection.ts" />
 /// <reference path="typings/chrome/chrome.d.ts" />
 /// <reference path="typings/firefox/firefox.d.ts" />
@@ -57,6 +56,10 @@ module AlienTube {
 				}
 			}
 			return null;
+		}
+
+		static isPreserved(epochTime : number) : Boolean {
+			return ((((new Date()).getTime() / 1000) - epochTime) >= 15552000);
 		}
 
         static getCurrentBrowser() : Browser {
