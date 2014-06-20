@@ -4,8 +4,7 @@
 
 //Save options
 function save_options() {
-    var hiddenPostsScoreThreshold = document.getElementById("hiddenPostsScoreThreshold");
-    var hiddenCommentScoreThreshold = document.getElementById("hiddenCommentScoreThreshold");
+    var commentVoteThreshold = document.getElementById("commentVoteThreshold");
     var featherDescriptionPlacement = document.getElementById("featherDescriptionPlacement");
     var disablePostHeader = document.getElementById("disablePostHeader");
     var disableTabs = document.getElementById("disableTabs");
@@ -18,8 +17,7 @@ function save_options() {
         hiddenCommentScoreThreshold.value = -4;
     }
     chrome.storage.sync.set({
-        'hiddenPostsScoreThreshold' :  hiddenPostsScoreThreshold.value,
-        'hiddenCommentScoreThreshold': hiddenCommentScoreThreshold.value,
+        'commentVoteThreshold' :  commentVoteThreshold.value,
         'featherDescriptionPlacement': featherDescriptionPlacement.checked,
         'disablePostHeader': disablePostHeader.checked,
         'disableTabs': disableTabs.checked,
@@ -36,16 +34,14 @@ function save_options() {
 
 //Restore options when option page is loaded
 function restore_options() {
-    var  hiddenPostsScoreThreshold = document.getElementById("hiddenPostsScoreThreshold");
-    var hiddenCommentScoreThreshold = document.getElementById("hiddenCommentScoreThreshold");
+    var  commentVoteThreshold = document.getElementById("commentVoteThreshold");
     var featherDescriptionPlacement = document.getElementById("featherDescriptionPlacement");
     var disablePostHeader = document.getElementById("disablePostHeader");
     var disableTabs = document.getElementById("disableTabs");
     var minimiseCommentBox = document.getElementById("minimiseCommentBox");
     var dontShowGplus = document.getElementById("dontShowGplus");
     chrome.storage.sync.get(null, function (items) {
-        hiddenPostsScoreThreshold.value = items.hiddenPostsScoreThreshold ? items.hiddenPostsScoreThreshold : -5;
-        hiddenCommentScoreThreshold.value = items.hiddenCommentScoreThreshold ? items.hiddenCommentScoreThreshold : -4;
+        commentVoteThreshold.value = items.commentVoteThreshold || 10;
         featherDescriptionPlacement.checked = items.featherDescriptionPlacement;
         disablePostHeader.checked = items.disablePostHeader;
         disableTabs.checked = items.disableTabs;

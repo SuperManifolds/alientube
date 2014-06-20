@@ -4,21 +4,11 @@
 <array>
 	<dict>
 		<key>DefaultValue</key>
-		<real>-4</real>
+		<real>10</real>
 		<key>Key</key>
-		<string>hiddenPostsScoreThreshold</string>
+		<string>commentVoteThreshold</string>
 		<key>Title</key>
-		<string>Don't show me submissions with a score less than</string>
-		<key>Type</key>
-		<string>TextField</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>-4</real>
-		<key>Key</key>
-		<string>hiddenCommentScoreThreshold</string>
-		<key>Title</key>
-		<string>Don't show me comments with a score less than</string>
+		<string>Don't show me comments that is liked by less than this many percent of people</string>
 		<key>Type</key>
 		<string>TextField</string>
 	</dict>

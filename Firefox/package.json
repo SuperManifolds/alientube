@@ -5,25 +5,18 @@
   "description": "Reddit comments, in your YouTube!",
   "author": "Delexious",
   "license": "BSD 3",
-  "version": "1.1",
+  "version": "1.2",
 
     "permissions": {
         "cross-domain-content": ["http://www.reddit.com/", "https://pay.reddit.com/"]
     },
 
     "preferences": [{
-        "name": "hiddenPostsScoreThreshold",
-        "title": "Don't show me submissions with a score less than",
+        "name": "commentVoteThreshold",
+        "title": "Don't show me comments that is liked by less than this many percent of people",
         "description": "",
         "type": "string",
-        "value": "-5"
-    },
-    {
-        "name": "hiddenCommentScoreThreshold",
-        "title": "Don't show me comments with a score less than",
-        "description": "",
-        "type": "string",
-        "value": "-4"
+        "value": "10"
     },
     {
         "name": "featherDescriptionPlacement",
