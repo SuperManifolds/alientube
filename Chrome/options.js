@@ -10,11 +10,8 @@ function save_options() {
     var disableTabs = document.getElementById("disableTabs");
     var minimiseCommentBox = document.getElementById("minimiseCommentBox");
     var dontShowGplus = document.getElementById("dontShowGplus");
-    if (!hiddenPostsScoreThreshold.value.match(/[0-9]+/)) {
-        hiddenPostsScoreThreshold.value = -5;
-    }
-    if (!hiddenCommentScoreThreshold.value.match(/[0-9]+/)) {
-        hiddenCommentScoreThreshold.value = -4;
+    if (!commentVoteThreshold.value.match(/[0-9]+/)) {
+        commentVoteThreshold.value = 10;
     }
     chrome.storage.sync.set({
         'commentVoteThreshold' :  commentVoteThreshold.value,
