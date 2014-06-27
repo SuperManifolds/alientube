@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Delexious</string>
 	<key>Builder Version</key>
-	<string>10538.35.8</string>
+	<string>10538.39.41</string>
 	<key>CFBundleDisplayName</key>
 	<string>AlienTube</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2</string>
+	<string>1.2.2</string>
 	<key>CFBundleVersion</key>
 	<string>1.2</string>
 	<key>Chrome</key>
