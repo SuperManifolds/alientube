@@ -77,7 +77,7 @@ article span .downvotes {
 #reddit {
     margin-top: 40px;
     padding-bottom: 40px;
-    width: 628px;
+    width: 95%;
     padding-right: 20px;
     box-sizing: border-box;
 }
@@ -258,10 +258,6 @@ article a:hover {
     -webkit-transition: opacity 1s ease-in;
     -moz-transition: opacity 1s ease-in;
     transition: opacity 1s ease-in;
-}
-
-#watch7-sidebar {
-    margin-left: 655px !important;
 }
 
 #redditOverflow ul li {
@@ -538,7 +534,7 @@ header .vote {
 
 @-webkit-keyframes duckinvasion {
     0%   { left: -100px; }
-    100% { left: 100%; } 
+    100% { left: 100%; }
 }
 @-moz-keyframes duckinvasion {
     0%   { left: -100px; }
@@ -550,7 +546,7 @@ header .vote {
 }
 @keyframes duckinvasion {
     0%   { left: -100px; }
-    100% { left: 100%; } 
+    100% { left: 100%; }
 }
 
 .redditSpinner {
