@@ -8,3 +8,5 @@ gen/*
 *.crx
 *.safariextz
 TypeScript/*.js
+lib/script.js
+lib/script.js.map

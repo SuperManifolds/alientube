@@ -1,8 +1,3 @@
-/// <reference path="Main.ts" />
-/// <reference path="typings/chrome/chrome.d.ts" />
-/// <reference path="typings/firefox/firefox.d.ts" />
-/// <reference path="typings/safari/safari.d.ts" />
-
 /**
     Namespace for All AlienTube operations.
     @namespace AlienTube
@@ -14,7 +9,7 @@ module AlienTube {
         @param url URL to make the request to.
         @param type Type of request to make (GET or POST)
         @param callback Callback handler for the event when loaded.
-        @param [postdata] Key-Value object containing POST data. 
+        @param [postdata] Key-Value object containing POST data.
     */
     export class HttpRequest {
         private acceptableResponseTypes = [200, 201, 202, 301, 302, 303, 0];

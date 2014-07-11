@@ -1,7 +1,7 @@
 #!/bin/bash
 
-lfiles=("jquery-1.9.1.min.js" "mustache.js" "snuownd.js" "script.js")
-rfiles=("style.css" "error.png" "gplus.png" "overload.png" "duck.png" "templates.mustache" "strings.json")
+lfiles=("snuownd.js" "script.js")
+rfiles=("error.png" "gplus.png" "overload.png" "duck.png")
 
 mkdir ./Chrome/js/
 mkdir ./Safari.safariextension/js/

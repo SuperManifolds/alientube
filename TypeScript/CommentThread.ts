@@ -1,9 +1,3 @@
-/// <reference path="Main.ts" />
-/// <reference path="BrowserPreferenceManager.ts" />
-/// <reference path="typings/chrome/chrome.d.ts" />
-/// <reference path="typings/firefox/firefox.d.ts" />
-/// <reference path="typings/safari/safari.d.ts" />
-
 /**
     Namespace for All AlienTube operations.
     @namespace AlienTube
