@@ -5,7 +5,7 @@
   "description": "Reddit Comments for YouTube",
   "author": "Delexious",
   "homepage_url": "http://alientube.co/",
-  "version": "1.1",
+  "version": "2.0",
   "icons": { "16": "icon16.png",
            "48": "icon48.png",
           "128": "icon128.png" },
@@ -17,7 +17,7 @@
     {
       "matches": ["*://youtube.com/*", "*://www.youtube.com/*", "*://alientube.co/"],
       "js": ["js/script.js"],
-      "css": ["res/style.css", "res/dots.css"],
+      "css": ["res/style.css"],
       "run_at": "document_start"
     }
   ],
@@ -32,6 +32,7 @@
     "res/style.css",
     "chrome_shared.css",
     "widgets.css",
+    "js/script.js.map",
     "js/options.js",
     "res/error.png",
     "res/gplus.png",
