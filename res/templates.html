@@ -1,10 +1,53 @@
 <template id="loading">
     <div class="loading">
-        <div class="circle"></div>
-        <div class="circle"></div>
+        <div class="dots">
+            Loading...
+        </div>
     </div>
 </template>
 
 <template id="noposts">
     <p class="single_line">No posts found</p>
+</template>
+
+
+<template id="tabcontainer">
+    <div id="at_tabcontainer">
+        <div id="at_overflow">
+            <img class="yt-uix-button-arrow" src="http://s.ytimg.com/yts/img/pixel-vfl3z5WfW.gif" alt="" title="">
+            <ul> </ul>
+        </div>
+        <button class="at_gplus">
+            <img src="" alt="Google+ Comments" />
+        </button>
+    </div>
+    <div id="at_comments">
+        <div class="loading">
+            <div class="dots">
+                Loading...
+            </div>
+        </loading>
+    </div>
+</template>
+
+<template id="threadcontainer">
+    <header class="at_thread">
+        <div class="vote">
+            <div class="arrow up"> </div>
+            <div class="postScore"> </div>
+            <div class="arrow down"> </div>
+        </div>
+        <div class="info">
+            <a class="title" target="_blank"> </a>
+            <span class="tagline">
+                <span class="timestamp"> </span>
+                <a href="" target="_blank"> </a>
+            </span>
+            <span class="commentOptions">
+                <span class="commentTo">comment</span>
+                <a href="https://getpocket.com/save?url={{encodedPermalink}}" target="_blank">pocket</a>
+                <span class="refresh">refresh</span>
+            </span>
+        </div>
+    </header>
 </template>
