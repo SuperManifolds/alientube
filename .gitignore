@@ -10,3 +10,4 @@ gen/*
 TypeScript/*.js
 lib/script.js
 lib/script.js.map
+res/style.css
