@@ -31,13 +31,9 @@
   "web_accessible_resources": [
     "res/style.css",
     "chrome_shared.css",
-    "widgets.css",
-    "js/script.js.map",
-    "js/options.js",
-    "res/error.png",
-    "res/gplus.png",
-    "res/duck.png",
-    "res/templates.html",
+    "js/*",
+    "res*",
+    "TypeScript/*",
     "icon128.png"
   ]
 }

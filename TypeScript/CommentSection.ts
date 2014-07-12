@@ -1,3 +1,4 @@
+/// <reference path="index.ts" />
 /**
     Namespace for All AlienTube operations.
     @namespace AlienTube
@@ -10,10 +11,13 @@ module AlienTube {
     */
     export class CommentSection {
         template : HTMLDocument;
-        threadCollection : Array<any>;
+        threadCollection: Array<any>;
         storedTabCollection : Array<CommentThread>;
 
         constructor(currentVideoIdentifier:string) {
+            this.threadCollection = new Array();
+            this.storedTabCollection = new Array();
+
             // Make sure video identifier is not null. If it is null we are not on a video page so we will just time out.
             if (currentVideoIdentifier) {
                 // Load the html5 template file from disk and wait for it to load.
