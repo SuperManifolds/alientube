@@ -42,27 +42,25 @@ module AlienTube {
                             var finalResultCollection = [];
 
                             // Filter out Reddit threads that do not lead to the video, or has been downvoted too much.
-                            for (var i = 0, len = searchResults.length; i < len; i++) {
-                                var resultData = searchResults[i].data;
-                                if ((resultData.ups - resultData.downs) > Main.Preferences.get("hiddenPostScoreThreshold")) {
-                                    if (resultData.domain === "youtube.com") {
-                                        var urlSearch = resultData.url.substring(resultData.url.indexOf("?") +1);
-                                        var requestObjects = urlSearch.split('&');
-                                        for (var a = 0, roLen = requestObjects.length; a < roLen; a++) {
-                                            var obj = requestObjects[a].split('=');
-                                            if (obj[0] === "v" && obj[1] === currentVideoIdentifier) {
-                                                finalResultCollection.push(resultData);
-                                            }
+                            resultData.forEach(function(result) {
+                                if (resultData.domain === "youtube.com") {
+                                    var urlSearch = resultData.url.substring(resultData.url.indexOf("?") +1);
+                                    var requestItems = urlSearch.split('&');
+                                    requestItems.forEach(function (requestItem) {
+                                        var requestPair = requestItem.split('=');
+                                        if (requestPair[0] === "v" && requestPair[1] === currentVideoIdentifier) {
+                                            finalResultCollection.push(result);
                                         }
-                                    } else if (resultData.domain === "youtu.be") {
-                                        var urlSearch = resultData.url.substring(resultData.url.indexOf("/") + 1);
-                                        var obj = urlSearch.split('?');
-                                        if (obj[0] === currentVideoIdentifier) {
-                                            finalResultCollection.push(resultData);
-                                        }
+                                    });
+
+                                } else if (resultData.domain === "youtu.be") {
+                                    var urlSearch = resultData.url.substring(resultData.url.indexOf("/") + 1);
+                                    var obj = urlSearch.split('?');
+                                    if (obj[0] === currentVideoIdentifier) {
+                                        finalResultCollection.push(resultData);
                                     }
                                 }
-                            }
+                            });
                             if (finalResultCollection.length > 0) {
                                 var preferredSubreddit = null;
                                 var preferredPost = null;
