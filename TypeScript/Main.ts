@@ -95,6 +95,15 @@ module AlienTube {
         }
 
 		/**
+		* Get a Reddit-style "x time ago" Timestamp from a unix epoch time.
+		* @param epochTime Epoch timestamp to calculate from.
+		* @returns A string with a human readable time.
+		*/
+		static getHumanReadableTimestamp(epochTime : number) : string {
+			return "";
+		}
+
+		/**
 		* Get the path to a ressource in the AlienTube folder.
 		* @param path Filename to the ressource.
 		* @returns Ressource path (file://)
