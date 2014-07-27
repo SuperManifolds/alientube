@@ -4,7 +4,7 @@
 #alientube {
   margin-top: 40px;
   padding-bottom: 40px;
-  width: 628px;
+  width: 100%;
   padding-right: 20px;
   box-sizing: border-box; }
   #alientube .single_line {
@@ -32,6 +32,7 @@
         color: #c92323; }
 
 .at_tab {
+  flex-grow: 1;
   position: relative;
   z-index: 1;
   font-family: Verdana, sans-serif !important;
@@ -67,7 +68,10 @@
 
 #at_tabcontainer {
   padding-left: 20px;
-  position: relative; }
+  padding-right: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: row; }
 
 @-moz-document url-prefix() {
   .at_tab {

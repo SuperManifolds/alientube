@@ -41,7 +41,6 @@ module AlienTube {
                             var searchResults = results.data.children;
                             var finalResultCollection = [];
 
-                            console.log(results);
                             // Filter out Reddit threads that do not lead to the video.
                             searchResults.forEach(function(result) {
                                 if (CommentSection.validateItemFromResultSet(result.data, currentVideoIdentifier)) {
@@ -101,36 +100,38 @@ module AlienTube {
                                 var tabContainer = this.template.getElementById("tabcontainer").content.cloneNode(true);
                                 var actualTabContainer = tabContainer.querySelector("#at_tabcontainer");
                                 var overflowContainer = tabContainer.querySelector("#at_overflow");
-                                var tlen = this.threadCollection.length;
-                                var c;
-                                var width = 0;
+                                var len = this.threadCollection.length;
+                                var maxWidth = document.getElementById("watch7-content").offsetWidth - 80;
+                                var width = (21 + this.threadCollection[0].subreddit.length * 7);
 
                                 /* Calculate the width of tabs and determine how many you can fit without breaking the
                                 bounds of the comment section. */
-                                for (c = 0; c < tlen; c++) {
-                                    width = width + (21 + (this.threadCollection[c].subreddit.length * 7));
-                                    if (width >= 560) {
-                                        break;
+                                if (len > 1) {
+                                    var i;
+                                    for (i = 1; i < len; i++) {
+                                        width = width + (21 + (this.threadCollection[i].subreddit.length * 7));
+                                        if (width >= maxWidth) {
+                                            break;
+                                        }
+                                        var tab = document.createElement("button");
+                                        tab.className = "at_tab";
+                                        tab.setAttribute("data-value", this.threadCollection[i].subreddit);
+                                        var tabName = document.createTextNode(this.threadCollection[i].subreddit);
+                                        tab.appendChild(tabName);
+                                        actualTabContainer.insertBefore(tab, overflowContainer);
                                     }
-                                    var tab = document.createElement("button");
-                                    tab.className = "at_tab";
-                                    tab.setAttribute("data-value", this.threadCollection[c].subreddit);
-                                    var tabName = document.createTextNode(this.threadCollection[c].subreddit);
-                                    tab.appendChild(tabName);
-                                    actualTabContainer.insertBefore(tab, overflowContainer);
-                                }
-
-                                // We can't fit any more tabs. We will now start populating the overflow menu.
-                                if (c < tlen) {
-                                    for (c = c; c < tlen; c++) {
-                                        var menuItem = document.createElement("li");
-                                        menuItem.setAttribute("data-value", this.threadCollection[c].subreddit);
-                                        var itemName = document.createTextNode(this.threadCollection[c].subreddit);
-                                        menuItem.appendChild(itemName);
-                                        overflowContainer.children[1].appendChild(menuItem);
+                                    // We can't fit any more tabs. We will now start populating the overflow menu.
+                                    if (i < len) {
+                                        for (i = i; i < len; i++) {
+                                            var menuItem = document.createElement("li");
+                                            menuItem.setAttribute("data-value", this.threadCollection[i].subreddit);
+                                            var itemName = document.createTextNode(this.threadCollection[i].subreddit);
+                                            menuItem.appendChild(itemName);
+                                            overflowContainer.children[1].appendChild(menuItem);
+                                        }
+                                    } else {
+                                        overflowContainer.style.display = "none";
                                     }
-                                } else {
-                                    overflowContainer.style.display = "none";
                                 }
 
                                 // Load the image for the Google+ icon.
