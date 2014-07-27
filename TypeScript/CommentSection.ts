@@ -41,26 +41,14 @@ module AlienTube {
                             var searchResults = results.data.children;
                             var finalResultCollection = [];
 
-                            // Filter out Reddit threads that do not lead to the video, or has been downvoted too much.
-                            resultData.forEach(function(result) {
-                                if (resultData.domain === "youtube.com") {
-                                    var urlSearch = resultData.url.substring(resultData.url.indexOf("?") +1);
-                                    var requestItems = urlSearch.split('&');
-                                    requestItems.forEach(function (requestItem) {
-                                        var requestPair = requestItem.split('=');
-                                        if (requestPair[0] === "v" && requestPair[1] === currentVideoIdentifier) {
-                                            finalResultCollection.push(result);
-                                        }
-                                    });
-
-                                } else if (resultData.domain === "youtu.be") {
-                                    var urlSearch = resultData.url.substring(resultData.url.indexOf("/") + 1);
-                                    var obj = urlSearch.split('?');
-                                    if (obj[0] === currentVideoIdentifier) {
-                                        finalResultCollection.push(resultData);
-                                    }
+                            console.log(results);
+                            // Filter out Reddit threads that do not lead to the video.
+                            searchResults.forEach(function(result) {
+                                if (CommentSection.validateItemFromResultSet(result.data, currentVideoIdentifier)) {
+                                    finalResultCollection.push(result.data);
                                 }
                             });
+
                             if (finalResultCollection.length > 0) {
                                 var preferredSubreddit = null;
                                 var preferredPost = null;
@@ -156,7 +144,7 @@ module AlienTube {
                                     if (!Main.Preferences.get("rememberTabsOnViewChange")) {
                                         this.storedTabCollection.length = 0;
                                     }
-                                    this.storedTabCollection.push(new CommentThread(responseObject));
+                                    this.storedTabCollection.push(new CommentThread(responseObject, this));
                                 });
                             } else {
                                 this.returnNoResults();
@@ -198,6 +186,34 @@ module AlienTube {
             redditContainer.id = "alientube";
             redditContainer.appendChild(contents);
             commentsContainer.insertBefore(redditContainer, googlePlusContainer);
+        }
+
+        /**
+            Validate a Reddit search result set and ensure the link urls go to the correct address.
+            This is done due to the Reddit search result being extremely unrealiable, and providing mismatches.
+
+            @param itemFromResultSet An object from the reddit search result array.
+            @param currentVideoIdentifier A YouTube video identifier to compare to.
+            @returns A boolean indicating whether the item is actually for the current video.
+        */
+        static validateItemFromResultSet(itemFromResultSet : any, currentVideoIdentifier : string) : Boolean {
+            if (itemFromResultSet.domain === "youtube.com") {
+                var urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.indexOf("?") +1);
+                var requestItems = urlSearch.split('&');
+                for (var i = 0, len = requestItems.length; i < len; i++) {
+                    var requestPair = requestItems[i].split("=");
+                    if (requestPair[0] === "v" && requestPair[1] === currentVideoIdentifier) {
+                        return true;
+                    }
+                }
+            } else if (itemFromResultSet.domain === "youtu.be") {
+                var urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.indexOf("/") + 1);
+                var obj = urlSearch.split('?');
+                if (obj[0] === currentVideoIdentifier) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /**
