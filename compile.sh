@@ -10,6 +10,9 @@ cp res/templates.html Chrome/res/templates.html
 cp res/templates.html Safari.safariextension/res/templates.html
 cp res/templates.html Firefox/data/templates.html
 
+cp res/localisation.json Chrome/res/localisation.json
+cp res/localisation.json Safari.safariextension/res/localisation.json
+cp res/localisation.json Firefox/data/localisation.json
 
 
 tsc --out lib/script.js TypeScript/index.ts --removeComments --declaration --sourcemap

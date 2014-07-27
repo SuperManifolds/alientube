@@ -18,6 +18,7 @@ module AlienTube {
     export class Main {
         static Preferences : BrowserPreferenceManager;
 		commentSection : CommentSection;
+		localisationManager : LocalisationManager;
 		currentVideoIdentifier : string;
         constructor() {
 			// Load stylesheet from disk.
@@ -30,6 +31,11 @@ module AlienTube {
                 document.head.appendChild(stylesheet);
             }
 
+			// Get language file
+			new HttpRequest(Main.getExtensionRessourcePath("localisation.json"), RequestType.GET, (data) => {
+				this.localisationManager = new LocalisationManager(JSON.parse(data));
+			});
+
 			// Start observer to detect when a new video is loaded.
 			var observer = new MutationObserver(this.mutationObserver);
 			var config = { attributes : true, childList : true, characterData : true };
@@ -40,7 +46,9 @@ module AlienTube {
 			this.commentSection = new CommentSection(this.currentVideoIdentifier);
         }
 
-
+		/**
+			Mutation Observer for monitoring for whenver the user changes to a new "page"
+		*/
 		private mutationObserver(mutations : Array<MutationRecord>) {
 			mutations.forEach(function(mutation) {
 				var target = <HTMLElement>mutation.target;
@@ -100,7 +108,56 @@ module AlienTube {
 		* @returns A string with a human readable time.
 		*/
 		static getHumanReadableTimestamp(epochTime : number) : string {
-			return "";
+			var secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
+			var timeUnits = {
+				years:   Math.floor(secs / 60 / 60 / 24 / 365.27),
+				months:  Math.floor(secs / 60 / 60 / 24 / 30),
+				weeks:   Math.floor(secs / 60 / 60 / 24 / 7),
+				days:    Math.floor(secs / 60 / 60 / 24),
+				hours:   Math.floor(secs / 60 / 60),
+				minutes: Math.floor(secs / 60),
+				seconds: secs,
+			};
+
+			for (var timeUnit in timeUnits) {
+				if (timeUnits.hasOwnProperty(timeUnit) && timeUnits[timeUnit] >= 1) {
+					return timeUnits[timeUnit] + " " +  timeUnits[timeUnit] > 1 ?
+				}
+			}
+
+			var secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
+        	var minutes = secs / 60;
+        	secs = Math.floor(secs % 60);
+        	if (minutes < 1) {
+            	return secs + (secs > 1 ? ' seconds' : ' second') + ' ago';
+        	}
+        	var hours = minutes / 60;
+        	minutes = Math.floor(minutes % 60);
+        	if (hours < 1) {
+            	return minutes + (minutes > 1 ? ' minutes' : ' minute') + ' ago';
+        	}
+        	var days = hours / 24;
+        		hours = Math.floor(hours % 24);
+        	if (days < 1) {
+            	return hours + (hours > 1 ? ' hours' : ' hour') + ' ago';
+        	}
+        	var weeks = days / 7;
+        	days = Math.floor(days % 7);
+        	if (weeks < 1) {
+            	return days + (days > 1 ? ' days' : ' day') + ' ago';
+        	}
+        	var months = weeks / 4.35;
+        	weeks = Math.floor(weeks % 4.35);
+        	if (months < 1) {
+            	return weeks + (weeks > 1 ? ' weeks' : ' week') + ' ago';
+        	}
+        	var years = months / 12;
+        	months = Math.floor(months % 12);
+        	if (years < 1) {
+            	return months + (months > 1 ? ' months' : ' month') + ' ago';
+        	}
+        	years = Math.floor(years);
+        	return years + (years > 1 ? ' years' : ' years') + ' ago';
 		}
 
 		/**
