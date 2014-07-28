@@ -1,0 +1,18 @@
+{
+    "en": {
+        "timestampYear": "year",
+        "timestampPluralYear": "years",
+        "timestampMonth": "month",
+        "timestampPluralMonth": "months",
+        "timestampWeek": "week",
+        "timestampPluralWeek": "weeks",
+        "timestampDay": "day",
+        "timestampPluralDay": "days",
+        "timestampHour": "hour",
+        "timestampPluralHour": "hours",
+        "timestampMinute": "minute",
+        "timestampPluralMinute": "minutes",
+        "timestampSecond": "second",
+        "timestampPluralSecond": "seconds"
+    }
+}

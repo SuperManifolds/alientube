@@ -17,7 +17,11 @@ module AlienTube {
         }
 
         get (key : string) {
-            return this.localisationIndex[window.navigator.language][key] || this.localisationIndex["en"][key];
+            if (this.localisationIndex[window.navigator.language]) {
+                return this.localisationIndex[window.navigator.language][key] || this.localisationIndex["en"][key];
+            } else {
+                return this.localisationIndex["en"][key];
+            }
         }
     }
 }
