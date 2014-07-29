@@ -16,6 +16,11 @@ module AlienTube {
             this.localisationIndex = localisationIndex;
         }
 
+        /**
+            Retrieve a localised string by key
+            @param key The key in the localisation file representing a language string.
+            @returns The requested language string.
+        */
         get (key : string) {
             if (this.localisationIndex[window.navigator.language]) {
                 return this.localisationIndex[window.navigator.language][key] || this.localisationIndex["en"][key];
