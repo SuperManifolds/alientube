@@ -199,6 +199,7 @@ module AlienTube {
         */
         static validateItemFromResultSet(itemFromResultSet : any, currentVideoIdentifier : string) : Boolean {
             if (itemFromResultSet.domain === "youtube.com") {
+                // For urls based on the full youtube.com domain, retrieve the value of the "v" query parameter and compare it.
                 var urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.indexOf("?") +1);
                 var requestItems = urlSearch.split('&');
                 for (var i = 0, len = requestItems.length; i < len; i++) {
@@ -208,6 +209,7 @@ module AlienTube {
                     }
                 }
             } else if (itemFromResultSet.domain === "youtu.be") {
+                // For urls based on the shortened youtu.be domain, retrieve everything the path after the domain and compare it.
                 var urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.indexOf("/") + 1);
                 var obj = urlSearch.split('?');
                 if (obj[0] === currentVideoIdentifier) {

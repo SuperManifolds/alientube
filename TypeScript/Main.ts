@@ -119,6 +119,8 @@ module AlienTube {
 				Second: secs,
 			};
 
+		 	/* Retrieve the most relevant number by retrieving the first one that is "1" or more.
+			   Decide if it is plural and retrieve the correct localisation */
 			for (var timeUnit in timeUnits) {
 				if (timeUnits.hasOwnProperty(timeUnit) && timeUnits[timeUnit] >= 1) {
 					var timeString = timeUnits[timeUnit] > 1 ?
