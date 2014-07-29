@@ -26,8 +26,10 @@ module AlienTube {
                 templateLink.onload = () => {
                     this.template = templateLink.import;
 
-                    // Set loading spinner.
-                    this.set(this.template.getElementById("loading").content.cloneNode(true));
+                    // Set loading indicator.
+                    var loadingContentIndicator = this.template.getElementById("loading").content.cloneNode(true);
+                    loadingContentIndicator.querySelector(".loading").appendChild(document.createTextNode(Main.localisationManager.get("loadingContentText")));
+                    this.set(loadingContentIndicator);
 
                     // Open a search request to Reddit for the video identfiier
                     var videoSearchString = encodeURIComponent("url:'/watch?v=" + currentVideoIdentifier + "' (site:youtube.com OR site:youtu.be)");
@@ -136,6 +138,11 @@ module AlienTube {
 
                                 // Load the image for the Google+ icon.
                                 tabContainer.querySelector(".at_gplus img").src = Main.getExtensionRessourcePath("gplus.png");
+
+                                // Set loading indicator
+                                var loadingContentIndicator = tabContainer.querySelector(".loading");
+                                loadingContentIndicator.appendChild(document.createTextNode(Main.localisationManager.get("loadingContentText")));
+                                this.set(loadingContentIndicator);
                                 this.set(tabContainer);
 
                                 // Load the first tab.

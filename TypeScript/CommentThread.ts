@@ -40,6 +40,13 @@ module AlienTube {
             timestamp.appendChild(document.createTextNode(Main.getHumanReadableTimestamp(this.threadInformation.created_utc)));
             timestamp.setAttribute("timestamp", new Date(this.threadInformation.created_utc).toISOString);
 
+            /* Set the localised text for "at {timestamp}" and "by {username}" */
+            var submittedAtTimeText = threadContainer.querySelector(".submittedAtTimeText");
+            submittedAtTimeText.appendChild(document.createTextNode(Main.localisationManager.get("submittedAtTimeText")));
+
+            var submittedByUsernameText = threadContainer.querySelector(".submittedByUsernameText");
+            submittedByUsernameText.appendChild(document.createTextNode(Main.localisationManager.get("submittedByUsernameText")));
+
             this.set(threadContainer);
         }
 

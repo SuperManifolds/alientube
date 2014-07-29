@@ -13,6 +13,10 @@
         "timestampMinute": "minute",
         "timestampPluralMinute": "minutes",
         "timestampSecond": "second",
-        "timestampPluralSecond": "seconds"
+        "timestampPluralSecond": "seconds",
+
+        "submittedAtTimeText": "by ",
+        "submittedByUsernameText": "at ",
+        "loadingContentText": "Loading.."
     }
 }
