@@ -17,7 +17,7 @@ module AlienTube {
 			hiddenCommentScoreThreshold: -4,
 			showGooglePlus: false,
 			rememberTabsOnViewChange: true,
-			userIdentifier: ""
+			redditUserIdentifierHash: ""
 		}
 
         constructor() {

@@ -19,8 +19,8 @@ module AlienTube {
             this.threadInformation = threadData.data.children[0].data;
             this.commentList = threadData.data.children;
 
-            var previousUserIdentifier = Main.Preferences.get("userIdentifier");
-            Main.Preferences.set("userIdentifier", threadData.data.modhash);
+            var previousUserIdentifier = Main.Preferences.get("redditUserIdentifierHash");
+            Main.Preferences.set("redditUserIdentifierHash", threadData.data.modhash);
             this.postIsInPreservedMode = Main.isPreserved(this.threadInformation.created_utc);
 
             var threadContainer = this.commentSection.template.getElementById("threadcontainer").content.cloneNode(true);
