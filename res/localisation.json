@@ -15,8 +15,8 @@
         "timestampSecond": "second",
         "timestampPluralSecond": "seconds",
 
-        "submittedAtTimeText": "by ",
-        "submittedByUsernameText": "at ",
+        "submittedAtTimeText": "submitted ",
+        "submittedByUsernameText": "by ",
         "loadingContentText": "Loading.."
     }
 }
