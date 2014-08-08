@@ -13,6 +13,7 @@ lib/script.js.map
 res/style.css
 Chrome/TypeScript/*
 lib/script.d.ts
+.sass-cache/*
 
 js/script.js.map
 
