@@ -22,4 +22,8 @@ js/script.js
 js/script.d.ts
 
 res/style.css
+compile.sh
+reloadExtension.scpt
 
+
+compile.sh
