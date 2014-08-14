@@ -11,8 +11,8 @@ module AlienTube {
     */
     export class CommentSection {
         template : HTMLDocument;
-        threadCollection: Array<any>;
-        storedTabCollection : Array<CommentThread>;
+        private threadCollection: Array<any>;
+        private storedTabCollection : Array<CommentThread>;
 
         constructor(currentVideoIdentifier:string) {
             this.threadCollection = new Array();
@@ -28,7 +28,7 @@ module AlienTube {
 
                     // Set loading indicator.
                     var loadingContentIndicator = this.template.getElementById("loading").content.cloneNode(true);
-                    loadingContentIndicator.querySelector(".loading").appendChild(document.createTextNode(Main.localisationManager.get("loadingContentText")));
+                    loadingContentIndicator.querySelector(".loading_inner").appendChild(document.createTextNode(Main.localisationManager.get("loadingContentText")));
                     this.set(loadingContentIndicator);
 
                     // Open a search request to Reddit for the video identfiier
@@ -141,8 +141,7 @@ module AlienTube {
 
                                 // Set loading indicator
                                 var loadingContentIndicator = tabContainer.querySelector(".loading");
-                                loadingContentIndicator.appendChild(document.createTextNode(Main.localisationManager.get("loadingContentText")));
-                                this.set(loadingContentIndicator);
+                                loadingContentIndicator.querySelector(".loading_inner").appendChild(document.createTextNode(Main.localisationManager.get("loadingContentText")));
                                 this.set(tabContainer);
 
                                 // Load the first tab.

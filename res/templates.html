@@ -1,5 +1,7 @@
 <template id="loading">
     <div class="loading">
+        <div class="loading_inner">
+        </div>
     </div>
 </template>
 
@@ -19,9 +21,9 @@
     </div>
     <div id="at_comments">
         <div class="loading">
-            <div class="loading">
+            <div class="loading_inner">
             </div>
-        </loading>
+        </div>
     </div>
 </template>
 
@@ -35,14 +37,41 @@
         <div class="info">
             <a class="title" target="_blank"> </a>
             <span class="tagline">
-                <span class="templateSubmittedAtTimeText"></span> <time class="timestamp"> </time>
-                <span class="templateSubmittedByUsernameText"></span><a class="username" target="_blank"> </a>
+                <span class="templateSubmittedAtTimeText"></span> <time class="at_timestamp"> </time>
+                <span class="templateSubmittedByUsernameText"></span><a class="at_author" target="_blank"> </a>
             </span>
             <span class="options">
                 <span class="commentTo">comment</span>
-                <a href="https://getpocket.com/save?url={{encodedPermalink}}" target="_blank">pocket</a>
+                <a class="at_pocket" href="" target="_blank">pocket</a>
                 <span class="refresh">refresh</span>
             </span>
         </div>
     </header>
+</template>
+
+<template id="comment">
+    <article class="at_comment">
+        <div class="at_votecontrols">
+            <div class="at_arrow up"></div>
+            <div class="at_arrow down"></div>
+        </div>
+        <div class="at_commentmain">
+            <div class="info">
+                <a class="at_togglehide" href="#">[-]</a>
+                <a class="at_author" rel="author" target="_blank"></a>
+                <span class="at_flair"></span>
+                <time class="at_timestamp" datetime=""></time>
+            </div>
+            <p class="at_commentcontent"></p>
+            <span class="options">
+                <a class="at_permalink" href="" target="_blank"></a>
+                <a class="at_parentlink" href="" target="_blank"></a>
+                <span class="at_reply"></span
+                <a class="at_pocket" href="" target="_blank"></a>
+            </span>
+        </div>
+        <div class="at_replies">
+
+        </div>
+    </article>
 </template>

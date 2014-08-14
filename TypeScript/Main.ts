@@ -109,6 +109,8 @@ module AlienTube {
 		*/
 		static getHumanReadableTimestamp(epochTime : number) : string {
 			var secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
+			secs = Math.abs(secs);
+			
 			var timeUnits = {
 				Year:   Math.floor(secs / 60 / 60 / 24 / 365.27),
 				Month:  Math.floor(secs / 60 / 60 / 24 / 30),
