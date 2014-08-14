@@ -145,7 +145,7 @@ module AlienTube {
                                 this.set(tabContainer);
 
                                 // Load the first tab.
-                                this.downloadThread(this.threadCollection[0], () => {
+                                this.downloadThread(this.threadCollection[0], (response) => {
                                     var responseObject = JSON.parse(response);
                                     // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
                                     if (!Main.Preferences.get("rememberTabsOnViewChange")) {
