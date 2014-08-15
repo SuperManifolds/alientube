@@ -17,6 +17,7 @@ module AlienTube {
 
         constructor(commentData : any, commentThread : CommentThread) {
             this.children = new Array();
+            this.commentObject = commentData;
 
             this.representedHTMLElement = commentThread.commentSection.template.getElementById("comment").content.cloneNode(true);
 
@@ -26,22 +27,32 @@ module AlienTube {
 
             /* Set the link and name of author, as well as whether they are the OP or not. */
             var author = this.representedHTMLElement.querySelector(".at_author");
-            author.appendChild(document.createTextNode(commentData.author));
-            author.setAttribute("href", "http://reddit.com/u/" + commentData.author);
+            author.appendChild(document.createTextNode(this.commentObject.author));
+            author.setAttribute("href", "http://reddit.com/u/" + this.commentObject.author);
             if (commentData.author === commentThread.threadInformation.author) {
                 author.setAttribute("data-reddit-op", "true");
             }
 
             var flair = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_flair");
-            if (commentData.author_flair_text) {
-                flair.appendChild(document.createTextNode(commentData.author_flair_text));
+            if (this.commentObject.author_flair_text) {
+                flair.appendChild(document.createTextNode(this.commentObject.author_flair_text));
             } else {
                 flair.style.display = "none";
             }
 
             var timestamp = this.representedHTMLElement.querySelector(".at_timestamp");
             timestamp.appendChild(document.createTextNode(Main.getHumanReadableTimestamp(this.commentObject.created_utc)));
-            timestamp.setAttribute("timestamp", new Date(this.commentObject.created_utc).toISOString);
+            timestamp.setAttribute("timestamp", new Date(this.commentObject.created_utc).toISOString());
+
+            var contentTextOfComment = this.representedHTMLElement.querySelector(".at_commentcontent");
+            contentTextOfComment = this.commentObject.body;
+
+            var replyContainer = this.representedHTMLElement.querySelector(".at_replies");
+            /*this.commentObject.replies.forEach((commentObject) => {
+                var comment = new Comment(commentObject.data, commentThread);
+                this.children.push(comment);
+                replyContainer.appendChild(comment.representedHTMLElement);
+            });*/
         }
     }
 }

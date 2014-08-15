@@ -20,11 +20,12 @@ module AlienTube {
         constructor(threadData : any, commentSection : CommentSection) {
             this.children = new Array();
             this.commentSection = commentSection;
-            this.threadInformation = threadData.data.children[0].data;
-            this.commentData = threadData.data.children.splice(0, 1);
+            console.log(threadData);
+            this.threadInformation = threadData[0].data.children[0].data;
+            this.commentData = threadData[1].data.children;
 
             var previousUserIdentifier = Main.Preferences.get("redditUserIdentifierHash");
-            Main.Preferences.set("redditUserIdentifierHash", threadData.data.modhash);
+            Main.Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
             this.postIsInPreservedMode = Main.isPreserved(this.threadInformation.created_utc);
 
             var threadContainer = this.commentSection.template.getElementById("threadcontainer").content.cloneNode(true);
@@ -45,7 +46,7 @@ module AlienTube {
             /* Set the the thread posted time */
             var timestamp = threadContainer.querySelector(".at_timestamp");
             timestamp.appendChild(document.createTextNode(Main.getHumanReadableTimestamp(this.threadInformation.created_utc)));
-            timestamp.setAttribute("timestamp", new Date(this.threadInformation.created_utc).toISOString);
+            timestamp.setAttribute("timestamp", new Date(this.threadInformation.created_utc).toISOString());
 
             /* Set the localised text for "at {timestamp}" and "by {username}" */
             var submittedAtTimeText = threadContainer.querySelector(".templateSubmittedAtTimeText");
@@ -56,7 +57,9 @@ module AlienTube {
 
             /* Start iterating the comment section */
             this.commentData.forEach((commentObject) => {
-                this.children.push(new Comment(commentObject.data, this));
+                var comment = new Comment(commentObject.data, this);
+                this.children.push(comment);
+                threadContainer.appendChild(comment.representedHTMLElement);
             });
 
             this.set(threadContainer);
