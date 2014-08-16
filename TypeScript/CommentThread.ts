@@ -20,9 +20,9 @@ module AlienTube {
         constructor(threadData : any, commentSection : CommentSection) {
             this.children = new Array();
             this.commentSection = commentSection;
-            console.log(threadData);
             this.threadInformation = threadData[0].data.children[0].data;
             this.commentData = threadData[1].data.children;
+            this.commentData.pop();
 
             var previousUserIdentifier = Main.Preferences.get("redditUserIdentifierHash");
             Main.Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
@@ -55,11 +55,34 @@ module AlienTube {
             var submittedByUsernameText = threadContainer.querySelector(".templateSubmittedByUsernameText");
             submittedByUsernameText.appendChild(document.createTextNode(Main.localisationManager.get("submittedByUsernameText")));
 
+            var openNewCommentBox = threadContainer.querySelector(".commentTo");
+            openNewCommentBox.appendChild(document.createTextNode(Main.localisationManager.get("commentText")));
+
+            var displaySourceForComment = threadContainer.querySelector(".at_displaysource");
+            displaySourceForComment.appendChild(document.createTextNode(Main.localisationManager.get("displaySourceForCommentText")));
+
+            var saveItemToRedditList = threadContainer.querySelector(".save");
+            saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
+
+            var refreshCommentThread = threadContainer.querySelector(".refresh");
+            refreshCommentThread.appendChild(document.createTextNode(Main.localisationManager.get("refreshCommentThreadText")));
+
+            var giveGoldToUser = threadContainer.querySelector(".giveGold");
+            giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("giveGoldToUserText")));
+
+            var reportToAdministrators = threadContainer.querySelector(".report");
+            reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("reportToAdministratorsText")));
+
             /* Start iterating the comment section */
             this.commentData.forEach((commentObject) => {
-                var comment = new Comment(commentObject.data, this);
-                this.children.push(comment);
-                threadContainer.appendChild(comment.representedHTMLElement);
+                console.log(commentObject);
+                if (commentObject.kind === "more") {
+
+                } else {
+                    var comment = new Comment(commentObject.data, this);
+                    this.children.push(comment);
+                    threadContainer.appendChild(comment.representedHTMLElement);
+                }
             });
 
             this.set(threadContainer);

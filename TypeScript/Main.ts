@@ -110,7 +110,7 @@ module AlienTube {
 		static getHumanReadableTimestamp(epochTime : number) : string {
 			var secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
 			secs = Math.abs(secs);
-			
+
 			var timeUnits = {
 				Year:   Math.floor(secs / 60 / 60 / 24 / 365.27),
 				Month:  Math.floor(secs / 60 / 60 / 24 / 30),
@@ -127,7 +127,7 @@ module AlienTube {
 				if (timeUnits.hasOwnProperty(timeUnit) && timeUnits[timeUnit] >= 1) {
 					var timeString = timeUnits[timeUnit] > 1 ?
 						this.localisationManager.get("timestampPlural" + timeUnit) : this.localisationManager.get("timestamp" + timeUnit);
-					return timeUnits[timeUnit] + " " + timeString;
+					return timeUnits[timeUnit] + " " + timeString + Main.localisationManager.get("timestampSinceDescription");
 				}
 			}
 		}

@@ -5,12 +5,21 @@
 }
 
 #alientube {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
     margin-top: 40px;
     padding-bottom: 40px;
     width: 100%;
     padding-left: 20px;
     padding-right: 20px;
     box-sizing: border-box;
+
+    & a {
+        color: #0066aa;
+    }
+
+    & a:hover {
+        color: #0066aa;
+    }
 
     & .single_line {
         text-align: center;
@@ -54,23 +63,55 @@
         & .title {
             font-size: 130%;
         }
+    }
 
-        & .tagline {
-            font-size: 90%;
-            color: #a2a2a2;
-            display: block;
+    & .tagline {
+        font-size: x-small;
+        color: #a2a2a2;
+        display: block;
+    }
+
+    & .options {
+        padding-top: 5px;
+        font-size: 80%;
+        color: #868686;
+        font-weight: bold;
+        display: block;
+
+        & a {
+            color: #868686;
+        }
+    }
+
+    & article {
+        font-family: verdana, sans-serif;
+        word-wrap:break-word;
+        break-word: all;
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        & .info {
+            font-size: x-small;
+            padding-bottom: 5px;
         }
 
-        & .options {
-            line-height: 1.5;
-            font-size: 80%;
-            color: #868686;
+        & .at_author {
             font-weight: bold;
-            display: block;
+        }
 
-            & a {
-                color: #868686;
-            }
+        & .at_score {
+            font-weight: bold;
+            color: #333;
+        }
+    }
+
+    & .at_replies {
+        padding-top: 5px;
+
+        & article {
+            padding-left: 20px;
+            padding-bottom: 0;
+            border-left: dotted 1px #cacaca;
         }
     }
 }

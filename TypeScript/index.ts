@@ -6,7 +6,7 @@
 /// <reference path="Comment.ts" />
 /// <reference path="LocalisationManager.ts" />
 
-
+/// <reference path="typings/snuownd.d.ts" />
 /// <reference path="typings/chrome/chrome.d.ts" />
 /// <reference path="typings/firefox/firefox.d.ts" />
 /// <reference path="typings/safari/safari.d.ts" />

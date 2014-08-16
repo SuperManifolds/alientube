@@ -15,8 +15,17 @@
         "timestampSecond": "second",
         "timestampPluralSecond": "seconds",
 
+        "timestampSinceDescription": " ago",
         "submittedAtTimeText": "submitted ",
         "submittedByUsernameText": "by ",
-        "loadingContentText": "Loading.."
+        "loadingContentText": "Loading..",
+        "scorePointsText": " points",
+        "commentText": "comment",
+        "refreshCommentThreadText": "refresh",
+        "giveGoldToUserText": "give gold",
+        "displaySourceForCommentText": "source",
+        "saveItemToRedditList": "save",
+        "reportToAdministratorsText": "report",
+        "replyToCommentText": "reply"
     }
 }
