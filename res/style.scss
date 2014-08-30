@@ -54,6 +54,7 @@
 
     & header {
         padding-top: 20px;
+        padding-bottom:20px;
         line-height: 1.25;
 
         & .title {
@@ -75,6 +76,7 @@
         display: block;
 
         & > * {
+            color: #868686;
             padding-right: 4px;
         }
     }
@@ -98,6 +100,13 @@
         & .at_score {
             font-weight: bold;
             color: #333;
+        }
+
+        & .at_commentcontent {
+            & p {
+                margin-top: 2px;
+                margin-bottom: 2px;
+            }
         }
     }
 
