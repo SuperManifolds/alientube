@@ -234,9 +234,6 @@ module AlienTube {
                     overflowContainer.style.display = "none";
                 }
             }
-            // Load the image for the Google+ icon.
-            var googlePlusIcon = <HTMLImageElement> tabContainer.querySelector(".at_gplus img");
-            googlePlusIcon.src = Main.getExtensionRessourcePath("gplus.png");
 
             // Set the active tab if provided
             if (selectTabAtIndex != null) {
