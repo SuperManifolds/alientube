@@ -83,8 +83,14 @@
         display: block;
 
         & > * {
+            cursor: pointer;
+            text-decoration: none;
             color: #868686;
             padding-right: 4px;
+
+            &:hover {
+                color: #bebcbc;
+            }
         }
     }
 
