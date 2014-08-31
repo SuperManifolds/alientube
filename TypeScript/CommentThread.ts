@@ -33,7 +33,7 @@ module AlienTube {
             /* Set the thread title and link to it */
             var title = threadContainer.querySelector(".title");
             title.appendChild(document.createTextNode(this.threadInformation.title));
-            title.setAttribute("href", this.threadInformation.permalink);
+            title.setAttribute("href", "http://reddit.com" + this.threadInformation.permalink);
 
             /* Set the username of the author and link to them */
             var username = threadContainer.querySelector(".at_author");
