@@ -11,7 +11,7 @@ module AlienTube {
     */
     export class CommentSection {
         template : HTMLDocument;
-        private threadCollection : Array<any>;
+        threadCollection : Array<any>;
         private storedTabCollection : Array<CommentThread>;
 
 
@@ -116,14 +116,7 @@ module AlienTube {
                                 mainContainer.appendChild(tabContainerTemplate.querySelector("#at_comments"));
 
                                 // Load the first tab.
-                                this.downloadThread(this.threadCollection[0], (downloadThreadResponse : string) => {
-                                    var responseObject = JSON.parse(downloadThreadResponse);
-                                    // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
-                                    if (!Main.Preferences.get("rememberTabsOnViewChange")) {
-                                        this.storedTabCollection.length = 0;
-                                    }
-                                    this.storedTabCollection.push(new CommentThread(responseObject, this));
-                                });
+                                this.downloadThread(this.threadCollection[0]);
                             } else {
                                 this.returnNoResults();
                             }
@@ -139,12 +132,16 @@ module AlienTube {
         /**
         * Download a thread from Reddit.
         * @param threadData Data about the thread to download from a Reddit search page.
-        * @param [callback] Callback handler for the download.
         */
-        downloadThread (threadData : any, callback? : any) {
+        downloadThread (threadData : any) {
             var requestUrl = "https://pay.reddit.com/r/" + threadData.subreddit + "/comments/" + threadData.id + ".json";
             new HttpRequest(requestUrl, RequestType.GET, (response) => {
-                callback(response);
+                var responseObject = JSON.parse(response);
+                // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
+                if (!Main.Preferences.get("rememberTabsOnViewChange")) {
+                    this.storedTabCollection.length = 0;
+                }
+                this.storedTabCollection.push(new CommentThread(responseObject, this));
             });
         }
 
@@ -320,14 +317,7 @@ module AlienTube {
                     tabElement.classList.remove("active");
                 }
                 tabElementClickedByUser.classList.add("active");
-                this.downloadThread(this.threadCollection[currentIndexOfNewTab], (downloadThreadResponse : string) => {
-                    var responseObject = JSON.parse(downloadThreadResponse);
-                    // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
-                    if (!Main.Preferences.get("rememberTabsOnViewChange")) {
-                        this.storedTabCollection.length = 0;
-                    }
-                    this.storedTabCollection.push(new CommentThread(responseObject, this));
-                });
+                this.downloadThread(this.threadCollection[currentIndexOfNewTab]);
             }
         }
 
@@ -350,14 +340,7 @@ module AlienTube {
             this.clearTabsFromTabContainer();
             this.insertTabsIntoDocument(tabContainer, 0);
 
-            this.downloadThread(this.threadCollection[currentIndexOfNewTab], (downloadThreadResponse : string) => {
-                var responseObject = JSON.parse(downloadThreadResponse);
-                // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
-                if (!Main.Preferences.get("rememberTabsOnViewChange")) {
-                    this.storedTabCollection.length = 0;
-                }
-                this.storedTabCollection.push(new CommentThread(responseObject, this));
-            });
+            this.downloadThread(this.threadCollection[currentIndexOfNewTab]);
             eventObject.stopPropagation();
         }
     }

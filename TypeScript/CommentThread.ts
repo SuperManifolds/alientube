@@ -66,9 +66,17 @@ module AlienTube {
             saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
 
             var refreshCommentThread = threadContainer.querySelector(".refresh");
+            refreshCommentThread.addEventListener("click", () => {
+                this.commentSection.threadCollection.forEach(function (item) {
+                    if (item.id === threadData.id) {
+                        this.commentSection.downloadThread(threadData);
+                    }
+                });
+            }, false);
             refreshCommentThread.appendChild(document.createTextNode(Main.localisationManager.get("refreshCommentThreadText")));
 
             var giveGoldToUser = threadContainer.querySelector(".giveGold");
+            giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.threadInformation.id);
             giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("giveGoldToUserText")));
 
             var reportToAdministrators = threadContainer.querySelector(".report");
