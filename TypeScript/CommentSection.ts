@@ -11,7 +11,7 @@ module AlienTube {
     */
     export class CommentSection {
         template : HTMLDocument;
-        private threadCollection: Array<any>;
+        private threadCollection : Array<any>;
         private storedTabCollection : Array<CommentThread>;
 
         constructor(currentVideoIdentifier:string) {
@@ -99,50 +99,17 @@ module AlienTube {
                                 });
 
                                 // Generate tabs.
-                                var tabContainer = this.template.getElementById("tabcontainer").content.cloneNode(true);
-                                var actualTabContainer = tabContainer.querySelector("#at_tabcontainer");
-                                var overflowContainer = tabContainer.querySelector("#at_overflow");
-                                var len = this.threadCollection.length;
-                                var maxWidth = document.getElementById("watch7-content").offsetWidth - 80;
-                                var width = (21 + this.threadCollection[0].subreddit.length * 7);
-
-                                /* Calculate the width of tabs and determine how many you can fit without breaking the
-                                bounds of the comment section. */
-                                if (len > 1) {
-                                    var i;
-                                    for (i = 1; i < len; i++) {
-                                        width = width + (21 + (this.threadCollection[i].subreddit.length * 7));
-                                        if (width >= maxWidth) {
-                                            break;
-                                        }
-                                        var tab = document.createElement("button");
-                                        tab.className = "at_tab";
-                                        tab.setAttribute("data-value", this.threadCollection[i].subreddit);
-                                        var tabName = document.createTextNode(this.threadCollection[i].subreddit);
-                                        tab.appendChild(tabName);
-                                        actualTabContainer.insertBefore(tab, overflowContainer);
-                                    }
-                                    // We can't fit any more tabs. We will now start populating the overflow menu.
-                                    if (i < len) {
-                                        for (i = i; i < len; i++) {
-                                            var menuItem = document.createElement("li");
-                                            menuItem.setAttribute("data-value", this.threadCollection[i].subreddit);
-                                            var itemName = document.createTextNode(this.threadCollection[i].subreddit);
-                                            menuItem.appendChild(itemName);
-                                            overflowContainer.children[1].appendChild(menuItem);
-                                        }
-                                    } else {
-                                        overflowContainer.style.display = "none";
-                                    }
-                                }
-
-                                // Load the image for the Google+ icon.
-                                tabContainer.querySelector(".at_gplus img").src = Main.getExtensionRessourcePath("gplus.png");
+                                var tabContainerTemplate = this.template.getElementById("tabcontainer").content.cloneNode(true);
+                                var tabContainer = tabContainerTemplate.querySelector("#at_tabcontainer");
+                                this.insertTabsIntoDocument(tabContainer, 0);
+                                window.addEventListener("resize", this.updateTabsToFitToBoundingContainer, false);
 
                                 // Set loading indicator
-                                var loadingContentIndicator = tabContainer.querySelector(".loading");
+                                var loadingContentIndicator = tabContainerTemplate.querySelector(".loading");
                                 loadingContentIndicator.querySelector(".loading_inner").appendChild(document.createTextNode(Main.localisationManager.get("loadingContentText")));
                                 this.set(tabContainer);
+                                var mainContainer = document.getElementById("alientube");
+                                mainContainer.appendChild(tabContainerTemplate.querySelector("#at_comments"));
 
                                 // Load the first tab.
                                 this.downloadThread(this.threadCollection[0], (downloadThreadResponse : string) => {
@@ -223,6 +190,80 @@ module AlienTube {
                 }
             }
             return false;
+        }
+
+        /**
+            Insert tabs to the document calculating the width of tabs and determine how many you can fit without breaking the
+            bounds of the comment section.
+
+            @param tabContainer The tab container to operate on.
+            @param [selectTabAtIndex] The tab to be in active / selected status.
+        */
+        private insertTabsIntoDocument(tabContainer : HTMLElement, selectTabAtIndex? : number) {
+            var overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
+            var len = this.threadCollection.length;
+            var maxWidth = document.getElementById("watch7-content").offsetWidth - 80;
+            var width = (21 + this.threadCollection[0].subreddit.length * 7);
+
+            /* Calculate the width of tabs and determine how many you can fit without breaking the
+            bounds of the comment section. */
+            if (len > 1) {
+                var i;
+                for (i = 0; i < len; i++) {
+                    width = width + (21 + (this.threadCollection[i].subreddit.length * 7));
+                    if (width >= maxWidth) {
+                        break;
+                    }
+                    var tab = document.createElement("button");
+                    tab.className = "at_tab";
+                    tab.setAttribute("data-value", this.threadCollection[i].subreddit);
+                    var tabName = document.createTextNode(this.threadCollection[i].subreddit);
+                    tab.appendChild(tabName);
+                    tabContainer.insertBefore(tab, overflowContainer);
+                }
+                // We can't fit any more tabs. We will now start populating the overflow menu.
+                if (i < len) {
+                    for (i = i; i < len; i++) {
+                        var menuItem = document.createElement("li");
+                        menuItem.setAttribute("data-value", this.threadCollection[i].subreddit);
+                        var itemName = document.createTextNode(this.threadCollection[i].subreddit);
+                        menuItem.appendChild(itemName);
+                        overflowContainer.children[1].appendChild(menuItem);
+                    }
+                } else {
+                    overflowContainer.style.display = "none";
+                }
+            }
+            // Load the image for the Google+ icon.
+            var googlePlusIcon = <HTMLImageElement> tabContainer.querySelector(".at_gplus img");
+            googlePlusIcon.src = Main.getExtensionRessourcePath("gplus.png");
+
+            // Set the active tab if provided
+            if (selectTabAtIndex) {
+                var selectedTab = <HTMLButtonElement>tabContainer.childNodes.item(selectTabAtIndex);
+                console.log(selectedTab);
+                selectedTab.classList.add("active");
+            }
+        }
+
+        /**
+            Update the tabs to fit the new size of the document
+        */
+        private updateTabsToFitToBoundingContainer () {
+            window.requestAnimationFrame(function () {
+                var tabContainer = document.getElementById("at_tabcontainer");
+                for (var i = 0, len = tabContainer.childNodes.length; i < len; i++) {
+                    var tabElement = <HTMLButtonElement> tabContainer.childNodes.item(i);
+                    if (tabElement.classList.contains("active")) {
+                        var currentActiveTabIndex = i;
+                        while (tabContainer.firstElementChild) {
+                            tabContainer.removeChild(tabContainer.firstElementChild);
+                        }
+                        this.insertTabsIntoDocument(tabContainer, currentActiveTabIndex);
+                        break;
+                    }
+                }
+            });
         }
 
         /**
