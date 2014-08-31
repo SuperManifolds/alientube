@@ -63,6 +63,7 @@ module AlienTube {
             saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
 
             var giveGoldToUser = this.representedHTMLElement.querySelector(".giveGold");
+            giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.commentObject.name);
             giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("giveGoldToUserText")));
 
             var reportToAdministrators = this.representedHTMLElement.querySelector(".report");
