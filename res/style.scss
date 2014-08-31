@@ -60,6 +60,13 @@
         & .title {
             font-size: 130%;
         }
+
+        .at_author[data-username="[deleted]"] {
+            color: #737373;
+            font-weight: normal;
+            pointer-events: none;
+            font-style: italic;
+        }
     }
 
     & .tagline {
@@ -95,6 +102,13 @@
 
         & .at_author {
             font-weight: bold;
+
+            &[data-username="[deleted]"] {
+                color: #737373;
+                font-weight: normal;
+                pointer-events: none;
+                font-style: italic;
+            }
         }
 
         & .at_score {

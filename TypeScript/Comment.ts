@@ -29,6 +29,7 @@ module AlienTube {
             var author = this.representedHTMLElement.querySelector(".at_author");
             author.appendChild(document.createTextNode(this.commentObject.author));
             author.setAttribute("href", "http://reddit.com/u/" + this.commentObject.author);
+            author.setAttribute("data-username", this.commentObject.author);
             if (commentData.author === commentThread.threadInformation.author) {
                 author.setAttribute("data-reddit-op", "true");
             }

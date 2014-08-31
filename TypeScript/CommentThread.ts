@@ -39,6 +39,7 @@ module AlienTube {
             var username = threadContainer.querySelector(".at_author");
             username.appendChild(document.createTextNode(this.threadInformation.author));
             username.setAttribute("href", "http://www.reddit.com/u/" + this.threadInformation.author);
+            username.setAttribute("data-username", this.threadInformation.author);
             if (this.threadInformation.distinguished === "moderator") {
                 username.setAttribute("data-reddit-moderator", "true");
             }
