@@ -222,14 +222,26 @@ module AlienTube {
                     tab.className = "at_tab";
                     tab.setAttribute("data-value", this.threadCollection[i].subreddit);
                     var tabName = document.createTextNode(this.threadCollection[i].subreddit);
+                    tab.addEventListener("click", this.onSubredditTabClick.bind(this), false);
                     tab.appendChild(tabName);
                     tabContainer.insertBefore(tab, overflowContainer);
                 }
                 // We can't fit any more tabs. We will now start populating the overflow menu.
                 if (i < len) {
+                    overflowContainer.addEventListener("click", () => {
+                        var overflowContainerMenu = <HTMLUListElement> overflowContainer.querySelector("ul");
+                        overflowContainerMenu.style.display = "block";
+                    }, false);
+
+                    document.body.addEventListener("click", () => {
+                        var overflowContainerMenu = <HTMLUListElement> overflowContainer.querySelector("ul");
+                        overflowContainerMenu.style.display = "none";
+                    }, true);
+
                     for (i = i; i < len; i++) {
                         var menuItem = document.createElement("li");
                         menuItem.setAttribute("data-value", this.threadCollection[i].subreddit);
+                        menuItem.addEventListener("click", this.onSubredditOverflowItemClick.bind(this), false);
                         var itemName = document.createTextNode(this.threadCollection[i].subreddit);
                         menuItem.appendChild(itemName);
                         overflowContainer.children[1].appendChild(menuItem);
@@ -247,6 +259,16 @@ module AlienTube {
         }
 
         /**
+        * Set the comment section to the "No Results" page.
+        */
+        returnNoResults () {
+            this.set(this.template.getElementById("noposts").content.cloneNode(true));
+            if (Main.Preferences.get("showGooglePlus")) {
+                document.getElementById("watch-discussion").style.display = "block";
+            }
+        }
+
+        /**
             Update the tabs to fit the new size of the document
         */
         private updateTabsToFitToBoundingContainer () {
@@ -257,19 +279,7 @@ module AlienTube {
                     var tabElement = <HTMLButtonElement> tabContainer.children[i];
                     if (tabElement.classList.contains("active")) {
                         var currentActiveTabIndex = i;
-                        while (tabContainer.firstElementChild) {
-                            var childElement = <HTMLUnknownElement> tabContainer.firstElementChild;
-                            if (childElement.classList.contains("at_tab")) {
-                                tabContainer.removeChild(tabContainer.firstElementChild);
-                            } else {
-                                break;
-                            }
-                        }
-
-                        var overflowListElement = <HTMLUListElement> overflowContainer.querySelector("ul");
-                        while (overflowListElement.firstElementChild) {
-                            overflowListElement.removeChild(overflowListElement.firstElementChild);
-                        }
+                        this.clearTabsFromTabContainer();
                         this.insertTabsIntoDocument(tabContainer, currentActiveTabIndex);
                         break;
                     }
@@ -277,14 +287,78 @@ module AlienTube {
             });
         }
 
-        /**
-        * Set the comment section to the "No Results" page.
-        */
-        returnNoResults () {
-            this.set(this.template.getElementById("noposts").content.cloneNode(true));
-            if (Main.Preferences.get("showGooglePlus")) {
-                document.getElementById("watch-discussion").style.display = "block";
+        /* Remove all tabs and overflow items from the DOM. */
+        private clearTabsFromTabContainer () {
+            var tabContainer = document.getElementById("at_tabcontainer");
+            var overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
+            while (tabContainer.firstElementChild) {
+                var childElement = <HTMLUnknownElement> tabContainer.firstElementChild;
+                if (childElement.classList.contains("at_tab")) {
+                    tabContainer.removeChild(tabContainer.firstElementChild);
+                } else {
+                    break;
+                }
             }
+
+            var overflowListElement = <HTMLUListElement> overflowContainer.querySelector("ul");
+            while (overflowListElement.firstElementChild) {
+                overflowListElement.removeChild(overflowListElement.firstElementChild);
+            }
+        }
+
+        /**
+            Select the new tab on click and load comment section.
+        */
+        private onSubredditTabClick(eventObject : Event) {
+            var tabElementClickedByUser = <HTMLButtonElement> eventObject.target;
+            if (! tabElementClickedByUser.classList.contains("active")) {
+                var tabContainer = document.getElementById("at_tabcontainer");
+                var currentIndexOfNewTab = 0;
+                for (var i = 0, len = tabContainer.children.length; i < len; i++) {
+                    var tabElement = <HTMLButtonElement> tabContainer.children[i];
+                    if (tabElement === tabElementClickedByUser) currentIndexOfNewTab = i;
+                    tabElement.classList.remove("active");
+                }
+                tabElementClickedByUser.classList.add("active");
+                this.downloadThread(this.threadCollection[currentIndexOfNewTab], (downloadThreadResponse : string) => {
+                    var responseObject = JSON.parse(downloadThreadResponse);
+                    // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
+                    if (!Main.Preferences.get("rememberTabsOnViewChange")) {
+                        this.storedTabCollection.length = 0;
+                    }
+                    this.storedTabCollection.push(new CommentThread(responseObject, this));
+                });
+            }
+        }
+
+        /**
+            Create a new tab and select it when an overflow menu item is clicked, load the comment section for it as well.
+        */
+        private onSubredditOverflowItemClick(eventObject : Event) {
+            var tabContainer = document.getElementById("at_tabcontainer");
+            var overflowItemClickedByUser = <HTMLLIElement> eventObject.target;
+            var currentIndexOfNewTab = 0;
+            var listOfExistingOverflowItems = <HTMLUListElement> overflowItemClickedByUser.parentNode;
+            for (var i = 0, len = listOfExistingOverflowItems.children.length; i < len; i++) {
+                var overflowElement = <HTMLLIElement> listOfExistingOverflowItems.children[i];
+                if (overflowElement === overflowItemClickedByUser) currentIndexOfNewTab = i;
+            }
+            currentIndexOfNewTab = (tabContainer.children.length - 2) + currentIndexOfNewTab;
+            var threadDataForNewTab = this.threadCollection[currentIndexOfNewTab];
+            this.threadCollection.splice(currentIndexOfNewTab, 1);
+            this.threadCollection.splice(0, 0, threadDataForNewTab);
+            this.clearTabsFromTabContainer();
+            this.insertTabsIntoDocument(tabContainer, 0);
+
+            this.downloadThread(this.threadCollection[currentIndexOfNewTab], (downloadThreadResponse : string) => {
+                var responseObject = JSON.parse(downloadThreadResponse);
+                // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
+                if (!Main.Preferences.get("rememberTabsOnViewChange")) {
+                    this.storedTabCollection.length = 0;
+                }
+                this.storedTabCollection.push(new CommentThread(responseObject, this));
+            });
+            eventObject.stopPropagation();
         }
     }
 }
