@@ -14,6 +14,7 @@ module AlienTube {
         private threadCollection : Array<any>;
         private storedTabCollection : Array<CommentThread>;
 
+
         constructor(currentVideoIdentifier:string) {
             this.threadCollection = new Array();
             this.storedTabCollection = new Array();
@@ -71,8 +72,11 @@ module AlienTube {
                                 }
 
                                 // Sort threads into array groups by what subreddit they are in.
+                                var getExcludedSubreddits = Main.Preferences.enforcedExludedSubreddits.concat(Main.Preferences.get("excludedSubredditsSelectedByUser"));
                                 var sortedResultCollection = {};
                                 finalResultCollection.forEach(function(thread) {
+                                    if (getExcludedSubreddits.indexOf(thread.subreddit.toLowerCase()) !== -1) return;
+
                                     if (!sortedResultCollection.hasOwnProperty(thread.subreddit)) sortedResultCollection[thread.subreddit] = [];
                                     sortedResultCollection[thread.subreddit].push(thread);
                                 });

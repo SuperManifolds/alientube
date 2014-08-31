@@ -17,7 +17,8 @@ module AlienTube {
 			hiddenCommentScoreThreshold: -4,
 			showGooglePlus: false,
 			rememberTabsOnViewChange: true,
-			redditUserIdentifierHash: ""
+			redditUserIdentifierHash: "",
+			excludedSubredditsSelectedByUser: []
 		}
 
         constructor() {
@@ -80,5 +81,37 @@ module AlienTube {
                     break;
             }
         }
+
+
+		get enforcedExludedSubreddits () {
+			return [
+				"mensrights",
+				"beatingcripples",
+				"beatingwomen",
+				"rapingwomen",
+				"beatingchildren",
+				"watchpeopledie",
+				"pussypass",
+				"theredpill",
+				"redpillwomen",
+				"protectandserve",
+				"whiterights",
+				"blackcrime",
+				"whiterightsuk",
+				"white_pride",
+				"whitenationalism",
+				"northwestfront",
+				"stopwhitegenocide",
+				"race_realism",
+				"racism_immigration",
+				"hate_crimes",
+				"gdnews",
+				"hbd",
+				"rights4men",
+				"muhfeelings",
+				"polistan",
+				"collapse"
+			];
+		}
     }
 }
