@@ -75,7 +75,6 @@ module AlienTube {
 
             /* Start iterating the comment section */
             this.commentData.forEach((commentObject) => {
-                console.log(commentObject);
                 if (commentObject.kind === "more") {
 
                 } else {

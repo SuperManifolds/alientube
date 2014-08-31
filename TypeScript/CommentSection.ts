@@ -102,7 +102,7 @@ module AlienTube {
                                 var tabContainerTemplate = this.template.getElementById("tabcontainer").content.cloneNode(true);
                                 var tabContainer = tabContainerTemplate.querySelector("#at_tabcontainer");
                                 this.insertTabsIntoDocument(tabContainer, 0);
-                                window.addEventListener("resize", this.updateTabsToFitToBoundingContainer, false);
+                                window.addEventListener("resize", this.updateTabsToFitToBoundingContainer.bind(this), false);
 
                                 // Set loading indicator
                                 var loadingContentIndicator = tabContainerTemplate.querySelector(".loading");
@@ -239,9 +239,8 @@ module AlienTube {
             googlePlusIcon.src = Main.getExtensionRessourcePath("gplus.png");
 
             // Set the active tab if provided
-            if (selectTabAtIndex) {
-                var selectedTab = <HTMLButtonElement>tabContainer.childNodes.item(selectTabAtIndex);
-                console.log(selectedTab);
+            if (selectTabAtIndex != null) {
+                var selectedTab = <HTMLButtonElement>tabContainer.children[selectTabAtIndex];
                 selectedTab.classList.add("active");
             }
         }
@@ -250,14 +249,25 @@ module AlienTube {
             Update the tabs to fit the new size of the document
         */
         private updateTabsToFitToBoundingContainer () {
-            window.requestAnimationFrame(function () {
+            window.requestAnimationFrame( () => {
                 var tabContainer = document.getElementById("at_tabcontainer");
-                for (var i = 0, len = tabContainer.childNodes.length; i < len; i++) {
-                    var tabElement = <HTMLButtonElement> tabContainer.childNodes.item(i);
+                var overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
+                for (var i = 0, len = tabContainer.children.length; i < len; i++) {
+                    var tabElement = <HTMLButtonElement> tabContainer.children[i];
                     if (tabElement.classList.contains("active")) {
                         var currentActiveTabIndex = i;
                         while (tabContainer.firstElementChild) {
-                            tabContainer.removeChild(tabContainer.firstElementChild);
+                            var childElement = <HTMLUnknownElement> tabContainer.firstElementChild;
+                            if (childElement.classList.contains("at_tab")) {
+                                tabContainer.removeChild(tabContainer.firstElementChild);
+                            } else {
+                                break;
+                            }
+                        }
+
+                        var overflowListElement = <HTMLUListElement> overflowContainer.querySelector("ul");
+                        while (overflowListElement.firstElementChild) {
+                            overflowListElement.removeChild(overflowListElement.firstElementChild);
                         }
                         this.insertTabsIntoDocument(tabContainer, currentActiveTabIndex);
                         break;
