@@ -82,6 +82,10 @@ module AlienTube {
             var reportToAdministrators = threadContainer.querySelector(".report");
             reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("reportToAdministratorsText")));
 
+            /* Set the state of the voting buttons */
+            var voteButtonScoreCountElement = threadContainer.querySelector(".score");
+            voteButtonScoreCountElement.appendChild(document.createTextNode(this.threadInformation.score));
+
             /* Start iterating the comment section */
             this.commentData.forEach((commentObject) => {
                 if (commentObject.kind === "more") {
