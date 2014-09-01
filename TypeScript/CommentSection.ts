@@ -67,6 +67,7 @@ module AlienTube {
                                         if (match) {
                                             preferredSubreddit = match[2];
                                             if (match[3].length > 0) preferredPost = match[3];
+                                            break;
                                         }
                                     }
                                 }
@@ -81,7 +82,7 @@ module AlienTube {
                                     sortedResultCollection[thread.subreddit].push(thread);
                                 });
 
-                                // Retrieve the subreddit that has the best score/comment relation in each subreddit, or is in the comment section.
+                                // Retrieve the subreddit that has the best score/comment relation in each subreddit, or is in the description.
                                 this.threadCollection = [];
                                 for (var subreddit in sortedResultCollection) {
                                     if (sortedResultCollection.hasOwnProperty(subreddit)) {
@@ -91,16 +92,18 @@ module AlienTube {
                                     }
                                 }
 
-                                // Sort subreddits so the one with the highest score/comment relation (or is in the comment section) is first in the list.
+                                // Sort subreddits so the one with the highest score/comment relation (or is in the description) is first in the list.
                                 this.threadCollection.sort(function (a, b) {
-                                    if (b.subreddit == preferredSubreddit && b.id == preferredPost) {
-                                        return 1;
-                                    } else if (b.subreddit == preferredSubreddit) {
-                                        return 1;
-                                    } else {
-                                        return ((b.score + (b.num_comments*3)) - (a.score + (a.num_comments*3)));
-                                    }
+                                    return ((b.score + (b.num_comments*3)) - (a.score + (a.num_comments*3)));
                                 });
+                                for (var i = 0, len = this.threadCollection.length; i < len; i++) {
+                                    if (this.threadCollection[i].subreddit === preferredSubreddit) {
+                                        var threadDataForFirstTab = this.threadCollection[i];
+                                        this.threadCollection.splice(i, 1);
+                                        this.threadCollection.splice(0, 0, threadDataForFirstTab);
+                                        break;
+                                    }
+                                }
 
                                 // Generate tabs.
                                 var tabContainerTemplate = this.template.getElementById("tabcontainer").content.cloneNode(true);
