@@ -26,6 +26,10 @@
         "displaySourceForCommentText": "source",
         "saveItemToRedditList": "save",
         "reportToAdministratorsText": "report",
-        "replyToCommentText": "reply"
+        "replyToCommentText": "reply",
+        "replyPlural": "replies",
+
+        "loadMoreComments": "load more comments",
+        "loading": "loading..."
     }
 }

@@ -13,7 +13,7 @@ module AlienTube {
     export class Comment {
         representedHTMLElement : HTMLDivElement;
         private commentObject : any;
-        private children : Array<Comment>;
+        private children : Array<any>;
 
         constructor(commentData : any, commentThread : CommentThread) {
             this.children = new Array();
@@ -74,7 +74,9 @@ module AlienTube {
                 var replies = this.commentObject.replies.data.children;
                 replies.forEach((commentObject) => {
                     if (commentObject.kind === "more") {
-
+                        var readmore = new LoadMore(commentObject.data, commentThread);
+                        this.children.push(readmore);
+                        replyContainer.appendChild(readmore.representedHTMLElement);
                     } else {
                         var comment = new Comment(commentObject.data, commentThread);
                         this.children.push(comment);

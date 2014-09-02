@@ -15,7 +15,7 @@ module AlienTube {
 
         private postIsInPreservedMode : Boolean;
         private commentData : Array<any>;
-        private children : Array<Comment>;
+        private children : Array<any>;
 
         constructor(threadData : any, commentSection : CommentSection) {
             this.children = new Array();
@@ -89,7 +89,9 @@ module AlienTube {
             /* Start iterating the comment section */
             this.commentData.forEach((commentObject) => {
                 if (commentObject.kind === "more") {
-
+                    var readmore = new LoadMore(commentObject.data, this);
+                    this.children.push(readmore);
+                    threadContainer.appendChild(readmore.representedHTMLElement);
                 } else {
                     var comment = new Comment(commentObject.data, this);
                     this.children.push(comment);

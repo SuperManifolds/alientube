@@ -11,10 +11,41 @@
 
     & a {
         color: #0066aa;
+        cursor: pointer;
     }
 
     & a:hover {
         color: #0066aa;
+        text-decoration: underline;
+    }
+
+    & .at_load {
+        color: #0066aa;
+        font-size: x-small;
+        cursor: pointer;
+        font-weight: bold;
+        padding-left: 25px;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &.loading {
+            color: #ff0000;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        &.loading + .at_replycount {
+            display: none;
+        }
+    }
+
+    & .at_replycount {
+        color: #a2a2a2;
+        font-size: x-small;
     }
 
     & .single_line {
