@@ -40,12 +40,14 @@ module AlienTube {
 
             var childrenSeperatedByComma = this.data.children.join(",");
             var loadMoreInstance = this;
+            var generateRequestUrl = "https://api.reddit.com/r/CGPGrey/comments/2dfh5v/z/" + this.data.id + ".json";
 
-            new HttpRequest("https://api.reddit.com/api/morechildren", RequestType.POST, (responseData) => {
+            new HttpRequest(generateRequestUrl, RequestType.GET, (responseData) => {
+                console.log(JSON.parse(responseData));
                 var getParentNode = loadingText.parentNode.parentNode;
                 getParentNode.removeChild(loadingText.parentNode);
 
-                var commentItems = JSON.parse(responseData).json.data.things;
+                var commentItems = JSON.parse(responseData)[1].data.children[0].data.replies.data.children;
                 if (commentItems.length > 0) {
                     commentItems.forEach((commentObject) => {
                         if (commentObject.kind === "more") {
@@ -59,10 +61,6 @@ module AlienTube {
                         }
                     });
                 }
-            }, {
-                "children": childrenSeperatedByComma,
-                "link_id": this.commentThread.threadInformation.name,
-                "api_type": "json"
             });
         }
     }
