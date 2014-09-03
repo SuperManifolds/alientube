@@ -4,13 +4,6 @@
     @namespace AlienTube
 */
 module AlienTube {
-	document.addEventListener( "DOMContentLoaded", function() {
-    	if (window.top === window) {
-			new Main();
-    	}
-	}, false );
-
-
 	/**
 		Main class for AlienTube
 		@class Main

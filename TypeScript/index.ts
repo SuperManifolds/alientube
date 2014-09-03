@@ -17,3 +17,10 @@
 /// <reference path="typings/chrome/chrome.d.ts" />
 /// <reference path="typings/firefox/firefox.d.ts" />
 /// <reference path="typings/safari/safari.d.ts" />
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    if (window.top === window) {
+        new AlienTube.Main();
+    }
+}, false);
