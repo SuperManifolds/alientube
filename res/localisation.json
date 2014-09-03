@@ -1,5 +1,7 @@
 {
     "en": {
+        "redditAPIHeaderMessage": "Hello Reddit! This request was made by the AlienTube Browser Extension (http://alientube.co/) If you have noticed unusual or overloading traffic here, you can contact the developer at alex@delexious.com",
+
         "timestampYear": "year",
         "timestampPluralYear": "years",
         "timestampMonth": "month",
