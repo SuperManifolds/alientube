@@ -22,8 +22,18 @@ module AlienTube {
             this.representedHTMLElement = commentThread.commentSection.template.getElementById("comment").content.cloneNode(true);
 
             /* Set the id for the comment in question so it can be correlated with the Comment Object */
-            var commentElement = this.representedHTMLElement.querySelector(".at_comment");
+            var commentElement = <HTMLDivElement> this.representedHTMLElement.querySelector(".at_comment");
             commentElement.setAttribute("data-reddit-id", commentData.id);
+
+            /* Show / collapse function for the comment */
+            var toggleHide = this.representedHTMLElement.querySelector(".at_togglehide");
+            toggleHide.addEventListener("click", function () {
+                if (commentElement.classList.contains("hidden")) {
+                    commentElement.classList.remove("hidden")
+                } else {
+                    commentElement.classList.add("hidden");
+                }
+            }.bind(this), false);
 
             /* Set the link and name of author, as well as whether they are the OP or not. */
             var author = this.representedHTMLElement.querySelector(".at_author");

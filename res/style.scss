@@ -182,12 +182,21 @@
         }
     }
 
+    & .at_maximise {
+        font-size: x-small;
+        padding-left: 20px;
+    }
+
     & article {
         font-family: verdana, sans-serif;
         word-wrap:break-word;
         break-word: all;
         padding-top: 10px;
         padding-bottom: 10px;
+
+        & .at_togglehide:before {
+            content: "[-]";
+        }
 
         & .info {
             font-size: x-small;
@@ -236,6 +245,27 @@
                 margin-bottom: 2px;
             }
         }
+
+        &.hidden {
+            padding-top: 0;
+            padding-bottom: 0;
+
+            & .at_author {
+                color: gray;
+            }
+
+            & .at_togglehide:before {
+                content: "[+]";
+                color: gray;
+            }
+
+            & .options,
+            & .vote,
+            & .at_replies,
+            & .at_commentcontent {
+                display: none;
+            }
+        }
     }
 
     & .at_replies {
@@ -255,6 +285,7 @@
         border: 1px solid #ddd;
         border-radius: 2px;
     }
+
 }
 
 .at_commentmain {
