@@ -24,7 +24,7 @@
   "permissions": [
     "http://www.youtube.com/",
     "https://www.youtube.com/",
-    "https://pay.reddit.com/",
+    "https://api.reddit.com/",
     "storage"
   ],
 

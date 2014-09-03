@@ -34,7 +34,7 @@ module AlienTube {
 
                     // Open a search request to Reddit for the video identfiier
                     var videoSearchString = encodeURIComponent("url:'/watch?v=" + currentVideoIdentifier + "' (site:youtube.com OR site:youtu.be)");
-                    new HttpRequest("https://pay.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (response :string) => {
+                    new HttpRequest("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (response :string) => {
                         var results = JSON.parse(response);
 
                         // There are a number of ways the Reddit API can arbitrarily explode, here are some of them.
@@ -137,7 +137,7 @@ module AlienTube {
         * @param threadData Data about the thread to download from a Reddit search page.
         */
         downloadThread (threadData : any) {
-            var requestUrl = "https://pay.reddit.com/r/" + threadData.subreddit + "/comments/" + threadData.id + ".json";
+            var requestUrl = "https://api.reddit.com/r/" + threadData.subreddit + "/comments/" + threadData.id + ".json";
             new HttpRequest(requestUrl, RequestType.GET, (response) => {
                 var responseObject = JSON.parse(response);
                 // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
