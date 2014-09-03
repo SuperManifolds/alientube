@@ -74,7 +74,7 @@ module AlienTube {
                 var replies = this.commentObject.replies.data.children;
                 replies.forEach((commentObject) => {
                     if (commentObject.kind === "more") {
-                        var readmore = new LoadMore(commentObject.data, commentThread);
+                        var readmore = new LoadMore(commentObject.data, this, commentThread);
                         this.children.push(readmore);
                         replyContainer.appendChild(readmore.representedHTMLElement);
                     } else {
