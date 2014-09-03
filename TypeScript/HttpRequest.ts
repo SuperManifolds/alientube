@@ -15,13 +15,16 @@ module AlienTube {
     export class HttpRequest {
         private static acceptableResponseTypes = [200, 201, 202, 301, 302, 303, 0];
 
-        constructor(url : string, type : RequestType, callback : any, postData? : Array<string>) {
+        constructor(url : string, type : RequestType, callback : any, postData? : any) {
             if (Main.getCurrentBrowser() == Browser.SAFARI) {
                 // TODO
             } else {
                 var xhr = new XMLHttpRequest();
                 xhr.open(RequestType[type], url, true);
                 xhr.withCredentials = true;
+                if (type === RequestType.POST) {
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                }
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
                         if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
@@ -36,13 +39,14 @@ module AlienTube {
                     for (var key in postData) {
                         query.push(encodeURIComponent(key) + '=' + encodeURIComponent(postData[key]));
                     }
-                    xhr.send("?" + query.join('&'));
+                    xhr.send(query.join('&'));
                 } else {
                     xhr.send();
                 }
             }
         }
     }
+
 
     export enum RequestType {
         GET,
