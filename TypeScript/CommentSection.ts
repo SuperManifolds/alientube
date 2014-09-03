@@ -228,6 +228,7 @@ module AlienTube {
                 }
                 // We can't fit any more tabs. We will now start populating the overflow menu.
                 if (i < len) {
+                    overflowContainer.style.display = "block";
                     overflowContainer.addEventListener("click", () => {
                         var overflowContainerMenu = <HTMLUListElement> overflowContainer.querySelector("ul");
                         overflowContainerMenu.style.display = "block";
