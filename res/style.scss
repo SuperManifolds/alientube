@@ -137,7 +137,6 @@
 
     & .vote {
         float: left;
-        vertical-align: top;
 
         & .arrow {
             background-repeat: no-repeat;
@@ -207,7 +206,6 @@
             font-size: x-small;
             padding-bottom: 5px;
             margin-left: 0;
-            text-align: center;
             color: #a2a2a2;
         }
 
@@ -270,11 +268,6 @@
             & .at_commentcontent {
                 display: none;
             }
-        }
-
-        & .info {
-            display: inline-block;
-            margin-left: 15px;
         }
     }
 
