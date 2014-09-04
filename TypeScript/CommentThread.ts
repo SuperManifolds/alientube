@@ -43,6 +43,14 @@ module AlienTube {
                 username.setAttribute("data-reddit-moderator", "true");
             }
 
+            /* Add flair to the user */
+            var flair = <HTMLSpanElement> threadContainer.querySelector(".at_flair");
+            if (this.threadInformation.author_flair_text) {
+                flair.appendChild(document.createTextNode(this.threadInformation.author_flair_text));
+            } else {
+                flair.style.display = "none";
+            }
+
             /* Set the gild (how many times the user has been given gold for this post) if any */
             if (this.threadInformation.gilded) {
                 var gildCountElement = threadContainer.querySelector(".at_gilded");
