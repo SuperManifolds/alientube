@@ -77,6 +77,16 @@ module AlienTube {
             var replyToComment = this.representedHTMLElement.querySelector(".at_reply");
             replyToComment.appendChild(document.createTextNode(Main.localisationManager.get("replyToCommentText")));
 
+            /* Set the button text and link for the "permalink" button */
+            var permalinkElement = this.representedHTMLElement.querySelector(".at_permalink");
+            permalinkElement.appendChild(document.createTextNode(Main.localisationManager.get("permalink")));
+            permalinkElement.setAttribute("href", "http://www.reddit.com" + commentThread.threadInformation.permalink + this.commentObject.id);
+
+            /* Set the button text and link for the "parent" link button */
+            var parentLinkElement = this.representedHTMLElement.querySelector(".at_parentlink");
+            parentLinkElement.appendChild(document.createTextNode(Main.localisationManager.get("parent")));
+            parentLinkElement.setAttribute("href", "http://www.reddit.com" + commentThread.threadInformation.permalink + "#" + this.commentObject.parent_id.substring(3));
+
             /* Set the button text and the event handler for the "show source" button */
             var displaySourceForComment = this.representedHTMLElement.querySelector(".at_displaysource");
             displaySourceForComment.appendChild(document.createTextNode(Main.localisationManager.get("displaySourceForCommentText")));

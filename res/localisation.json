@@ -30,6 +30,8 @@
         "reportToAdministratorsText": "report",
         "replyToCommentText": "reply",
         "replyPlural": "replies",
+        "permalink": "permalink",
+        "parent": "parent",
 
         "loadMoreComments": "load more comments",
         "loading": "loading..."
