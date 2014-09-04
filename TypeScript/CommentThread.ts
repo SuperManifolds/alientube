@@ -22,7 +22,6 @@ module AlienTube {
             this.commentSection = commentSection;
             this.threadInformation = threadData[0].data.children[0].data;
             this.commentData = threadData[1].data.children;
-            this.commentData.pop();
 
             var previousUserIdentifier = Main.Preferences.get("redditUserIdentifierHash");
             Main.Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
@@ -85,7 +84,6 @@ module AlienTube {
             /* Set the state of the voting buttons */
             var voteButtonScoreCountElement = threadContainer.querySelector(".score");
             voteButtonScoreCountElement.appendChild(document.createTextNode(this.threadInformation.score));
-
             /* Start iterating the comment section */
             this.commentData.forEach((commentObject) => {
                 if (commentObject.kind === "more") {

@@ -44,7 +44,8 @@ module AlienTube {
                             var searchResults = results.data.children;
                             var finalResultCollection = [];
 
-                            // Filter out Reddit threads that do not lead to the video.
+                            /* Filter out Reddit threads that do not lead to the video. Additionally, remove ones that have passed the 6
+                            month threshold for Reddit posts and are in preserved mode, but does not have any comments. */
                             searchResults.forEach(function(result) {
                                 if (CommentSection.validateItemFromResultSet(result.data, currentVideoIdentifier)) {
                                     finalResultCollection.push(result.data);
@@ -170,11 +171,18 @@ module AlienTube {
             Validate a Reddit search result set and ensure the link urls go to the correct address.
             This is done due to the Reddit search result being extremely unrealiable, and providing mismatches.
 
+            Additionally, remove ones that have passed the 6 month threshold for Reddit posts and are in preserved mode,
+            but does not have any comments.
+
             @param itemFromResultSet An object from the reddit search result array.
             @param currentVideoIdentifier A YouTube video identifier to compare to.
             @returns A boolean indicating whether the item is actually for the current video.
         */
         static validateItemFromResultSet(itemFromResultSet : any, currentVideoIdentifier : string) : Boolean {
+            if (Main.isPreserved(itemFromResultSet.created_utc) && itemFromResultSet.num_comments < 1) {
+                return false;
+            }
+
             if (itemFromResultSet.domain === "youtube.com") {
                 // For urls based on the full youtube.com domain, retrieve the value of the "v" query parameter and compare it.
                 var urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.indexOf("?") +1);
