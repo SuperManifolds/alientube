@@ -337,7 +337,7 @@ module AlienTube {
                 var overflowElement = <HTMLLIElement> listOfExistingOverflowItems.children[i];
                 if (overflowElement === overflowItemClickedByUser) currentIndexOfNewTab = i;
             }
-            currentIndexOfNewTab = (tabContainer.children.length - 2) + currentIndexOfNewTab;
+            currentIndexOfNewTab = (tabContainer.children.length - 1) + currentIndexOfNewTab;
             var threadDataForNewTab = this.threadCollection[currentIndexOfNewTab];
             this.threadCollection.splice(currentIndexOfNewTab, 1);
             this.threadCollection.splice(0, 0, threadDataForNewTab);
