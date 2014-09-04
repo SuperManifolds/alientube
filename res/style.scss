@@ -289,6 +289,30 @@
         border-radius: 2px;
     }
 
+    & .at_gilded {
+        display: none;
+        color: #99895F;
+        font-size: .9em;
+        vertical-align: middle;
+        background-image: url(http://www.redditstatic.com/sprite-reddit.jzJhk9_9j8Q.png);
+        background-position: -84px -818px;
+        background-repeat: no-repeat;
+        height: 14px;
+        width: 13px;
+
+        &[data-count] {
+            display: inline-block;
+            overflow: visible;
+
+            &:after {
+                display: inline-block;
+                margin-left: 15px;
+                vertical-align: middle;
+                overflow: visible;
+                content: attr(data-count) "x";
+            }
+        }
+    }
 }
 
 .at_commentmain {

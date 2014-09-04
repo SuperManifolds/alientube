@@ -44,6 +44,12 @@ module AlienTube {
                 author.setAttribute("data-reddit-op", "true");
             }
 
+            /* Set the gild (how many times the user has been given gold for this post) if any */
+            if (this.commentObject.gilded) {
+                var gildCountElement = this.representedHTMLElement.querySelector(".at_gilded");
+                gildCountElement.setAttribute("data-count", this.commentObject.gilded);
+            }
+
             var flair = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_flair");
             if (this.commentObject.author_flair_text) {
                 flair.appendChild(document.createTextNode(this.commentObject.author_flair_text));

@@ -43,6 +43,12 @@ module AlienTube {
                 username.setAttribute("data-reddit-moderator", "true");
             }
 
+            /* Set the gild (how many times the user has been given gold for this post) if any */
+            if (this.threadInformation.gilded) {
+                var gildCountElement = threadContainer.querySelector(".at_gilded");
+                gildCountElement.setAttribute("data-count", this.threadInformation.gilded);
+            }
+
             /* Set the the thread posted time */
             var timestamp = threadContainer.querySelector(".at_timestamp");
             timestamp.appendChild(document.createTextNode(Main.getHumanReadableTimestamp(this.threadInformation.created_utc)));
