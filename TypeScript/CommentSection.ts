@@ -264,6 +264,8 @@ module AlienTube {
                     /* If we didn't need the overflow menu there is no reason to show it. */
                     overflowContainer.style.display = "none";
                 }
+            } else {
+                overflowContainer.style.display = "none";
             }
 
             // Set the active tab if provided
@@ -287,7 +289,6 @@ module AlienTube {
             Update the tabs to fit the new size of the document
         */
         private updateTabsToFitToBoundingContainer () {
-
             /* Only perform the resize operation when we have a new frame to work on by the browser, any animation beyond this will not
             be rendered and is pointless. */
             window.requestAnimationFrame( () => {
