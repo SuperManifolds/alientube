@@ -273,13 +273,20 @@ module AlienTube {
             Update the tabs to fit the new size of the document
         */
         private updateTabsToFitToBoundingContainer () {
+
+            /* Only perform the resize operation when we have a new frame to work on by the browser, any animation beyond this will not
+            be rendered and is pointless. */
             window.requestAnimationFrame( () => {
                 var tabContainer = document.getElementById("at_tabcontainer");
                 var overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
+
+                /* Iterate over the tabs until we find the one that is currently selected, and store its value. */
                 for (var i = 0, len = tabContainer.children.length; i < len; i++) {
                     var tabElement = <HTMLButtonElement> tabContainer.children[i];
                     if (tabElement.classList.contains("active")) {
                         var currentActiveTabIndex = i;
+
+                        /* Remove all tabs and overflow ites, then render them over again using new size dimensions. */
                         this.clearTabsFromTabContainer();
                         this.insertTabsIntoDocument(tabContainer, currentActiveTabIndex);
                         break;
@@ -292,6 +299,8 @@ module AlienTube {
         private clearTabsFromTabContainer () {
             var tabContainer = document.getElementById("at_tabcontainer");
             var overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
+
+            /* Iterate over the tab elements and remove them all. Stopping short off the overflow button. */
             while (tabContainer.firstElementChild) {
                 var childElement = <HTMLUnknownElement> tabContainer.firstElementChild;
                 if (childElement.classList.contains("at_tab")) {
@@ -301,6 +310,7 @@ module AlienTube {
                 }
             }
 
+            /* Iterate over the overflow items, removing them all. */
             var overflowListElement = <HTMLUListElement> overflowContainer.querySelector("ul");
             while (overflowListElement.firstElementChild) {
                 overflowListElement.removeChild(overflowListElement.firstElementChild);
@@ -312,14 +322,20 @@ module AlienTube {
         */
         private onSubredditTabClick(eventObject : Event) {
             var tabElementClickedByUser = <HTMLButtonElement> eventObject.target;
+
+            /* Only continue if the user did not click a tab that is already selected. */
             if (! tabElementClickedByUser.classList.contains("active")) {
                 var tabContainer = document.getElementById("at_tabcontainer");
                 var currentIndexOfNewTab = 0;
+
+                /* Iterate over the tabs to find the currently selected one and remove its selected status */
                 for (var i = 0, len = tabContainer.children.length; i < len; i++) {
                     var tabElement = <HTMLButtonElement> tabContainer.children[i];
                     if (tabElement === tabElementClickedByUser) currentIndexOfNewTab = i;
                     tabElement.classList.remove("active");
                 }
+
+                /* Mark the new tab as selected and start downloading it. */
                 tabElementClickedByUser.classList.add("active");
                 this.downloadThread(this.threadCollection[currentIndexOfNewTab]);
             }
@@ -332,18 +348,26 @@ module AlienTube {
             var tabContainer = document.getElementById("at_tabcontainer");
             var overflowItemClickedByUser = <HTMLLIElement> eventObject.target;
             var currentIndexOfNewTab = 0;
+
+            /* Iterate over the current overflow items to find the index of the one that was just clicked. */
             var listOfExistingOverflowItems = <HTMLUListElement> overflowItemClickedByUser.parentNode;
             for (var i = 0, len = listOfExistingOverflowItems.children.length; i < len; i++) {
                 var overflowElement = <HTMLLIElement> listOfExistingOverflowItems.children[i];
                 if (overflowElement === overflowItemClickedByUser) currentIndexOfNewTab = i;
             }
+
+            /* Derive the total index of the item in the subreddit list from the number we just calculated added
+             with the total length of the visible non overflow tabs */
             currentIndexOfNewTab = (tabContainer.children.length - 1) + currentIndexOfNewTab;
             var threadDataForNewTab = this.threadCollection[currentIndexOfNewTab];
+
+            /* Move the new item frontmost in the array so it will be the first tab, and force a re-render of the tab control. */
             this.threadCollection.splice(currentIndexOfNewTab, 1);
             this.threadCollection.splice(0, 0, threadDataForNewTab);
             this.clearTabsFromTabContainer();
             this.insertTabsIntoDocument(tabContainer, 0);
 
+            /* Start downloading the new tab. */
             this.downloadThread(this.threadCollection[currentIndexOfNewTab]);
             eventObject.stopPropagation();
         }
