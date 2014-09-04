@@ -61,15 +61,19 @@ module AlienTube {
             var submittedByUsernameText = threadContainer.querySelector(".templateSubmittedByUsernameText");
             submittedByUsernameText.appendChild(document.createTextNode(Main.localisationManager.get("submittedByUsernameText")));
 
+            /* Set the button text and the event handler for the "comment" button */
             var openNewCommentBox = threadContainer.querySelector(".commentTo");
             openNewCommentBox.appendChild(document.createTextNode(Main.localisationManager.get("commentText")));
 
+            /* Set the button text and the event handler for the "display source" button */
             var displaySourceForComment = threadContainer.querySelector(".at_displaysource");
             displaySourceForComment.appendChild(document.createTextNode(Main.localisationManager.get("displaySourceForCommentText")));
 
+            /* Set the button text and the event handler for the "save" button */
             var saveItemToRedditList = threadContainer.querySelector(".save");
             saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
 
+            /* Set the button text and the event handler for the "refresh" button */
             var refreshCommentThread = threadContainer.querySelector(".refresh");
             refreshCommentThread.addEventListener("click", () => {
                 this.commentSection.threadCollection.forEach((item) => {
@@ -80,17 +84,20 @@ module AlienTube {
             }, false);
             refreshCommentThread.appendChild(document.createTextNode(Main.localisationManager.get("refreshCommentThreadText")));
 
+            /* Set the button text and the link for the "give gold" button */
             var giveGoldToUser = threadContainer.querySelector(".giveGold");
             giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.threadInformation.name);
             giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("giveGoldToUserText")));
 
+            /* Set the button text and the event handler for the "report post" button */
             var reportToAdministrators = threadContainer.querySelector(".report");
             reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("reportToAdministratorsText")));
 
             /* Set the state of the voting buttons */
             var voteButtonScoreCountElement = threadContainer.querySelector(".score");
             voteButtonScoreCountElement.appendChild(document.createTextNode(this.threadInformation.score));
-            /* Start iterating the comment section */
+
+            /* Start iterating the top level comments in the comment section */
             this.commentData.forEach((commentObject) => {
                 if (commentObject.kind === "more") {
                     var readmore = new LoadMore(commentObject.data, this, this);
