@@ -209,8 +209,7 @@ module AlienTube {
             var maxWidth = document.getElementById("watch7-content").offsetWidth - 80;
             var width = (21 + this.threadCollection[0].subreddit.length * 7);
 
-            /* Calculate the width of tabs and determine how many you can fit without breaking the
-            bounds of the comment section. */
+            /* Calculate the width of tabs and determine how many you can fit without breaking the bounds of the comment section. */
             if (len > 1) {
                 var i;
                 for (i = 0; i < len; i++) {
@@ -226,19 +225,25 @@ module AlienTube {
                     tab.appendChild(tabName);
                     tabContainer.insertBefore(tab, overflowContainer);
                 }
+
                 // We can't fit any more tabs. We will now start populating the overflow menu.
                 if (i < len) {
                     overflowContainer.style.display = "block";
+
+                    /* Click handler for the overflow menu button, displays the overflow menu. */
                     overflowContainer.addEventListener("click", () => {
                         var overflowContainerMenu = <HTMLUListElement> overflowContainer.querySelector("ul");
                         overflowContainerMenu.style.display = "block";
                     }, false);
 
+                    /* Document body click handler that closes the overflow menu when the user clicks outside of it.
+                    by defining event bubbling in the third argument we are preventing clicks on the menu from triggering this event */
                     document.body.addEventListener("click", () => {
                         var overflowContainerMenu = <HTMLUListElement> overflowContainer.querySelector("ul");
                         overflowContainerMenu.style.display = "none";
                     }, true);
 
+                    /* Continue iterating through the items we couldn't fit into tabs and populate the overflow menu. */
                     for (i = i; i < len; i++) {
                         var menuItem = document.createElement("li");
                         menuItem.setAttribute("data-value", this.threadCollection[i].subreddit);
@@ -248,6 +253,7 @@ module AlienTube {
                         overflowContainer.children[1].appendChild(menuItem);
                     }
                 } else {
+                    /* If we didn't need the overflow menu there is no reason to show it. */
                     overflowContainer.style.display = "none";
                 }
             }
