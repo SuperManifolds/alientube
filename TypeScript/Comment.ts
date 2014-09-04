@@ -50,6 +50,7 @@ module AlienTube {
                 gildCountElement.setAttribute("data-count", this.commentObject.gilded);
             }
 
+            /* Add flair to the user */
             var flair = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_flair");
             if (this.commentObject.author_flair_text) {
                 flair.appendChild(document.createTextNode(this.commentObject.author_flair_text));
@@ -57,34 +58,43 @@ module AlienTube {
                 flair.style.display = "none";
             }
 
+            /* Set the score of the comment next to the user tag */
             var score = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_score");
             score.appendChild(document.createTextNode(this.commentObject.score + Main.localisationManager.get("scorePointsText")));
 
+            /* Set the timestamp of the comment */
             var timestamp = this.representedHTMLElement.querySelector(".at_timestamp");
             timestamp.appendChild(document.createTextNode(Main.getHumanReadableTimestamp(this.commentObject.created_utc)));
             timestamp.setAttribute("timestamp", new Date(this.commentObject.created_utc).toISOString());
 
+            /* Render the markdown and set the actual comement messsage of the comment */
             var contentTextOfComment = this.representedHTMLElement.querySelector(".at_commentcontent");
             var contentTextHolder = document.createElement("span");
             contentTextHolder.innerHTML = SnuOwnd.getParser().render(this.commentObject.body);
             contentTextOfComment.appendChild(contentTextHolder);
 
+            /* Set the button text and event handler for the reply button. */
             var replyToComment = this.representedHTMLElement.querySelector(".at_reply");
             replyToComment.appendChild(document.createTextNode(Main.localisationManager.get("replyToCommentText")));
 
+            /* Set the button text and the event handler for the "show source" button */
             var displaySourceForComment = this.representedHTMLElement.querySelector(".at_displaysource");
             displaySourceForComment.appendChild(document.createTextNode(Main.localisationManager.get("displaySourceForCommentText")));
 
+            /* Set the button text and the event handler for the "save comment" button */
             var saveItemToRedditList = this.representedHTMLElement.querySelector(".save");
             saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
 
+            /* Set the button text and the link for the "give gold" button */
             var giveGoldToUser = this.representedHTMLElement.querySelector(".giveGold");
             giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.commentObject.name);
             giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("giveGoldToUserText")));
 
+            /* Set the button text and the event handler for the "report comment" button */
             var reportToAdministrators = this.representedHTMLElement.querySelector(".report");
             reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("reportToAdministratorsText")));
 
+            /* Continue traversing down and populate the replies to this comment. */
             if (this.commentObject.replies) {
                 var replyContainer = this.representedHTMLElement.querySelector(".at_replies");
                 var replies = this.commentObject.replies.data.children;
