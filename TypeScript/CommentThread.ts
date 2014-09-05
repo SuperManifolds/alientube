@@ -12,6 +12,7 @@ module AlienTube {
     export class CommentThread {
         commentSection : CommentSection;
         threadInformation : any;
+        threadContainer : HTMLDivElement;
 
         private postIsInPreservedMode : Boolean;
         private commentData : Array<any>;
@@ -27,15 +28,15 @@ module AlienTube {
             Main.Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
             this.postIsInPreservedMode = Main.isPreserved(this.threadInformation.created_utc);
 
-            var threadContainer = this.commentSection.template.getElementById("threadcontainer").content.cloneNode(true);
+            this.threadContainer = this.commentSection.template.getElementById("threadcontainer").content.cloneNode(true);
 
             /* Set the thread title and link to it */
-            var title = threadContainer.querySelector(".title");
+            var title = this.threadContainer.querySelector(".title");
             title.appendChild(document.createTextNode(this.threadInformation.title));
             title.setAttribute("href", "http://reddit.com" + this.threadInformation.permalink);
 
             /* Set the username of the author and link to them */
-            var username = threadContainer.querySelector(".at_author");
+            var username = this.threadContainer.querySelector(".at_author");
             username.appendChild(document.createTextNode(this.threadInformation.author));
             username.setAttribute("href", "http://www.reddit.com/u/" + this.threadInformation.author);
             username.setAttribute("data-username", this.threadInformation.author);
@@ -44,7 +45,7 @@ module AlienTube {
             }
 
             /* Add flair to the user */
-            var flair = <HTMLSpanElement> threadContainer.querySelector(".at_flair");
+            var flair = <HTMLSpanElement> this.threadContainer.querySelector(".at_flair");
             if (this.threadInformation.author_flair_text) {
                 flair.appendChild(document.createTextNode(this.threadInformation.author_flair_text));
             } else {
@@ -53,7 +54,7 @@ module AlienTube {
 
             /* Set the NSFW label on the post if applicable */
             if (this.threadInformation.over_18) {
-                var optionsElement = threadContainer.querySelector(".options");
+                var optionsElement = this.threadContainer.querySelector(".options");
                 var nsfwElement = document.createElement("acronym");
                 nsfwElement.classList.add("nsfw");
                 nsfwElement.setAttribute("title", Main.localisationManager.get("fullNSFWText"));
@@ -63,32 +64,32 @@ module AlienTube {
 
             /* Set the gild (how many times the user has been given gold for this post) if any */
             if (this.threadInformation.gilded) {
-                var gildCountElement = threadContainer.querySelector(".at_gilded");
+                var gildCountElement = this.threadContainer.querySelector(".at_gilded");
                 gildCountElement.setAttribute("data-count", this.threadInformation.gilded);
             }
 
             /* Set the the thread posted time */
-            var timestamp = threadContainer.querySelector(".at_timestamp");
+            var timestamp = this.threadContainer.querySelector(".at_timestamp");
             timestamp.appendChild(document.createTextNode(Main.getHumanReadableTimestamp(this.threadInformation.created_utc)));
             timestamp.setAttribute("timestamp", new Date(this.threadInformation.created_utc).toISOString());
 
             /* Set the localised text for "at {timestamp}" and "by {username}" */
-            var submittedAtTimeText = threadContainer.querySelector(".templateSubmittedAtTimeText");
+            var submittedAtTimeText = this.threadContainer.querySelector(".templateSubmittedAtTimeText");
             submittedAtTimeText.appendChild(document.createTextNode(Main.localisationManager.get("submittedAtTimeText")));
 
-            var submittedByUsernameText = threadContainer.querySelector(".templateSubmittedByUsernameText");
+            var submittedByUsernameText = this.threadContainer.querySelector(".templateSubmittedByUsernameText");
             submittedByUsernameText.appendChild(document.createTextNode(Main.localisationManager.get("submittedByUsernameText")));
 
             /* Set the button text and the event handler for the "comment" button */
-            var openNewCommentBox = threadContainer.querySelector(".commentTo");
+            var openNewCommentBox = this.threadContainer.querySelector(".commentTo");
             openNewCommentBox.appendChild(document.createTextNode(Main.localisationManager.get("commentText")));
 
             /* Set the button text and the event handler for the "display source" button */
-            var displaySourceForComment = threadContainer.querySelector(".at_displaysource");
+            var displaySourceForComment = this.threadContainer.querySelector(".at_displaysource");
             displaySourceForComment.appendChild(document.createTextNode(Main.localisationManager.get("displaySourceForCommentText")));
 
             /* Set the button text and the event handler for the "save" button */
-            var saveItemToRedditList = threadContainer.querySelector(".save");
+            var saveItemToRedditList = this.threadContainer.querySelector(".save");
             if (this.threadInformation.saved) {
                 saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("removeItemFromRedditSaveList")));
                 saveItemToRedditList.setAttribute("saved", "true");
@@ -99,7 +100,7 @@ module AlienTube {
 
 
             /* Set the button text and the event handler for the "refresh" button */
-            var refreshCommentThread = threadContainer.querySelector(".refresh");
+            var refreshCommentThread = this.threadContainer.querySelector(".refresh");
             refreshCommentThread.addEventListener("click", () => {
                 this.commentSection.threadCollection.forEach((item) => {
                     if (item.id === this.threadInformation.id) {
@@ -110,16 +111,16 @@ module AlienTube {
             refreshCommentThread.appendChild(document.createTextNode(Main.localisationManager.get("refreshCommentThreadText")));
 
             /* Set the button text and the link for the "give gold" button */
-            var giveGoldToUser = threadContainer.querySelector(".giveGold");
+            var giveGoldToUser = this.threadContainer.querySelector(".giveGold");
             giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.threadInformation.name);
             giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("giveGoldToUserText")));
 
             /* Set the button text and the event handler for the "report post" button */
-            var reportToAdministrators = threadContainer.querySelector(".report");
+            var reportToAdministrators = this.threadContainer.querySelector(".report");
             reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("reportToAdministratorsText")));
 
             /* Set the state of the voting buttons */
-            var voteButtonScoreCountElement = threadContainer.querySelector(".score");
+            var voteButtonScoreCountElement = this.threadContainer.querySelector(".score");
             voteButtonScoreCountElement.appendChild(document.createTextNode(this.threadInformation.score));
 
             /* Start iterating the top level comments in the comment section */
@@ -127,15 +128,15 @@ module AlienTube {
                 if (commentObject.kind === "more") {
                     var readmore = new LoadMore(commentObject.data, this, this);
                     this.children.push(readmore);
-                    threadContainer.appendChild(readmore.representedHTMLElement);
+                    this.threadContainer.appendChild(readmore.representedHTMLElement);
                 } else {
                     var comment = new Comment(commentObject.data, this);
                     this.children.push(comment);
-                    threadContainer.appendChild(comment.representedHTMLElement);
+                    this.threadContainer.appendChild(comment.representedHTMLElement);
                 }
             });
 
-            this.set(threadContainer);
+            this.set(this.threadContainer);
         }
 
         /**
