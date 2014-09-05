@@ -24,6 +24,8 @@
         "scorePointsText": " points",
         "commentText": "comment",
         "refreshCommentThreadText": "refresh",
+        "NSFW": "NSFW",
+        "fullNSFWText": "Adult content: Not Safe For Work",
         "giveGoldToUserText": "give gold",
         "displaySourceForCommentText": "source",
         "saveItemToRedditList": "save",

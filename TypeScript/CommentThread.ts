@@ -51,6 +51,16 @@ module AlienTube {
                 flair.style.display = "none";
             }
 
+            /* Set the NSFW label on the post if applicable */
+            if (this.threadInformation.over_18) {
+                var optionsElement = threadContainer.querySelector(".options");
+                var nsfwElement = document.createElement("acronym");
+                nsfwElement.classList.add("nsfw");
+                nsfwElement.setAttribute("title", Main.localisationManager.get("fullNSFWText"));
+                nsfwElement.appendChild(document.createTextNode(Main.localisationManager.get("NSFW")));
+                optionsElement.insertBefore(nsfwElement, optionsElement.firstChild);
+            }
+
             /* Set the gild (how many times the user has been given gold for this post) if any */
             if (this.threadInformation.gilded) {
                 var gildCountElement = threadContainer.querySelector(".at_gilded");
