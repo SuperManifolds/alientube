@@ -29,6 +29,7 @@
         "giveGoldToUserText": "give gold",
         "displaySourceForCommentText": "source",
         "saveItemToRedditList": "save",
+        "removeItemFromRedditSaveList": "unsave",
         "reportToAdministratorsText": "report",
         "replyToCommentText": "reply",
         "replyPlural": "replies",

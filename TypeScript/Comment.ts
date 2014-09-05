@@ -93,7 +93,13 @@ module AlienTube {
 
             /* Set the button text and the event handler for the "save comment" button */
             var saveItemToRedditList = this.representedHTMLElement.querySelector(".save");
-            saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
+            if (this.commentObject.saved) {
+                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("removeItemFromRedditSaveList")));
+                saveItemToRedditList.setAttribute("saved", "true");
+            } else {
+                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
+            }
+            saveItemToRedditList.addEventListener("click", this.onSaveButtonClick.bind(this), false);
 
             /* Set the button text and the link for the "give gold" button */
             var giveGoldToUser = this.representedHTMLElement.querySelector(".giveGold");
@@ -120,6 +126,22 @@ module AlienTube {
                     }
                 });
             }
+        }
+
+        onSaveButtonClick(eventObject : Event) {
+            var saveButton = <HTMLSpanElement> eventObject.target;
+            var savedType = saveButton.getAttribute("saved") ? SaveType.UNSAVE : SaveType.SAVE;
+            new RedditSaveRequest(this.commentObject.name, savedType, () => {
+                if (savedType === SaveType.SAVE) {
+                    saveButton.setAttribute("saved", "true");
+                    saveButton.removeChild(saveButton.firstChild);
+                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("removeItemFromRedditSaveList")));
+                } else {
+                    saveButton.removeAttribute("saved");
+                    saveButton.removeChild(saveButton.firstChild);
+                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
+                }
+            });
         }
     }
 }

@@ -89,7 +89,14 @@ module AlienTube {
 
             /* Set the button text and the event handler for the "save" button */
             var saveItemToRedditList = threadContainer.querySelector(".save");
-            saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
+            if (this.threadInformation.saved) {
+                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("removeItemFromRedditSaveList")));
+                saveItemToRedditList.setAttribute("saved", "true");
+            } else {
+                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
+            }
+            saveItemToRedditList.addEventListener("click", this.onSaveButtonClick.bind(this), false);
+
 
             /* Set the button text and the event handler for the "refresh" button */
             var refreshCommentThread = threadContainer.querySelector(".refresh");
@@ -141,6 +148,22 @@ module AlienTube {
                 threadContainer.removeChild(threadContainer.firstChild);
             }
             threadContainer.appendChild(contents);
+        }
+
+        onSaveButtonClick(eventObject : Event) {
+            var saveButton = <HTMLSpanElement> eventObject.target;
+            var savedType = saveButton.getAttribute("saved") ? SaveType.UNSAVE : SaveType.SAVE;
+            new RedditSaveRequest(this.threadInformation.name, savedType, () => {
+                if (savedType === SaveType.SAVE) {
+                    saveButton.setAttribute("saved", "true");
+                    saveButton.removeChild(saveButton.firstChild);
+                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("removeItemFromRedditSaveList")));
+                } else {
+                    saveButton.removeAttribute("saved");
+                    saveButton.removeChild(saveButton.firstChild);
+                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
+                }
+            });
         }
     }
 }
