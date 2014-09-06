@@ -62,7 +62,8 @@ module AlienTube {
 
             /* Set the score of the comment next to the user tag */
             var score = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_score");
-            score.appendChild(document.createTextNode(this.commentObject.score + Main.localisationManager.get("scorePointsText")));
+            var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("scorePointsText") : Main.localisationManager.get("scorePointsTextPlural");
+            score.appendChild(document.createTextNode(this.commentObject.score + scorePointsText));
 
             /* Set the timestamp of the comment */
             var timestamp = this.representedHTMLElement.querySelector(".at_timestamp");
