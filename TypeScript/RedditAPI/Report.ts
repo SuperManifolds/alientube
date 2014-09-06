@@ -64,6 +64,10 @@ module AlienTube {
                     }
                 }
 
+                cancelButton.addEventListener("click", () => {
+                    this.reportContainer.parentNode.removeChild(this.reportContainer);
+                }, false);
+
                 new HttpRequest("https://api.reddit.com/api/report", RequestType.POST, () => {
                     if (isThread) {
                         var threadCollection = commentThread.commentSection.threadCollection;
