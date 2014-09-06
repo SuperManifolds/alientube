@@ -75,6 +75,9 @@ module AlienTube {
             var contentTextHolder = document.createElement("span");
             contentTextHolder.innerHTML = SnuOwnd.getParser().render(this.commentObject.body);
             contentTextOfComment.appendChild(contentTextHolder);
+            if (this.commentObject.body === "[deleted]") {
+                commentElement.classList.add("deleted");
+            }
 
             /* Set the button text and event handler for the reply button. */
             var replyToComment = this.representedHTMLElement.querySelector(".at_reply");

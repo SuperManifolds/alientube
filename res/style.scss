@@ -288,6 +288,22 @@
                 display: none;
             }
         }
+
+        &.deleted {
+            & > .at_commentmain {
+                & > .options {
+                    display: none;
+                }
+
+                & > .at_commentcontent {
+                    display: inline-block;
+                    color: gray;
+                    background-color: #f0f0f0;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
+            }
+        }
     }
 
     & .at_replies {
@@ -436,6 +452,15 @@
 #at_comments {
     padding-left: 20px;
     padding-right: 20px;
+
+    &.preserved {
+        & .commentTo,
+        & .at_reply,
+        & .report,
+        & .giveGold {
+            display: none;
+        }
+    }
 }
 
 @-moz-document url-prefix() {

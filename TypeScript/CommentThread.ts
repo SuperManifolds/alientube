@@ -30,6 +30,12 @@ module AlienTube {
 
             this.threadContainer = this.commentSection.template.getElementById("threadcontainer").content.cloneNode(true);
 
+
+            if (this.postIsInPreservedMode) {
+                var commentContainer = <HTMLDivElement> document.getElementById("at_comments");
+                commentContainer.classList.add("preserved");
+            }
+
             /* Set the thread title and link to it */
             var title = this.threadContainer.querySelector(".title");
             title.appendChild(document.createTextNode(this.threadInformation.title));
