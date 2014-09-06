@@ -211,7 +211,7 @@ module AlienTube {
             @param tabContainer The tab container to operate on.
             @param [selectTabAtIndex] The tab to be in active / selected status.
         */
-        private insertTabsIntoDocument(tabContainer : HTMLElement, selectTabAtIndex? : number) {
+        insertTabsIntoDocument(tabContainer : HTMLElement, selectTabAtIndex? : number) {
             var overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
             var len = this.threadCollection.length;
             var maxWidth = document.getElementById("watch7-content").offsetWidth - 80;
@@ -311,7 +311,7 @@ module AlienTube {
         }
 
         /* Remove all tabs and overflow items from the DOM. */
-        private clearTabsFromTabContainer () {
+        clearTabsFromTabContainer () {
             var tabContainer = document.getElementById("at_tabcontainer");
             var overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
 

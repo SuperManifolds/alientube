@@ -36,6 +36,15 @@
         "permalink": "permalink",
         "parent": "parent",
 
+        "spam": "spam",
+        "voteManipulation": "vote manipulation",
+        "personalInformation": "personal information",
+        "sexualisingMinors": "sexualizing minors",
+        "breakingReddit": "breaking reddit",
+        "reportOther": "other (max 100 characters):",
+        "submit": "submit",
+        "cancel": "cancel",
+
         "loadMoreComments": "load more comments",
         "loading": "loading..."
     }

@@ -89,3 +89,41 @@
         <span class="at_replycount"></span>
     </div>
 </template>
+
+<template id="report">
+    <div class="at_report">
+        <span class="at_report_header"></span>
+        <ul>
+            <li>
+                <input id="report_spam" type="radio" name="report" value="spam" />
+                <label for="report_spam"></label>
+            </li>
+            <li>
+                <input id="report_vote_manipulation" type="radio" name="report" value="vote_manipulation" />
+                <label for="report_vote_manipulation"></label>
+            </li>
+            <li>
+                <input id="report_personal_information" type="radio" name="report" value="personal_information" />
+                <label for="report_personal_information"></label>
+            </li>
+            <li>
+                <input id="report_sexualising_minors" type="radio" name="report" value="sexualising_minors" />
+                <label for="report_sexualising_minors"></label>
+            </li>
+            <li>
+                <input id="report_breaking_reddit" type="radio" name="report" value="breaking_reddit" />
+                <label for="report_breaking_reddit"></label>
+            </li>
+            <li>
+            </li>
+                <input id="report_other" type="radio" name="report" value="other" />
+                <label for="report_other"></label>
+            </li>
+            <li>
+                <input id="report_otherfield" type="text" max="100" name="otherfield" disabled>
+            </li>
+        </ul>
+        <button class="at_report_submit button"></button>
+        <button class="at_report_cancel button"></button>
+    </div>
+</template>

@@ -14,10 +14,12 @@ module AlienTube {
         representedHTMLElement : HTMLDivElement;
         private commentObject : any;
         private children : Array<any>;
+        private commentThread : CommentThread;
 
         constructor(commentData : any, commentThread : CommentThread) {
             this.children = new Array();
             this.commentObject = commentData;
+            this.commentThread = commentThread;
 
             this.representedHTMLElement = commentThread.commentSection.template.getElementById("comment").content.cloneNode(true);
 
@@ -109,6 +111,7 @@ module AlienTube {
             /* Set the button text and the event handler for the "report comment" button */
             var reportToAdministrators = this.representedHTMLElement.querySelector(".report");
             reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("reportToAdministratorsText")));
+            reportToAdministrators.addEventListener("click", this.onReportButtonClicked.bind(this), false);
 
             /* Continue traversing down and populate the replies to this comment. */
             if (this.commentObject.replies) {
@@ -142,6 +145,10 @@ module AlienTube {
                     saveButton.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
                 }
             });
+        }
+
+        onReportButtonClicked(eventObject : Event) {
+            new RedditReport(this.commentObject.name, this.commentThread, false);
         }
     }
 }

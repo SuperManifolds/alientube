@@ -19,6 +19,23 @@
         text-decoration: underline;
     }
 
+    .button {
+        user-select: none;
+        padding: 6px;
+        border-radius: 1px;
+        border: 1px solid rgb(196, 219, 241);
+        background-color: white;
+        color: rgb(51, 102, 153);
+        height: auto;
+        cursor: pointer;
+
+        &:hover {
+            border-color: rgb(51, 102, 153);
+            background-color: rgb(240, 248, 255);
+            outline: none;
+        }
+    }
+
     & .at_load {
         color: #0066aa;
         font-size: x-small;
@@ -329,6 +346,30 @@
                 vertical-align: middle;
                 overflow: visible;
                 content: attr(data-count) "x";
+            }
+        }
+    }
+
+    .at_report {
+        background: #f6e69f;
+        border: thin solid #d8bb3c;
+        border-radius: 3px;
+        margin-top: 10px;
+        width: 220px;
+        padding: 10px;
+
+        ul li {
+            list-style: none;
+            margin: 5px 0;
+        }
+
+        input[type=text] {
+            width: 100%;
+            font-size: 120%;
+            border: 1px solid rgb(196, 219, 241);
+
+            &:disabled {
+                background: #dddddd;
             }
         }
     }

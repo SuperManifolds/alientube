@@ -118,6 +118,7 @@ module AlienTube {
             /* Set the button text and the event handler for the "report post" button */
             var reportToAdministrators = this.threadContainer.querySelector(".report");
             reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("reportToAdministratorsText")));
+            reportToAdministrators.addEventListener("click", this.onReportButtonClicked.bind(this), false);
 
             /* Set the state of the voting buttons */
             var voteButtonScoreCountElement = this.threadContainer.querySelector(".score");
@@ -165,6 +166,10 @@ module AlienTube {
                     saveButton.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
                 }
             });
+        }
+
+        onReportButtonClicked(eventObject : Event) {
+            new RedditReport(this.threadInformation.name, this, true);
         }
     }
 }
