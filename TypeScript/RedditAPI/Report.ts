@@ -99,7 +99,8 @@ module AlienTube {
                     "api_type": "json",
                     "reason": reportReason,
                     "other_reason": otherReason,
-                    "thing_id": thing
+                    "thing_id": thing,
+                    "uh": Main.Preferences.get("redditUserIdentifierHash")
                 });
 
             }, false);
