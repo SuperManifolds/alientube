@@ -35,7 +35,7 @@ module AlienTube {
             this.loadTimer = setTimeout(() => {
                 var loadingText = document.getElementById("at_loadingtext");
                 loadingText.innerText = Main.localisationManager.get("slowLoadingText");
-            }, 5000);
+            }, 3000);
 
             new HttpRequest(this.requestUrl, this.requestType, this.onSuccess.bind(this), this.postData, this.onRequestError.bind(this));
         }
