@@ -17,7 +17,7 @@ module AlienTube {
 			hiddenCommentScoreThreshold: -4,
 			showGooglePlusWhenNoPosts: true,
 			rememberTabsOnViewChange: true,
-			displayGooglePlusByDefault: true,
+			displayGooglePlusByDefault: false,
 			redditUserIdentifierHash: "",
 			excludedSubredditsSelectedByUser: []
 		}
