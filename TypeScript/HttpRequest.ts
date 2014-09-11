@@ -33,7 +33,7 @@ module AlienTube {
                         if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
                             callback(xhr.responseText);
                         } else {
-                            errorHandler(xhr);
+                            if (errorHandler) errorHandler(xhr);
                         }
                     }
                 }
