@@ -41,12 +41,10 @@ module AlienTube {
             loadingText.classList.add("loading");
             loadingText.appendChild(document.createTextNode(Main.localisationManager.get("loading")));
 
-            var childrenSeperatedByComma = this.data.children.join(",");
-            var loadMoreInstance = this;
-            var generateRequestUrl = "https://api.reddit.com/r/CGPGrey/comments/2dfh5v/z/" + this.data.id + ".json";
+            var generateRequestUrl = "https://api.reddit.com/r/" + this.commentThread.threadInformation.subreddit +
+            "/comments/" + this.commentThread.threadInformation.id + "/z/" + this.data.id + ".json";
 
             new HttpRequest(generateRequestUrl, RequestType.GET, (responseData) => {
-                console.log(JSON.parse(responseData));
 
                 /* Remove "loading comments" text */
                 var getParentNode = loadingText.parentNode.parentNode;
