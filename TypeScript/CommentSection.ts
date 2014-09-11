@@ -12,7 +12,7 @@ module AlienTube {
     export class CommentSection {
         template : HTMLDocument;
         threadCollection : Array<any>;
-        private storedTabCollection : Array<CommentThread>;
+        private storedTabCollection : Array<any>;
 
 
         constructor(currentVideoIdentifier:string) {
@@ -129,6 +129,17 @@ module AlienTube {
             }
         }
 
+        showTab(threadData : any) {
+            var getTabById = this.storedTabCollection.filter(function (x) {
+                return x[0].data.children[0].data.name === threadData.name;
+            });
+            if (getTabById.length > 0) {
+                new CommentThread(getTabById[0], this)
+            } else {
+                this.downloadThread(threadData);
+            }
+        }
+
         /**
         * Download a thread from Reddit.
         * @param threadData Data about the thread to download from a Reddit search page.
@@ -148,7 +159,8 @@ module AlienTube {
                 if (!Main.Preferences.get("rememberTabsOnViewChange")) {
                     this.storedTabCollection.length = 0;
                 }
-                this.storedTabCollection.push(new CommentThread(responseObject, this));
+                new CommentThread(responseObject, this)
+                this.storedTabCollection.push(responseObject);
             }, null, loadingScreen);
         }
 
@@ -355,7 +367,7 @@ module AlienTube {
 
                 /* Mark the new tab as selected and start downloading it. */
                 tabElementClickedByUser.classList.add("active");
-                this.downloadThread(this.threadCollection[currentIndexOfNewTab]);
+                this.showTab(this.threadCollection[currentIndexOfNewTab]);
             }
         }
 
@@ -386,7 +398,7 @@ module AlienTube {
             this.insertTabsIntoDocument(tabContainer, 0);
 
             /* Start downloading the new tab. */
-            this.downloadThread(this.threadCollection[currentIndexOfNewTab]);
+            this.showTab(this.threadCollection[currentIndexOfNewTab]);
             eventObject.stopPropagation();
         }
     }
