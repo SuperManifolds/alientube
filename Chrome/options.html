@@ -1,43 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AlienTube Options</title>
+    <title></title>
     <link href="chrome_shared.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="widgets.css" rel="stylesheet" type="text/css" media="screen" />
+    <meta charset="utf-8">
 </head>
 <body>
     <div id="cover"></div>
     <section id="container">
         <header>
             <img src="icon128.png" style="width: 60px; height: auto;" id="logo" alt="AlienTube Logo" />
-            <h1>AlienTube Options</h1>
+            <h1>AlienTube</h1>
         </header>
-        <label for="hiddenPostsScoreThreshold">Don't show me submissions with a score less than</label>
+        <label for="hiddenPostsScoreThreshold"></label>
         <input type="number" name="hiddenPostsScoreThreshold" id="hiddenPostsScoreThreshold" />
         <br/>
-        <label for="hiddenCommentScoreThreshold">Don't show me comments with a score less than</label>
+        <label for="hiddenCommentScoreThreshold"></label>
         <input type="number" name="hiddenCommentScoreThreshold" id="hiddenCommentScoreThreshold" />
-        <br/>
-        <input type="checkbox" name="featherDescriptionPlacement" id="featherDescriptionPlacement" />
-        <label for="featherDescriptionPlacement">Collapse comment box into description in YouTube Feather</label>
         <br />
-        <input type="checkbox" name="disablePostHeader" id="disablePostHeader" />
-        <label for="disablePostHeader">Hide the post header</label>
+        <label for="showGooglePlusWhenNoPosts"></label>
+        <input type="checkbox" name="showGooglePlusWhenNoPosts" id="showGooglePlusWhenNoPosts" />
         <br />
-        <input type="checkbox" name="disableTabs" id="disableTabs" />
-        <label for="disableTabs">Hide the tab bar</label>
+        <label for="rememberTabsOnViewChange"></label>
+        <input type="checkbox" name="rememberTabsOnViewChange" id="rememberTabsOnViewChange" />
         <br />
-        <input type="checkbox" name="minimiseCommentBox" id="minimiseCommentBox" />
-        <label for="minimiseCommentBox">Minimise comment box</label>
+        <label for="displayGooglePlusByDefault"></label>
+        <input type="checkbox" name="displayGooglePlusByDefault" id="displayGooglePlusByDefault" />
         <br />
-        <input type="checkbox" name="dontShowGplus" id="dontShowGplus" />
-        <label for="dontShowGplus">Do not display the Google Plus comment section when no results are found.</label>
-        <br />
-        <button id="saveButton">Save</button>
+        <button id="saveButton"></button>
         <div id="status"></div>
     </section>
     <section id="about" class="overlay">
-        AlienTube version
+        <span id="versiontext"></span>
         <span id="version"></span>
         <article class="markdown-body entry-content" itemprop="mainContentOfPage">
             <p>Copyright (c) 2014, Alex Sørlie Glomsaas All rights reserved.</p>
@@ -66,10 +61,10 @@
             <p>THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.</p>
         </article>
         <div id="control">
-            <button id="close">Close</button>
+            <button id="closeButton"></button>
         </div>
     </section>
-    <button id="aboutButton">About</button>
+    <button id="aboutButton"></button>
     <script src="options.js" type="text/javascript"></script>
 </body>
 

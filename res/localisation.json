@@ -59,6 +59,18 @@
         "overloadHeader": "reddit is under heavy load right now",
         "overloadText": "please try again in a few minutes",
         "errorHeader": "You broke reddit :(",
-        "retryButtonText": "Try again"
+        "retryButtonText": "Try again",
+
+        "hiddenPostsScoreThreshold": "Do not display posts with a score less than:",
+        "hiddenCommentScoreThreshold": "Do not display comments with a score less than:",
+        "showGooglePlusWhenNoPosts": "Display Google+ comments if no Reddit comments are found",
+        "rememberTabsOnViewChange": "Remember the contents of tabs when you switch from them",
+        "displayGooglePlusByDefault": "Show the Google+ comments by default",
+        "saveButtonText": "Save",
+        "aboutButtonText": "About",
+        "closeButtonText": "Close",
+        "versionText": "AlienTube version",
+        "optionsTitle": "AlienTube Options",
+        "optionsSavedText": "Changes has been saved"
     }
 }
