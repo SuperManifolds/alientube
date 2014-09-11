@@ -677,6 +677,8 @@ a[href$="/spoiler"]::before {
     right: 0;
     opacity: 0.5;
     cursor: pointer;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
 
     &:hover {
         opacity: 0.8;
@@ -693,7 +695,6 @@ a[href$="/spoiler"]::before {
     }
 
     & span {
-        font-size: 100%;
         vertical-align: top;
         line-height: 24px;
     }
