@@ -173,13 +173,22 @@ module AlienTube {
         * @param contents HTML DOM node or element to use.
         */
         set (contents : Node) {
+            var redditContainer = document.createElement("section");
+            redditContainer.id = "alientube";
+
             var commentsContainer = document.getElementById("watch7-content");
             var previousRedditInstance = document.getElementById("alientube");
             if (previousRedditInstance) {
                 commentsContainer.removeChild(document.getElementById("alientube"));
             }
+
             var googlePlusContainer = document.getElementById("watch-discussion");
-            googlePlusContainer.style.display = "none";
+            if (Main.Preferences.get("displayGooglePlusByDefault")) {
+                redditContainer.style.display="none"
+            } else {
+                googlePlusContainer.style.display = "none";
+            }
+
 
             /* Add the "switch to Reddit" button in the google+ comment section */
             var redditButton = <HTMLDivElement> document.getElementById("switchtoreddit");
@@ -196,8 +205,6 @@ module AlienTube {
 
 
             /* Add AlienTube contents*/
-            var redditContainer = document.createElement("section");
-            redditContainer.id = "alientube";
             redditContainer.appendChild(contents);
             commentsContainer.insertBefore(redditContainer, googlePlusContainer);
         }
@@ -315,7 +322,10 @@ module AlienTube {
         */
         returnNoResults () {
             this.set(this.template.getElementById("noposts").content.cloneNode(true));
-            if (Main.Preferences.get("showGooglePlus")) {
+            var redditButton = <HTMLDivElement> document.getElementById("switchtoreddit");
+            redditButton.style.display = "none";
+
+            if (Main.Preferences.get("showGooglePlusWhenNoPosts")) {
                 document.getElementById("watch-discussion").style.display = "block";
             }
         }
