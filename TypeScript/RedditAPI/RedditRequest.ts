@@ -58,7 +58,7 @@ module AlienTube {
             /* Cancel the slow load timer */
             clearTimeout(this.loadTimer);
 
-            if (this.attempts <= 3) {
+            if (this.attempts <= 3 && xhr.status !== 404) {
                 /* Up to 3 attempts, retry the loading process automatically. */
                 this.loadingScreen.updateProgress(LoadingState.RETRY);
                 this.performRequest();
