@@ -129,6 +129,10 @@ module AlienTube {
             }
         }
 
+        /** 
+            Display a tab in the comment section, if it is locally cached, use that, if not, download it.
+            @param threadData Data about the thread to download from a Reddit search page.
+        */
         showTab(threadData : any) {
             var getTabById = this.storedTabCollection.filter(function (x) {
                 return x[0].data.children[0].data.name === threadData.name;

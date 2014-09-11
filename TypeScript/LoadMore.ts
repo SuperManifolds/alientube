@@ -23,16 +23,19 @@ module AlienTube {
 
             this.representedHTMLElement = commentThread.commentSection.template.getElementById("loadmore").content.cloneNode(true);
 
+            /* Display the amount of replies available to load */
             var replyCount = this.representedHTMLElement.querySelector(".at_replycount");
             var replyCountText = data.count > 1 ?  Main.localisationManager.get("replyPlural") : Main.localisationManager.get("replyToCommentText");
             replyCount.appendChild(document.createTextNode("(" + data.count + " " + replyCountText + ")"));
 
+            /* Set the localisation for the "load more" button, and the event listener. */
             var loadMoreText = this.representedHTMLElement.querySelector(".at_load");
             loadMoreText.appendChild(document.createTextNode(Main.localisationManager.get("loadMoreComments")));
             loadMoreText.addEventListener("click", this.onLoadMoreClick.bind(this), false);
         }
 
         private onLoadMoreClick(eventObject : Event) {
+            /* Display "loading comments" text */
             var loadingText =  <HTMLAnchorElement> eventObject.target;
             loadingText.removeChild(loadingText.firstChild);
             loadingText.classList.add("loading");
@@ -44,9 +47,12 @@ module AlienTube {
 
             new HttpRequest(generateRequestUrl, RequestType.GET, (responseData) => {
                 console.log(JSON.parse(responseData));
+
+                /* Remove "loading comments" text */
                 var getParentNode = loadingText.parentNode.parentNode;
                 getParentNode.removeChild(loadingText.parentNode);
 
+                /* Traverse the retrieved comments and append them to the comment section */
                 var commentItems = JSON.parse(responseData)[1].data.children[0].data.replies.data.children;
                 if (commentItems.length > 0) {
                     commentItems.forEach((commentObject) => {

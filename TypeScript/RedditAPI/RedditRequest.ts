@@ -32,32 +32,39 @@ module AlienTube {
 
         private performRequest () {
             this.attempts++;
+
+            /* Kick of a 3 second timer that will confirm to the user that the loading process is taking unusually long, unless cancelled
+            by a successful load (or an error) */
             this.loadTimer = setTimeout(() => {
                 var loadingText = document.getElementById("at_loadingtext");
                 loadingText.innerText = Main.localisationManager.get("slowLoadingText");
             }, 3000);
 
+            /* Perform the reddit api request */
             new HttpRequest(this.requestUrl, this.requestType, this.onSuccess.bind(this), this.postData, this.onRequestError.bind(this));
         }
 
         private onSuccess (responseText) {
+            /* Cancel the slow load timer */
             clearTimeout(this.loadTimer);
 
+            /* Dismiss the loading screen, perform the callback and clear ourselves out of memory. */
             this.loadingScreen.updateProgress(LoadingState.COMPLETE);
             this.finalCallback(responseText);
             delete this;
         }
 
         private onRequestError (xhr) {
+            /* Cancel the slow load timer */
             clearTimeout(this.loadTimer);
 
             if (this.attempts <= 3) {
+                /* Up to 3 attempts, retry the loading process automatically. */
                 this.loadingScreen.updateProgress(LoadingState.RETRY);
-
                 this.performRequest();
             } else {
+                /* We have tried too many times without success, give up and display an error to the user. */
                 this.loadingScreen.updateProgress(LoadingState.ERROR);
-
                 switch (xhr.status) {
                     case 404:
                         new ErrorScreen(Main.commentSection, ErrorState.NOT_FOUND);
