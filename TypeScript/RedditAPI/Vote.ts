@@ -17,7 +17,7 @@ module AlienTube {
             new HttpRequest(url, RequestType.POST, callback, {
                 "uh": Main.Preferences.get("redditUserIdentifierHash"),
                 "id": thing,
-                "dir": type.toString
+                "dir": type
             });
         }
     }
