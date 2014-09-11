@@ -122,6 +122,9 @@
 
         & .vote {
             float: none;
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: 5px;
             margin-right: 10px;
         }
     }
@@ -130,6 +133,7 @@
     & .tagline {
         font-size: x-small;
         color: #a2a2a2;
+        margin-top: 3px;
         display: block;
     }
 
@@ -213,7 +217,6 @@
         font-family: verdana, sans-serif;
         word-wrap:break-word;
         break-word: all;
-        padding-top: 10px;
         padding-bottom: 10px;
 
         & .at_togglehide:before {
@@ -307,12 +310,13 @@
     }
 
     & .at_replies {
-        padding-top: 5px;
+        padding-top: 15px;
+        padding-left: 15px;
 
         & article {
-            padding-left: 20px;
-            padding-bottom: 0;
             border-left: dotted 1px #cacaca;
+            padding-left: 10px;
+            padding-bottom: 0;
         }
     }
 
