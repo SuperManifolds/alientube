@@ -559,43 +559,79 @@ a[href$="/spoiler"]::before {
 }
 
 .loading {
-    position: relative;
-    padding-top: 40px;
+    height: 200px;
+    width: 500px;
     margin-left: auto;
     margin-right: auto;
-    width: 150px;
-    height: 150px;
+    text-align: center;
+
+    & > .spinner,
+    & > #textContainer {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    & > #textContainer {
+        margin-left: 20px;
+
+        & > h2 {
+            font-size: 150%;
+            font-weight: 200;
+        }
+
+        & p {
+            margin-top: 10px;
+        }
+    }
 }
 
-.loading_inner {
-    animation: load 1.7s infinite ease;
-    font-size: 90px;
-    text-indent: -9999em;
-    overflow: hidden;
-    width: 1em;
-    height: 1em;
-    border-radius: 50%;
-    margin: 0.8em auto;
+.spinner {
+    margin: 100px auto;
+    width: 32px;
+    height: 32px;
     position: relative;
 }
 
-@keyframes load {
-  0% {
-    transform: rotate(0deg);
-    box-shadow: -0.11em -0.83em 0 -0.4em #ff7d46, -0.11em -0.83em 0 -0.42em #ff7d46, -0.11em -0.83em 0 -0.44em #ff7d46, -0.11em -0.83em 0 -0.46em #ff7d46, -0.11em -0.83em 0 -0.477em #ff7d46;
-  }
-  5%,
-  95% {
-    box-shadow: -0.11em -0.83em 0 -0.4em #ff7d46, -0.11em -0.83em 0 -0.42em #ff7d46, -0.11em -0.83em 0 -0.44em #ff7d46, -0.11em -0.83em 0 -0.46em #ff7d46, -0.11em -0.83em 0 -0.477em #ff7d46;
-  }
-  30% {
-    box-shadow: -0.11em -0.83em 0 -0.4em #ff7d46, -0.51em -0.66em 0 -0.42em #ff7d46, -0.75em -0.36em 0 -0.44em #ff7d46, -0.83em -0.03em 0 -0.46em #ff7d46, -0.81em 0.21em 0 -0.477em #ff7d46;
-  }
-  55% {
-    box-shadow: -0.11em -0.83em 0 -0.4em #ff7d46, -0.29em -0.78em 0 -0.42em #ff7d46, -0.43em -0.72em 0 -0.44em #ff7d46, -0.52em -0.65em 0 -0.46em #ff7d46, -0.57em -0.61em 0 -0.477em #ff7d46;
-  }
-  100% {
-    transform: rotate(360deg);
-    box-shadow: -0.11em -0.83em 0 -0.4em #ff7d46, -0.11em -0.83em 0 -0.42em #ff7d46, -0.11em -0.83em 0 -0.44em #ff7d46, -0.11em -0.83em 0 -0.46em #ff7d46, -0.11em -0.83em 0 -0.477em #ff7d46;
-  }
+.cube1, .cube2 {
+    background-color: #ff5500;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    -webkit-animation: cubemove 1.8s infinite ease-in-out;
+    animation: cubemove 1.8s infinite ease-in-out;
+}
+
+.cube2 {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
+}
+
+@-webkit-keyframes cubemove {
+    25% { -webkit-transform: translateX(22px) rotate(-90deg) scale(0.5) }
+    50% { -webkit-transform: translateX(22px) translateY(22px) rotate(-180deg) }
+    75% { -webkit-transform: translateX(0px) translateY(22px) rotate(-270deg) scale(0.5) }
+    100% { -webkit-transform: rotate(-360deg) }
+}
+
+@keyframes cubemove {
+    25% {
+        transform: translateX(42px) rotate(-90deg) scale(0.5);
+        -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+    } 50% {
+        /* Hack to make FF rotate in the right direction */
+        transform: translateX(42px) translateY(42px) rotate(-179deg);
+        -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+    } 50.1% {
+        transform: translateX(42px) translateY(42px) rotate(-180deg);
+        -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+    } 75% {
+        transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+        -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+    } 100% {
+        transform: rotate(-360deg);
+        -webkit-transform: rotate(-360deg);
+    }
 }

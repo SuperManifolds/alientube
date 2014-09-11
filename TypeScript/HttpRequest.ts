@@ -13,9 +13,9 @@ module AlienTube {
         @param [postdata] Key-Value object containing POST data.
     */
     export class HttpRequest {
-        private static acceptableResponseTypes = [200, 201, 202, 301, 302, 303, 0, 404];
+        private static acceptableResponseTypes = [200, 201, 202, 301, 302, 303, 0];
 
-        constructor(url : string, type : RequestType, callback : any, postData? : any) {
+        constructor(url : string, type : RequestType, callback : any, postData? : any, errorHandler? : any) {
             if (Main.getCurrentBrowser() == Browser.SAFARI) {
                 // TODO
             } else {
@@ -33,7 +33,7 @@ module AlienTube {
                         if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
                             callback(xhr.responseText);
                         } else {
-                            // TODO Error handling
+                            errorHandler(xhr);
                         }
                     }
                 }

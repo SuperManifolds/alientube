@@ -47,6 +47,10 @@
         "cancel": "cancel",
 
         "loadMoreComments": "load more comments",
-        "loading": "loading..."
+        "loading": "loading...",
+        "loadingListText": "Searching for Reddit posts..",
+        "loadingPostText": "Loading post..",
+        "slowLoadingText": "This is taking longer than usual..",
+        "retryText": "Retrying.. (Attempt {0} of 3)"
     }
 }

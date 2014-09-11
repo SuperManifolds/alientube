@@ -8,6 +8,7 @@
 /// <reference path="LocalisationManager.ts" />
 /// <reference path="LoadingScreen.ts" />
 
+/// <reference path="RedditAPI/RedditRequest.ts" />
 /// <reference path="RedditAPI/Comment.ts" />
 /// <reference path="RedditAPI/Vote.ts" />
 /// <reference path="RedditAPI/Report.ts" />

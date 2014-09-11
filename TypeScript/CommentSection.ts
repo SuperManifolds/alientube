@@ -27,14 +27,13 @@ module AlienTube {
                 templateLink.onload = () => {
                     this.template = templateLink.import;
 
-                    // Set loading indicator.
-                    var loadingContentIndicator = this.template.getElementById("loading").content.cloneNode(true);
-                    loadingContentIndicator.querySelector(".loading_inner").appendChild(document.createTextNode(Main.localisationManager.get("loadingContentText")));
-                    this.set(loadingContentIndicator);
+                    // Set Loading Screen
+                    var loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Main.localisationManager.get("loadingListText"));
+                    this.set(loadingScreen.HTMLElement);
 
                     // Open a search request to Reddit for the video identfiier
                     var videoSearchString = encodeURIComponent("url:'/watch?v=" + currentVideoIdentifier + "' (site:youtube.com OR site:youtu.be)");
-                    new HttpRequest("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (response :string) => {
+                    new RedditRequest("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (response :string) => {
                         var results = JSON.parse(response);
 
                         // There are a number of ways the Reddit API can arbitrarily explode, here are some of them.
@@ -112,9 +111,6 @@ module AlienTube {
                                 this.insertTabsIntoDocument(tabContainer, 0);
                                 window.addEventListener("resize", this.updateTabsToFitToBoundingContainer.bind(this), false);
 
-                                // Set loading indicator
-                                var loadingContentIndicator = tabContainerTemplate.querySelector(".loading");
-                                loadingContentIndicator.querySelector(".loading_inner").appendChild(document.createTextNode(Main.localisationManager.get("loadingContentText")));
                                 this.set(tabContainer);
                                 var mainContainer = document.getElementById("alientube");
                                 mainContainer.appendChild(tabContainerTemplate.querySelector("#at_comments"));
@@ -125,7 +121,7 @@ module AlienTube {
                                 this.returnNoResults();
                             }
                         }
-                    });
+                    }, null, loadingScreen);
                 }
                 templateLink.setAttribute("rel", "import");
                 templateLink.setAttribute("href", Main.getExtensionRessourcePath("templates.html"));
@@ -138,15 +134,22 @@ module AlienTube {
         * @param threadData Data about the thread to download from a Reddit search page.
         */
         downloadThread (threadData : any) {
+            var loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Main.localisationManager.get("loadingPostText"));
+            var alientubeCommentContainer = document.getElementById("at_comments");
+            while (alientubeCommentContainer.firstChild) {
+                alientubeCommentContainer.removeChild(alientubeCommentContainer.firstChild);
+            }
+            alientubeCommentContainer.appendChild(loadingScreen.HTMLElement);
+
             var requestUrl = "https://api.reddit.com/r/" + threadData.subreddit + "/comments/" + threadData.id + ".json";
-            new HttpRequest(requestUrl, RequestType.GET, (response) => {
+            new RedditRequest(requestUrl, RequestType.GET, (response) => {
                 var responseObject = JSON.parse(response);
                 // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
                 if (!Main.Preferences.get("rememberTabsOnViewChange")) {
                     this.storedTabCollection.length = 0;
                 }
                 this.storedTabCollection.push(new CommentThread(responseObject, this));
-            });
+            }, null, loadingScreen);
         }
 
         /**
