@@ -33,13 +33,16 @@ module AlienTube {
                 case LoadingState.LOADING:
                     this.loadingAttempts = 1;
                     var loadingHeader = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingheader");
-                    loadingHeader.innerText = alternativeText || Main.localisationManager.get("loading");
+                    loadingHeader.innerText = alternativeText || Main.localisationManager.get("loading_generic_message");
                     break;
 
                 case LoadingState.RETRY:
                     this.loadingAttempts++;
                     var loadingText = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingtext");
-                    loadingText.innerText = Main.localisationManager.get("retryText").replace("{0}", this.loadingAttempts);
+                    loadingText.innerText = Main.localisationManager.get("loading_retry_message", [
+                        this.loadingAttempts.toString(),
+                        "3"
+                    ]);
                     break;
 
                 case LoadingState.ERROR:

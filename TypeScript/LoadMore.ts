@@ -25,12 +25,12 @@ module AlienTube {
 
             /* Display the amount of replies available to load */
             var replyCount = this.representedHTMLElement.querySelector(".at_replycount");
-            var replyCountText = data.count > 1 ?  Main.localisationManager.get("replyPlural") : Main.localisationManager.get("replyToCommentText");
+            var replyCountText = data.count > 1 ?  Main.localisationManager.get("post_label_reply_plural") : Main.localisationManager.get("post_label_reply");
             replyCount.appendChild(document.createTextNode("(" + data.count + " " + replyCountText + ")"));
 
             /* Set the localisation for the "load more" button, and the event listener. */
             var loadMoreText = this.representedHTMLElement.querySelector(".at_load");
-            loadMoreText.appendChild(document.createTextNode(Main.localisationManager.get("loadMoreComments")));
+            loadMoreText.appendChild(document.createTextNode(Main.localisationManager.get("post_button_load_more")));
             loadMoreText.addEventListener("click", this.onLoadMoreClick.bind(this), false);
         }
 
@@ -39,7 +39,7 @@ module AlienTube {
             var loadingText =  <HTMLAnchorElement> eventObject.target;
             loadingText.removeChild(loadingText.firstChild);
             loadingText.classList.add("loading");
-            loadingText.appendChild(document.createTextNode(Main.localisationManager.get("loading")));
+            loadingText.appendChild(document.createTextNode(Main.localisationManager.get("loading_generic_message")));
 
             var generateRequestUrl = "https://api.reddit.com/r/" + this.commentThread.threadInformation.subreddit +
             "/comments/" + this.commentThread.threadInformation.id + "/z/" + this.data.id + ".json";

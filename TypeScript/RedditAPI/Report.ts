@@ -19,25 +19,25 @@ module AlienTube {
 
             /* Set localisation text for the various report reasons */
             var report_spam = this.reportContainer.querySelector("label[for='report_spam']");
-            report_spam.appendChild(document.createTextNode(Main.localisationManager.get("spam")));
+            report_spam.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_spam")));
             var report_vote_manipulation = this.reportContainer.querySelector("label[for='report_vote_manipulation']");
-            report_vote_manipulation.appendChild(document.createTextNode(Main.localisationManager.get("voteManipulation")));
+            report_vote_manipulation.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_vote_manipulation")));
             var report_personal_information = this.reportContainer.querySelector("label[for='report_personal_information']");
-            report_personal_information.appendChild(document.createTextNode(Main.localisationManager.get("personalInformation")));
+            report_personal_information.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_personal_information")));
             var report_sexualising_minors = this.reportContainer.querySelector("label[for='report_sexualising_minors']");
-            report_sexualising_minors.appendChild(document.createTextNode(Main.localisationManager.get("sexualisingMinors")));
+            report_sexualising_minors.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_seuxalising_minors")));
             var report_breaking_reddit = this.reportContainer.querySelector("label[for='report_breaking_reddit']");
-            report_breaking_reddit.appendChild(document.createTextNode(Main.localisationManager.get("breakingReddit")));
+            report_breaking_reddit.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_breaking_reddit")));
             var report_other = this.reportContainer.querySelector("label[for='report_other']");
-            report_other.appendChild(document.createTextNode(Main.localisationManager.get("reportOther")));
+            report_other.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_other")));
 
             /* Set localisation text for the submit button */
             var submitButton = this.reportContainer.querySelector(".at_report_submit");
-            submitButton.appendChild(document.createTextNode(Main.localisationManager.get("submit")));
+            submitButton.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_button_submit")));
 
             /* Set localisation text for the cancel button */
             var cancelButton = this.reportContainer.querySelector(".at_report_cancel");
-            cancelButton.appendChild(document.createTextNode(Main.localisationManager.get("cancel")));
+            cancelButton.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_button_cancel")));
 
             /* Assign an event listener to all the buttons, checking if the one that is being selected is the "other" button.
             If so, re-enable the "other reason" text field, if not, disable it. */

@@ -16,6 +16,8 @@ module AlienTube {
         constructor() {
 			// Load stylesheet from disk.
             Main.Preferences = new BrowserPreferenceManager();
+            Main.localisationManager = new LocalisationManager();
+
             if (Main.getCurrentBrowser() == Browser.SAFARI) {
                 var stylesheet = document.createElement("link");
                 stylesheet.setAttribute("href", Main.getExtensionRessourcePath("style.css"));
@@ -24,19 +26,14 @@ module AlienTube {
                 document.head.appendChild(stylesheet);
             }
 
-			// Get language file
-			new HttpRequest(Main.getExtensionRessourcePath("localisation.json"), RequestType.GET, (data) => {
-				Main.localisationManager = new LocalisationManager(JSON.parse(data));
+			// Start observer to detect when a new video is loaded.
+            var observer = new MutationObserver(this.mutationObserver);
+            var config = { attributes : true, childList : true, characterData : true };
+            observer.observe(document.getElementById("content"), config);
 
-				// Start observer to detect when a new video is loaded.
-				var observer = new MutationObserver(this.mutationObserver);
-				var config = { attributes : true, childList : true, characterData : true };
-				observer.observe(document.getElementById("content"), config);
-
-				// Start a new comment section.
-				this.currentVideoIdentifier = Main.getCurrentVideoId();
-				Main.commentSection = new CommentSection(this.currentVideoIdentifier);
-			});
+            // Start a new comment section.
+            this.currentVideoIdentifier = Main.getCurrentVideoId();
+            Main.commentSection = new CommentSection(this.currentVideoIdentifier);
         }
 
 		/**
@@ -119,8 +116,8 @@ module AlienTube {
 			for (var timeUnit in timeUnits) {
 				if (timeUnits.hasOwnProperty(timeUnit) && timeUnits[timeUnit] >= 1) {
 					var timeString = timeUnits[timeUnit] > 1 ?
-						this.localisationManager.get("timestampPlural" + timeUnit) : this.localisationManager.get("timestamp" + timeUnit);
-					return timeUnits[timeUnit] + " " + timeString + Main.localisationManager.get("timestampSinceDescription");
+						this.localisationManager.get("timestmap_format_" + timeUnit + "_plural") : this.localisationManager.get("timestmap_format_" + timeUnit);
+					return timeUnits[timeUnit] + " " + timeString + Main.localisationManager.get("timestamp_format_suffix");
 				}
 			}
 		}

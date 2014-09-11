@@ -7,26 +7,30 @@ module AlienTube {
     /**
         Starts a new instance of the Localisation Manager, for handling language.
         @class LocalisationManager
-        @param localisationIndex An object containing a list of language localisation statements.
     */
     export class LocalisationManager {
-        private localisationIndex : any;
 
-        constructor(localisationIndex : any) {
-            this.localisationIndex = localisationIndex;
+        constructor() {
         }
 
         /**
             Retrieve a localised string by key
             @param key The key in the localisation file representing a language string.
+            @param [placeholders] An array of values for the placeholders in the string.
             @returns The requested language string.
         */
-        get (key : string) {
-            if (this.localisationIndex[window.navigator.language]) {
-                return this.localisationIndex[window.navigator.language][key] || this.localisationIndex["en"][key];
-            } else {
-                return this.localisationIndex["en"][key];
+        get (key : string, placeholders? : Array<string>) {
+            switch (Main.getCurrentBrowser()) {
+                case Browser.CHROME:
+                    if (placeholders) {
+                        return chrome.i18n.getMessage(key, placeholders);
+                    } else {
+                        return chrome.i18n.getMessage(key);
+                    }
+                    break;
             }
+            return "";
         }
+
     }
 }

@@ -37,7 +37,7 @@ module AlienTube {
             by a successful load (or an error) */
             this.loadTimer = setTimeout(() => {
                 var loadingText = document.getElementById("at_loadingtext");
-                loadingText.innerText = Main.localisationManager.get("slowLoadingText");
+                loadingText.innerText = Main.localisationManager.get("loading_slow_message");
             }, 3000);
 
             /* Perform the reddit api request */

@@ -29,8 +29,8 @@ module AlienTube {
                     errorImage.setAttribute("src", "http://www.redditstatic.com/reddit404" + getRandom404Id + ".png");
 
                     /* Set page not found localisation text */
-                    errorHeader.innerText = Main.localisationManager.get("404header");
-                    errorText.innerText = Main.localisationManager.get("404text");
+                    errorHeader.innerText = Main.localisationManager.get("error_header_not_found");
+                    errorText.innerText = Main.localisationManager.get("error_message_not_found");
                     break;
 
                 case ErrorState.OVERLOAD:
@@ -38,8 +38,8 @@ module AlienTube {
                     errorImage.setAttribute("src", Main.getExtensionRessourcePath("redditoverload.svg"));
 
                     /* Set reddit overloaded localisation text */
-                    errorHeader.innerText = Main.localisationManager.get("overloadHeader");
-                    errorText.innerText = Main.localisationManager.get("overloadText");
+                    errorHeader.innerText = Main.localisationManager.get("error_header_overloaded");
+                    errorText.innerText = Main.localisationManager.get("error_message_overloaded");
                     break;
 
                 case ErrorState.ERROR:
@@ -47,7 +47,7 @@ module AlienTube {
                     errorImage.setAttribute("src", Main.getExtensionRessourcePath("redditbroken.svg"));
 
                     /* Set "you broke reddit" localisation text, and a custom message if provided */
-                    errorHeader.innerText = Main.localisationManager.get("errorHeader");
+                    errorHeader.innerText = Main.localisationManager.get("error_header_generic");
                     if (message) {
                         errorText.innerText = message;
                     }
@@ -56,7 +56,7 @@ module AlienTube {
 
             /* Provide a retry button which reloads AlienTube completely and tries again. */
             var retryButton = <HTMLButtonElement> this.representedHTMLElement.querySelector(".at_retry");
-            retryButton.innerText = Main.localisationManager.get("retryButtonText");
+            retryButton.innerText = Main.localisationManager.get("error_button_retry");
             retryButton.addEventListener("click", this.reload, false);
 
             commentSection.set(this.representedHTMLElement);

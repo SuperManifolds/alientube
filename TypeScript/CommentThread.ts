@@ -64,8 +64,8 @@ module AlienTube {
                 var optionsElement = this.threadContainer.querySelector(".options");
                 var nsfwElement = document.createElement("acronym");
                 nsfwElement.classList.add("nsfw");
-                nsfwElement.setAttribute("title", Main.localisationManager.get("fullNSFWText"));
-                nsfwElement.appendChild(document.createTextNode(Main.localisationManager.get("NSFW")));
+                nsfwElement.setAttribute("title", Main.localisationManager.get("post_badge_NSFW_message"));
+                nsfwElement.appendChild(document.createTextNode(Main.localisationManager.get("post_badge_NSFW")));
                 optionsElement.insertBefore(nsfwElement, optionsElement.firstChild);
             }
 
@@ -82,26 +82,26 @@ module AlienTube {
 
             /* Set the localised text for "at {timestamp}" and "by {username}" */
             var submittedAtTimeText = this.threadContainer.querySelector(".templateSubmittedAtTimeText");
-            submittedAtTimeText.appendChild(document.createTextNode(Main.localisationManager.get("submittedAtTimeText")));
+            submittedAtTimeText.appendChild(document.createTextNode(Main.localisationManager.get("post_submitted_timestamp_text")));
 
             var submittedByUsernameText = this.threadContainer.querySelector(".templateSubmittedByUsernameText");
-            submittedByUsernameText.appendChild(document.createTextNode(Main.localisationManager.get("submittedByUsernameText")));
+            submittedByUsernameText.appendChild(document.createTextNode(Main.localisationManager.get("post_submitted_preposition")));
 
             /* Set the button text and the event handler for the "comment" button */
             var openNewCommentBox = this.threadContainer.querySelector(".commentTo");
-            openNewCommentBox.appendChild(document.createTextNode(Main.localisationManager.get("commentText")));
+            openNewCommentBox.appendChild(document.createTextNode(Main.localisationManager.get("post_button_comment")));
 
             /* Set the button text and the event handler for the "display source" button */
             var displaySourceForComment = this.threadContainer.querySelector(".at_displaysource");
-            displaySourceForComment.appendChild(document.createTextNode(Main.localisationManager.get("displaySourceForCommentText")));
+            displaySourceForComment.appendChild(document.createTextNode(Main.localisationManager.get("post_button_source")));
 
             /* Set the button text and the event handler for the "save" button */
             var saveItemToRedditList = this.threadContainer.querySelector(".save");
             if (this.threadInformation.saved) {
-                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("removeItemFromRedditSaveList")));
+                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("post_button_unsave")));
                 saveItemToRedditList.setAttribute("saved", "true");
             } else {
-                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
+                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("post_button_save")));
             }
             saveItemToRedditList.addEventListener("click", this.onSaveButtonClick.bind(this), false);
 
@@ -116,16 +116,16 @@ module AlienTube {
                     }
                 });
             }, false);
-            refreshCommentThread.appendChild(document.createTextNode(Main.localisationManager.get("refreshCommentThreadText")));
+            refreshCommentThread.appendChild(document.createTextNode(Main.localisationManager.get("post_button_refresh")));
 
             /* Set the button text and the link for the "give gold" button */
             var giveGoldToUser = this.threadContainer.querySelector(".giveGold");
             giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.threadInformation.name);
-            giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("giveGoldToUserText")));
+            giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("post_button_gold")));
 
             /* Set the button text and the event handler for the "report post" button */
             var reportToAdministrators = this.threadContainer.querySelector(".report");
-            reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("reportToAdministratorsText")));
+            reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("post_button_report")));
             reportToAdministrators.addEventListener("click", this.onReportButtonClicked.bind(this), false);
 
             /* Set the state of the voting buttons */
@@ -149,7 +149,7 @@ module AlienTube {
             var googlePlusImage = <HTMLImageElement> googlePlusButton.querySelector("img");
             var googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
             googlePlusImage.setAttribute("src", Main.getExtensionRessourcePath("googleplus.svg"));
-            googlePlusText.innerText = Main.localisationManager.get("googlePlusText");
+            googlePlusText.innerText = Main.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
             /* Start iterating the top level comments in the comment section */
@@ -187,11 +187,11 @@ module AlienTube {
                 if (savedType === SaveType.SAVE) {
                     saveButton.setAttribute("saved", "true");
                     saveButton.removeChild(saveButton.firstChild);
-                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("removeItemFromRedditSaveList")));
+                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("post_button_unsave")));
                 } else {
                     saveButton.removeAttribute("saved");
                     saveButton.removeChild(saveButton.firstChild);
-                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
+                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("post_button_save")));
                 }
             });
         }

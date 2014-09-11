@@ -28,7 +28,7 @@ module AlienTube {
                     this.template = templateLink.import;
 
                     // Set Loading Screen
-                    var loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Main.localisationManager.get("loadingListText"));
+                    var loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Main.localisationManager.get("loading_search_message"));
                     this.set(loadingScreen.HTMLElement);
 
                     // Open a search request to Reddit for the video identfiier
@@ -149,7 +149,7 @@ module AlienTube {
         * @param threadData Data about the thread to download from a Reddit search page.
         */
         downloadThread (threadData : any) {
-            var loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Main.localisationManager.get("loadingPostText"));
+            var loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Main.localisationManager.get("loading_post_message"));
             var alientubeCommentContainer = document.getElementById("at_comments");
             while (alientubeCommentContainer.firstChild) {
                 alientubeCommentContainer.removeChild(alientubeCommentContainer.firstChild);
@@ -198,7 +198,7 @@ module AlienTube {
                 var redditImage = <HTMLImageElement> redditButton.querySelector("img");
                 var redditText = <HTMLSpanElement> redditButton.querySelector("#at_reddittext");
                 redditImage.setAttribute("src", Main.getExtensionRessourcePath("reddit.svg"));
-                redditText.innerText = Main.localisationManager.get("googlePlusText");
+                redditText.innerText = Main.localisationManager.get("post_button_comments");
                 redditButton.addEventListener("click", this.onRedditClick, true);
                 googlePlusContainer.appendChild(redditButton);
             }

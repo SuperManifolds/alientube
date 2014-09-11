@@ -16,46 +16,35 @@ var showGooglePlusWhenNoPosts = document.getElementById("showGooglePlusWhenNoPos
 var rememberTabsOnViewChange = document.getElementById("rememberTabsOnViewChange");
 var displayGooglePlusByDefault = document.getElementById("displayGooglePlusByDefault");
 
-var localisationDirectory;
-
 function initialise() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", chrome.extension.getURL('res/localisation.json'), true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            localisationDirectory = JSON.parse(xhr.responseText);
-
-            window.title = getLocalisationText("optionsTitle");
-            document.getElementById("saveButton").innerText = getLocalisationText("saveButtonText");
-            document.getElementById("aboutButton").innerText = getLocalisationText("aboutButtonText");
-            document.getElementById("closeButton").innerText = getLocalisationText("closeButtonText");
-            document.getElementById("versiontext").innerText = getLocalisationText("versionText");
+    window.title = getLocalisationText("options_label_title");
+    document.getElementById("saveButton").innerText = getLocalisationText("options_button_save");
+    document.getElementById("aboutButton").innerText = getLocalisationText("options_button_about");
+    document.getElementById("closeButton").innerText = getLocalisationText("options_button_close");
+    document.getElementById("versiontext").innerText = getLocalisationText("options_label_version");
 
 
-            for (var i = 0, len = preferenceKeys.length; i < len; i++) {
-                var label = document.querySelector("label[for='" + preferenceKeys[i] + "']");
-                label.innerText = getLocalisationText(preferenceKeys[i]);
-            }
-
-            chrome.storage.sync.get(null, function (items) {
-                console.log(items);
-                hiddenPostsScoreThreshold.value     = items.hiddenPostsScoreThreshold || -4;
-                hiddenCommentScoreThreshold.value   = items.hiddenCommentScoreThreshold || -4;
-                showGooglePlusWhenNoPosts.checked     = items.showGooglePlusWhenNoPosts || true;
-                rememberTabsOnViewChange.checked      = items.rememberTabsOnViewChange || true;
-                displayGooglePlusByDefault.checked    = items.displayGooglePlusByDefault || false;
-            });
-        }
+    for (var i = 0, len = preferenceKeys.length; i < len; i++) {
+        var label = document.querySelector("label[for='" + preferenceKeys[i] + "']");
+        label.innerText = getLocalisationText("options_label_" + preferenceKeys[i]);
     }
-    xhr.send();
+
+    chrome.storage.sync.get(null, function (items) {
+        console.log(items);
+        hiddenPostsScoreThreshold.value     = items.hiddenPostsScoreThreshold || -4;
+        hiddenCommentScoreThreshold.value   = items.hiddenCommentScoreThreshold || -4;
+        showGooglePlusWhenNoPosts.checked     = items.showGooglePlusWhenNoPosts || true;
+        rememberTabsOnViewChange.checked      = items.rememberTabsOnViewChange || true;
+        displayGooglePlusByDefault.checked    = items.displayGooglePlusByDefault || false;
+    });
 }
 
 
-function getLocalisationText(key) {
-    if (localisationDirectory[window.navigator.language]) {
-        return localisationDirectory[window.navigator.language][key] || localisationDirectory["en"][key];
+function getLocalisationText(key, placeholders) {
+    if (placeholders) {
+        return chrome.i18n.getMessage(key, placeholders);
     } else {
-        return localisationDirectory["en"][key];
+        return chrome.i18n.getMessage(key);
     }
 }
 
@@ -75,7 +64,7 @@ function save_options() {
         'displayGooglePlusByDefault': displayGooglePlusByDefault.checked
     }, function() {
             var status = document.getElementById("status");
-            status.innerHTML = getLocalisationText("optionsSavedText");
+            status.innerHTML = getLocalisationText("options_label_saved");
             setTimeout(function() {
                 status.innerHTML = "";
             }, 1000);

@@ -62,7 +62,7 @@ module AlienTube {
 
             /* Set the score of the comment next to the user tag */
             var score = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_score");
-            var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("scorePointsText") : Main.localisationManager.get("scorePointsTextPlural");
+            var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
             score.appendChild(document.createTextNode(this.commentObject.score + scorePointsText));
 
             /* Set the timestamp of the comment */
@@ -81,40 +81,40 @@ module AlienTube {
 
             /* Set the button text and event handler for the reply button. */
             var replyToComment = this.representedHTMLElement.querySelector(".at_reply");
-            replyToComment.appendChild(document.createTextNode(Main.localisationManager.get("replyToCommentText")));
+            replyToComment.appendChild(document.createTextNode(Main.localisationManager.get("post_button_reply")));
 
             /* Set the button text and link for the "permalink" button */
             var permalinkElement = this.representedHTMLElement.querySelector(".at_permalink");
-            permalinkElement.appendChild(document.createTextNode(Main.localisationManager.get("permalink")));
+            permalinkElement.appendChild(document.createTextNode(Main.localisationManager.get("post_button_permalink")));
             permalinkElement.setAttribute("href", "http://www.reddit.com" + commentThread.threadInformation.permalink + this.commentObject.id);
 
             /* Set the button text and link for the "parent" link button */
             var parentLinkElement = this.representedHTMLElement.querySelector(".at_parentlink");
-            parentLinkElement.appendChild(document.createTextNode(Main.localisationManager.get("parent")));
+            parentLinkElement.appendChild(document.createTextNode(Main.localisationManager.get("post_button_parent")));
             parentLinkElement.setAttribute("href", "http://www.reddit.com" + commentThread.threadInformation.permalink + "#" + this.commentObject.parent_id.substring(3));
 
             /* Set the button text and the event handler for the "show source" button */
             var displaySourceForComment = this.representedHTMLElement.querySelector(".at_displaysource");
-            displaySourceForComment.appendChild(document.createTextNode(Main.localisationManager.get("displaySourceForCommentText")));
+            displaySourceForComment.appendChild(document.createTextNode(Main.localisationManager.get("post_button_source")));
 
             /* Set the button text and the event handler for the "save comment" button */
             var saveItemToRedditList = this.representedHTMLElement.querySelector(".save");
             if (this.commentObject.saved) {
-                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("removeItemFromRedditSaveList")));
+                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("post_button_unsave")));
                 saveItemToRedditList.setAttribute("saved", "true");
             } else {
-                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
+                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("post_button_save")));
             }
             saveItemToRedditList.addEventListener("click", this.onSaveButtonClick.bind(this), false);
 
             /* Set the button text and the link for the "give gold" button */
             var giveGoldToUser = this.representedHTMLElement.querySelector(".giveGold");
             giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.commentObject.name);
-            giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("giveGoldToUserText")));
+            giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("post_button_gold")));
 
             /* Set the button text and the event handler for the "report comment" button */
             var reportToAdministrators = this.representedHTMLElement.querySelector(".report");
-            reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("reportToAdministratorsText")));
+            reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("post_button_report")));
             reportToAdministrators.addEventListener("click", this.onReportButtonClicked.bind(this), false);
 
             /* Set the state of the voting buttons */
@@ -154,11 +154,11 @@ module AlienTube {
                 if (savedType === SaveType.SAVE) {
                     saveButton.setAttribute("saved", "true");
                     saveButton.removeChild(saveButton.firstChild);
-                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("removeItemFromRedditSaveList")));
+                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("post_button_unsave")));
                 } else {
                     saveButton.removeAttribute("saved");
                     saveButton.removeChild(saveButton.firstChild);
-                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("saveItemToRedditList")));
+                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("post_button_save")));
                 }
             });
         }
@@ -178,7 +178,7 @@ module AlienTube {
                 voteController.classList.remove("liked");
                 this.commentObject.likes = null;
                 this.commentObject.score = this.commentObject.score - 1;
-                var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("scorePointsText") : Main.localisationManager.get("scorePointsTextPlural");
+                var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
                 scoreValue.innerText = this.commentObject.score + scorePointsText;
 
                 new RedditVoteRequest(this.commentObject.name, VoteType.NONE);
@@ -193,7 +193,7 @@ module AlienTube {
                 }
                 voteController.classList.add("liked");
                 this.commentObject.likes = true;
-                var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("scorePointsText") : Main.localisationManager.get("scorePointsTextPlural");
+                var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
                 scoreValue.innerText = this.commentObject.score + scorePointsText;
 
                 new RedditVoteRequest(this.commentObject.name, VoteType.UPVOTE);
@@ -211,7 +211,7 @@ module AlienTube {
                 voteController.classList.remove("disliked");
                 this.commentObject.likes = null;
                 this.commentObject.score = this.commentObject.score + 1;
-                var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("scorePointsText") : Main.localisationManager.get("scorePointsTextPlural");
+                var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
                 scoreValue.innerText = this.commentObject.score + scorePointsText;
 
                 new RedditVoteRequest(this.commentObject.name, VoteType.NONE);
@@ -226,7 +226,7 @@ module AlienTube {
                 }
                 voteController.classList.add("disliked");
                 this.commentObject.likes = false;
-                var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("scorePointsText") : Main.localisationManager.get("scorePointsTextPlural");
+                var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
                 scoreValue.innerText = this.commentObject.score + scorePointsText;
 
                 new RedditVoteRequest(this.commentObject.name, VoteType.DOWNVOTE);
