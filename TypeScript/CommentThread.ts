@@ -36,9 +36,10 @@ module AlienTube {
                 commentContainer.classList.add("preserved");
             }
 
-            /* Set the thread title and link to it */
-            var title = this.threadContainer.querySelector(".title");
-            title.appendChild(document.createTextNode(this.threadInformation.title));
+            /* Set the thread title and link to it, because Reddit for some reason encodes html entities in the title, we must use
+            innerHTML. */
+            var title = <HTMLParagraphElement> this.threadContainer.querySelector(".title");
+            title.innerHTML = this.threadInformation.title;
             title.setAttribute("href", "http://reddit.com" + this.threadInformation.permalink);
 
             /* Set the username of the author and link to them */
