@@ -108,6 +108,7 @@ module AlienTube {
 
             /* Set the button text and the event handler for the "refresh" button */
             var refreshCommentThread = this.threadContainer.querySelector(".refresh");
+            this.commentSection.storedTabCollection.splice(this.commentSection.storedTabCollection.indexOf(threadData), 1);
             refreshCommentThread.addEventListener("click", () => {
                 this.commentSection.threadCollection.forEach((item) => {
                     if (item.id === this.threadInformation.id) {

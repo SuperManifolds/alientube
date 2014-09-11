@@ -12,7 +12,7 @@ module AlienTube {
     export class CommentSection {
         template : HTMLDocument;
         threadCollection : Array<any>;
-        private storedTabCollection : Array<any>;
+        storedTabCollection : Array<any>;
 
 
         constructor(currentVideoIdentifier:string) {
