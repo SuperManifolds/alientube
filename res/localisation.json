@@ -36,6 +36,7 @@
         "replyPlural": "replies",
         "permalink": "permalink",
         "parent": "parent",
+        "googlePlusText": "Comments",
 
         "spam": "spam",
         "voteManipulation": "vote manipulation",

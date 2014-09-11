@@ -129,7 +129,7 @@ module AlienTube {
             }
         }
 
-        /** 
+        /**
             Display a tab in the comment section, if it is locally cached, use that, if not, download it.
             @param threadData Data about the thread to download from a Reddit search page.
         */
@@ -180,6 +180,22 @@ module AlienTube {
             }
             var googlePlusContainer = document.getElementById("watch-discussion");
             googlePlusContainer.style.display = "none";
+
+            /* Add the "switch to Reddit" button in the google+ comment section */
+            var redditButton = <HTMLDivElement> document.getElementById("switchtoreddit");
+            if (!redditButton) {
+                var redditButtonTemplate = this.template.getElementById("switchtoreddit").content.cloneNode(true);
+                redditButton = <HTMLDivElement> redditButtonTemplate.querySelector("#at_switchtoreddit");
+                var redditImage = <HTMLImageElement> redditButton.querySelector("img");
+                var redditText = <HTMLSpanElement> redditButton.querySelector("#at_reddittext");
+                redditImage.setAttribute("src", Main.getExtensionRessourcePath("reddit.svg"));
+                redditText.innerText = Main.localisationManager.get("googlePlusText");
+                redditButton.addEventListener("click", this.onRedditClick, true);
+                googlePlusContainer.appendChild(redditButton);
+            }
+
+
+            /* Add AlienTube contents*/
             var redditContainer = document.createElement("section");
             redditContainer.id = "alientube";
             redditContainer.appendChild(contents);
@@ -302,6 +318,13 @@ module AlienTube {
             if (Main.Preferences.get("showGooglePlus")) {
                 document.getElementById("watch-discussion").style.display = "block";
             }
+        }
+
+        onRedditClick(eventObject : Event) {
+            var googlePlusContainer = document.getElementById("watch-discussion");
+            googlePlusContainer.style.display = "none";
+            var alienTubeContainer = document.getElementById("alientube");
+            alienTubeContainer.style.display = "block";
         }
 
         /**

@@ -144,6 +144,14 @@ module AlienTube {
                 voteController.classList.add("disliked");
             }
 
+            /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
+            var googlePlusButton = this.threadContainer.querySelector("#at_switchtogplus");
+            var googlePlusImage = <HTMLImageElement> googlePlusButton.querySelector("img");
+            var googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
+            googlePlusImage.setAttribute("src", Main.getExtensionRessourcePath("googleplus.svg"));
+            googlePlusText.innerText = Main.localisationManager.get("googlePlusText");
+            googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
+
             /* Start iterating the top level comments in the comment section */
             this.commentData.forEach((commentObject) => {
                 if (commentObject.kind === "more") {
@@ -190,6 +198,13 @@ module AlienTube {
 
         onReportButtonClicked(eventObject : Event) {
             new RedditReport(this.threadInformation.name, this, true);
+        }
+
+        onGooglePlusClick(eventObject : Event) {
+            var alienTubeContainer = document.getElementById("alientube");
+            alienTubeContainer.style.display = "none";
+            var googlePlusContainer = document.getElementById("watch-discussion");
+            googlePlusContainer.style.display = "block";
         }
 
         onUpvoteControllerClick(eventObject : Event) {
