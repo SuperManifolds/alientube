@@ -47,11 +47,15 @@ module AlienTube {
                     break;
             }
 
+            var retryButton = <HTMLButtonElement> this.representedHTMLElement.querySelector(".at_retry");
+            retryButton.innerText = Main.localisationManager.get("retryButtonText");
+            retryButton.addEventListener("click", this.reload, false);
+
             commentSection.set(this.representedHTMLElement);
         }
 
         private reload () {
-
+            Main.commentSection = new CommentSection(Main.getCurrentVideoId());
         }
     }
 

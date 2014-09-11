@@ -57,6 +57,7 @@
         "404text": "the page you requested does not exist",
         "overloadHeader": "reddit is under heavy load right now",
         "overloadText": "please try again in a few minutes",
-        "errorHeader": "You broke reddit :("
+        "errorHeader": "You broke reddit :(",
+        "retryButtonText": "Try again"
     }
 }
