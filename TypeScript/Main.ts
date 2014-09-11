@@ -11,7 +11,7 @@ module AlienTube {
     export class Main {
         static Preferences : BrowserPreferenceManager;
 		static localisationManager : LocalisationManager;
-		commentSection : CommentSection;
+		static commentSection : CommentSection;
 		currentVideoIdentifier : string;
         constructor() {
 			// Load stylesheet from disk.
@@ -27,7 +27,7 @@ module AlienTube {
 			// Get language file
 			new HttpRequest(Main.getExtensionRessourcePath("localisation.json"), RequestType.GET, (data) => {
 				Main.localisationManager = new LocalisationManager(JSON.parse(data));
-				
+
 				// Start observer to detect when a new video is loaded.
 				var observer = new MutationObserver(this.mutationObserver);
 				var config = { attributes : true, childList : true, characterData : true };
@@ -35,7 +35,7 @@ module AlienTube {
 
 				// Start a new comment section.
 				this.currentVideoIdentifier = Main.getCurrentVideoId();
-				this.commentSection = new CommentSection(this.currentVideoIdentifier);
+				Main.commentSection = new CommentSection(this.currentVideoIdentifier);
 			});
         }
 
@@ -49,7 +49,7 @@ module AlienTube {
 					var reportedVideoId = Main.getCurrentVideoId();
 					if (reportedVideoId !== this.currentVideoIdentifier) {
 						this.currentVideoIdentifier = reportedVideoId;
-						this.commentSection = new CommentSection(this.currentVideoIdentifier);
+						Main.commentSection = new CommentSection(this.currentVideoIdentifier);
 					}
 				}
 			});

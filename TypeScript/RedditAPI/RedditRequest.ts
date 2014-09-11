@@ -57,7 +57,20 @@ module AlienTube {
                 this.performRequest();
             } else {
                 this.loadingScreen.updateProgress(LoadingState.ERROR);
-                // TODO: Handle errors
+
+                switch (xhr.status) {
+                    case 404:
+                        new ErrorScreen(Main.commentSection, ErrorState.NOT_FOUND);
+                        break;
+
+                    case 503:
+                    case 504:
+                        new ErrorScreen(Main.commentSection, ErrorState.OVERLOAD);
+                        break;
+
+                    default:
+                        new ErrorScreen(Main.commentSection, ErrorState.ERROR, xhr.responseText);
+                }
             }
         }
     }

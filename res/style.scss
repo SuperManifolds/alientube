@@ -533,6 +533,28 @@
     }
 }
 
+.at_error {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+
+    & img {
+        max-width: 500px;
+        max-height: 400px;
+    }
+    & h2 {
+        font-size: 200%;
+        font-weight: 200;
+    }
+
+    & p {
+        margin-top: 10px;
+    }
+}
+
 a[href$="/s"],
 a[href$="/spoiler"] {
     cursor: default;

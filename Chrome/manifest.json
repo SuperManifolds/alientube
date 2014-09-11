@@ -32,7 +32,7 @@
     "res/style.css",
     "chrome_shared.css",
     "js/*",
-    "res*",
+    "res/*",
     "TypeScript/*",
     "icon128.png"
   ]

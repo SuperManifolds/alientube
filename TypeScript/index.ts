@@ -7,6 +7,7 @@
 /// <reference path="LoadMore.ts" />
 /// <reference path="LocalisationManager.ts" />
 /// <reference path="LoadingScreen.ts" />
+/// <reference path="ErrorScreen.ts" />
 
 /// <reference path="RedditAPI/RedditRequest.ts" />
 /// <reference path="RedditAPI/Comment.ts" />

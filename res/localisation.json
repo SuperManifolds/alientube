@@ -51,6 +51,12 @@
         "loadingListText": "Searching for Reddit posts..",
         "loadingPostText": "Loading post..",
         "slowLoadingText": "This is taking longer than usual..",
-        "retryText": "Retrying.. (Attempt {0} of 3)"
+        "retryText": "Retrying.. (Attempt {0} of 3)",
+
+        "404header": "page not found",
+        "404text": "the page you requested does not exist",
+        "overloadHeader": "reddit is under heavy load right now",
+        "overloadText": "please try again in a few minutes",
+        "errorHeader": "You broke reddit :("
     }
 }
