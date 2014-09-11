@@ -129,8 +129,20 @@ module AlienTube {
             reportToAdministrators.addEventListener("click", this.onReportButtonClicked.bind(this), false);
 
             /* Set the state of the voting buttons */
-            var voteButtonScoreCountElement = this.threadContainer.querySelector(".score");
+            var voteController = <HTMLDivElement> this.threadContainer.querySelector(".vote");
+            var voteButtonScoreCountElement = voteController.querySelector(".score");
             voteButtonScoreCountElement.appendChild(document.createTextNode(this.threadInformation.score));
+
+            var upvoteController = voteController.querySelector(".arrow.up");
+            var downvoteController = voteController.querySelector(".arrow.down");
+            upvoteController.addEventListener("click", this.onUpvoteControllerClick.bind(this), false);
+            downvoteController.addEventListener("click", this.onDownvoteControllerClick.bind(this), false);
+
+            if (this.threadInformation.likes === true) {
+                voteController.classList.add("liked");
+            } else if (this.threadInformation.likes === false) {
+                voteController.classList.add("disliked");
+            }
 
             /* Start iterating the top level comments in the comment section */
             this.commentData.forEach((commentObject) => {
@@ -178,6 +190,66 @@ module AlienTube {
 
         onReportButtonClicked(eventObject : Event) {
             new RedditReport(this.threadInformation.name, this, true);
+        }
+
+        onUpvoteControllerClick(eventObject : Event) {
+            var upvoteController = <HTMLDivElement> eventObject.target;
+            var voteController = <HTMLDivElement> upvoteController.parentNode;
+            var scoreValue = <HTMLDivElement> voteController.querySelector(".score");
+
+            if (this.threadInformation.likes === true) {
+                /* The user already likes this post, so they wish to remove their current like. */
+                voteController.classList.remove("liked");
+                this.threadInformation.likes = null;
+                this.threadInformation.score = this.threadInformation.score - 1;
+                scoreValue.innerText = this.threadInformation.score;
+
+                new RedditVoteRequest(this.threadInformation.name, VoteType.NONE);
+            } else {
+                /* The user wishes to like this post */
+                if (this.threadInformation.likes === false) {
+                    /* The user has previously disliked this post, we need to remove that status and add 2 to the score instead of 1*/
+                    voteController.classList.remove("disliked");
+                    this.threadInformation.score = this.threadInformation.score + 2;
+                } else {
+                    this.threadInformation.score = this.threadInformation.score + 1;
+                }
+                voteController.classList.add("liked");
+                this.threadInformation.likes = true;
+                scoreValue.innerText = this.threadInformation.score;
+
+                new RedditVoteRequest(this.threadInformation.name, VoteType.UPVOTE);
+            }
+        }
+
+        onDownvoteControllerClick(eventObject : Event) {
+            var downvoteController = <HTMLDivElement> eventObject.target;
+            var voteController = <HTMLDivElement> downvoteController.parentNode;
+            var scoreValue = <HTMLDivElement> voteController.querySelector(".score");
+
+            if (this.threadInformation.likes === false) {
+                /* The user already dislikes this post, so they wish to remove their current dislike */
+                voteController.classList.remove("disliked");
+                this.threadInformation.likes = null;
+                this.threadInformation.score = this.threadInformation.score + 1;
+                scoreValue.innerText = this.threadInformation.score;
+
+                new RedditVoteRequest(this.threadInformation.name, VoteType.NONE);
+            } else {
+                /* The user wishes to dislike this post */
+                if (this.threadInformation.likes === true) {
+                    /* The user has previously liked this post, we need to remove that status and subtract 2 from the score instead of 1*/
+                    voteController.classList.remove("liked");
+                    this.threadInformation.score = this.threadInformation.score - 2;
+                } else {
+                    this.threadInformation.score = this.threadInformation.score - 1;
+                }
+                voteController.classList.add("disliked");
+                this.threadInformation.likes = false;
+                scoreValue.innerText = this.threadInformation.score;
+
+                new RedditVoteRequest(this.threadInformation.name, VoteType.DOWNVOTE);
+            }
         }
     }
 }

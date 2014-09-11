@@ -31,7 +31,9 @@ module AlienTube {
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
                         if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
-                            callback(xhr.responseText);
+                            if (callback) {
+                                callback(xhr.responseText);
+                            }
                         } else {
                             if (errorHandler) errorHandler(xhr);
                         }

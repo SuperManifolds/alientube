@@ -117,6 +117,18 @@ module AlienTube {
             reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("reportToAdministratorsText")));
             reportToAdministrators.addEventListener("click", this.onReportButtonClicked.bind(this), false);
 
+            /* Set the state of the voting buttons */
+            var voteController = <HTMLDivElement> this.representedHTMLElement.querySelector(".vote");
+            var upvoteController = voteController.querySelector(".arrow.up");
+            var downvoteController = voteController.querySelector(".arrow.down");
+            upvoteController.addEventListener("click", this.onUpvoteControllerClick.bind(this), false);
+            downvoteController.addEventListener("click", this.onDownvoteControllerClick.bind(this), false);
+            if (this.commentObject.likes === true) {
+                voteController.classList.add("liked");
+            } else if (this.commentObject.likes === false) {
+                voteController.classList.add("disliked");
+            }
+
             /* Continue traversing down and populate the replies to this comment. */
             if (this.commentObject.replies) {
                 var replyContainer = this.representedHTMLElement.querySelector(".at_replies");
@@ -153,6 +165,72 @@ module AlienTube {
 
         onReportButtonClicked(eventObject : Event) {
             new RedditReport(this.commentObject.name, this.commentThread, false);
+        }
+
+        onUpvoteControllerClick(eventObject : Event) {
+            var upvoteController = <HTMLDivElement> eventObject.target;
+            var voteController = <HTMLDivElement> upvoteController.parentNode;
+            var parentNode = <HTMLDivElement> voteController.parentNode;
+            var scoreValue = <HTMLSpanElement> parentNode.querySelector(".at_score");
+
+            if (this.commentObject.likes === true) {
+                /* The user already likes this post, so they wish to remove their current like. */
+                voteController.classList.remove("liked");
+                this.commentObject.likes = null;
+                this.commentObject.score = this.commentObject.score - 1;
+                var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("scorePointsText") : Main.localisationManager.get("scorePointsTextPlural");
+                scoreValue.innerText = this.commentObject.score + scorePointsText;
+
+                new RedditVoteRequest(this.commentObject.name, VoteType.NONE);
+            } else {
+                /* The user wishes to like this post */
+                if (this.commentObject.likes === false) {
+                    /* The user has previously disliked this post, we need to remove that status and add 2 to the score instead of 1*/
+                    voteController.classList.remove("disliked");
+                    this.commentObject.score = this.commentObject.score + 2;
+                } else {
+                    this.commentObject.score = this.commentObject.score + 1;
+                }
+                voteController.classList.add("liked");
+                this.commentObject.likes = true;
+                var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("scorePointsText") : Main.localisationManager.get("scorePointsTextPlural");
+                scoreValue.innerText = this.commentObject.score + scorePointsText;
+
+                new RedditVoteRequest(this.commentObject.name, VoteType.UPVOTE);
+            }
+        }
+
+        onDownvoteControllerClick(eventObject : Event) {
+            var downvoteController = <HTMLDivElement> eventObject.target;
+            var voteController = <HTMLDivElement> downvoteController.parentNode;
+            var parentNode = <HTMLDivElement> voteController.parentNode;
+            var scoreValue = <HTMLSpanElement> parentNode.querySelector(".at_score");
+
+            if (this.commentObject.likes === false) {
+                /* The user already dislikes this post, so they wish to remove their current dislike */
+                voteController.classList.remove("disliked");
+                this.commentObject.likes = null;
+                this.commentObject.score = this.commentObject.score + 1;
+                var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("scorePointsText") : Main.localisationManager.get("scorePointsTextPlural");
+                scoreValue.innerText = this.commentObject.score + scorePointsText;
+
+                new RedditVoteRequest(this.commentObject.name, VoteType.NONE);
+            } else {
+                /* The user wishes to dislike this post */
+                if (this.commentObject.likes === true) {
+                    /* The user has previously liked this post, we need to remove that status and subtract 2 from the score instead of 1*/
+                    voteController.classList.remove("liked");
+                    this.commentObject.score = this.commentObject.score - 2;
+                } else {
+                    this.commentObject.score = this.commentObject.score - 1;
+                }
+                voteController.classList.add("disliked");
+                this.commentObject.likes = false;
+                var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("scorePointsText") : Main.localisationManager.get("scorePointsTextPlural");
+                scoreValue.innerText = this.commentObject.score + scorePointsText;
+
+                new RedditVoteRequest(this.commentObject.name, VoteType.DOWNVOTE);
+            }
         }
     }
 }
