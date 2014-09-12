@@ -157,6 +157,10 @@
         "message": "respuestas",
         "description": "Plural label describing how many replies this comment has"
     },
+    "post_label_noresults": {
+        "message": "No hay resultados",
+        "description": "Label describing that there were no results found"
+    },
 
 
     "report_dialog_spam": {
