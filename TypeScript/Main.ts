@@ -130,7 +130,7 @@ module AlienTube {
 			}
             return Main.localisationManager.get("timestamp_format", [
                 "0",
-                Main.localisationManager.get("timestamp_format_seconds_plural")
+                Main.localisationManager.get("timestamp_format_second_plural")
             ]);
 		}
 
