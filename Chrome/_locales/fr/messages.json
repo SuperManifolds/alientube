@@ -241,33 +241,33 @@
         "description": "Title for error describing that comments failed to load because Reddit is too overloaded and couldn't give us what we wanted"
     },
     "error_message_overloaded": {
-        "message": "please try again in a few minutes",
+        "message": "veuillez réessayer dans quelques minutes",
         "description": "Message describing that the user should wait a few minutes before trying again to give Reddi time to recover"
     },
     "error_header_generic": {
-        "message": "You broke Reddit :(",
+        "message": "Reddit est cassé :(",
         "description": "Message describing that Reddit experienced an error, with humoristic implications jokingly implying that it is the user's fault."
     },
     "error_button_retry": {
-        "message": "Try again",
+        "message": "réessayez",
         "description": "Button for attempting to load the comments again."
     },
 
 
     "commentfield_button_submit": {
-        "message": "Submit",
+        "message": "Soumettre",
         "description": "Button for submitting the comment to Reddit"
     },
     "commentfield_button_cancel": {
-        "message": "Cancel",
+        "message": "Annuler",
         "description": "Button for cancelling your comment and hiding the comment box"
     },
     "commentfield_label_preview": {
-        "message": "Preview",
+        "message": "Prévisualisation",
         "description": "Label indicating that this panel shows a preview of how your text will look when it is posted"
     },
     "commentfield_label_author": {
-        "message": "Commenting as: $AUTHOR$",
+        "message": "Vous êtes connecté en tant: $AUTHOR$",
         "description": "Label under the comment field indicating who your comment will be submitted as.",
         "placeholders": {
             "author": {
@@ -279,35 +279,35 @@
 
 
     "options_label_hiddenPostsScoreThreshold": {
-        "message": "Do not display posts with a score less than:",
+        "message": "Ne plus afficher discussions avec moins de points que:",
         "description": "If the score for this Reddit post is less than the input, it will not be shown in the list"
     },
     "options_label_hiddenCommentScoreThreshold": {
-        "message": "Do not display comments with a score less than:",
+        "message": "Ne pas afficher les commentaires avec moins de points que:",
         "description": "If the score for this comment is less than the input, it will not be shown in the comment section"
     },
     "options_label_showGooglePlusWhenNoPosts": {
-        "message": "Display Google+ comments if no Reddit comments are found",
+        "message": "Voir les commentaires Google+ s'il n'y a pas de résultats",
         "description": "Show the Google+ comments like usual if there are no Reddit comments to see"
     },
     "options_label_rememberTabsOnViewChange": {
-        "message": "Remember the contents of tabs when you switch from them",
+        "message": "N'oubliez pas de contenu lorsque vous passez loin de pattes",
         "description": "If this option is unticked we will forget the contents of the tabs if they move away from them, and comments will have to be redownloaded"
     },
     "options_label_displayGooglePlusByDefault": {
-        "message": "Show the Google+ comments by default",
+        "message": "Afficher les commentaires Google+ par défaut",
         "description": "This option will show the Google+ comments by default instead of the Reddit comments"
     },
     "options_button_save": {
-        "message": "Save",
+        "message": "Enregistrer",
         "description": "Button for saving settings"
     },
     "options_button_about": {
-        "message": "About",
+        "message": "à propos de AlienTube",
         "description": "Button to open a panel with a typical 'About' dialog, and license."
     },
     "options_button_close": {
-        "message": "Close",
+        "message": "Fermer",
         "description": "Button to close the about dialog"
     },
     "options_label_version": {
@@ -319,7 +319,7 @@
         "description": "Option page title"
     },
     "options_label_saved": {
-        "message": "Changes has been saved",
+        "message": "Vos changements ont été enregistrés",
         "description": "Notification that lets the user know their changes to the options has been successfully saved"
     }
 }
