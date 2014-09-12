@@ -32,7 +32,7 @@ input[type='submit']):not(.custom-appearance):not(.link-button),
 select {
     min-height: 2em;
     min-width: 4em;
-    
+
 }
 
 :-webkit-any(button,
@@ -303,11 +303,6 @@ label > input:disabled:-webkit-any([type='checkbox'], [type='radio']) ~ span {
     height: 22px;
     line-height: 20px;
     font-size: 13px;
-}
-
-label[for=hiddenPostsScoreThreshold],
-label[for=hiddenCommentScoreThreshold] {
-    padding-left: 0;
 }
 
 #saveButton {
