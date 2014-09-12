@@ -16,7 +16,7 @@ module AlienTube {
 
         private postIsInPreservedMode : Boolean;
         private commentData : Array<any>;
-        private children : Array<any>;
+        children : Array<any>;
 
         constructor(threadData : any, commentSection : CommentSection) {
             this.children = new Array();
@@ -28,12 +28,15 @@ module AlienTube {
             Main.Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
             this.postIsInPreservedMode = Main.isPreserved(this.threadInformation.created_utc);
 
-            this.threadContainer = this.commentSection.template.getElementById("threadcontainer").content.cloneNode(true);
+            if (previousUserIdentifier !== threadData[0].data.modhash) {
+                new RedditUsernameRequest();
+            }
+            var template = this.commentSection.template.getElementById("threadcontainer").content.cloneNode(true);
+            this.threadContainer = template.querySelector("#at_comments");
 
 
             if (this.postIsInPreservedMode) {
-                var commentContainer = <HTMLDivElement> document.getElementById("at_comments");
-                commentContainer.classList.add("preserved");
+                this.threadContainer.classList.add("preserved");
             }
 
             /* Set the thread title and link to it, because Reddit for some reason encodes html entities in the title, we must use
@@ -149,6 +152,8 @@ module AlienTube {
             googlePlusText.innerText = Main.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
+            new CommentField(this);
+
             /* Start iterating the top level comments in the comment section */
             this.commentData.forEach((commentObject) => {
                 if (commentObject.kind === "more") {
@@ -170,11 +175,12 @@ module AlienTube {
         * @param contents HTML DOM node or element to use.
         */
         set (contents : Node) {
-            var threadContainer = document.getElementById("at_comments");
-            while (threadContainer.firstChild) {
-                threadContainer.removeChild(threadContainer.firstChild);
+            var oldThread = document.getElementById("at_comments");
+            var alientube = document.getElementById("alientube");
+            if (alientube && oldThread) {
+                alientube.removeChild(oldThread);
             }
-            threadContainer.appendChild(contents);
+            alientube.appendChild(contents);
         }
 
         onSaveButtonClick(eventObject : Event) {

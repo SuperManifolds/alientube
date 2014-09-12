@@ -12,8 +12,8 @@ module AlienTube {
     */
     export class Comment {
         representedHTMLElement : HTMLDivElement;
-        private commentObject : any;
-        private children : Array<any>;
+        commentObject : any;
+        children : Array<any>;
         private commentThread : CommentThread;
 
         constructor(commentData : any, commentThread : CommentThread) {
@@ -21,19 +21,19 @@ module AlienTube {
             this.commentObject = commentData;
             this.commentThread = commentThread;
 
-            this.representedHTMLElement = commentThread.commentSection.template.getElementById("comment").content.cloneNode(true);
+            var template = commentThread.commentSection.template.getElementById("comment").content.cloneNode(true);
+            this.representedHTMLElement = template.querySelector(".at_comment");
 
             /* Set the id for the comment in question so it can be correlated with the Comment Object */
-            var commentElement = <HTMLDivElement> this.representedHTMLElement.querySelector(".at_comment");
-            commentElement.setAttribute("data-reddit-id", commentData.id);
+            this.representedHTMLElement.setAttribute("data-reddit-id", commentData.id);
 
             /* Show / collapse function for the comment */
             var toggleHide = this.representedHTMLElement.querySelector(".at_togglehide");
             toggleHide.addEventListener("click", function () {
-                if (commentElement.classList.contains("hidden")) {
-                    commentElement.classList.remove("hidden")
+                if (this.representedHTMLElement.classList.contains("hidden")) {
+                    this.representedHTMLElement.classList.remove("hidden")
                 } else {
-                    commentElement.classList.add("hidden");
+                    this.representedHTMLElement.classList.add("hidden");
                 }
             }.bind(this), false);
 
@@ -76,7 +76,7 @@ module AlienTube {
             contentTextHolder.innerHTML = SnuOwnd.getParser().render(this.commentObject.body);
             contentTextOfComment.appendChild(contentTextHolder);
             if (this.commentObject.body === "[deleted]") {
-                commentElement.classList.add("deleted");
+                this.representedHTMLElement.classList.add("deleted");
             }
 
             /* Set the button text and event handler for the reply button. */
