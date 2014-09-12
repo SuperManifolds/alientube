@@ -111,8 +111,7 @@ module AlienTube {
                                 this.insertTabsIntoDocument(tabContainer, 0);
                                 window.addEventListener("resize", this.updateTabsToFitToBoundingContainer.bind(this), false);
 
-                                this.set(tabContainer);
-                                var mainContainer = document.getElementById("alientube");
+                                var mainContainer = this.set(tabContainer);
                                 mainContainer.appendChild(tabContainerTemplate.querySelector("#at_comments"));
 
                                 // Load the first tab.
@@ -207,6 +206,7 @@ module AlienTube {
             /* Add AlienTube contents*/
             redditContainer.appendChild(contents);
             commentsContainer.insertBefore(redditContainer, googlePlusContainer);
+            return redditContainer;
         }
 
         /**
