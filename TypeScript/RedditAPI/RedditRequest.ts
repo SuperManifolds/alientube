@@ -50,7 +50,16 @@ module AlienTube {
 
             /* Dismiss the loading screen, perform the callback and clear ourselves out of memory. */
             this.loadingScreen.updateProgress(LoadingState.COMPLETE);
-            this.finalCallback(responseText);
+            try {
+                var responseObject = JSON.parse(responseText);
+                this.finalCallback(responseObject);
+            } catch (e) {
+                if (e.toString().indexOf("SyntaxError: Unexpected end of input") !== -1) {
+                    new ErrorScreen(Main.commentSection, ErrorState.CONNECTERROR);
+                } else {
+                    new ErrorScreen(Main.commentSection, ErrorState.ERROR, e.toString());
+                }
+            }
             delete this;
         }
 
@@ -76,7 +85,7 @@ module AlienTube {
                         break;
 
                     default:
-                        new ErrorScreen(Main.commentSection, ErrorState.ERROR, xhr.responseText);
+                        new ErrorScreen(Main.commentSection, ErrorState.REDDITERROR, xhr.responseText);
                 }
             }
         }

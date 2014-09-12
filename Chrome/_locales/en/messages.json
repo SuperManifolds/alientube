@@ -244,6 +244,14 @@
         "message": "please try again in a few minutes",
         "description": "Message describing that the user should wait a few minutes before trying again to give Reddi time to recover"
     },
+    "error_header_interrupted": {
+        "message": "connection interrupted",
+        "description": "Title for error describing that comments failed because the connection was interrupted by something"
+    },
+    "error_message_interrupted": {
+        "message": "Something is interrupting the connection to reddit.com and we cannot proceed, please check your browser settings and extensions",
+        "description": "Message for error describing that comments failed because the connection was interrupted by somethingr"
+    },
     "error_header_generic": {
         "message": "You broke Reddit :(",
         "description": "Message describing that Reddit experienced an error, with humoristic implications jokingly implying that it is the user's fault."

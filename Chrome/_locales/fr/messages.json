@@ -244,6 +244,14 @@
         "message": "veuillez réessayer dans quelques minutes",
         "description": "Message describing that the user should wait a few minutes before trying again to give Reddi time to recover"
     },
+    "error_header_interrupted": {
+        "message": "connexion interrompue",
+        "description": "Title for error describing that comments failed because the connection was interrupted by something"
+    },
+    "error_message_interrupted": {
+        "message": "Il y avait une erreur lors de la connexion à reddit.com, s'il vous plaît vérifier votre navigateur",
+        "description": "Message for error describing that comments failed because the connection was interrupted by somethingr"
+    },
     "error_header_generic": {
         "message": "Reddit est cassé :(",
         "description": "Message describing that Reddit experienced an error, with humoristic implications jokingly implying that it is the user's fault."

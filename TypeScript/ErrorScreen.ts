@@ -43,6 +43,7 @@ module AlienTube {
                     break;
 
                 case ErrorState.ERROR:
+                case ErrorState.REDDITERROR:
                     /* Retrieve the generic "Reddit is broken" svg graphic from the ressource directory */
                     errorImage.setAttribute("src", Main.getExtensionRessourcePath("redditbroken.svg"));
 
@@ -51,6 +52,16 @@ module AlienTube {
                     if (message) {
                         errorText.innerText = message;
                     }
+                    break;
+
+                case ErrorState.CONNECTERROR:
+                    /* Retrieve the generic "Reddit is broken" svg graphic from the ressource directory */
+                    errorImage.setAttribute("src", Main.getExtensionRessourcePath("redditbroken.svg"));
+
+                    /* Set "connection is being interrupted" localisation text */
+                    errorHeader.innerText = Main.localisationManager.get("error_header_interrupted");
+                    errorText.innerText = Main.localisationManager.get("error_message_interrupted");
+
                     break;
             }
 
@@ -70,6 +81,8 @@ module AlienTube {
     export enum ErrorState {
         NOT_FOUND,
         OVERLOAD,
+        REDDITERROR,
+        CONNECTERROR,
         ERROR
     }
 }

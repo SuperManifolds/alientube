@@ -244,6 +244,14 @@
         "message": "prøv igjen om noen få minutter",
         "description": "Message describing that the user should wait a few minutes before trying again to give Reddi time to recover"
     },
+    "error_header_interrupted": {
+        "message": "tilkoblingen ble uventet avbrytet",
+        "description": "Title for error describing that comments failed because the connection was interrupted by something"
+    },
+    "error_message_interrupted": {
+        "message": "Noe hindrer tilkoblingen til reddit.com så vi får ikke lastet kommentarene, vennligst sjekk instillingene til nettleseren din, og eventuelle nettleserutvidelser",
+        "description": "Message for error describing that comments failed because the connection was interrupted by somethingr"
+    },
     "error_header_generic": {
         "message": "Du kræsjet reddit :(",
         "description": "Message describing that Reddit experienced an error, with humoristic implications jokingly implying that it is the user's fault."

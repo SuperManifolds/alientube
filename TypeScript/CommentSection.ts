@@ -33,8 +33,7 @@ module AlienTube {
 
                     // Open a search request to Reddit for the video identfiier
                     var videoSearchString = encodeURIComponent("url:'/watch?v=" + currentVideoIdentifier + "' (site:youtube.com OR site:youtu.be)");
-                    new RedditRequest("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (response :string) => {
-                        var results = JSON.parse(response);
+                    new RedditRequest("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (results) => {
 
                         // There are a number of ways the Reddit API can arbitrarily explode, here are some of them.
                         if (results == '{}' || results.kind !== 'Listing' || results.data.children.length === 0) {
@@ -156,8 +155,7 @@ module AlienTube {
             alientubeCommentContainer.appendChild(loadingScreen.HTMLElement);
 
             var requestUrl = "https://api.reddit.com/r/" + threadData.subreddit + "/comments/" + threadData.id + ".json";
-            new RedditRequest(requestUrl, RequestType.GET, (response) => {
-                var responseObject = JSON.parse(response);
+            new RedditRequest(requestUrl, RequestType.GET, (responseObject) => {
                 // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
                 if (!Main.Preferences.get("rememberTabsOnViewChange")) {
                     this.storedTabCollection.length = 0;
