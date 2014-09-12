@@ -115,9 +115,17 @@ module AlienTube {
 			   Decide if it is plural and retrieve the correct localisation */
 			for (var timeUnit in timeUnits) {
 				if (timeUnits.hasOwnProperty(timeUnit) && timeUnits[timeUnit] >= 1) {
-					var timeString = timeUnits[timeUnit] > 1 ?
-						this.localisationManager.get("timestmap_format_" + timeUnit + "_plural") : this.localisationManager.get("timestmap_format_" + timeUnit);
-					return timeUnits[timeUnit] + " " + timeString + Main.localisationManager.get("timestamp_format_suffix");
+                    if (timeUnits[timeUnit] > 1) {
+                        return Main.localisationManager.get("timestamp_format", [
+                            timeUnits[timeUnit],
+                            Main.localisationManager.get("timestamp_format_" + timeUnit + "_plural")
+                        ]);
+                    } else {
+                        return Main.localisationManager.get("timestamp_format", [
+                            timeUnits[timeUnit],
+                            Main.localisationManager.get("timestamp_format_" + timeUnit)
+                        ]);
+                    }
 				}
 			}
 		}

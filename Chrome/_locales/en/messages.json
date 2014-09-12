@@ -61,11 +61,20 @@
         "message": "seconds",
         "description": "Plural form of the time unit 'Second' for timestamps."
     },
-    "timestamp_format_suffix": {
-        "message": " ago",
-        "description": "Suffix at the end of timestamps describing that this is a past event illustrated by time."
+    "timestamp_format": {
+        "message": "$TIME_INTERVAL$ $UNIT$ ago",
+        "description": "Format of timestamps",
+        "placeholders": {
+            "time_interval": {
+                "content": "$1",
+                "example": "4"
+            },
+            "unit": {
+                "content": "$2",
+                "example": "hours"
+            }
+        }
     },
-
 
     "post_submitted_timestamp_text": {
         "message": "submitted ",
