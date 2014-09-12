@@ -23,6 +23,7 @@ module AlienTube {
 		}
 
         constructor() {
+			this.preferences = {};
             switch (Main.getCurrentBrowser()) {
                 case Browser.CHROME:
                     chrome.storage.sync.get(null, (settings) => {
