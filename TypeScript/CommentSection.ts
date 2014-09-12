@@ -87,14 +87,14 @@ module AlienTube {
                                 for (var subreddit in sortedResultCollection) {
                                     if (sortedResultCollection.hasOwnProperty(subreddit)) {
                                         this.threadCollection.push(sortedResultCollection[subreddit].reduce(function (a, b) {
-                                            return ((a.score + (a.num_comments*3)) > (b.score + (b.num_comments*3)) || b.id === preferredPost) ? a : b;
+                                            return ((a.score + (a.num_comments*10)) > (b.score + (b.num_comments*10)) || b.id === preferredPost) ? a : b;
                                         }));
                                     }
                                 }
 
                                 // Sort subreddits so the one with the highest score/comment relation (or is in the description) is first in the list.
                                 this.threadCollection.sort(function (a, b) {
-                                    return ((b.score + (b.num_comments*3)) - (a.score + (a.num_comments*3)));
+                                    return ((b.score + (b.num_comments*10)) - (a.score + (a.num_comments*10)));
                                 });
                                 for (var i = 0, len = this.threadCollection.length; i < len; i++) {
                                     if (this.threadCollection[i].subreddit === preferredSubreddit) {
