@@ -3,6 +3,7 @@
 /// <reference path="BrowserPreferenceManager.ts" />
 /// <reference path="CommentSection.ts" />
 /// <reference path="CommentThread.ts" />
+/// <reference path="CommentField.ts" />
 /// <reference path="Comment.ts" />
 /// <reference path="LoadMore.ts" />
 /// <reference path="LocalisationManager.ts" />
@@ -14,6 +15,7 @@
 /// <reference path="RedditAPI/Vote.ts" />
 /// <reference path="RedditAPI/Report.ts" />
 /// <reference path="RedditAPI/Save.ts" />
+/// <reference path="RedditAPI/Username.ts" />
 
 
 /// <reference path="typings/snuownd.d.ts" />

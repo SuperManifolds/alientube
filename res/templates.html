@@ -28,34 +28,36 @@
 </template>
 
 <template id="threadcontainer">
-    <header class="at_thread">
-        <div class="vote">
-            <div class="arrow up"> </div>
-            <div class="score"> </div>
-            <div class="arrow down"> </div>
-        </div>
-        <div class="info">
-            <a class="title" target="_blank"> </a>
-            <span class="tagline">
-                <span class="templateSubmittedAtTimeText"></span> <time class="at_timestamp"> </time>
-                <span class="templateSubmittedByUsernameText"></span><a class="at_author" target="_blank"> </a>
-                <span class="at_flair"></span>
-                <span class="at_gilded"></span>
-            </span>
-            <span class="options">
-                <span class="commentTo"></span>
-                <span class="at_displaysource"></span>
-                <span class="save"></span>
-                <span class="refresh"></span>
-                <a class="giveGold" href="" target="_blank"></a>
-                <span class="report"></span>
-            </span>
-        </div>
-        <div id="at_switchtogplus">
-            <img src="" alt="" />
-            <span id="at_gplustext"></span>
-        </div>
-    </header>
+    <div id="at_comments">
+        <header class="at_thread">
+            <div class="vote">
+                <div class="arrow up"> </div>
+                <div class="score"> </div>
+                <div class="arrow down"> </div>
+            </div>
+            <div class="info">
+                <a class="title" target="_blank"> </a>
+                <span class="tagline">
+                    <span class="templateSubmittedAtTimeText"></span> <time class="at_timestamp"> </time>
+                    <span class="templateSubmittedByUsernameText"></span><a class="at_author" target="_blank"> </a>
+                    <span class="at_flair"></span>
+                    <span class="at_gilded"></span>
+                </span>
+                <span class="options">
+                    <span class="commentTo"></span>
+                    <span class="at_displaysource"></span>
+                    <span class="save"></span>
+                    <span class="refresh"></span>
+                    <a class="giveGold" href="" target="_blank"></a>
+                    <span class="report"></span>
+                </span>
+            </div>
+            <div id="at_switchtogplus">
+                <img src="" alt="" />
+                <span id="at_gplustext"></span>
+            </div>
+        </header>
+    </div>
 </template>
 
 <template id="comment">
@@ -148,5 +150,21 @@
     <div id="at_switchtoreddit">
         <img src="" alt="" />
         <span id="at_reddittext"></span>
+    </div>
+</template>
+
+<template id="commentfield">
+    <div class="at_commentfield">
+        <textarea rows="1" cols="1" class="at_textarea" maxlength="10000"></textarea>
+        <div class="at_comment_lowercontrols">
+            <button class="button at_submit"></button>
+            <button class="button at_cancel"></button>
+            <span class="at_writingauthor"></span>
+        </div>
+        <div class="at_comment_preview">
+            <span class="at_preview_header"></span>
+            <span class="at_preview_count"></span>
+            <div class="at_preview_contents"></div>
+        </div>
     </div>
 </template>

@@ -251,6 +251,30 @@
     },
 
 
+    "commentfield_button_submit": {
+        "message": "Enviar",
+        "description": "Button for submitting the comment to Reddit"
+    },
+    "commentfield_button_cancel": {
+        "message": "Cancelar",
+        "description": "Button for cancelling your comment and hiding the comment box"
+    },
+    "commentfield_label_preview": {
+        "message": "Preestreno",
+        "description": "Label indicating that this panel shows a preview of how your text will look when it is posted"
+    },
+    "commentfield_label_author": {
+        "message": "Nombre de usuario: $AUTHOR$",
+        "description": "Label under the comment field indicating who your comment will be submitted as.",
+        "placeholders": {
+            "author": {
+                "content": "$1",
+                "example": "lexious"
+            }
+        }
+    },
+
+
     "options_label_hiddenPostsScoreThreshold": {
         "message": "No mostrar enlace si menos de:",
         "description": "If the score for this Reddit post is less than the input, it will not be shown in the list"

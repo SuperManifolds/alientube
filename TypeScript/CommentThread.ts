@@ -34,11 +34,6 @@ module AlienTube {
             var template = this.commentSection.template.getElementById("threadcontainer").content.cloneNode(true);
             this.threadContainer = template.querySelector("#at_comments");
 
-
-            if (this.postIsInPreservedMode) {
-                this.threadContainer.classList.add("preserved");
-            }
-
             /* Set the thread title and link to it, because Reddit for some reason encodes html entities in the title, we must use
             innerHTML. */
             var title = <HTMLParagraphElement> this.threadContainer.querySelector(".title");
@@ -152,7 +147,12 @@ module AlienTube {
             googlePlusText.innerText = Main.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
-            new CommentField(this);
+
+            if (this.postIsInPreservedMode) {
+                this.threadContainer.classList.add("preserved");
+            } else {
+                new CommentField(this);
+            }
 
             /* Start iterating the top level comments in the comment section */
             this.commentData.forEach((commentObject) => {
