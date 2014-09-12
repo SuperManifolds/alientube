@@ -62,7 +62,7 @@
         "description": "Plural form of the time unit 'Second' for timestamps."
     },
     "timestamp_format": {
-        "message": "$TIME_INTERVAL$ $UNIT$ de ça",
+        "message": "il y a $TIME_INTERVAL$ $UNIT$",
         "description": "Format of timestamps",
         "placeholders": {
             "time_interval": {
@@ -93,7 +93,7 @@
         "description": "Plural form describing that the previous number was the score of this post (points)"
     },
     "post_button_refresh": {
-        "message": "rafraichir",
+        "message": "actualiser",
         "description": "This button will cause the post to be reloaded/refreshed."
     },
     "post_button_gold": {
@@ -101,7 +101,7 @@
         "description": "This button will open up a donation window for the reddit gold membership feature to another user for this submission"
     },
     "post_button_comment": {
-        "message": "Postez un commentaire",
+        "message": "Écrire un commentaire",
         "description": "This button will open up a comment field to write in"
     },
     "post_button_source": {
@@ -237,7 +237,7 @@
         "description": "Message for error describing that an attempt to load something failed because it went somewhere that does not exist (404)"
     },
     "error_header_overloaded": {
-        "message": "reddit is under heavy load right now",
+        "message": "reddit est débordé",
         "description": "Title for error describing that comments failed to load because Reddit is too overloaded and couldn't give us what we wanted"
     },
     "error_message_overloaded": {
