@@ -82,6 +82,7 @@ module AlienTube {
             /* Set the button text and event handler for the reply button. */
             var replyToComment = this.representedHTMLElement.querySelector(".at_reply");
             replyToComment.appendChild(document.createTextNode(Main.localisationManager.get("post_button_reply")));
+            replyToComment.addEventListener("click", this.onCommentButtonClick.bind(this), false);
 
             /* Set the button text and link for the "permalink" button */
             var permalinkElement = this.representedHTMLElement.querySelector(".at_permalink");
@@ -96,6 +97,7 @@ module AlienTube {
             /* Set the button text and the event handler for the "show source" button */
             var displaySourceForComment = this.representedHTMLElement.querySelector(".at_displaysource");
             displaySourceForComment.appendChild(document.createTextNode(Main.localisationManager.get("post_button_source")));
+            displaySourceForComment.addEventListener("click", this.onSourceButtonClick.bind(this), false);
 
             /* Set the button text and the event handler for the "save comment" button */
             var saveItemToRedditList = this.representedHTMLElement.querySelector(".save");
@@ -231,6 +233,22 @@ module AlienTube {
 
                 new RedditVoteRequest(this.commentObject.name, VoteType.DOWNVOTE);
             }
+        }
+
+        onCommentButtonClick () {
+            var previousCommentBox = this.representedHTMLElement.querySelector(".at_commentfield");
+            if (previousCommentBox) {
+                previousCommentBox.parentNode.removeChild(previousCommentBox);
+            }
+            new CommentField(this);
+        }
+
+        onSourceButtonClick () {
+            var previousCommentBox = this.representedHTMLElement.querySelector(".at_commentfield");
+            if (previousCommentBox) {
+                previousCommentBox.parentNode.removeChild(previousCommentBox);
+            }
+            new CommentField(this, this.commentObject.body);
         }
     }
 }

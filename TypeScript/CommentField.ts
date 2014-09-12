@@ -18,7 +18,7 @@ module AlienTube {
         private parentClass : any;
         private previewElement : HTMLDivElement;
 
-        constructor(parent : any) {
+        constructor(parent : any, initialText? : string) {
             if (parent instanceof CommentThread) {
                 this.parentClass = <CommentThread> parent;
                 this.commentThread = this.parentClass;
@@ -50,6 +50,9 @@ module AlienTube {
             cancelButton.addEventListener("click", this.onCancelButtonClick.bind(this), false);
 
             var inputField = <HTMLInputElement> this.representedHTMLElement.querySelector(".at_textarea");
+            if (initialText) {
+                inputField.value = initialText;
+            }
             inputField.addEventListener("input", this.onInputFieldChange.bind(this), false);
 
             this.previewElement = <HTMLDivElement> this.representedHTMLElement.querySelector(".at_comment_preview");

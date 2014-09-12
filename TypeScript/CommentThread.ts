@@ -85,10 +85,7 @@ module AlienTube {
             /* Set the button text and the event handler for the "comment" button */
             var openNewCommentBox = this.threadContainer.querySelector(".commentTo");
             openNewCommentBox.appendChild(document.createTextNode(Main.localisationManager.get("post_button_comment")));
-
-            /* Set the button text and the event handler for the "display source" button */
-            var displaySourceForComment = this.threadContainer.querySelector(".at_displaysource");
-            displaySourceForComment.appendChild(document.createTextNode(Main.localisationManager.get("post_button_source")));
+            openNewCommentBox.addEventListener("click", this.onCommentButtonClick.bind(this), false);
 
             /* Set the button text and the event handler for the "save" button */
             var saveItemToRedditList = this.threadContainer.querySelector(".save");
@@ -268,6 +265,15 @@ module AlienTube {
 
                 new RedditVoteRequest(this.threadInformation.name, VoteType.DOWNVOTE);
             }
+        }
+
+        onCommentButtonClick () {
+            var header = document.querySelector(".at_thread");
+            var previousCommentBox = header.querySelector(".at_commentfield");
+            if (previousCommentBox) {
+                previousCommentBox.parentNode.removeChild(previousCommentBox);
+            }
+            new CommentField(this);
         }
     }
 }
