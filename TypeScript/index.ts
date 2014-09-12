@@ -26,6 +26,10 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     if (window.top === window) {
-        new AlienTube.Main();
+        if (window.location.host === "alientube.co") {
+            document.body.classList.add("installed");
+        } else {
+            new AlienTube.Main();
+        }
     }
 }, false);
