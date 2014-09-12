@@ -497,6 +497,14 @@
     }
 }
 
+.preserved  {
+    & .arrow {
+        pointer-events: none;
+    }
+    & .at_submit {
+        display: none;
+    }
+}
 
 #at_tabcontainer {
     margin-left: 4px;
