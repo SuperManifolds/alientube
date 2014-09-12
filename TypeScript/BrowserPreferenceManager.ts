@@ -60,9 +60,7 @@ module AlienTube {
             this.preferences[key] = value;
             switch (Main.getCurrentBrowser()) {
                 case Browser.CHROME:
-                    chrome.storage.sync.set({
-                        key: value
-                    });
+                    chrome.storage.sync.set(this.preferences);
                     break;
 
                 case Browser.FIREFOX:
