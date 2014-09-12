@@ -150,7 +150,7 @@
         "description": "Longer message that displays on hover, explaining the badge."
     },
     "post_label_reply": {
-        "message": "responder",
+        "message": "respuesta",
         "description": "Singular label describing how many replies this comment has"
     },
     "post_label_reply_plural": {
