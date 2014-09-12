@@ -739,6 +739,10 @@ a[href$="/spoiler"]::before {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 13px;
 
+    &.noresults {
+        pointer-events: none;
+    }
+
     &:hover {
         opacity: 0.8;
     }

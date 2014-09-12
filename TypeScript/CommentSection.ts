@@ -190,7 +190,7 @@ module AlienTube {
 
 
             /* Add the "switch to Reddit" button in the google+ comment section */
-            var redditButton = <HTMLDivElement> document.getElementById("switchtoreddit");
+            var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
             if (!redditButton) {
                 var redditButtonTemplate = this.template.getElementById("switchtoreddit").content.cloneNode(true);
                 redditButton = <HTMLDivElement> redditButtonTemplate.querySelector("#at_switchtoreddit");
@@ -321,10 +321,15 @@ module AlienTube {
         * Set the comment section to the "No Results" page.
         */
         returnNoResults () {
-            this.set(this.template.getElementById("noposts").content.cloneNode(true));
-            var redditButton = <HTMLDivElement> document.getElementById("switchtoreddit");
+            var template = this.template.getElementById("noposts").content.cloneNode(true);
+            var message = template.querySelector(".single_line");
+            message.innerText = Main.localisationManager.get("post_label_noresults");
+            this.set(template);
+
+            var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
             if (redditButton) {
-                redditButton.style.display = "none";
+                redditButton.classList.add("noresults");
+                document.getElementById("at_reddittext").innerText = Main.localisationManager.get("post_label_noresults");
             }
             if (Main.Preferences.get("showGooglePlusWhenNoPosts")) {
                 document.getElementById("watch-discussion").style.display = "block";
