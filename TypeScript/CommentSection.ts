@@ -323,8 +323,9 @@ module AlienTube {
         returnNoResults () {
             this.set(this.template.getElementById("noposts").content.cloneNode(true));
             var redditButton = <HTMLDivElement> document.getElementById("switchtoreddit");
-            redditButton.style.display = "none";
-
+            if (redditButton) {
+                redditButton.style.display = "none";
+            }
             if (Main.Preferences.get("showGooglePlusWhenNoPosts")) {
                 document.getElementById("watch-discussion").style.display = "block";
             }
