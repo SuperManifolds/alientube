@@ -258,7 +258,7 @@ module AlienTube {
             var width = (21 + this.threadCollection[0].subreddit.length * 7);
 
             /* Calculate the width of tabs and determine how many you can fit without breaking the bounds of the comment section. */
-            if (len > 1) {
+            if (len > 0) {
                 var i;
                 for (i = 0; i < len; i++) {
                     width = width + (21 + (this.threadCollection[i].subreddit.length * 7));
