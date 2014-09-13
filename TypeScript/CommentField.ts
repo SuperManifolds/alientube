@@ -92,6 +92,7 @@ module AlienTube {
                     var replyContainer = this.representedHTMLElement.querySelector(".at_replies");
                     replyContainer.appendChild(comment.representedHTMLElement);
                 }
+                this.parentClass.children.push(comment);
 
                 /* Scroll the new comment in to view */
                 comment.representedHTMLElement.scrollIntoView(true);
