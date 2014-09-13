@@ -24,8 +24,7 @@
 /// <reference path="typings/firefox/firefox.d.ts" />
 /// <reference path="typings/safari/safari.d.ts" />
 
-
-document.addEventListener("DOMContentLoaded", function () {
+function at_initialise () {
     if (window.top === window) {
         if (window.location.host === "alientube.co") {
             document.body.classList.add("installed");
@@ -33,4 +32,10 @@ document.addEventListener("DOMContentLoaded", function () {
             new AlienTube.Main();
         }
     }
-}, false);
+}
+
+if (document.readyState === "complete") {
+    at_initialise();
+}
+
+document.addEventListener("DOMContentLoaded", at_initialise, false);
