@@ -120,6 +120,14 @@
         "message": "report",
         "description": "This button will open up a report dialog to report this user/post for terms of service violations or illegal activity"
     },
+    "post_button_edit": {
+        "message": "edit",
+        "description": "This button will open up an edit post box for the user."
+    },
+    "post_button_delete": {
+        "message": "delete",
+        "description": "This button will delete the selected post"
+    },
     "post_button_reply": {
         "message": "reply",
         "description": "This button will open up a reply field to write a comment reply in."
@@ -159,6 +167,10 @@
     "post_label_noresults": {
         "message": "No posts found",
         "description": "Label describing that there were no results found"
+    },
+    "post_delete_confirm": {
+        "message": "Are you sure you want to delete this comment?",
+        "description": "Message asking the user whether they really want to delete this post."
     },
 
 

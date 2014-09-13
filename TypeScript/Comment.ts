@@ -114,10 +114,30 @@ module AlienTube {
             giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.commentObject.name);
             giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("post_button_gold")));
 
-            /* Set the button text and the event handler for the "report comment" button */
+
             var reportToAdministrators = this.representedHTMLElement.querySelector(".report");
-            reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("post_button_report")));
-            reportToAdministrators.addEventListener("click", this.onReportButtonClicked.bind(this), false);
+            var editPost = this.representedHTMLElement.querySelector(".at_edit");
+            var deletePost = this.representedHTMLElement.querySelector(".at_delete");
+            if (this.commentObject.author === Main.Preferences.get("username")) {
+                /* Report button does not make sense on our own post, so let's get rid of it */
+                reportToAdministrators.parentNode.removeChild(reportToAdministrators);
+
+                /* Set the button text and the event handler for the "edit post" button */
+                editPost.appendChild(document.createTextNode(Main.localisationManager.get("post_button_edit")));
+                editPost.addEventListener("click", this.onEditPostButtonClick.bind(this), false);
+
+                /* Set the button text and the event handler for the "delete post" button */
+                deletePost.appendChild(document.createTextNode(Main.localisationManager.get("post_button_delete")));
+                deletePost.addEventListener("click", this.onDeletePostButtonClick.bind(this), false);
+            } else {
+                /* Delete and edit buttons does not make sense if the post is not ours, so let's get rid of them. */
+                editPost.parentNode.removeChild(editPost);
+                deletePost.parentNode.removeChild(deletePost);
+
+                /* Set the button text and the event handler for the "report comment" button */
+                reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("post_button_report")));
+                reportToAdministrators.addEventListener("click", this.onReportButtonClicked.bind(this), false);
+            }
 
             /* Set the state of the voting buttons */
             var voteController = <HTMLDivElement> this.representedHTMLElement.querySelector(".vote");
@@ -249,6 +269,32 @@ module AlienTube {
                 previousCommentBox.parentNode.removeChild(previousCommentBox);
             }
             new CommentField(this, this.commentObject.body);
+        }
+
+        onEditPostButtonClick () {
+            var previousCommentBox = this.representedHTMLElement.querySelector(".at_commentfield");
+            if (previousCommentBox) {
+                previousCommentBox.parentNode.removeChild(previousCommentBox);
+            }
+            new CommentField(this, this.commentObject.body, true);
+        }
+
+        onDeletePostButtonClick () {
+            var confirmation = window.confirm(Main.localisationManager.get("post_delete_confirm"));
+            if (confirmation) {
+                var url  = "https://api.reddit.com/api/del";
+                new HttpRequest(url, RequestType.POST, () => {
+                    this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
+                    var getIndexInParentList = this.commentThread.children.indexOf(this);
+                    if (getIndexInParentList !== -1) {
+                        this.commentThread.children.splice(getIndexInParentList, 1);
+                    }
+                    delete this;
+                }, {
+                    "uh": Main.Preferences.get("redditUserIdentifierHash"),
+                    "id": this.commentObject.name,
+                });
+            }
         }
     }
 }

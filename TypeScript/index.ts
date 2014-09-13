@@ -12,6 +12,7 @@
 
 /// <reference path="RedditAPI/RedditRequest.ts" />
 /// <reference path="RedditAPI/Comment.ts" />
+/// <reference path="RedditAPI/EditComment.ts" />
 /// <reference path="RedditAPI/Vote.ts" />
 /// <reference path="RedditAPI/Report.ts" />
 /// <reference path="RedditAPI/Save.ts" />

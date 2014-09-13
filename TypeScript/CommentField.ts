@@ -17,8 +17,9 @@ module AlienTube {
         private commentThread: CommentThread;
         private parentClass : any;
         private previewElement : HTMLDivElement;
+        private edit : boolean;
 
-        constructor(parent : any, initialText? : string) {
+        constructor(parent : any, initialText? : string, edit? : boolean) {
             /* Check if the paramter is a Coment Thread and assign the correct parent HTML element .*/
             if (parent instanceof CommentThread) {
                 this.parentClass = <CommentThread> parent;
@@ -34,6 +35,7 @@ module AlienTube {
             } else {
                 new TypeError("parent needs to be type CommentThread or Type Comment");
             }
+            this.edit = edit;
 
             var template = this.commentThread.commentSection.template.getElementById("commentfield").content.cloneNode(true);
             this.representedHTMLElement = template.querySelector(".at_commentfield");
@@ -78,29 +80,38 @@ module AlienTube {
             var thing_id = (this.parentClass instanceof CommentThread)
                 ? this.parentClass.threadInformation.name : this.parentClass.commentObject.name;
 
-            /* Send the comment to Reddit */
-            new RedditCommentRequest(thing_id, inputField.value, (responseText) => {
-                var responseObject = JSON.parse(responseText);
-                var comment = new Comment(responseObject.json.data.things[0].data, this.commentThread);
-                this.parentClass.children.push(comment);
+            if (this.edit) {
+                /* Send the edit comment request to reddit */
+                new RedditCommentRequest(thing_id, inputField.value, (responseText) => {
+                    this.parentClass.commentObject.body = inputField.value;
+                    var editedCommentBody = this.parentClass.representedHTMLElement.querySelector(".at_commentcontent");
+                    editedCommentBody.innerHTML = SnuOwnd.getParser().render(inputField.value);
+                });
+            } else {
+                /* Send the comment to Reddit */
+                new RedditCommentRequest(thing_id, inputField.value, (responseText) => {
+                    var responseObject = JSON.parse(responseText);
+                    var comment = new Comment(responseObject.json.data.things[0].data, this.commentThread);
+                    this.parentClass.children.push(comment);
 
-                /* Find the correct insert location and append the new comment to DOM */
-                if (this.parentClass instanceof CommentThread) {
-                    this.parentClass.threadContainer.appendChild(comment.representedHTMLElement);
-                    new CommentField(this.parentClass);
-                } else {
-                    var replyContainer = this.representedHTMLElement.querySelector(".at_replies");
-                    replyContainer.appendChild(comment.representedHTMLElement);
-                }
-                this.parentClass.children.push(comment);
+                    /* Find the correct insert location and append the new comment to DOM */
+                    if (this.parentClass instanceof CommentThread) {
+                        this.parentClass.threadContainer.appendChild(comment.representedHTMLElement);
+                        new CommentField(this.parentClass);
+                    } else {
+                        var replyContainer = this.representedHTMLElement.querySelector(".at_replies");
+                        replyContainer.appendChild(comment.representedHTMLElement);
+                    }
+                    this.parentClass.children.push(comment);
 
-                /* Scroll the new comment in to view */
-                comment.representedHTMLElement.scrollIntoView(true);
+                    /* Scroll the new comment in to view */
+                    comment.representedHTMLElement.scrollIntoView(true);
 
-                /* The comment box is no longer needed, remove it and clear outselves out of memory */
-                this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
-                delete this;
-            });
+                    /* The comment box is no longer needed, remove it and clear outselves out of memory */
+                    this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
+                    delete this;
+                });
+            }
         }
 
         onCancelButtonClick () {
