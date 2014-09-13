@@ -12,7 +12,7 @@ module AlienTube {
     */
     export class RedditEditCommentRequest {
         constructor(thing : string, comment : string, callback? : any) {
-            var url  = "https://api.reddit.com/api/comment";
+            var url  = "https://api.reddit.com/api/editusertext";
             new HttpRequest(url, RequestType.POST, callback, {
                 "uh": Main.Preferences.get("redditUserIdentifierHash"),
                 "thing_id": thing,
