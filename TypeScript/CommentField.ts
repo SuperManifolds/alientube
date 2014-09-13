@@ -86,6 +86,10 @@ module AlienTube {
                     this.parentClass.commentObject.body = inputField.value;
                     var editedCommentBody = this.parentClass.representedHTMLElement.querySelector(".at_commentcontent");
                     editedCommentBody.innerHTML = SnuOwnd.getParser().render(inputField.value);
+
+                    /* The comment box is no longer needed, remove it and clear outselves out of memory */
+                    this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
+                    delete this;
                 });
             } else {
                 /* Send the comment to Reddit */
