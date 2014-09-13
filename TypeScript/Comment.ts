@@ -114,6 +114,10 @@ module AlienTube {
             giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.commentObject.name);
             giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("post_button_gold")));
 
+            /* Add the little astreix on the comment if it has been edited at some point */
+            if (this.commentObject.edited) {
+                this.representedHTMLElement.classList.add("edited");
+            }
 
             var reportToAdministrators = this.representedHTMLElement.querySelector(".report");
             var editPost = this.representedHTMLElement.querySelector(".at_edit");

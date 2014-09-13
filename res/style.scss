@@ -315,6 +315,12 @@
                 }
             }
         }
+
+        &.edited {
+            .at_timestamp:after {
+                content: "*";
+            }
+        }
     }
 
     & .at_replies {
