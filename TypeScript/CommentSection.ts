@@ -429,11 +429,11 @@ module AlienTube {
 
             /* Derive the total index of the item in the subreddit list from the number we just calculated added
              with the total length of the visible non overflow tabs */
-            currentIndexOfNewTab = (tabContainer.children.length - 1) + currentIndexOfNewTab;
+            currentIndexOfNewTab = (tabContainer.children.length) + currentIndexOfNewTab;
             var threadDataForNewTab = this.threadCollection[currentIndexOfNewTab];
 
             /* Move the new item frontmost in the array so it will be the first tab, and force a re-render of the tab control. */
-            this.threadCollection.splice(currentIndexOfNewTab, 1);
+            this.threadCollection.splice(currentIndexOfNewTab -1, 1);
             this.threadCollection.splice(0, 0, threadDataForNewTab);
             this.clearTabsFromTabContainer();
             this.insertTabsIntoDocument(tabContainer, 0);
