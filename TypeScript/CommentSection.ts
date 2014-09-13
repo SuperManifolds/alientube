@@ -13,7 +13,7 @@ module AlienTube {
         template : HTMLDocument;
         threadCollection : Array<any>;
         storedTabCollection : Array<any>;
-
+        userIsSignedIn : boolean;
 
         constructor(currentVideoIdentifier:string) {
             this.threadCollection = new Array();

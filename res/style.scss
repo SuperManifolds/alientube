@@ -518,6 +518,7 @@
     padding-left: 20px;
     padding-right: 20px;
 
+    &.signedout,
     &.preserved {
         & .commentTo,
         & .at_reply,
@@ -525,6 +526,12 @@
         & .at_edit,
         & .at_delete,
         & .giveGold {
+            display: none;
+        }
+    }
+
+    &.signedout {
+        & .save {
             display: none;
         }
     }

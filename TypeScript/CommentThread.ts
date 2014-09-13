@@ -28,11 +28,19 @@ module AlienTube {
             Main.Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
             this.postIsInPreservedMode = Main.isPreserved(this.threadInformation.created_utc);
 
-            if (previousUserIdentifier !== threadData[0].data.modhash) {
-                new RedditUsernameRequest();
-            }
             var template = this.commentSection.template.getElementById("threadcontainer").content.cloneNode(true);
             this.threadContainer = template.querySelector("#at_comments");
+
+            if (threadData[0].data.modhash.length > 0) {
+                this.commentSection.userIsSignedIn = true;
+                if (previousUserIdentifier !== threadData[0].data.modhash) {
+                    new RedditUsernameRequest();
+                }
+            } else {
+                this.commentSection.userIsSignedIn = false;
+                Main.Preferences.set("username", "");
+                this.threadContainer.classList.add("signedout");
+            }
 
             /* Set the thread title and link to it, because Reddit for some reason encodes html entities in the title, we must use
             innerHTML. */
@@ -148,7 +156,9 @@ module AlienTube {
             if (this.postIsInPreservedMode) {
                 this.threadContainer.classList.add("preserved");
             } else {
-                new CommentField(this);
+                if (this.commentSection.userIsSignedIn) {
+                    new CommentField(this);
+                }
             }
 
             /* Start iterating the top level comments in the comment section */
