@@ -9,7 +9,7 @@
         "message": "año",
         "description": "Singular form of the date unit 'Year' for timestamps."
     },
-    "timestmap_format_year_plural": {
+    "timestamp_format_year_plural": {
         "message": "años",
         "description": "Plural form of the date unit 'Year' for timestamps."
     },
