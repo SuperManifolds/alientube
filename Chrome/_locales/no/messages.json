@@ -171,7 +171,7 @@
     "post_delete_confirm": {
         "message": "Er du sikker på du vil slette denne kommentaren?",
         "description": "Message asking the user whether they really want to delete this comment."
-    }
+    },
 
 
     "report_dialog_spam": {
