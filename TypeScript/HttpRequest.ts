@@ -26,7 +26,7 @@ module AlienTube {
                     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 }
                 if (url.indexOf("api.reddit.com") !== -1) {
-                    xhr.setRequestHeader("AlienTube", Main.localisationManager.get("redditAPIHeaderMessage"));
+                    xhr.setRequestHeader("AlienTube", Main.localisationManager.get("api_header_message"));
                 }
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
