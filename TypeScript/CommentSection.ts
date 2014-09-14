@@ -186,15 +186,18 @@ module AlienTube {
                 googlePlusContainer.style.display = "none";
             }
 
+            /* Check if Magic Actions Night Mode is activated, and set AlienTube to dark mode */
+            var bodyBackgroundColor = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
+            if (bodyBackgroundColor === "rgb(16, 16, 16)") {
+                document.body.classList.add("darkmode");
+            }
 
             /* Add the "switch to Reddit" button in the google+ comment section */
             var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
             if (!redditButton) {
                 var redditButtonTemplate = this.template.getElementById("switchtoreddit").content.cloneNode(true);
                 redditButton = <HTMLDivElement> redditButtonTemplate.querySelector("#at_switchtoreddit");
-                var redditImage = <HTMLImageElement> redditButton.querySelector("img");
                 var redditText = <HTMLSpanElement> redditButton.querySelector("#at_reddittext");
-                redditImage.setAttribute("src", Main.getExtensionRessourcePath("reddit.svg"));
                 redditText.innerText = Main.localisationManager.get("post_button_comments");
                 redditButton.addEventListener("click", this.onRedditClick, true);
                 googlePlusContainer.appendChild(redditButton);
