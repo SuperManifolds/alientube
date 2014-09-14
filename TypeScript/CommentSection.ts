@@ -176,7 +176,7 @@ module AlienTube {
             var commentsContainer = document.getElementById("watch7-content");
             var previousRedditInstance = document.getElementById("alientube");
             if (previousRedditInstance) {
-                commentsContainer.removeChild(document.getElementById("alientube"));
+                commentsContainer.removeChild(previousRedditInstance);
             }
 
             var googlePlusContainer = document.getElementById("watch-discussion");
