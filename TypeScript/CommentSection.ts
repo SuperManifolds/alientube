@@ -334,6 +334,7 @@ module AlienTube {
             }
             if (Main.Preferences.get("showGooglePlusWhenNoPosts")) {
                 document.getElementById("watch-discussion").style.display = "block";
+                document.getElementById("alientube").style.display = "none";
             }
         }
 
