@@ -203,7 +203,7 @@ module AlienTube {
 
             /* Add AlienTube contents*/
             redditContainer.appendChild(contents);
-            commentsContainer.insertBefore(redditContainer, googlePlusContainer);
+            commentsContainer.appendChild(redditContainer);
             return redditContainer;
         }
 
