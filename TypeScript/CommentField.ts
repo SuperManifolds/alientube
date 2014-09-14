@@ -113,7 +113,7 @@ module AlienTube {
                     this.parentClass.children.push(comment);
 
                     /* Scroll the new comment in to view */
-                    comment.representedHTMLElement.scrollIntoView(true);
+                    comment.representedHTMLElement.scrollIntoView(false);
 
                     /* The comment box is no longer needed, remove it and clear outselves out of memory */
                     this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
