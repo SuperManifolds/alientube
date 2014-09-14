@@ -28,7 +28,7 @@ function at_initialise () {
     if (window.top === window) {
         if (window.location.host === "alientube.co") {
             document.body.classList.add("installed");
-        } else {
+        } else if (window.location.href.indexOf("www.youtube.com/watch") !== -1){
             new AlienTube.Main();
         }
     }
