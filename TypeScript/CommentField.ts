@@ -107,7 +107,7 @@ module AlienTube {
                         this.parentClass.threadContainer.appendChild(comment.representedHTMLElement);
                         new CommentField(this.parentClass);
                     } else {
-                        var replyContainer = this.representedHTMLElement.querySelector(".at_replies");
+                        var replyContainer = this.parentClass.representedHTMLElement.querySelector(".at_replies");
                         replyContainer.appendChild(comment.representedHTMLElement);
                     }
                     this.parentClass.children.push(comment);
