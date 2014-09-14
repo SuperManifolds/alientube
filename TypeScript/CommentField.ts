@@ -78,7 +78,7 @@ module AlienTube {
         onSubmitButtonClick (eventObject : Event) {
             /* Disable the button on click so the user does not accidentally press it multiple times */
             var submitButton = <HTMLButtonElement> eventObject.target;
-            submitButton.disabled = false;
+            submitButton.disabled = true;
 
             var inputField = <HTMLInputElement> this.representedHTMLElement.querySelector(".at_textarea");
             var thing_id = (this.parentClass instanceof CommentThread)
