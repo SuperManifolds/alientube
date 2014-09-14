@@ -34,8 +34,8 @@ function at_initialise () {
     }
 }
 
-if (document.readyState === "complete") {
+if (document.readyState === "complete" || document.readyState === "interactive") {
     at_initialise();
+} else {
+    document.addEventListener("DOMContentLoaded", at_initialise, false);
 }
-
-document.addEventListener("DOMContentLoaded", at_initialise, false);
