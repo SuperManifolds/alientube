@@ -172,6 +172,10 @@
         "message": "Are you sure you want to delete this comment?",
         "description": "Message asking the user whether they really want to delete this post."
     },
+    "post_message_official": {
+        "message": "This thread has been marked as official by the video author",
+        "description": "Message explaining to the user that this reddit thread is official, that is promoted or endorsed by the author"
+    },
 
 
     "report_dialog_spam": {

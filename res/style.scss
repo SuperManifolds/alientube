@@ -134,6 +134,16 @@
             margin-top: 5px;
             margin-right: 10px;
         }
+
+        & .at_official {
+            border: solid 1px #579654;
+            color: #579654 !important;
+            margin-top: 8px;
+            padding: 1px 3px;
+            border-radius: 3px;
+            display: none;
+            font-size: x-small;
+        }
     }
 
 

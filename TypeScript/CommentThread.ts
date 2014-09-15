@@ -150,13 +150,20 @@ module AlienTube {
             googlePlusText.innerText = Main.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
-
+            /* Mark the post as preserved if applicable */
             if (this.postIsInPreservedMode) {
                 this.threadContainer.classList.add("preserved");
             } else {
                 if (this.commentSection.userIsSignedIn) {
                     new CommentField(this);
                 }
+            }
+
+            /* If this post is prioritised (official) mark it as such in the header */
+            if (this.threadInformation.official) {
+                var officialLabel = <HTMLSpanElement> this.threadContainer.querySelector(".at_official");
+                officialLabel.textContent = Main.localisationManager.get("post_message_official");
+                officialLabel.style.display = "inline-block";
             }
 
             /* Start iterating the top level comments in the comment section */

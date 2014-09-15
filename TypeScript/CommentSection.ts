@@ -113,6 +113,11 @@ module AlienTube {
                                 var mainContainer = this.set(tabContainer);
                                 mainContainer.appendChild(tabContainerTemplate.querySelector("#at_comments"));
 
+                                // If the selected post is prioritised, marked it as such
+                                if (this.threadCollection[0].id === preferredPost || this.threadCollection[0].subreddit === preferredSubreddit) {
+                                    this.threadCollection[0].official = true;
+                                }
+
                                 // Load the first tab.
                                 this.downloadThread(this.threadCollection[0]);
                             } else {
@@ -160,6 +165,8 @@ module AlienTube {
                 if (!Main.Preferences.get("rememberTabsOnViewChange")) {
                     this.storedTabCollection.length = 0;
                 }
+                responseObject[0].data.children[0].data.official = threadData.official;
+
                 new CommentThread(responseObject, this)
                 this.storedTabCollection.push(responseObject);
             }, null, loadingScreen);
