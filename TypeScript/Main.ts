@@ -33,7 +33,9 @@ module AlienTube {
 
             // Start a new comment section.
             this.currentVideoIdentifier = Main.getCurrentVideoId();
-            Main.commentSection = new CommentSection(this.currentVideoIdentifier);
+            if (Main.isYouTubeVideoPage) {
+                Main.commentSection = new CommentSection(this.currentVideoIdentifier);
+            }
         }
 
 		/**
@@ -46,7 +48,9 @@ module AlienTube {
 					var reportedVideoId = Main.getCurrentVideoId();
 					if (reportedVideoId !== this.currentVideoIdentifier) {
 						this.currentVideoIdentifier = reportedVideoId;
-						Main.commentSection = new CommentSection(this.currentVideoIdentifier);
+                        if (Main.isYouTubeVideoPage) {
+                            Main.commentSection = new CommentSection(this.currentVideoIdentifier);
+                        }
 					}
 				}
 			});
@@ -78,6 +82,13 @@ module AlienTube {
 		static isPreserved(epochTime : number) : Boolean {
 			return ((((new Date()).getTime() / 1000) - epochTime) >= 15552000);
 		}
+
+        /**
+            Determine whether the current url of the tab is a YouTube video page.
+        */
+        static isYouTubeVideoPage() : Boolean {
+            return (window.location.pathname === "watch");
+        }
 
 		/**
 		* Get the current browser that the extension is running as.
