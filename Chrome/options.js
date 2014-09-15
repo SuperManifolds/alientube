@@ -32,9 +32,9 @@ function initialise() {
     chrome.storage.sync.get(null, function (items) {
         hiddenPostsScoreThreshold.value     = items.hiddenPostsScoreThreshold || -4;
         hiddenCommentScoreThreshold.value   = items.hiddenCommentScoreThreshold || -4;
-        showGooglePlusWhenNoPosts.checked     = items.showGooglePlusWhenNoPosts === null ? items.showGooglePlusWhenNoPosts : true;
-        rememberTabsOnViewChange.checked      = items.rememberTabsOnViewChange === null ? items.rememberTabsOnViewChange : true;
-        displayGooglePlusByDefault.checked    = items.displayGooglePlusByDefault === null ? items.displayGooglePlusByDefault : false;
+        showGooglePlusWhenNoPosts.checked     = items.showGooglePlusWhenNoPosts !== null ? items.showGooglePlusWhenNoPosts : true;
+        rememberTabsOnViewChange.checked      = items.rememberTabsOnViewChange !== null ? items.rememberTabsOnViewChange : true;
+        displayGooglePlusByDefault.checked    = items.displayGooglePlusByDefault !== null ? items.displayGooglePlusByDefault : false;
     });
 }
 
