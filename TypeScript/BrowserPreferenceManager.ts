@@ -54,7 +54,7 @@ module AlienTube {
 
 
         get(key : string):any {
-            return this.preferences[key] || this.defaults[key];
+            return this.preferences[key] !== null ? this.preferences[key] : this.defaults[key];
         }
 
         set(key : string, value : any):void {
