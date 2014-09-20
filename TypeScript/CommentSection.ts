@@ -193,10 +193,15 @@ module AlienTube {
                 googlePlusContainer.style.display = "none";
             }
 
-            /* Check if Darl Mode is activated, and set AlienTube to dark mode */
+            /* Check if Dark Mode is activated, and set AlienTube to dark mode */
             var bodyBackgroundColor = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
             var bodyBackgroundColorArray = bodyBackgroundColor.substring(4, bodyBackgroundColor.length-1).replace(/ /g, '').split(',');
-            if (parseInt(bodyBackgroundColorArray[0], 10) < 100) {
+            var bodyBackgroundColorAverage = 0;
+            for (var i = 0; i < 3; i++) {
+                bodyBackgroundColorAverage = bodyBackgroundColorAverage + parseInt(bodyBackgroundColorArray[i], 10);
+            }
+            bodyBackgroundColorAverage = bodyBackgroundColorAverage / 3;
+            if (bodyBackgroundColorAverage < 100) {
                 document.body.classList.add("darkmode");
             }
 
