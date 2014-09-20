@@ -193,9 +193,10 @@ module AlienTube {
                 googlePlusContainer.style.display = "none";
             }
 
-            /* Check if Magic Actions Night Mode is activated, and set AlienTube to dark mode */
+            /* Check if Darl Mode is activated, and set AlienTube to dark mode */
             var bodyBackgroundColor = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
-            if (bodyBackgroundColor === "rgb(16, 16, 16)") {
+            var bodyBackgroundColorArray = bodyBackgroundColor.substring(4, bodyBackgroundColor.length-1).replace(/ /g, '').split(',');
+            if (parseInt(bodyBackgroundColorArray[0], 10) < 100) {
                 document.body.classList.add("darkmode");
             }
 
