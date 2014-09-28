@@ -216,6 +216,10 @@
         "message": "loading...",
         "description": "Generic loading message to indicate to the user that content is being downloaded from Reddit"
     },
+    "loading_generic_text": {
+        "message": "It's a thing in progress, respect the thing!",
+        "description": "Generic loading message, a joke Doctor Who reference."
+    },
     "loading_search_message": {
         "message": "Searching for Reddit posts..",
         "description": "Message indicating that AlienTube is currently searching for Reddit posts that have linked to this video"

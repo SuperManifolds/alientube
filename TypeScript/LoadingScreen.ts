@@ -28,17 +28,18 @@ module AlienTube {
 
         public updateProgress (state : LoadingState, alternativeText? : string) {
             this.currentProgressState = state;
+            var loadingText = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingtext");
+            var loadingHeader = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingheader");
 
             switch (this.currentProgressState) {
                 case LoadingState.LOADING:
                     this.loadingAttempts = 1;
-                    var loadingHeader = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingheader");
                     loadingHeader.textContent = alternativeText || Main.localisationManager.get("loading_generic_message");
+                    loadingText.textContent = Main.localisationManager.get("loading_generic_text") || "";
                     break;
 
                 case LoadingState.RETRY:
                     this.loadingAttempts++;
-                    var loadingText = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingtext");
                     loadingText.textContent = Main.localisationManager.get("loading_retry_message", [
                         this.loadingAttempts.toString(),
                         "3"
