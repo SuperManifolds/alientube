@@ -210,9 +210,8 @@ module AlienTube {
                 var redditText = <HTMLSpanElement> redditButton.querySelector("#at_reddittext");
                 redditText.innerText = Main.localisationManager.get("post_button_comments");
                 redditButton.addEventListener("click", this.onRedditClick, true);
-                googlePlusContainer.appendChild(redditButton);
+                googlePlusContainer.parentNode.insertBefore(redditButton, googlePlusContainer);
             }
-
 
             /* Add AlienTube contents*/
             redditContainer.appendChild(contents);

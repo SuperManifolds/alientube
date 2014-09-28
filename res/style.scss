@@ -752,10 +752,6 @@ a[href$="/spoiler"]::before {
     }
 }
 
-#watch-discussion {
-    position: relative !important;
-}
-
 #at_switchtogplus,
 #at_switchtoreddit {
     position: absolute;
@@ -791,8 +787,10 @@ a[href$="/spoiler"]::before {
 }
 
 #at_switchtoreddit {
-    right: 10px;
-    top: 10px;
+    position: static;
+    margin-top: 10px;
+    margin-right: 10px;
+    float: right;
 }
 
 body.darkmode {
