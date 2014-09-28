@@ -95,9 +95,9 @@ module AlienTube {
 		* @returns An AlienTube.Browser enum with the value of the Browser.
 		*/
         static getCurrentBrowser() : Browser {
-            if (chrome) return Browser.CHROME;
-            else if (self.on) return Browser.FIREFOX;
-            else if (safari) return Browser.SAFARI;
+            if (typeof(chrome) !== 'undefined') return Browser.CHROME;
+            else if (typeof(self.on) !== 'undefined') return Browser.FIREFOX;
+            else if (typeof(safari) !== 'undefined') return Browser.SAFARI;
             else {
                 throw "Invalid Browser";
             }
@@ -157,9 +157,44 @@ module AlienTube {
                 case Browser.CHROME:
                     return chrome.extension.getURL('res/' + path);
                 case Browser.FIREFOX:
-                    return self.options[path];
+                    return self.options.ressources[path];
                 default:
                     return null;
+            }
+        }
+
+        /**
+            Get the HTML templates for the extension
+        */
+        static getExtensionTemplates(callback : any) {
+            if (Main.getCurrentBrowser() === Browser.FIREFOX) {
+                var templateHTML = self.options.template;
+                var templateContainer = document.createElement('div');
+                templateContainer.id = "alientubeTemplate";
+                templateContainer.innerHTML = templateHTML;
+                document.body.appendChild(templateContainer);
+                 if (callback) {
+                    callback(templateContainer);
+                }
+            } else {
+                var templateLink = document.createElement("link");
+                templateLink.id = "alientubeTemplate";
+                templateLink.onload = () => {
+                    if (callback) {
+                        callback(templateLink.import);
+                    }
+                }
+                templateLink.setAttribute("rel", "import");
+                templateLink.setAttribute("href", Main.getExtensionRessourcePath("templates.html"));
+                document.head[0].appendChild(templateLink);
+            }
+        }
+
+        static getExtensionTemplateItem(id : string, template) {
+            if (Main.getCurrentBrowser() === Browser.FIREFOX) {
+                return template.querySelector("#" + id).content.cloneNode(true);
+            } else {
+                return template.getElementById(id).content.cloneNode(true);
             }
         }
 

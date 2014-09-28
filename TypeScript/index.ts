@@ -23,7 +23,6 @@
 /// <reference path="typings/chrome/chrome.d.ts" />
 /// <reference path="typings/firefox/firefox.d.ts" />
 /// <reference path="typings/safari/safari.d.ts" />
-
 function at_initialise () {
     if (window.top === window) {
         if (window.location.host === "alientube.co") {

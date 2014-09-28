@@ -29,7 +29,7 @@ interface Apps {
 interface Window {
     on(id:string, callback:any): void;
 	postMessage(object): void;
-    options: Array<any>;
+    options: any;
 }
 
 interface DOMRequest<T> {

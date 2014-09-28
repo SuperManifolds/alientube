@@ -28,15 +28,13 @@ module AlienTube {
                 if (url.indexOf("api.reddit.com") !== -1) {
                     xhr.setRequestHeader("AlienTube", Main.localisationManager.get("api_header_message"));
                 }
-                xhr.onreadystatechange = () => {
-                    if (xhr.readyState == XMLHttpRequest.DONE) {
-                        if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
-                            if (callback) {
-                                callback(xhr.responseText);
-                            }
-                        } else {
-                            if (errorHandler) errorHandler(xhr);
+                xhr.onload = () => {
+                    if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
+                        if (callback) {
+                            callback(xhr.responseText);
                         }
+                    } else {
+                        if (errorHandler) errorHandler(xhr);
                     }
                 }
                 if (type == RequestType.POST) {

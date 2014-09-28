@@ -5,57 +5,43 @@
   "description": "Reddit comments, in your YouTube!",
   "author": "Delexious",
   "license": "BSD 3",
-  "version": "1.1",
+  "version": "2.0.8",
 
     "permissions": {
-        "cross-domain-content": ["http://www.reddit.com/", "https://pay.reddit.com/"]
+        "cross-domain-content": ["https://api.reddit.com/"]
     },
 
     "preferences": [{
-        "name": "hiddenPostsScoreThreshold",
-        "title": "Don't show me submissions with a score less than",
+        "name": "hiddenPostScoreThreshold",
+        "title": "Do not display posts with a score less than",
         "description": "",
-        "type": "string",
-        "value": "-5"
+        "type": "integer",
+        "value": -5
     },
     {
         "name": "hiddenCommentScoreThreshold",
-        "title": "Don't show me comments with a score less than",
+        "title": "Do not display comments with a score less than",
         "description": "",
-        "type": "string",
-        "value": "-4"
+        "type": "integer",
+        "value": -4
     },
     {
-        "name": "featherDescriptionPlacement",
-        "title": "Collapse comment box into description in YouTube Feather",
-        "description": "",
-        "type": "bool",
-        "value": false
-    },
-    {
-        "name": "disablePostHeader",
-        "title": "Hide the post header",
+        "name": "showGooglePlusWhenNoPosts",
+        "title": "Display Google+ comments if no Reddit comments are found",
         "description": "",
         "type": "bool",
-        "value": false
+        "value": true
     },
     {
-        "name": "disableTabs",
-        "title": "Hide the tab bar",
+        "name": "rememberTabsOnViewChange",
+        "title": "Remember the contents of tabs when you switch from them",
         "description": "",
         "type": "bool",
-        "value": false
+        "value": true
     },
     {
-        "name": "minimiseCommentBox",
-        "title": "Minimise the comment box",
-        "description": "",
-        "type": "bool",
-        "value": false
-    },
-    {
-        "name": "dontShowGplus",
-        "title": "Do not display the Google Plus comment section when no results are found.",
+        "name": "displayGooglePlusByDefault",
+        "title": "Show the Google+ comments by default",
         "description": "",
         "type": "bool",
         "value": false

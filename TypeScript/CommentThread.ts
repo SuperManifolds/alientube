@@ -28,7 +28,7 @@ module AlienTube {
             Main.Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
             this.postIsInPreservedMode = Main.isPreserved(this.threadInformation.created_utc);
 
-            var template = this.commentSection.template.getElementById("threadcontainer").content.cloneNode(true);
+            var template = Main.getExtensionTemplateItem("threadcontainer", this.commentSection.template);
             this.threadContainer = template.querySelector("#at_comments");
 
             if (threadData[0].data.modhash.length > 0) {

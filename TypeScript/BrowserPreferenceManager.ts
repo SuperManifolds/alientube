@@ -32,9 +32,7 @@ module AlienTube {
                     break;
 
                 case Browser.FIREFOX:
-                    self.on("message", (msg) => {
-                        this.preferences = msg.preferences.prefs;
-                    });
+                    this.preferences = self.options.preferences;
                     break;
 
                 case Browser.SAFARI:

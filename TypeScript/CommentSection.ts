@@ -24,8 +24,8 @@ module AlienTube {
                 // Load the html5 template file from disk and wait for it to load.
                 var templateLink = document.createElement("link");
                 templateLink.id = "alientubeTemplate";
-                templateLink.onload = () => {
-                    this.template = templateLink.import;
+                Main.getExtensionTemplates((templateContainer) => {
+                    this.template = templateContainer;
 
                     // Set Loading Screen
                     var loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Main.localisationManager.get("loading_search_message"));
@@ -105,7 +105,7 @@ module AlienTube {
                                 }
 
                                 // Generate tabs.
-                                var tabContainerTemplate = this.template.getElementById("tabcontainer").content.cloneNode(true);
+                                var tabContainerTemplate = Main.getExtensionTemplateItem("tabcontainer", this.template);
                                 var tabContainer = tabContainerTemplate.querySelector("#at_tabcontainer");
                                 this.insertTabsIntoDocument(tabContainer, 0);
                                 window.addEventListener("resize", this.updateTabsToFitToBoundingContainer.bind(this), false);
@@ -125,10 +125,7 @@ module AlienTube {
                             }
                         }
                     }, null, loadingScreen);
-                }
-                templateLink.setAttribute("rel", "import");
-                templateLink.setAttribute("href", Main.getExtensionRessourcePath("templates.html"));
-                document.head.appendChild(templateLink);
+                });
             }
         }
 
@@ -208,7 +205,7 @@ module AlienTube {
             /* Add the "switch to Reddit" button in the google+ comment section */
             var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
             if (!redditButton) {
-                var redditButtonTemplate = this.template.getElementById("switchtoreddit").content.cloneNode(true);
+                var redditButtonTemplate = Main.getExtensionTemplateItem("switchtoreddit", this.template);
                 redditButton = <HTMLDivElement> redditButtonTemplate.querySelector("#at_switchtoreddit");
                 var redditText = <HTMLSpanElement> redditButton.querySelector("#at_reddittext");
                 redditText.innerText = Main.localisationManager.get("post_button_comments");
@@ -335,7 +332,7 @@ module AlienTube {
         * Set the comment section to the "No Results" page.
         */
         returnNoResults () {
-            var template = this.template.getElementById("noposts").content.cloneNode(true);
+            var template = Main.getExtensionTemplateItem("noposts", this.template);
             var message = template.querySelector(".single_line");
             message.innerText = Main.localisationManager.get("post_label_noresults");
             this.set(template);
