@@ -186,7 +186,7 @@ module AlienTube {
                 }
                 templateLink.setAttribute("rel", "import");
                 templateLink.setAttribute("href", Main.getExtensionRessourcePath("templates.html"));
-                document.head[0].appendChild(templateLink);
+                document.head.appendChild(templateLink);
             }
         }
 
