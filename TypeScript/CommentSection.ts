@@ -334,16 +334,24 @@ module AlienTube {
             var template = Main.getExtensionTemplateItem("noposts", this.template);
             var message = template.querySelector(".single_line");
             message.innerText = Main.localisationManager.get("post_label_noresults");
+
+            /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
+            var googlePlusButton = template.querySelector("#at_switchtogplus");
+            var googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
+            googlePlusText.innerText = Main.localisationManager.get("post_button_comments");
+            googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
+
             this.set(template);
 
-            var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
-            if (redditButton) {
-                redditButton.classList.add("noresults");
-                document.getElementById("at_reddittext").innerText = Main.localisationManager.get("post_label_noresults");
-            }
             if (Main.Preferences.get("showGooglePlusWhenNoPosts")) {
                 document.getElementById("watch-discussion").style.display = "block";
                 document.getElementById("alientube").style.display = "none";
+
+                var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
+                if (redditButton) {
+                    redditButton.classList.add("noresults");
+                    document.getElementById("at_reddittext").innerText = Main.localisationManager.get("post_label_noresults");
+                }
             }
         }
 
@@ -352,6 +360,13 @@ module AlienTube {
             googlePlusContainer.style.display = "none";
             var alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "block";
+        }
+
+        onGooglePlusClick(eventObject : Event) {
+            var alienTubeContainer = document.getElementById("alientube");
+            alienTubeContainer.style.display = "none";
+            var googlePlusContainer = document.getElementById("watch-discussion");
+            googlePlusContainer.style.display = "block";
         }
 
         /**
