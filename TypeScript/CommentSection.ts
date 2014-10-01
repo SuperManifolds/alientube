@@ -184,11 +184,6 @@ module AlienTube {
             }
 
             var googlePlusContainer = document.getElementById("watch-discussion");
-            if (Main.Preferences.get("displayGooglePlusByDefault")) {
-                redditContainer.style.display="none"
-            } else {
-                googlePlusContainer.style.display = "none";
-            }
 
             /* Check if Dark Mode is activated, and set AlienTube to dark mode */
             var bodyBackgroundColor = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
@@ -211,6 +206,13 @@ module AlienTube {
                 redditText.innerText = Main.localisationManager.get("post_button_comments");
                 redditButton.addEventListener("click", this.onRedditClick, true);
                 googlePlusContainer.parentNode.insertBefore(redditButton, googlePlusContainer);
+            }
+
+            if (Main.Preferences.get("displayGooglePlusByDefault")) {
+                redditContainer.style.display="none"
+                redditButton.style.display = "block";
+            } else {
+                googlePlusContainer.style.display = "none";
             }
 
             /* Add AlienTube contents*/
@@ -360,6 +362,8 @@ module AlienTube {
             googlePlusContainer.style.display = "none";
             var alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "block";
+            var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
+            redditButton.style.display = "none";
         }
 
         onGooglePlusClick(eventObject : Event) {
@@ -367,6 +371,8 @@ module AlienTube {
             alienTubeContainer.style.display = "none";
             var googlePlusContainer = document.getElementById("watch-discussion");
             googlePlusContainer.style.display = "block";
+            var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
+            redditButton.style.display = "block";
         }
 
         /**

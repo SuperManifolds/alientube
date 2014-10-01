@@ -220,6 +220,8 @@ module AlienTube {
             alienTubeContainer.style.display = "none";
             var googlePlusContainer = document.getElementById("watch-discussion");
             googlePlusContainer.style.display = "block";
+            var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
+            redditButton.style.display = "block";
         }
 
         onUpvoteControllerClick(eventObject : Event) {

@@ -788,6 +788,7 @@ a[href$="/spoiler"]::before {
 }
 
 #at_switchtoreddit {
+    display: none;
     position: static;
     margin-top: 10px;
     margin-right: 10px;
