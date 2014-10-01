@@ -57,7 +57,7 @@
         "message": "segundo",
         "description": "Singular form of the time unit 'Second' for timestamps"
     },
-    "timstamp_format_second_plural": {
+    "timestamp_format_second_plural": {
         "message": "segundos",
         "description": "Plural form of the time unit 'Second' for timestamps."
     },
