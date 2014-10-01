@@ -81,6 +81,7 @@ module AlienTube {
 
                     case 503:
                     case 504:
+                    case 520:
                         new ErrorScreen(Main.commentSection, ErrorState.OVERLOAD);
                         break;
 
