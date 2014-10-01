@@ -86,7 +86,7 @@ module AlienTube {
 
             if (this.edit) {
                 /* Send the edit comment request to reddit */
-                new RedditCommentRequest(thing_id, inputField.value, (responseText) => {
+                new RedditEditCommentRequest(thing_id, inputField.value, (responseText) => {
                     this.parentClass.commentObject.body = inputField.value;
                     var editedCommentBody = this.parentClass.representedHTMLElement.querySelector(".at_commentcontent");
                     editedCommentBody.innerHTML = SnuOwnd.getParser().render(inputField.value);
