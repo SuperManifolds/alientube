@@ -298,7 +298,7 @@
     },
 
 
-    "options_label_hiddenPostsScoreThreshold": {
+    "options_label_hiddenPostScoreThreshold": {
         "message": "Ne plus afficher discussions avec moins de points que:",
         "description": "If the score for this Reddit post is less than the input, it will not be shown in the list"
     },

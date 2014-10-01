@@ -76,6 +76,7 @@ module AlienTube {
                                 var sortedResultCollection = {};
                                 finalResultCollection.forEach(function(thread) {
                                     if (getExcludedSubreddits.indexOf(thread.subreddit.toLowerCase()) !== -1) return;
+                                    if (thread.score < Main.Preferences.get("hiddenPostScoreThreshold")) return;
 
                                     if (!sortedResultCollection.hasOwnProperty(thread.subreddit)) sortedResultCollection[thread.subreddit] = [];
                                     sortedResultCollection[thread.subreddit].push(thread);

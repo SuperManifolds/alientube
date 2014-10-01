@@ -299,7 +299,7 @@
     },
 
 
-    "options_label_hiddenPostsScoreThreshold": {
+    "options_label_hiddenPostScoreThreshold": {
         "message": "No mostrar enlace si menos de:",
         "description": "If the score for this Reddit post is less than the input, it will not be shown in the list"
     },

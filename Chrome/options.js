@@ -3,14 +3,14 @@
 // Saves options to localStorage.
 
 var preferenceKeys = [
-    "hiddenPostsScoreThreshold",
+    "hiddenPostScoreThreshold",
     "hiddenCommentScoreThreshold",
     "showGooglePlusWhenNoPosts",
     "rememberTabsOnViewChange",
     "displayGooglePlusByDefault"
 ];
 
-var hiddenPostsScoreThreshold = document.getElementById("hiddenPostsScoreThreshold");
+var hiddenPostsScoreThreshold = document.getElementById("hiddenPostScoreThreshold");
 var hiddenCommentScoreThreshold = document.getElementById("hiddenCommentScoreThreshold");
 var showGooglePlusWhenNoPosts = document.getElementById("showGooglePlusWhenNoPosts");
 var rememberTabsOnViewChange = document.getElementById("rememberTabsOnViewChange");
@@ -30,7 +30,7 @@ function initialise() {
     }
 
     chrome.storage.sync.get(null, function (items) {
-        hiddenPostsScoreThreshold.value     = items.hiddenPostsScoreThreshold || -4;
+        hiddenPostsScoreThreshold.value     = items.hiddenPostScoreThreshold || -4;
         hiddenCommentScoreThreshold.value   = items.hiddenCommentScoreThreshold || -4;
         showGooglePlusWhenNoPosts.checked     = items.showGooglePlusWhenNoPosts !== null ? items.showGooglePlusWhenNoPosts : true;
         rememberTabsOnViewChange.checked      = items.rememberTabsOnViewChange !== null ? items.rememberTabsOnViewChange : true;
@@ -49,14 +49,14 @@ function getLocalisationText(key, placeholders) {
 
 //Save options
 function save_options() {
-    if (!hiddenPostsScoreThreshold.value.match(/[0-9]+/)) {
-        hiddenPostsScoreThreshold.value = -4;
+    if (!hiddenPostScoreThreshold.value.match(/[0-9]+/)) {
+        hiddenPostScoreThreshold.value = -4;
     }
     if (!hiddenCommentScoreThreshold.value.match(/[0-9]+/)) {
         hiddenCommentScoreThreshold.value = -4;
     }
     chrome.storage.sync.set({
-        'hiddenPostsScoreThreshold' :  hiddenPostsScoreThreshold.value,
+        'hiddenPostScoreThreshold' :  hiddenPostScoreThreshold.value,
         'hiddenCommentScoreThreshold': hiddenCommentScoreThreshold.value,
         'showGooglePlusWhenNoPosts': showGooglePlusWhenNoPosts.checked,
         'rememberTabsOnViewChange': rememberTabsOnViewChange.checked,
