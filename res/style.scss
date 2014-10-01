@@ -291,7 +291,7 @@
 
         &.hidden {
             padding-top: 0;
-            padding-bottom: 10px;
+            padding-bottom: 10px !important;
 
             & .at_author {
                 color: gray !important;
