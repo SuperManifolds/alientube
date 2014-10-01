@@ -560,6 +560,10 @@
     }
 }
 
+.at_loadmore {
+    padding-bottom: 10px !important;
+}
+
 @-moz-document url-prefix() {
     .at_tab {
         padding-left: 8px;
