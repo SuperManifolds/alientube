@@ -37,6 +37,11 @@ module AlienTube {
                 }
             }.bind(this), false);
 
+            /* Hide comments with a score less than the threshold set by the user  */
+            if (this.commentObject.score < Main.Preferences.get("hiddenCommentScoreThreshold")) {
+                this.representedHTMLElement.classList.add("hidden");
+            }
+
             /* Set the link and name of author, as well as whether they are the OP or not. */
             var author = this.representedHTMLElement.querySelector(".at_author");
             author.appendChild(document.createTextNode(this.commentObject.author));
