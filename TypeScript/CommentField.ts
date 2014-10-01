@@ -90,6 +90,8 @@ module AlienTube {
                     this.parentClass.commentObject.body = inputField.value;
                     var editedCommentBody = this.parentClass.representedHTMLElement.querySelector(".at_commentcontent");
                     editedCommentBody.innerHTML = SnuOwnd.getParser().render(inputField.value);
+                    this.parentClass.representedHTMLElement.classList.add("edited");
+
 
                     /* The comment box is no longer needed, remove it and clear outselves out of memory */
                     this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
