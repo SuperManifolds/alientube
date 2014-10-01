@@ -7,13 +7,11 @@ A Chrome, Firefox and Safari extension that embeds Reddit comments, in your YouT
 Instructions
 -------------
 __OS X/Linux:__  
-Run chmod +x setup.sh in terminal to give the file executable rights.  
-Run setup.sh to create hardlinks for files commonly shared between browser extensions.  
+Run _chmod +x make.sh_ in the shell  to give the file executable rights.  
+Run _make.sh --init_ to copy compile resources and copy them to the inividual browser extensions.
 
 __Windows:__  
-Run setup.cmd to create symlinks for files commonly shared between browser extensions.  
+TODO
 
 
-Running compile.py will automatically generate a minified production version for release.
-
-![Image of the extension in action](http://i.imgur.com/jsdPUIZ.png)
+![Image of the extension in action](https://lh5.googleusercontent.com/PdAptwghLGNmtw_N93qkotTDMjYNbc-2vXadlWBSBr0QNLXOQ7__Ndkn9icmkDDgUkXw50fLOXs=s640-h400-e365-rw)
