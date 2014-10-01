@@ -24,7 +24,6 @@ module AlienTube {
             this.threadInformation = threadData[0].data.children[0].data;
             this.commentData = threadData[1].data.children;
 
-            var previousUserIdentifier = Main.Preferences.get("redditUserIdentifierHash");
             Main.Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
             this.postIsInPreservedMode = Main.isPreserved(this.threadInformation.created_utc);
 
@@ -33,7 +32,7 @@ module AlienTube {
 
             if (threadData[0].data.modhash.length > 0) {
                 this.commentSection.userIsSignedIn = true;
-                if (previousUserIdentifier !== threadData[0].data.modhash) {
+                if (!threadData[0].data.modhash) {
                     new RedditUsernameRequest();
                 }
             } else {
