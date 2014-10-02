@@ -49,7 +49,7 @@ module AlienTube {
 
             /* Set the username of the author and link to them */
             var username = this.threadContainer.querySelector(".at_author");
-            username.appendChild(document.createTextNode(this.threadInformation.author));
+            username.textContent = this.threadInformation.author;
             username.setAttribute("href", "http://www.reddit.com/u/" + this.threadInformation.author);
             username.setAttribute("data-username", this.threadInformation.author);
             if (this.threadInformation.distinguished === "moderator") {
@@ -59,7 +59,7 @@ module AlienTube {
             /* Add flair to the user */
             var flair = <HTMLSpanElement> this.threadContainer.querySelector(".at_flair");
             if (this.threadInformation.author_flair_text) {
-                flair.appendChild(document.createTextNode(this.threadInformation.author_flair_text));
+                flair.textContent = this.threadInformation.author_flair_text;
             } else {
                 flair.style.display = "none";
             }
@@ -70,7 +70,7 @@ module AlienTube {
                 var nsfwElement = document.createElement("acronym");
                 nsfwElement.classList.add("nsfw");
                 nsfwElement.setAttribute("title", Main.localisationManager.get("post_badge_NSFW_message"));
-                nsfwElement.appendChild(document.createTextNode(Main.localisationManager.get("post_badge_NSFW")));
+                nsfwElement.textContent = Main.localisationManager.get("post_badge_NSFW");
                 optionsElement.insertBefore(nsfwElement, optionsElement.firstChild);
             }
 
@@ -82,25 +82,25 @@ module AlienTube {
 
             /* Set the the thread posted time */
             var timestamp = this.threadContainer.querySelector(".at_timestamp");
-            timestamp.appendChild(document.createTextNode(Main.getHumanReadableTimestamp(this.threadInformation.created_utc)));
+            timestamp.textContent = Main.getHumanReadableTimestamp(this.threadInformation.created_utc);
             timestamp.setAttribute("timestamp", new Date(this.threadInformation.created_utc).toISOString());
 
             /* Set the localised text for "by {username}" */
             var submittedByUsernameText = this.threadContainer.querySelector(".templateSubmittedByUsernameText");
-            submittedByUsernameText.appendChild(document.createTextNode(Main.localisationManager.get("post_submitted_preposition")));
+            submittedByUsernameText.textContent = Main.localisationManager.get("post_submitted_preposition");
 
             /* Set the button text and the event handler for the "comment" button */
             var openNewCommentBox = this.threadContainer.querySelector(".commentTo");
-            openNewCommentBox.appendChild(document.createTextNode(Main.localisationManager.get("post_button_comment")));
+            openNewCommentBox.textContent = Main.localisationManager.get("post_button_comment");
             openNewCommentBox.addEventListener("click", this.onCommentButtonClick.bind(this), false);
 
             /* Set the button text and the event handler for the "save" button */
             var saveItemToRedditList = this.threadContainer.querySelector(".save");
             if (this.threadInformation.saved) {
-                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("post_button_unsave")));
+                saveItemToRedditList.textContent = Main.localisationManager.get("post_button_unsave");
                 saveItemToRedditList.setAttribute("saved", "true");
             } else {
-                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("post_button_save")));
+                saveItemToRedditList.textContent = Main.localisationManager.get("post_button_save");
             }
             saveItemToRedditList.addEventListener("click", this.onSaveButtonClick.bind(this), false);
 
@@ -115,22 +115,22 @@ module AlienTube {
                     }
                 });
             }, false);
-            refreshCommentThread.appendChild(document.createTextNode(Main.localisationManager.get("post_button_refresh")));
+            refreshCommentThread.textContent = Main.localisationManager.get("post_button_refresh");
 
             /* Set the button text and the link for the "give gold" button */
             var giveGoldToUser = this.threadContainer.querySelector(".giveGold");
             giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.threadInformation.name);
-            giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("post_button_gold")));
+            giveGoldToUser.textContent = Main.localisationManager.get("post_button_gold");
 
             /* Set the button text and the event handler for the "report post" button */
             var reportToAdministrators = this.threadContainer.querySelector(".report");
-            reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("post_button_report")));
+            reportToAdministrators.textContent = Main.localisationManager.get("post_button_report");
             reportToAdministrators.addEventListener("click", this.onReportButtonClicked.bind(this), false);
 
             /* Set the state of the voting buttons */
             var voteController = <HTMLDivElement> this.threadContainer.querySelector(".vote");
             var voteButtonScoreCountElement = voteController.querySelector(".score");
-            voteButtonScoreCountElement.appendChild(document.createTextNode(this.threadInformation.score));
+            voteButtonScoreCountElement.textContent = this.threadInformation.score;
 
             var upvoteController = voteController.querySelector(".arrow.up");
             var downvoteController = voteController.querySelector(".arrow.down");
@@ -146,7 +146,7 @@ module AlienTube {
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
             var googlePlusButton = this.threadContainer.querySelector("#at_switchtogplus");
             var googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
-            googlePlusText.innerText = Main.localisationManager.get("post_button_comments");
+            googlePlusText.textContent = Main.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
             /* Mark the post as preserved if applicable */
@@ -200,12 +200,10 @@ module AlienTube {
             new RedditSaveRequest(this.threadInformation.name, savedType, () => {
                 if (savedType === SaveType.SAVE) {
                     saveButton.setAttribute("saved", "true");
-                    saveButton.removeChild(saveButton.firstChild);
-                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("post_button_unsave")));
+                    saveButton.textContent = Main.localisationManager.get("post_button_unsave");
                 } else {
                     saveButton.removeAttribute("saved");
-                    saveButton.removeChild(saveButton.firstChild);
-                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("post_button_save")));
+                    saveButton.textContent = Main.localisationManager.get("post_button_save");
                 }
             });
         }
@@ -233,7 +231,7 @@ module AlienTube {
                 voteController.classList.remove("liked");
                 this.threadInformation.likes = null;
                 this.threadInformation.score = this.threadInformation.score - 1;
-                scoreValue.innerText = this.threadInformation.score;
+                scoreValue.textContent = this.threadInformation.score;
 
                 new RedditVoteRequest(this.threadInformation.name, VoteType.NONE);
             } else {
@@ -247,7 +245,7 @@ module AlienTube {
                 }
                 voteController.classList.add("liked");
                 this.threadInformation.likes = true;
-                scoreValue.innerText = this.threadInformation.score;
+                scoreValue.textContent = this.threadInformation.score;
 
                 new RedditVoteRequest(this.threadInformation.name, VoteType.UPVOTE);
             }
@@ -263,7 +261,7 @@ module AlienTube {
                 voteController.classList.remove("disliked");
                 this.threadInformation.likes = null;
                 this.threadInformation.score = this.threadInformation.score + 1;
-                scoreValue.innerText = this.threadInformation.score;
+                scoreValue.textContent = this.threadInformation.score;
 
                 new RedditVoteRequest(this.threadInformation.name, VoteType.NONE);
             } else {
@@ -277,7 +275,7 @@ module AlienTube {
                 }
                 voteController.classList.add("disliked");
                 this.threadInformation.likes = false;
-                scoreValue.innerText = this.threadInformation.score;
+                scoreValue.textContent = this.threadInformation.score;
 
                 new RedditVoteRequest(this.threadInformation.name, VoteType.DOWNVOTE);
             }

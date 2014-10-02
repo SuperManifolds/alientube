@@ -204,7 +204,7 @@ module AlienTube {
                 var redditButtonTemplate = Main.getExtensionTemplateItem("switchtoreddit", this.template);
                 redditButton = <HTMLDivElement> redditButtonTemplate.querySelector("#at_switchtoreddit");
                 var redditText = <HTMLSpanElement> redditButton.querySelector("#at_reddittext");
-                redditText.innerText = Main.localisationManager.get("post_button_comments");
+                redditText.textContent = Main.localisationManager.get("post_button_comments");
                 redditButton.addEventListener("click", this.onRedditClick, true);
                 googlePlusContainer.parentNode.insertBefore(redditButton, googlePlusContainer);
             }
@@ -336,12 +336,12 @@ module AlienTube {
         returnNoResults () {
             var template = Main.getExtensionTemplateItem("noposts", this.template);
             var message = template.querySelector(".single_line");
-            message.innerText = Main.localisationManager.get("post_label_noresults");
+            message.textContent = Main.localisationManager.get("post_label_noresults");
 
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
             var googlePlusButton = template.querySelector("#at_switchtogplus");
             var googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
-            googlePlusText.innerText = Main.localisationManager.get("post_button_comments");
+            googlePlusText.textContent = Main.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
             this.set(template);
@@ -353,7 +353,7 @@ module AlienTube {
                 var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
                 if (redditButton) {
                     redditButton.classList.add("noresults");
-                    document.getElementById("at_reddittext").innerText = Main.localisationManager.get("post_label_noresults");
+                    document.getElementById("at_reddittext").textContent = Main.localisationManager.get("post_label_noresults");
                 }
             }
         }

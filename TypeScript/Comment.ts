@@ -44,7 +44,7 @@ module AlienTube {
 
             /* Set the link and name of author, as well as whether they are the OP or not. */
             var author = this.representedHTMLElement.querySelector(".at_author");
-            author.appendChild(document.createTextNode(this.commentObject.author));
+            author.textContent = this.commentObject.author;
             author.setAttribute("href", "http://reddit.com/u/" + this.commentObject.author);
             author.setAttribute("data-username", this.commentObject.author);
             if (commentData.author === commentThread.threadInformation.author) {
@@ -60,7 +60,7 @@ module AlienTube {
             /* Add flair to the user */
             var flair = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_flair");
             if (this.commentObject.author_flair_text) {
-                flair.appendChild(document.createTextNode(this.commentObject.author_flair_text));
+                flair.textContent = this.commentObject.author_flair_text;
             } else {
                 flair.style.display = "none";
             }
@@ -68,11 +68,11 @@ module AlienTube {
             /* Set the score of the comment next to the user tag */
             var score = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_score");
             var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
-            score.appendChild(document.createTextNode(this.commentObject.score + scorePointsText));
+            score.textContent = (this.commentObject.score + scorePointsText);
 
             /* Set the timestamp of the comment */
             var timestamp = this.representedHTMLElement.querySelector(".at_timestamp");
-            timestamp.appendChild(document.createTextNode(Main.getHumanReadableTimestamp(this.commentObject.created_utc)));
+            timestamp.textContent = Main.getHumanReadableTimestamp(this.commentObject.created_utc);
             timestamp.setAttribute("timestamp", new Date(this.commentObject.created_utc).toISOString());
 
             /* Render the markdown and set the actual comement messsage of the comment */
@@ -86,38 +86,38 @@ module AlienTube {
 
             /* Set the button text and event handler for the reply button. */
             var replyToComment = this.representedHTMLElement.querySelector(".at_reply");
-            replyToComment.appendChild(document.createTextNode(Main.localisationManager.get("post_button_reply")));
+            replyToComment.textContent = Main.localisationManager.get("post_button_reply");
             replyToComment.addEventListener("click", this.onCommentButtonClick.bind(this), false);
 
             /* Set the button text and link for the "permalink" button */
             var permalinkElement = this.representedHTMLElement.querySelector(".at_permalink");
-            permalinkElement.appendChild(document.createTextNode(Main.localisationManager.get("post_button_permalink")));
+            permalinkElement.textContent = Main.localisationManager.get("post_button_permalink");
             permalinkElement.setAttribute("href", "http://www.reddit.com" + commentThread.threadInformation.permalink + this.commentObject.id);
 
             /* Set the button text and link for the "parent" link button */
             var parentLinkElement = this.representedHTMLElement.querySelector(".at_parentlink");
-            parentLinkElement.appendChild(document.createTextNode(Main.localisationManager.get("post_button_parent")));
+            permalinkElement.textContent = Main.localisationManager.get("post_button_parent");
             parentLinkElement.setAttribute("href", "http://www.reddit.com" + commentThread.threadInformation.permalink + "#" + this.commentObject.parent_id.substring(3));
 
             /* Set the button text and the event handler for the "show source" button */
             var displaySourceForComment = this.representedHTMLElement.querySelector(".at_displaysource");
-            displaySourceForComment.appendChild(document.createTextNode(Main.localisationManager.get("post_button_source")));
+            displaySourceForComment.textContent = Main.localisationManager.get("post_button_source");
             displaySourceForComment.addEventListener("click", this.onSourceButtonClick.bind(this), false);
 
             /* Set the button text and the event handler for the "save comment" button */
             var saveItemToRedditList = this.representedHTMLElement.querySelector(".save");
             if (this.commentObject.saved) {
-                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("post_button_unsave")));
+                saveItemToRedditList.textContent = Main.localisationManager.get("post_button_unsave");
                 saveItemToRedditList.setAttribute("saved", "true");
             } else {
-                saveItemToRedditList.appendChild(document.createTextNode(Main.localisationManager.get("post_button_save")));
+                saveItemToRedditList.textContent = Main.localisationManager.get("post_button_save");
             }
             saveItemToRedditList.addEventListener("click", this.onSaveButtonClick.bind(this), false);
 
             /* Set the button text and the link for the "give gold" button */
             var giveGoldToUser = this.representedHTMLElement.querySelector(".giveGold");
             giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.commentObject.name);
-            giveGoldToUser.appendChild(document.createTextNode(Main.localisationManager.get("post_button_gold")));
+            giveGoldToUser.textContent = Main.localisationManager.get("post_button_gold");
 
             /* Add the little astreix on the comment if it has been edited at some point */
             if (this.commentObject.edited) {
@@ -132,11 +132,11 @@ module AlienTube {
                 reportToAdministrators.parentNode.removeChild(reportToAdministrators);
 
                 /* Set the button text and the event handler for the "edit post" button */
-                editPost.appendChild(document.createTextNode(Main.localisationManager.get("post_button_edit")));
+                editPost.textContent = Main.localisationManager.get("post_button_edit");
                 editPost.addEventListener("click", this.onEditPostButtonClick.bind(this), false);
 
                 /* Set the button text and the event handler for the "delete post" button */
-                deletePost.appendChild(document.createTextNode(Main.localisationManager.get("post_button_delete")));
+                deletePost.textContent = Main.localisationManager.get("post_button_delete");
                 deletePost.addEventListener("click", this.onDeletePostButtonClick.bind(this), false);
             } else {
                 /* Delete and edit buttons does not make sense if the post is not ours, so let's get rid of them. */
@@ -144,7 +144,7 @@ module AlienTube {
                 deletePost.parentNode.removeChild(deletePost);
 
                 /* Set the button text and the event handler for the "report comment" button */
-                reportToAdministrators.appendChild(document.createTextNode(Main.localisationManager.get("post_button_report")));
+                reportToAdministrators.textContent = Main.localisationManager.get("post_button_report");
                 reportToAdministrators.addEventListener("click", this.onReportButtonClicked.bind(this), false);
             }
 
@@ -184,12 +184,10 @@ module AlienTube {
             new RedditSaveRequest(this.commentObject.name, savedType, () => {
                 if (savedType === SaveType.SAVE) {
                     saveButton.setAttribute("saved", "true");
-                    saveButton.removeChild(saveButton.firstChild);
-                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("post_button_unsave")));
+                    saveButton.textContent = Main.localisationManager.get("post_button_unsave");
                 } else {
                     saveButton.removeAttribute("saved");
-                    saveButton.removeChild(saveButton.firstChild);
-                    saveButton.appendChild(document.createTextNode(Main.localisationManager.get("post_button_save")));
+                    saveButton.textContent = Main.localisationManager.get("post_button_save");
                 }
             });
         }
@@ -210,7 +208,7 @@ module AlienTube {
                 this.commentObject.likes = null;
                 this.commentObject.score = this.commentObject.score - 1;
                 var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
-                scoreValue.innerText = this.commentObject.score + scorePointsText;
+                scoreValue.textContent = this.commentObject.score + scorePointsText;
 
                 new RedditVoteRequest(this.commentObject.name, VoteType.NONE);
             } else {
@@ -225,7 +223,7 @@ module AlienTube {
                 voteController.classList.add("liked");
                 this.commentObject.likes = true;
                 var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
-                scoreValue.innerText = this.commentObject.score + scorePointsText;
+                scoreValue.textContent = this.commentObject.score + scorePointsText;
 
                 new RedditVoteRequest(this.commentObject.name, VoteType.UPVOTE);
             }
@@ -243,7 +241,7 @@ module AlienTube {
                 this.commentObject.likes = null;
                 this.commentObject.score = this.commentObject.score + 1;
                 var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
-                scoreValue.innerText = this.commentObject.score + scorePointsText;
+                scoreValue.textContent = this.commentObject.score + scorePointsText;
 
                 new RedditVoteRequest(this.commentObject.name, VoteType.NONE);
             } else {
@@ -258,7 +256,7 @@ module AlienTube {
                 voteController.classList.add("disliked");
                 this.commentObject.likes = false;
                 var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
-                scoreValue.innerText = this.commentObject.score + scorePointsText;
+                scoreValue.textContent = this.commentObject.score + scorePointsText;
 
                 new RedditVoteRequest(this.commentObject.name, VoteType.DOWNVOTE);
             }

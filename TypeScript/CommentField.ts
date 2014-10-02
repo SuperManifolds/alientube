@@ -42,21 +42,21 @@ module AlienTube {
 
             /* Set the "You are now commenting as" text under the comment field. */
             var authorName = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_writingauthor");
-            authorName.innerText = Main.localisationManager.get("commentfield_label_author", [Main.Preferences.get("username")]);
+            authorName.textContent = Main.localisationManager.get("commentfield_label_author", [Main.Preferences.get("username")]);
 
             /* Set the button text and event listener for the submit button */
             var submitButton = <HTMLButtonElement> this.representedHTMLElement.querySelector(".at_submit");
-            submitButton.innerText = Main.localisationManager.get("commentfield_button_submit");
+            submitButton.textContent = Main.localisationManager.get("commentfield_button_submit");
             submitButton.addEventListener("click", this.onSubmitButtonClick.bind(this), false);
 
             /* Set the button text and event listener for the cancel button */
             var cancelButton = <HTMLButtonElement> this.representedHTMLElement.querySelector(".at_cancel");
-            cancelButton.innerText = Main.localisationManager.get("commentfield_button_cancel")
+            cancelButton.textContent = Main.localisationManager.get("commentfield_button_cancel")
             cancelButton.addEventListener("click", this.onCancelButtonClick.bind(this), false);
 
             /* Set the text for the markdown preview header */
             var previewHeader = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_preview_header");
-            previewHeader.innerText = Main.localisationManager.get("commentfield_label_preview");
+            previewHeader.textContent = Main.localisationManager.get("commentfield_label_preview");
 
             /* Check if we were initialised with some text (most likely from the show source button) and add event listener for input
             change */
