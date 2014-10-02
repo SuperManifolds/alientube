@@ -1,33 +1,33 @@
 /// <reference path="index.ts" />
 /**
-	Namespace for All AlienTube operations.
-	@namespace AlienTube
+    Namespace for All AlienTube operations.
+    @namespace AlienTube
 */
 module AlienTube {
-	/**
-		Manages the Preferences across browsers.
-		@class BrowserPreferenceManager
-	*/
-	export class BrowserPreferenceManager {
+    /**
+        Manages the Preferences across browsers.
+        @class BrowserPreferenceManager
+    */
+    export class BrowserPreferenceManager {
         private preferences : Object;
         private evt;
 
 		private defaults = {
-			hiddenPostScoreThreshold: -4,
-			hiddenCommentScoreThreshold: -4,
-			showGooglePlusWhenNoPosts: true,
-			rememberTabsOnViewChange: true,
-			displayGooglePlusByDefault: false,
-			redditUserIdentifierHash: "",
-			excludedSubredditsSelectedByUser: []
-		}
+            hiddenPostScoreThreshold: -4,
+            hiddenCommentScoreThreshold: -4,
+            showGooglePlusWhenNoPosts: true,
+            rememberTabsOnViewChange: true,
+            displayGooglePlusByDefault: false,
+            redditUserIdentifierHash: "",
+            excludedSubredditsSelectedByUser: []
+        }
 
-        constructor() {
-			this.preferences = {};
+        constructor () {
+            this.preferences = {};
             switch (Main.getCurrentBrowser()) {
                 case Browser.CHROME:
                     chrome.storage.sync.get(null, (settings) => {
-						this.preferences = settings;
+                        this.preferences = settings;
                     });
                     break;
 
@@ -51,11 +51,11 @@ module AlienTube {
         }
 
 
-        get(key : string):any {
-            return this.preferences[key] !== null && typeof(this.preferences[key]) !== 'undefined' ? this.preferences[key] : this.defaults[key];
+        get (key: string): any {
+            return this.preferences[key] !== null && typeof (this.preferences[key]) !== 'undefined' ? this.preferences[key] : this.defaults[key];
         }
 
-        set(key : string, value : any):void {
+        set (key: string, value: any): void {
             this.preferences[key] = value;
             switch (Main.getCurrentBrowser()) {
                 case Browser.CHROME:
@@ -81,35 +81,35 @@ module AlienTube {
         }
 
 
-		get enforcedExludedSubreddits () {
-			return [
-				"mensrights",
-				"beatingcripples",
-				"beatingwomen",
-				"rapingwomen",
-				"beatingchildren",
-				"watchpeopledie",
-				"pussypass",
-				"theredpill",
-				"redpillwomen",
-				"protectandserve",
-				"whiterights",
-				"blackcrime",
-				"whiterightsuk",
-				"white_pride",
-				"whitenationalism",
-				"northwestfront",
-				"stopwhitegenocide",
-				"race_realism",
-				"racism_immigration",
-				"hate_crimes",
-				"gdnews",
-				"hbd",
-				"rights4men",
-				"muhfeelings",
-				"polistan",
-				"collapse"
-			];
-		}
+        get enforcedExludedSubreddits() {
+            return [
+                "mensrights",
+                "beatingcripples",
+                "beatingwomen",
+                "rapingwomen",
+                "beatingchildren",
+                "watchpeopledie",
+                "pussypass",
+                "theredpill",
+                "redpillwomen",
+                "protectandserve",
+                "whiterights",
+                "blackcrime",
+                "whiterightsuk",
+                "white_pride",
+                "whitenationalism",
+                "northwestfront",
+                "stopwhitegenocide",
+                "race_realism",
+                "racism_immigration",
+                "hate_crimes",
+                "gdnews",
+                "hbd",
+                "rights4men",
+                "muhfeelings",
+                "polistan",
+                "collapse"
+            ];
+        }
     }
 }

@@ -10,6 +10,7 @@ module AlienTube {
     */
     export class LocalisationManager {
         private localisationData : any;
+        
         constructor() {
             switch (Main.getCurrentBrowser()) {
                 case Browser.FIREFOX:

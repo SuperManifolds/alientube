@@ -14,7 +14,7 @@ module AlienTube {
     export class RedditReport {
         private reportContainer;
 
-        constructor(thing : string, commentThread : CommentThread, isThread : boolean) {
+        constructor (thing : string, commentThread : CommentThread, isThread : boolean) {
             var reportTemplate = commentThread.commentSection.template.getElementById("report").content.cloneNode(true);
             this.reportContainer = reportTemplate.querySelector(".at_report");
 
@@ -48,11 +48,11 @@ module AlienTube {
             var radioButtonControllers = this.reportContainer.querySelectorAll("input[type=radio]");
             for (var i = 0, len = radioButtonControllers.length; i < len; i++) {
                 radioButtonControllers[i].addEventListener("change", () => {
-                        if (reportOtherButton.checked) {
-                            reportOtherField.disabled = false;
-                        } else {
-                            reportOtherField.disabled = true;
-                        }
+                    if (reportOtherButton.checked) {
+                        reportOtherField.disabled = false;
+                    } else {
+                        reportOtherField.disabled = true;
+                    }
                 }, false);
             }
 
@@ -97,12 +97,12 @@ module AlienTube {
                         }
                     }
                 }, {
-                    "api_type": "json",
-                    "reason": reportReason,
-                    "other_reason": otherReason,
-                    "thing_id": thing,
-                    "uh": Main.Preferences.get("redditUserIdentifierHash")
-                });
+                        "api_type": "json",
+                        "reason": reportReason,
+                        "other_reason": otherReason,
+                        "thing_id": thing,
+                        "uh": Main.Preferences.get("redditUserIdentifierHash")
+                    });
 
             }, false);
 

@@ -14,19 +14,19 @@ module AlienTube {
     export class CommentField {
         private representedHTMLElement : HTMLDivElement;
         private parentHTMLElement : HTMLDivElement;
-        private commentThread: CommentThread;
+        private commentThread : CommentThread;
         private parentClass : any;
         private previewElement : HTMLDivElement;
         private edit : boolean;
 
-        constructor(parent : any, initialText? : string, edit? : boolean) {
+        constructor (parent : any, initialText? : string, edit? : boolean) {
             /* Check if the paramter is a Coment Thread and assign the correct parent HTML element .*/
             if (parent instanceof CommentThread) {
                 this.parentClass = <CommentThread> parent;
                 this.commentThread = this.parentClass;
                 this.parentHTMLElement = this.parentClass.threadContainer.querySelector(".options");
 
-            /* Check if the parameter is a Comment and assign the correct parent HTML element.*/
+                /* Check if the parameter is a Comment and assign the correct parent HTML element.*/
             } else if (parent instanceof Comment) {
                 this.parentClass = <Comment> parent;
                 this.commentThread = this.parentClass.commentThread;
@@ -129,7 +129,7 @@ module AlienTube {
             delete this;
         }
 
-        onInputFieldChange(eventObject : Event) {
+        onInputFieldChange (eventObject : Event) {
             var inputField = <HTMLInputElement> eventObject.target;
 
             /* If there is any contents of the input box, display the markdown preview and populate it. */

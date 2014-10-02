@@ -13,7 +13,8 @@ module AlienTube {
         static localisationManager : LocalisationManager;
         static commentSection : CommentSection;
         currentVideoIdentifier : string;
-        constructor() {
+        
+        constructor () {
             // Load stylesheet from disk.
             Main.Preferences = new BrowserPreferenceManager();
             Main.localisationManager = new LocalisationManager();
@@ -41,7 +42,7 @@ module AlienTube {
         /**
             Mutation Observer for monitoring for whenver the user changes to a new "page"
         */
-        private mutationObserver(mutations : Array<MutationRecord>) {
+        private mutationObserver (mutations : Array<MutationRecord>) {
             mutations.forEach(function(mutation) {
                 var target = <HTMLElement>mutation.target;
                 if (target.classList.contains("yt-card")) {
@@ -79,14 +80,14 @@ module AlienTube {
             * @param epochTime The unix epoch time of the post.
             * @returns Boolean saying whether the post is preserved or not.
             */
-            static isPreserved(epochTime : number) : Boolean {
+            static isPreserved (epochTime : number) : Boolean {
                 return ((((new Date()).getTime() / 1000) - epochTime) >= 15552000);
             }
 
             /**
             Determine whether the current url of the tab is a YouTube video page.
             */
-            static isYouTubeVideoPage() : Boolean {
+            static isYouTubeVideoPage () : Boolean {
                 return (window.location.pathname === "watch");
             }
 
@@ -108,7 +109,7 @@ module AlienTube {
             * @param epochTime Epoch timestamp to calculate from.
             * @returns A string with a human readable time.
             */
-            static getHumanReadableTimestamp(epochTime : number) : string {
+            static getHumanReadableTimestamp (epochTime : number) : string {
                 var secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
                 secs = Math.abs(secs);
 
@@ -150,7 +151,7 @@ module AlienTube {
                 * @param path Filename to the ressource.
                 * @returns Ressource path (file://)
                 */
-                static getExtensionRessourcePath(path : string) : string {
+                static getExtensionRessourcePath (path : string) : string {
                     switch (Main.getCurrentBrowser()) {
                         case Browser.SAFARI:
                         return safari.extension.baseURI + 'res/' + path;
@@ -166,7 +167,7 @@ module AlienTube {
                 /**
                     Get the HTML templates for the extension
                 */
-                static getExtensionTemplates(callback : any) {
+                static getExtensionTemplates (callback : any) {
                     if (Main.getCurrentBrowser() === Browser.FIREFOX) {
                         var templateHTML = self.options.template;
                         var templateContainer = document.createElement('div');
@@ -190,7 +191,7 @@ module AlienTube {
                         }
                     }
 
-                    static getExtensionTemplateItem(id : string, template) {
+                    static getExtensionTemplateItem (id : string, template) {
                         if (Main.getCurrentBrowser() === Browser.FIREFOX) {
                             return template.querySelector("#" + id).content.cloneNode(true);
                             } else {
@@ -202,7 +203,7 @@ module AlienTube {
                         * Generate a UUID 4 sequence.
                         * @returns A UUID 4 sequence as string.
                         */
-                        static generateUUID() : string {
+                        static generateUUID () : string {
                             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                                 var r = Math.random() * 16 | 0,
                                 v = c === 'x' ? r : (r & 0x3 | 0x8);

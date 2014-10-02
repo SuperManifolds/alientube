@@ -21,7 +21,7 @@ module AlienTube {
 
         private loadTimer = 0;
 
-        constructor(url : string, type : RequestType, callback : any, postData? : any, loadingScreen? : LoadingScreen) {
+        constructor (url : string, type : RequestType, callback : any, postData? : any, loadingScreen? : LoadingScreen) {
             this.requestUrl = url;
             this.requestType = type;
             this.finalCallback = callback;

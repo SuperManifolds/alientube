@@ -16,7 +16,7 @@ module AlienTube {
         children : Array<any>;
         private commentThread : CommentThread;
 
-        constructor(commentData : any, commentThread : CommentThread) {
+        constructor (commentData : any, commentThread : CommentThread) {
             this.children = new Array();
             this.commentObject = commentData;
             this.commentThread = commentThread;
@@ -29,7 +29,7 @@ module AlienTube {
 
             /* Show / collapse function for the comment */
             var toggleHide = this.representedHTMLElement.querySelector(".at_togglehide");
-            toggleHide.addEventListener("click", function () {
+            toggleHide.addEventListener("click", function() {
                 if (this.representedHTMLElement.classList.contains("hidden")) {
                     this.representedHTMLElement.classList.remove("hidden")
                 } else {
@@ -178,7 +178,7 @@ module AlienTube {
             }
         }
 
-        onSaveButtonClick(eventObject : Event) {
+        onSaveButtonClick (eventObject : Event) {
             var saveButton = <HTMLSpanElement> eventObject.target;
             var savedType = saveButton.getAttribute("saved") ? SaveType.UNSAVE : SaveType.SAVE;
             new RedditSaveRequest(this.commentObject.name, savedType, () => {
@@ -194,11 +194,11 @@ module AlienTube {
             });
         }
 
-        onReportButtonClicked(eventObject : Event) {
+        onReportButtonClicked (eventObject : Event) {
             new RedditReport(this.commentObject.name, this.commentThread, false);
         }
 
-        onUpvoteControllerClick(eventObject : Event) {
+        onUpvoteControllerClick (eventObject : Event) {
             var upvoteController = <HTMLDivElement> eventObject.target;
             var voteController = <HTMLDivElement> upvoteController.parentNode;
             var parentNode = <HTMLDivElement> voteController.parentNode;
@@ -231,7 +231,7 @@ module AlienTube {
             }
         }
 
-        onDownvoteControllerClick(eventObject : Event) {
+        onDownvoteControllerClick (eventObject : Event) {
             var downvoteController = <HTMLDivElement> eventObject.target;
             var voteController = <HTMLDivElement> downvoteController.parentNode;
             var parentNode = <HTMLDivElement> voteController.parentNode;
@@ -291,7 +291,7 @@ module AlienTube {
         onDeletePostButtonClick () {
             var confirmation = window.confirm(Main.localisationManager.get("post_delete_confirm"));
             if (confirmation) {
-                var url  = "https://api.reddit.com/api/del";
+                var url = "https://api.reddit.com/api/del";
                 new HttpRequest(url, RequestType.POST, () => {
                     this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
                     var getIndexInParentList = this.commentThread.children.indexOf(this);
@@ -300,9 +300,9 @@ module AlienTube {
                     }
                     delete this;
                 }, {
-                    "uh": Main.Preferences.get("redditUserIdentifierHash"),
-                    "id": this.commentObject.name,
-                });
+                        "uh": Main.Preferences.get("redditUserIdentifierHash"),
+                        "id": this.commentObject.name,
+                    });
             }
         }
     }

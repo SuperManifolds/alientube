@@ -16,7 +16,7 @@ module AlienTube {
         private commentThread;
         private referenceParent;
 
-        constructor(data : any, referenceParent : any, commentThread : CommentThread) {
+        constructor (data : any, referenceParent : any, commentThread : CommentThread) {
             this.data = data;
             this.commentThread = commentThread;
             this.referenceParent = referenceParent;
@@ -25,7 +25,7 @@ module AlienTube {
 
             /* Display the amount of replies available to load */
             var replyCount = this.representedHTMLElement.querySelector(".at_replycount");
-            var replyCountText = data.count > 1 ?  Main.localisationManager.get("post_label_reply_plural") : Main.localisationManager.get("post_label_reply");
+            var replyCountText = data.count > 1 ? Main.localisationManager.get("post_label_reply_plural") : Main.localisationManager.get("post_label_reply");
             replyCount.appendChild(document.createTextNode("(" + data.count + " " + replyCountText + ")"));
 
             /* Set the localisation for the "load more" button, and the event listener. */
@@ -34,15 +34,15 @@ module AlienTube {
             loadMoreText.addEventListener("click", this.onLoadMoreClick.bind(this), false);
         }
 
-        private onLoadMoreClick(eventObject : Event) {
+        private onLoadMoreClick (eventObject : Event) {
             /* Display "loading comments" text */
-            var loadingText =  <HTMLAnchorElement> eventObject.target;
+            var loadingText = <HTMLAnchorElement> eventObject.target;
             loadingText.removeChild(loadingText.firstChild);
             loadingText.classList.add("loading");
             loadingText.appendChild(document.createTextNode(Main.localisationManager.get("loading_generic_message")));
 
             var generateRequestUrl = "https://api.reddit.com/r/" + this.commentThread.threadInformation.subreddit +
-            "/comments/" + this.commentThread.threadInformation.id + "/z/" + this.data.id + ".json";
+                "/comments/" + this.commentThread.threadInformation.id + "/z/" + this.data.id + ".json";
 
             new HttpRequest(generateRequestUrl, RequestType.GET, (responseData) => {
 

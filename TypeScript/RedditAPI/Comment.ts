@@ -11,8 +11,8 @@ module AlienTube {
         @param callback Callback handler for the event when loaded.
     */
     export class RedditCommentRequest {
-        constructor(thing : string, comment : string, callback? : any) {
-            var url  = "https://api.reddit.com/api/comment";
+        constructor (thing : string, comment : string, callback? : any) {
+            var url = "https://api.reddit.com/api/comment";
             new HttpRequest(url, RequestType.POST, callback, {
                 "uh": Main.Preferences.get("redditUserIdentifierHash"),
                 "thing_id": thing,

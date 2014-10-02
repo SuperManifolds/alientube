@@ -12,8 +12,8 @@ module AlienTube {
         @param callback Callback handler for the event when loaded.
     */
     export class RedditSaveRequest {
-        constructor(thing : string, type : SaveType, callback : any) {
-            var url  = "https://api.reddit.com/api/" + SaveType[type].toLowerCase();
+        constructor (thing : string, type : SaveType, callback : any) {
+            var url = "https://api.reddit.com/api/" + SaveType[type].toLowerCase();
             new HttpRequest(url, RequestType.POST, callback, {
                 "uh": Main.Preferences.get("redditUserIdentifierHash"),
                 "id": thing

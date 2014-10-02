@@ -14,7 +14,7 @@ module AlienTube {
     export class ErrorScreen {
         private representedHTMLElement : HTMLDivElement;
 
-        constructor(commentSection : CommentSection, errorState : ErrorState, message? : string) {
+        constructor (commentSection : CommentSection, errorState : ErrorState, message? : string) {
             this.representedHTMLElement = Main.getExtensionTemplateItem("error", commentSection.template);
 
             var errorImage = <HTMLImageElement> this.representedHTMLElement.querySelector("img");
@@ -30,7 +30,7 @@ module AlienTube {
 
                     /* Set page not found localisation text */
                     errorHeader.textContent = Main.localisationManager.get("error_header_not_found");
-                    errorText.textContent= Main.localisationManager.get("error_message_not_found");
+                    errorText.textContent = Main.localisationManager.get("error_message_not_found");
                     break;
 
                 case ErrorState.OVERLOAD:

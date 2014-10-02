@@ -16,8 +16,8 @@ module AlienTube {
         private currentProgressState : LoadingState;
         private loadingAttempts : number;
 
-        constructor(commentSection : CommentSection, initialState? : LoadingState, alternativeText? : string) {
-            var loadingState = initialState || LoadingState.LOADING;
+        constructor (commentSection : CommentSection, initialState? : LoadingState, alternativeText? : string) {
+            var loadingState = initialState || LoadingState.LOADING;
             this.representedHTMLElement = Main.getExtensionTemplateItem("loading", commentSection.template);
             this.updateProgress(loadingState, alternativeText);
         }
@@ -26,7 +26,7 @@ module AlienTube {
             return this.representedHTMLElement;
         }
 
-        public updateProgress (state : LoadingState, alternativeText? : string) {
+        public updateProgress(state : LoadingState, alternativeText? : string) {
             this.currentProgressState = state;
             var loadingText = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingtext");
             var loadingHeader = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingheader");
@@ -34,8 +34,8 @@ module AlienTube {
             switch (this.currentProgressState) {
                 case LoadingState.LOADING:
                     this.loadingAttempts = 1;
-                    loadingHeader.textContent = alternativeText || Main.localisationManager.get("loading_generic_message");
-                    loadingText.textContent = Main.localisationManager.get("loading_generic_text") || "";
+                    loadingHeader.textContent = alternativeText || Main.localisationManager.get("loading_generic_message");
+                    loadingText.textContent = Main.localisationManager.get("loading_generic_text") || "";
                     break;
 
                 case LoadingState.RETRY:

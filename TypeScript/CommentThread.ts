@@ -18,7 +18,7 @@ module AlienTube {
         private commentData : Array<any>;
         children : Array<any>;
 
-        constructor(threadData : any, commentSection : CommentSection) {
+        constructor (threadData : any, commentSection : CommentSection) {
             this.children = new Array();
             this.commentSection = commentSection;
             this.threadInformation = threadData[0].data.children[0].data;
@@ -194,7 +194,7 @@ module AlienTube {
             alientube.appendChild(contents);
         }
 
-        onSaveButtonClick(eventObject : Event) {
+        onSaveButtonClick (eventObject : Event) {
             var saveButton = <HTMLSpanElement> eventObject.target;
             var savedType = saveButton.getAttribute("saved") ? SaveType.UNSAVE : SaveType.SAVE;
             new RedditSaveRequest(this.threadInformation.name, savedType, () => {
@@ -210,11 +210,11 @@ module AlienTube {
             });
         }
 
-        onReportButtonClicked(eventObject : Event) {
+        onReportButtonClicked (eventObject : Event) {
             new RedditReport(this.threadInformation.name, this, true);
         }
 
-        onGooglePlusClick(eventObject : Event) {
+        onGooglePlusClick (eventObject : Event) {
             var alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "none";
             var googlePlusContainer = document.getElementById("watch-discussion");
@@ -223,7 +223,7 @@ module AlienTube {
             redditButton.style.display = "block";
         }
 
-        onUpvoteControllerClick(eventObject : Event) {
+        onUpvoteControllerClick (eventObject : Event) {
             var upvoteController = <HTMLDivElement> eventObject.target;
             var voteController = <HTMLDivElement> upvoteController.parentNode;
             var scoreValue = <HTMLDivElement> voteController.querySelector(".score");
@@ -253,7 +253,7 @@ module AlienTube {
             }
         }
 
-        onDownvoteControllerClick(eventObject : Event) {
+        onDownvoteControllerClick (eventObject : Event) {
             var downvoteController = <HTMLDivElement> eventObject.target;
             var voteController = <HTMLDivElement> downvoteController.parentNode;
             var scoreValue = <HTMLDivElement> voteController.querySelector(".score");
