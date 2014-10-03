@@ -13,7 +13,7 @@ module AlienTube {
         static localisationManager : LocalisationManager;
         static commentSection : CommentSection;
         currentVideoIdentifier : string;
-        
+
         constructor () {
             // Load stylesheet from disk.
             Main.Preferences = new BrowserPreferenceManager();
@@ -45,7 +45,7 @@ module AlienTube {
         private mutationObserver (mutations : Array<MutationRecord>) {
             mutations.forEach(function(mutation) {
                 var target = <HTMLElement>mutation.target;
-                if (target.classList.contains("yt-card")) {
+                if (target.classList.contains("yt-card") || target.id === "content") {
                     var reportedVideoId = Main.getCurrentVideoId();
                     if (reportedVideoId !== this.currentVideoIdentifier) {
                         this.currentVideoIdentifier = reportedVideoId;
