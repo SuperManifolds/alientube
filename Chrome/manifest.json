@@ -5,7 +5,7 @@
   "description": "Reddit Comments for YouTube",
   "author": "Delexious",
   "homepage_url": "http://alientube.co/",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "icons": { "16": "icon16.png",
            "48": "icon48.png",
           "128": "icon128.png" },
