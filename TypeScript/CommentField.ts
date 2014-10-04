@@ -37,8 +37,8 @@ module AlienTube {
             }
             this.edit = edit;
 
-            var template = Main.getExtensionTemplateItem("commentfield", this.commentThread.commentSection.template);
-            this.representedHTMLElement = template.querySelector(".at_commentfield");
+            var template = this.commentThread.commentSection.template.getExtensionTemplateItem("commentfield");
+            this.representedHTMLElement = <HTMLDivElement> template.querySelector(".at_commentfield");
 
             /* Set the "You are now commenting as" text under the comment field. */
             var authorName = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_writingauthor");

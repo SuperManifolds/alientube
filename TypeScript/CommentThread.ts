@@ -25,10 +25,10 @@ module AlienTube {
             this.commentData = threadData[1].data.children;
 
             Main.Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
-            this.postIsInPreservedMode = Main.isPreserved(this.threadInformation.created_utc);
+            this.postIsInPreservedMode = this.threadInformation.isRedditPreservedPost();
 
-            var template = Main.getExtensionTemplateItem("threadcontainer", this.commentSection.template);
-            this.threadContainer = template.querySelector("#at_comments");
+            var template = this.commentSection.template.getExtensionTemplateItem("threadcontainer");
+            this.threadContainer = <HTMLDivElement> template.querySelector("#at_comments");
 
             if (threadData[0].data.modhash.length > 0) {
                 this.commentSection.userIsSignedIn = true;

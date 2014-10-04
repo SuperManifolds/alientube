@@ -10,9 +10,9 @@ module AlienTube {
     */
     export class LocalisationManager {
         private localisationData : any;
-        
+
         constructor() {
-            switch (Main.getCurrentBrowser()) {
+            switch (window.getCurrentBrowser()) {
                 case Browser.FIREFOX:
                     this.localisationData = JSON.parse(self.options.localisation);
                     break;
@@ -26,7 +26,7 @@ module AlienTube {
             @returns The requested language string.
         */
         get (key : string, placeholders? : Array<string>) {
-            switch (Main.getCurrentBrowser()) {
+            switch (window.getCurrentBrowser()) {
                 case Browser.CHROME:
                     if (placeholders) {
                         return chrome.i18n.getMessage(key, placeholders);

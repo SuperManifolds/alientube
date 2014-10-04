@@ -15,7 +15,7 @@ module AlienTube {
         private representedHTMLElement : HTMLDivElement;
 
         constructor (commentSection : CommentSection, errorState : ErrorState, message? : string) {
-            this.representedHTMLElement = Main.getExtensionTemplateItem("error", commentSection.template);
+            this.representedHTMLElement = commentSection.template.getExtensionTemplateItem("error");
 
             var errorImage = <HTMLImageElement> this.representedHTMLElement.querySelector("img");
             var errorHeader = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_errorheader");

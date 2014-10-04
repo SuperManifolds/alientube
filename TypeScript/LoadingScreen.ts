@@ -18,7 +18,7 @@ module AlienTube {
 
         constructor (commentSection : CommentSection, initialState? : LoadingState, alternativeText? : string) {
             var loadingState = initialState || LoadingState.LOADING;
-            this.representedHTMLElement = Main.getExtensionTemplateItem("loading", commentSection.template);
+            this.representedHTMLElement = commentSection.template.getExtensionTemplateItem("loading");
             this.updateProgress(loadingState, alternativeText);
         }
 

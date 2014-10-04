@@ -24,7 +24,7 @@ module AlienTube {
 
         constructor () {
             this.preferences = {};
-            switch (Main.getCurrentBrowser()) {
+            switch (window.getCurrentBrowser()) {
                 case Browser.CHROME:
                     chrome.storage.sync.get(null, (settings) => {
                         this.preferences = settings;
@@ -57,7 +57,7 @@ module AlienTube {
 
         set (key: string, value: any): void {
             this.preferences[key] = value;
-            switch (Main.getCurrentBrowser()) {
+            switch (window.getCurrentBrowser()) {
                 case Browser.CHROME:
                     chrome.storage.sync.set(this.preferences);
                     break;
@@ -81,7 +81,7 @@ module AlienTube {
         }
 
 
-        get enforcedExludedSubreddits() {
+        get enforcedExludedSubreddits () {
             return [
                 "mensrights",
                 "beatingcripples",

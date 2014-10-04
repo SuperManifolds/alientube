@@ -21,15 +21,15 @@ module AlienTube {
             this.commentObject = commentData;
             this.commentThread = commentThread;
 
-            var template = Main.getExtensionTemplateItem("comment", this.commentThread.commentSection.template);
-            this.representedHTMLElement = template.querySelector(".at_comment");
+            var template = this.commentThread.commentSection.template.getExtensionTemplateItem("comment");
+            this.representedHTMLElement = <HTMLDivElement> template.querySelector(".at_comment");
 
             /* Set the id for the comment in question so it can be correlated with the Comment Object */
             this.representedHTMLElement.setAttribute("data-reddit-id", commentData.id);
 
             /* Show / collapse function for the comment */
             var toggleHide = this.representedHTMLElement.querySelector(".at_togglehide");
-            toggleHide.addEventListener("click", function() {
+            toggleHide.addEventListener("click", function () {
                 if (this.representedHTMLElement.classList.contains("hidden")) {
                     this.representedHTMLElement.classList.remove("hidden")
                 } else {

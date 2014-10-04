@@ -19,7 +19,7 @@ module AlienTube {
             Main.Preferences = new BrowserPreferenceManager();
             Main.localisationManager = new LocalisationManager();
 
-            if (Main.getCurrentBrowser() == Browser.SAFARI) {
+            if (window.getCurrentBrowser() == Browser.SAFARI) {
                 var stylesheet = document.createElement("link");
                 stylesheet.setAttribute("href", Main.getExtensionRessourcePath("style.css"));
                 stylesheet.setAttribute("type", "text/css");
@@ -34,7 +34,7 @@ module AlienTube {
 
             // Start a new comment section.
             this.currentVideoIdentifier = Main.getCurrentVideoId();
-            if (Main.isYouTubeVideoPage) {
+            if (window.isYouTubeVideoPage) {
                 Main.commentSection = new CommentSection(this.currentVideoIdentifier);
             }
         }
@@ -49,7 +49,7 @@ module AlienTube {
                     var reportedVideoId = Main.getCurrentVideoId();
                     if (reportedVideoId !== this.currentVideoIdentifier) {
                         this.currentVideoIdentifier = reportedVideoId;
-                        if (Main.isYouTubeVideoPage) {
+                        if (window.isYouTubeVideoPage) {
                             Main.commentSection = new CommentSection(this.currentVideoIdentifier);
                         }
                     }
@@ -73,35 +73,6 @@ module AlienTube {
                     }
                 }
                 return null;
-            }
-
-            /**
-            * Determine a reddit post is more than 6 months old, and thereby in preserved status.
-            * @param epochTime The unix epoch time of the post.
-            * @returns Boolean saying whether the post is preserved or not.
-            */
-            static isPreserved (epochTime : number) : Boolean {
-                return ((((new Date()).getTime() / 1000) - epochTime) >= 15552000);
-            }
-
-            /**
-            Determine whether the current url of the tab is a YouTube video page.
-            */
-            static isYouTubeVideoPage () : Boolean {
-                return (window.location.pathname === "watch");
-            }
-
-            /**
-            * Get the current browser that the extension is running as.
-            * @returns An AlienTube.Browser enum with the value of the Browser.
-            */
-            static getCurrentBrowser() : Browser {
-                if (typeof(chrome) !== 'undefined') return Browser.CHROME;
-                else if (typeof(self.on) !== 'undefined') return Browser.FIREFOX;
-                else if (typeof(safari) !== 'undefined') return Browser.SAFARI;
-                else {
-                    throw "Invalid Browser";
-                }
             }
 
             /**
@@ -152,7 +123,7 @@ module AlienTube {
                 * @returns Ressource path (file://)
                 */
                 static getExtensionRessourcePath (path : string) : string {
-                    switch (Main.getCurrentBrowser()) {
+                    switch (window.getCurrentBrowser()) {
                         case Browser.SAFARI:
                         return safari.extension.baseURI + 'res/' + path;
                         case Browser.CHROME:
@@ -168,7 +139,7 @@ module AlienTube {
                     Get the HTML templates for the extension
                 */
                 static getExtensionTemplates (callback : any) {
-                    if (Main.getCurrentBrowser() === Browser.FIREFOX) {
+                    if (window.getCurrentBrowser() === Browser.FIREFOX) {
                         var templateHTML = self.options.template;
                         var templateContainer = document.createElement('div');
                         templateContainer.id = "alientubeTemplate";
@@ -190,15 +161,6 @@ module AlienTube {
                             document.head.appendChild(templateLink);
                         }
                     }
-
-                    static getExtensionTemplateItem (id : string, template) {
-                        if (Main.getCurrentBrowser() === Browser.FIREFOX) {
-                            return template.querySelector("#" + id).content.cloneNode(true);
-                            } else {
-                                return template.getElementById(id).content.cloneNode(true);
-                            }
-                        }
-
                         /**
                         * Generate a UUID 4 sequence.
                         * @returns A UUID 4 sequence as string.
@@ -210,10 +172,5 @@ module AlienTube {
                                 return v.toString(16);
                                 });
                             }
-                        }
-                        export enum Browser {
-                            CHROME,
-                            FIREFOX,
-                            SAFARI
                         }
                     }
