@@ -1,4 +1,4 @@
-/// <reference path="index.ts" />
+/// <reference path="Utilities.ts" />
 /**
     Namespace for All AlienTube operations.
     @namespace AlienTube
