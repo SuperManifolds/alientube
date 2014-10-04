@@ -19,6 +19,8 @@ TypeScript/*.js
 lib/script.js
 lib/script.js.map
 lib/script.d.ts
+lib/options.js
+lib/options.d.ts
 
 res/style.css
 res/style.css.map

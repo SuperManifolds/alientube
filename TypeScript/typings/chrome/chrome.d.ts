@@ -19,7 +19,7 @@ declare module chrome.alarms {
         name: string;
     }
 
-    interface AlarmEvent extends chrome.events.Event { 
+    interface AlarmEvent extends chrome.events.Event {
         addListener(callback: (alarm: Alarm) => void) : void;
     }
 
@@ -30,7 +30,7 @@ declare module chrome.alarms {
     export function clear(name?: string): void;
     export function get(callback: (alarm: Alarm) => void): void;
     export function get(name: string, callback: (alarm: Alarm) => void): void;
-    
+
     var onAlarm: AlarmEvent;
 }
 
@@ -58,7 +58,7 @@ declare module chrome.bookmarks {
         index: number;
         oldIndex: number;
         parentId: string;
-        oldParentId: string;    
+        oldParentId: string;
     }
 
     interface BookmarkChangeInfo {
@@ -70,7 +70,7 @@ declare module chrome.bookmarks {
         childIds: string[];
     }
 
-    interface BookmarkRemovedEvent extends chrome.events.Event { 
+    interface BookmarkRemovedEvent extends chrome.events.Event {
         addListener(callback: (id: string, removeInfo: BookmarkRemoveInfo) => void): void;
     }
 
@@ -225,10 +225,10 @@ declare module chrome.browsingData {
 // Commands
 ////////////////////
 declare module chrome.commands {
-    interface CommandEvent extends chrome.events.Event { 
+    interface CommandEvent extends chrome.events.Event {
         addListener(callback: (command: string) => void): void;
     }
-        
+
     var onCommand: CommandEvent;
 }
 
@@ -532,7 +532,7 @@ declare module chrome.declarativeWebRequest {
 
     interface RequestedEvent extends chrome.events.Event {
         addListener(callback: Function): void;
-    }    
+    }
 
     var onRequest: RequestedEvent;
 }
@@ -1451,7 +1451,7 @@ declare module chrome.runtime {
         arch: string;
         nacl_arch: string;
     }
-    
+
     interface Port {
         postMessage: Function;
         sender?: MessageSender;
@@ -1510,7 +1510,7 @@ declare module chrome.runtime {
     interface RuntimeUpdateAvailableEvent extends chrome.events.Event {
         addListener(callback: (details: UpdateAvailableDetails) => void): void;
     }
-    
+
     export function connect(connectInfo?: ConnectInfo): Port;
     export function connect(extensionId: string, connectInfo?: ConnectInfo): Port;
     export function connectNative(application: string): Port;
@@ -2108,7 +2108,7 @@ declare module chrome.webNavigation {
 
     export function getFrame(details: GetFrameDetails, callback: (details?: GetFrameResultDetails) => void): void;
     export function getAllFrames(details: GetAllFrameDetails, callback: (details?: Object[]) => void): void;
-    
+
     var onReferenceFragmentUpdated: WebNavigationReferenceFragmentUpdatedEvent;
     var onCompleted: WebNavigationCompletedEvent;
     var onHistoryStateUpdated: WebNavigationHistoryStateUpdatedEvent;
@@ -2286,46 +2286,46 @@ declare module chrome.webRequest {
         requestBody: RequestBody;
     }
 
-    interface WebRequestCompletedEvent extends chrome.events.Event { 
+    interface WebRequestCompletedEvent extends chrome.events.Event {
         addListener(callback: (details: OnCompletedDetails) => void, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
     }
 
-    interface WebRequestHeadersReceivedEvent extends chrome.events.Event { 
+    interface WebRequestHeadersReceivedEvent extends chrome.events.Event {
         addListener(callback: (details: OnHeadersReceivedDetails) => void, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
     }
 
-    interface WebRequestBeforeRedirectEvent extends chrome.events.Event { 
+    interface WebRequestBeforeRedirectEvent extends chrome.events.Event {
         addListener(callback: (details: OnBeforeRedirectDetails) => void, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
     }
 
-    interface WebRequestAuthRequiredEvent extends chrome.events.Event { 
+    interface WebRequestAuthRequiredEvent extends chrome.events.Event {
         addListener(callback: (details: OnAuthRequiredDetails, callback?: (response: BlockingResponse) => void, filter?: RequestFilter, opt_extraInfoSpec?: string[]) => void): void;
     }
 
-    interface WebRequestBeforeSendHeadersEvent extends chrome.events.Event { 
+    interface WebRequestBeforeSendHeadersEvent extends chrome.events.Event {
         addListener(callback: (details: OnBeforeSendHeadersDetails) => void, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
     }
 
-    interface WebRequestErrorOccurredEvent extends chrome.events.Event { 
+    interface WebRequestErrorOccurredEvent extends chrome.events.Event {
         addListener(callback: (details: OnErrorOccurredDetails) => void, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
     }
 
-    interface WebRequestResponseStartedEvent extends chrome.events.Event { 
+    interface WebRequestResponseStartedEvent extends chrome.events.Event {
         addListener(callback: (details: OnResponseStartedDetails) => void, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
     }
 
-    interface WebRequestSendHeadersEvent extends chrome.events.Event { 
+    interface WebRequestSendHeadersEvent extends chrome.events.Event {
         addListener(callback: (details: OnSendHeadersDetails) => void, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
     }
 
-    interface WebRequestBeforeRequestEvent extends chrome.events.Event { 
+    interface WebRequestBeforeRequestEvent extends chrome.events.Event {
         addListener(callback: (details: OnBeforeRequestDetails) => void, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
     }
 
     var MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES: number;
 
     export function handlerBehaviorChanged(callback?: Function): void;
-    
+
     var onCompleted: WebRequestCompletedEvent;
     var onHeadersReceived: WebRequestHeadersReceivedEvent;
     var onBeforeRedirect: WebRequestBeforeRedirectEvent;
@@ -2342,6 +2342,10 @@ declare module chrome.webRequest {
 ////////////////////
 declare module chrome.webstore {
     export function install(url?: string, successCallback?: Function, failureCallback?: (error: string) => void): void;
+}
+
+declare module chrome.app {
+    export function getDetails (): any;
 }
 
 ////////////////////

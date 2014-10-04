@@ -2,7 +2,6 @@
 
 sass res/style.scss res/style.css
 
-
 if [ "$1" == "--init" ]; then
     mkdir -p Chrome/res
     mkdir -p Chrome/js
@@ -12,17 +11,35 @@ if [ "$1" == "--init" ]; then
 
     cp -fr res/redditbroken.svg Chrome/res
     cp -fr res/redditoverload.svg Chrome/res
+    cp -fr res/chrome_shared.css Chrome/res
+    cp -fr res/icon128.png Chrome/res
+    cp -fr res/widgets.css Chrome/res
     cp -fr lib/snuownd.js Chrome/js
 
     cp -fr res/redditbroken.svg Safari.safariextension/res
     cp -fr res/redditoverload.svg Safari.safariextension/res
+    cp -fr res/icon128.png Safari.safariextension/res
+    cp -fr res/chrome_shared.css Safari.safariextension/res
+    cp -fr res/widgets.css Safari.safariextension/res
     cp -fr lib/snuownd.js Safari.safariextension/js
-
 
     cp -fr res/redditbroken.svg Firefox/data
     cp -fr res/redditoverload.svg Firefox/data
+    cp -fr res/icon128.png Firefox/data
+    cp -fr res/chrome_shared.css Firefox/data
+    cp -fr res/widgets.css Firefox/data
     cp -fr lib/snuownd.js Firefox/data
+
+    cp options.html Chrome/res/options.html
+    cp options.html Firefox/data/options.html
+    cp options.html Safari.safariextension/res/options.html
+
+    tsc --target ES5 --out lib/options.js TypeScript/Options/Options.ts --removeComments --declaration
+    cp lib/options.js Chrome/res/options.js
+    cp lib/options.js Firefox/data/options.js
+    cp lib/options.js Safari.safariextension/res/options.js
 fi
+
 
 cp res/style.css Chrome/res/style.css
 cp res/style.css Safari.safariextension/res/style.css

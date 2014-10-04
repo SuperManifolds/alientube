@@ -11,7 +11,7 @@
           "128": "icon128.png" },
   "minimum_chrome_version": "37.0",
   "content_security_policy": "script-src 'self' https://api.reddit.com; object-src 'self'",
-  "options_page": "options.html",
+  "options_page": "res/options.html",
   "default_locale": "en",
 
   "content_scripts": [
@@ -32,7 +32,8 @@
 
   "web_accessible_resources": [
     "res/style.css",
-    "chrome_shared.css",
+    "res/chrome_shared.css",
+    "res/widgets.css",
     "js/*",
     "res/*",
     "TypeScript/*",
