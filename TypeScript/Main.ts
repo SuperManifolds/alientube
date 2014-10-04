@@ -54,123 +54,123 @@ module AlienTube {
                         }
                     }
                 }
-                });
-            }
+            });
+        }
 
-            /**
-            * Get the current YouTube video identifier of the window.
-            * @returns YouTube video identifier.
-            */
-            static getCurrentVideoId() : string {
-                if (window.location.search.length > 0) {
-                    var s = window.location.search.substring(1);
-                    var requestObjects = s.split('&');
-                    for (var i = 0, len = requestObjects.length; i < len; i++) {
-                        var obj = requestObjects[i].split('=');
-                        if (obj[0] === "v") {
-                            return obj[1];
-                        }
+        /**
+        * Get the current YouTube video identifier of the window.
+        * @returns YouTube video identifier.
+        */
+        static getCurrentVideoId() : string {
+            if (window.location.search.length > 0) {
+                var s = window.location.search.substring(1);
+                var requestObjects = s.split('&');
+                for (var i = 0, len = requestObjects.length; i < len; i++) {
+                    var obj = requestObjects[i].split('=');
+                    if (obj[0] === "v") {
+                        return obj[1];
                     }
                 }
-                return null;
             }
+            return null;
+        }
 
-            /**
-            * Get a Reddit-style "x time ago" Timestamp from a unix epoch time.
-            * @param epochTime Epoch timestamp to calculate from.
-            * @returns A string with a human readable time.
-            */
-            static getHumanReadableTimestamp (epochTime : number) : string {
-                var secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
-                secs = Math.abs(secs);
+        /**
+        * Get a Reddit-style "x time ago" Timestamp from a unix epoch time.
+        * @param epochTime Epoch timestamp to calculate from.
+        * @returns A string with a human readable time.
+        */
+        static getHumanReadableTimestamp (epochTime : number) : string {
+            var secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
+            secs = Math.abs(secs);
 
-                var timeUnits = {
-                    Year:   Math.floor(secs / 60 / 60 / 24 / 365.27),
-                    Month:  Math.floor(secs / 60 / 60 / 24 / 30),
-                    Week:   Math.floor(secs / 60 / 60 / 24 / 7),
-                    Day:    Math.floor(secs / 60 / 60 / 24),
-                    Hour:   Math.floor(secs / 60 / 60),
-                    Minute: Math.floor(secs / 60),
-                    Second: secs,
-                };
+            var timeUnits = {
+                Year:   Math.floor(secs / 60 / 60 / 24 / 365.27),
+                Month:  Math.floor(secs / 60 / 60 / 24 / 30),
+                Week:   Math.floor(secs / 60 / 60 / 24 / 7),
+                Day:    Math.floor(secs / 60 / 60 / 24),
+                Hour:   Math.floor(secs / 60 / 60),
+                Minute: Math.floor(secs / 60),
+                Second: secs,
+            };
 
-                /* Retrieve the most relevant number by retrieving the first one that is "1" or more.
-                Decide if it is plural and retrieve the correct localisation */
-                for (var timeUnit in timeUnits) {
-                    if (timeUnits.hasOwnProperty(timeUnit) && timeUnits[timeUnit] >= 1) {
-                        if (timeUnits[timeUnit] > 1) {
-                            return Main.localisationManager.get("timestamp_format", [
+            /* Retrieve the most relevant number by retrieving the first one that is "1" or more.
+            Decide if it is plural and retrieve the correct localisation */
+            for (var timeUnit in timeUnits) {
+                if (timeUnits.hasOwnProperty(timeUnit) && timeUnits[timeUnit] >= 1) {
+                    if (timeUnits[timeUnit] > 1) {
+                        return Main.localisationManager.get("timestamp_format", [
                             timeUnits[timeUnit],
                             Main.localisationManager.get("timestamp_format_" + timeUnit + "_plural")
-                            ]);
-                            } else {
-                                return Main.localisationManager.get("timestamp_format", [
-                                timeUnits[timeUnit],
-                                Main.localisationManager.get("timestamp_format_" + timeUnit)
-                                ]);
-                            }
-                        }
-                    }
-                    return Main.localisationManager.get("timestamp_format", [
-                    "0",
-                    Main.localisationManager.get("timestamp_format_second_plural")
-                    ]);
-                }
-
-                /**
-                * Get the path to a ressource in the AlienTube folder.
-                * @param path Filename to the ressource.
-                * @returns Ressource path (file://)
-                */
-                static getExtensionRessourcePath (path : string) : string {
-                    switch (window.getCurrentBrowser()) {
-                        case Browser.SAFARI:
-                        return safari.extension.baseURI + 'res/' + path;
-                        case Browser.CHROME:
-                        return chrome.extension.getURL('res/' + path);
-                        case Browser.FIREFOX:
-                        return self.options.ressources[path];
-                        default:
-                        return null;
+                        ]);
+                    } else {
+                        return Main.localisationManager.get("timestamp_format", [
+                            timeUnits[timeUnit],
+                            Main.localisationManager.get("timestamp_format_" + timeUnit)
+                        ]);
                     }
                 }
+            }
+            return Main.localisationManager.get("timestamp_format", [
+                "0",
+                Main.localisationManager.get("timestamp_format_second_plural")
+            ]);
+        }
 
-                /**
-                    Get the HTML templates for the extension
-                */
-                static getExtensionTemplates (callback : any) {
-                    if (window.getCurrentBrowser() === Browser.FIREFOX) {
-                        var templateHTML = self.options.template;
-                        var templateContainer = document.createElement('div');
-                        templateContainer.id = "alientubeTemplate";
-                        templateContainer.innerHTML = templateHTML;
-                        document.body.appendChild(templateContainer);
-                        if (callback) {
-                            callback(templateContainer);
-                        }
-                        } else {
-                            var templateLink = document.createElement("link");
-                            templateLink.id = "alientubeTemplate";
-                            templateLink.onload = () => {
-                                if (callback) {
-                                    callback(templateLink.import);
-                                }
-                            }
-                            templateLink.setAttribute("rel", "import");
-                            templateLink.setAttribute("href", Main.getExtensionRessourcePath("templates.html"));
-                            document.head.appendChild(templateLink);
-                        }
+        /**
+        * Get the path to a ressource in the AlienTube folder.
+        * @param path Filename to the ressource.
+        * @returns Ressource path (file://)
+        */
+        static getExtensionRessourcePath (path : string) : string {
+            switch (window.getCurrentBrowser()) {
+                case Browser.SAFARI:
+                    return safari.extension.baseURI + 'res/' + path;
+                case Browser.CHROME:
+                    return chrome.extension.getURL('res/' + path);
+                case Browser.FIREFOX:
+                    return self.options.ressources[path];
+                default:
+                    return null;
+            }
+        }
+
+        /**
+            Get the HTML templates for the extension
+        */
+        static getExtensionTemplates (callback : any) {
+            if (window.getCurrentBrowser() === Browser.FIREFOX) {
+                var templateHTML = self.options.template;
+                var templateContainer = document.createElement('div');
+                templateContainer.id = "alientubeTemplate";
+                templateContainer.innerHTML = templateHTML;
+                document.body.appendChild(templateContainer);
+                if (callback) {
+                    callback(templateContainer);
+                }
+            } else {
+                var templateLink = document.createElement("link");
+                templateLink.id = "alientubeTemplate";
+                templateLink.onload = () => {
+                    if (callback) {
+                        callback(templateLink.import);
                     }
-                        /**
-                        * Generate a UUID 4 sequence.
-                        * @returns A UUID 4 sequence as string.
-                        */
-                        static generateUUID () : string {
-                            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                                var r = Math.random() * 16 | 0,
-                                v = c === 'x' ? r : (r & 0x3 | 0x8);
-                                return v.toString(16);
-                                });
-                            }
-                        }
-                    }
+                }
+                templateLink.setAttribute("rel", "import");
+                templateLink.setAttribute("href", Main.getExtensionRessourcePath("templates.html"));
+                document.head.appendChild(templateLink);
+            }
+        }
+        /**
+        * Generate a UUID 4 sequence.
+        * @returns A UUID 4 sequence as string.
+        */
+        static generateUUID () : string {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0,
+                v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+    }
+}
