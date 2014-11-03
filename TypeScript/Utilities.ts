@@ -12,6 +12,9 @@ interface Window {
     getCurrentBrowser: () => Browser;
 }
 
+interface HTMLElement {
+    getExtensionTemplateItem: (id : string) => HTMLDivElement;
+}
 
 /**
     * Determine a reddit post is more than 6 months old, and thereby in preserved status.
@@ -20,26 +23,32 @@ interface Window {
 */
 if (!Object.prototype.isRedditPreservedPost) {
     Object.prototype.isRedditPreservedPost = function() {
-        if (!this || isNaN(this.created_utc)) {
-            throw new TypeError("Value: \"" + this.created_utc + "\" given to isRedditPreservedPost is invalid.");
+        if (!this) {
+            return false;
         }
         var currentEpochTime = ((new Date()).getTime() / 1000);
         return ((currentEpochTime - this.created_utc) >= 15552000);
     }
 }
 
-if (!Object.prototype.getExtensionTemplateItem) {
-    Object.prototype.getExtensionTemplateItem = function(id) {
-        if (!this) {
-            throw new TypeError("Value: \"" + this + "\" given to getExtensionTemplateItem is invalid.");
-        }
-        if (window.getCurrentBrowser() === Browser.FIREFOX) {
-            return this.querySelector("#" + id).content.cloneNode(true);
-        } else {
-            return this.getElementById(id).content.cloneNode(true);
-        }
+function getExtensionTemplateItem(id) {
+    if (!this) {
+        return false;
+    }
+    if (window.getCurrentBrowser() === Browser.FIREFOX) {
+        return this.querySelector("#" + id).content.cloneNode(true);
+    } else {
+        return this.getElementById(id).content.cloneNode(true);
     }
 }
+
+if (!Object.prototype.getExtensionTemplateItem) {
+    Object.prototype.getExtensionTemplateItem = getExtensionTemplateItem;
+}
+if (!HTMLElement.prototype.getExtensionTemplateItem) {
+    HTMLElement.prototype.getExtensionTemplateItem = getExtensionTemplateItem;
+}
+
 
 /**
     Determine whether the current url of the tab is a YouTube video page.

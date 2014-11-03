@@ -1,4 +1,5 @@
 /// <reference path="../LocalisationManager.ts" />
+/// <reference path="../BrowserPreferenceManager.ts" />
 
 module AlienTube {
     export class Options {
@@ -21,9 +22,10 @@ module AlienTube {
         private displayAboutDialogButton;
         private closeAboutDialogButton;
 
+        private preferences;
+
         constructor () {
             this.localisationManager = new LocalisationManager();
-
             this.hiddenPostScoreThresholdElement   = document.getElementById("hiddenPostScoreThreshold");
             this.hiddenCommentScoreThresholdElement = document.getElementById("hiddenCommentScoreThreshold");
             this.showGooglePlusWhenNoPostsElement   = document.getElementById("showGooglePlusWhenNoPosts");
@@ -41,29 +43,25 @@ module AlienTube {
             document.title = this.localisationManager.get("options_button_save");
             document.getElementById("versiontext").textContent = this.localisationManager.get("options_label_version");
 
+            this.preferences = new BrowserPreferenceManager(() => {
+                for (var i = 0, len = this.preferenceKeyList.length; i < len; i++) {
+                    var label = <HTMLLabelElement> document.querySelector("label[for='" + this.preferenceKeyList[i] + "']");
+                    label.textContent = this.localisationManager.get("options_label_" + this.preferenceKeyList[i]);
+                }
 
-            for (var i = 0, len = this.preferenceKeyList.length; i < len; i++) {
-                var label = <HTMLLabelElement> document.querySelector("label[for='" + this.preferenceKeyList[i] + "']");
-                label.textContent = this.localisationManager.get("options_label_" + this.preferenceKeyList[i]);
-            }
+                this.hiddenPostScoreThresholdElement.value       = this.preferences.get("hiddenPostScoreThreshold");
+                this.hiddenCommentScoreThresholdElement.value     = this.preferences.get("hiddenCommentScoreThreshold");
+                this.showGooglePlusWhenNoPostsElement.checked     = this.preferences.get("showGooglePlusWhenNoPosts");
+                this.rememberTabsOnViewChangeElement.checked      = this.preferences.get("rememberTabsOnViewChange");
+                this.displayGooglePlusByDefaultElement.checked    = this.preferences.get("displayGooglePlusByDefault");
 
-            switch (window.getCurrentBrowser()) {
-                case Browser.CHROME:
-                    chrome.storage.sync.get(null, (items : AlienTubePreferenceKeys) => {
-                        this.hiddenPostScoreThresholdElement.value       = items.hiddenPostScoreThreshold || -4;
-                        this.hiddenCommentScoreThresholdElement.value     = items.hiddenCommentScoreThreshold || -4;
-                        this.showGooglePlusWhenNoPostsElement.checked     = items.showGooglePlusWhenNoPosts !== null ? items.showGooglePlusWhenNoPosts : true;
-                        this.rememberTabsOnViewChangeElement.checked      = items.rememberTabsOnViewChange !== null ? items.rememberTabsOnViewChange : true;
-                        this.displayGooglePlusByDefaultElement.checked    = items.displayGooglePlusByDefault !== null ? items.displayGooglePlusByDefault : false;
-                    });
-                    break;
-            }
+                this.saveOptionsButton.addEventListener("click", this.saveOptions.bind(this), false);
+                this.displayAboutDialogButton.addEventListener("click", this.displayAboutDialog.bind(this), false);
+                this.closeAboutDialogButton.addEventListener("click", this.closeAboutDialog.bind(this), false);
+                document.getElementById("cover").addEventListener("click", this.closeAboutDialog.bind(this), false);
+                document.getElementById('version').textContent = Options.getExtensionVersionNumber();
+            });
 
-            this.saveOptionsButton.addEventListener("click", this.saveOptions.bind(this), false);
-            this.displayAboutDialogButton.addEventListener("click", this.displayAboutDialog.bind(this), false);
-            this.closeAboutDialogButton.addEventListener("click", this.closeAboutDialog.bind(this), false);
-            document.getElementById("cover").addEventListener("click", this.closeAboutDialog.bind(this), false);
-            document.getElementById('version').textContent = Options.getExtensionVersionNumber();
         }
 
         saveOptions () {

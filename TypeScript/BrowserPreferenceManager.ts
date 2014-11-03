@@ -1,4 +1,4 @@
-/// <reference path="index.ts" />
+/// <reference path="Utilities.ts" />
 /**
     Namespace for All AlienTube operations.
     @namespace AlienTube
@@ -22,29 +22,35 @@ module AlienTube {
             excludedSubredditsSelectedByUser: []
         }
 
-        constructor () {
+        constructor (callback?) {
             this.preferences = {};
             switch (window.getCurrentBrowser()) {
                 case Browser.CHROME:
                     chrome.storage.sync.get(null, (settings) => {
                         this.preferences = settings;
+                        if (callback) {
+                            callback();
+                        }
                     });
                     break;
 
                 case Browser.FIREFOX:
                     this.preferences = self.options.preferences;
+                    if (callback) {
+                        callback();
+                    }
                     break;
 
                 case Browser.SAFARI:
-                    var uuid = Main.generateUUID();
-                    safari.self.addEventListener('message', (event) => {
-                        if (event.name == uuid) {
-                            var safariPref = JSON.parse(event.message);
-                            this.preferences = safariPref;
+                    var listener = safari.self.addEventListener('message', (event) => {
+                        var safariPref = JSON.parse(event.message);
+                        this.preferences = safariPref;
+                        if (callback) {
+                            callback();
                         }
                     }, false);
-                    safari.self.tab.dispatchMessage(uuid, {
-                        type: 'settings'
+                    safari.self.tab.dispatchMessage("settings", {
+                        'type': 'get'
                     });
                     break;
             }
@@ -64,7 +70,7 @@ module AlienTube {
 
                 case Browser.FIREFOX:
                     self.postMessage({
-                        type: 'setSettingsValue',
+                        type: 'setSettingsValues',
                         key: key,
                         value: value
                     });
