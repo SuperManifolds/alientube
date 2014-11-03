@@ -492,6 +492,11 @@
     border: 1px solid #d3d3d3;
     color: #333;
 
+    & > a {
+        color: rgb(51, 51, 51) !important;
+        pointer-events: none;
+    }
+
     &:hover {
         border: 1px solid #9c9c9c;
         z-index: 50;
@@ -511,6 +516,11 @@
 
         &:hover {
             border-bottom: 1px solid #fff;
+        }
+
+        & > a {
+            pointer-events: auto;
+            color: rgb(0, 102, 170) !important;
         }
     }
 
