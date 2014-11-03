@@ -32,7 +32,7 @@ module AlienTube {
 
             if (threadData[0].data.modhash.length > 0) {
                 this.commentSection.userIsSignedIn = true;
-                if (!threadData[0].data.modhash) {
+                if (!threadData[0].data.modhash || ! Main.Preferences.get("username")) {
                     new RedditUsernameRequest();
                 }
             } else {
