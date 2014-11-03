@@ -96,7 +96,7 @@ module AlienTube {
 
             /* Set the button text and link for the "parent" link button */
             var parentLinkElement = this.representedHTMLElement.querySelector(".at_parentlink");
-            permalinkElement.textContent = Main.localisationManager.get("post_button_parent");
+            parentLinkElement.textContent = Main.localisationManager.get("post_button_parent");
             parentLinkElement.setAttribute("href", "http://www.reddit.com" + commentThread.threadInformation.permalink + "#" + this.commentObject.parent_id.substring(3));
 
             /* Set the button text and the event handler for the "show source" button */
