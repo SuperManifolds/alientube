@@ -283,9 +283,12 @@ module AlienTube {
                     var tab = document.createElement("button");
                     tab.className = "at_tab";
                     tab.setAttribute("data-value", this.threadCollection[i].subreddit);
-                    var tabName = document.createTextNode(this.threadCollection[i].subreddit);
+                    var tabLink = document.createElement("a");
+                    tabLink.textContent = this.threadCollection[i].subreddit;
+                    tabLink.setAttribute("href", "http://reddit.com/r/" + this.threadCollection[i].subreddit);
+                    tabLink.setAttribute("target", "_blank");
                     tab.addEventListener("click", this.onSubredditTabClick.bind(this), false);
-                    tab.appendChild(tabName);
+                    tab.appendChild(tabLink);
                     tabContainer.insertBefore(tab, overflowContainer);
                 }
 
