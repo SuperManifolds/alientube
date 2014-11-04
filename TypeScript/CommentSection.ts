@@ -261,7 +261,7 @@ module AlienTube {
                 }
             } else if (itemFromResultSet.domain === "youtu.be") {
                 // For urls based on the shortened youtu.be domain, retrieve everything the path after the domain and compare it.
-                var urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.indexOf("/") + 1);
+                var urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.lastIndexOf("/") + 1);
                 var obj = urlSearch.split('?');
                 if (obj[0] === currentVideoIdentifier) {
                     return true;
