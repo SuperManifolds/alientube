@@ -444,7 +444,7 @@ module AlienTube {
             var tabElementClickedByUser = <HTMLButtonElement> eventObject.target;
 
             /* Only continue if the user did not click a tab that is already selected. */
-            if (!tabElementClickedByUser.classList.contains("active")) {
+            if (!tabElementClickedByUser.classList.contains("active") && tabElementClickedByUser.tagName == "BUTTON") {
                 var tabContainer = document.getElementById("at_tabcontainer");
                 var currentIndexOfNewTab = 0;
 
