@@ -32,7 +32,7 @@ module AlienTube {
                     this.set(loadingScreen.HTMLElement);
 
                     // Open a search request to Reddit for the video identfiier
-                    var videoSearchString = encodeURIComponent("url:'/watch?v=" + currentVideoIdentifier + "' (site:youtube.com OR site:youtu.be)");
+                    var videoSearchString = encodeURI("(url:3D" + currentVideoIdentifier + " OR url:" + currentVideoIdentifier + ") (site:youtube.com OR site:youtu.be)");
                     new RedditRequest("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (results) => {
 
                         // There are a number of ways the Reddit API can arbitrarily explode, here are some of them.
@@ -246,6 +246,17 @@ module AlienTube {
                     var requestPair = requestItems[i].split("=");
                     if (requestPair[0] === "v" && requestPair[1] === currentVideoIdentifier) {
                         return true;
+                    }
+                    if (requestPair[0] == "amp;u") {
+                        var component = decodeURIComponent(requestPair[1]);
+                        component = component.replace("/watch?", "");
+                        var shareRequestItems = component.split('&');
+                        for (var j = 0, slen = shareRequestItems.length; j < slen; j++) {
+                            var shareRequestPair = shareRequestItems[j].split("=");
+                            if (shareRequestPair[0] === "v" && shareRequestPair[1] === currentVideoIdentifier) {
+                                return true;
+                            }
+                        }
                     }
                 }
             } else if (itemFromResultSet.domain === "youtu.be") {
