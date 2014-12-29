@@ -824,10 +824,18 @@ body.darkmode {
             text-shadow: none;
             color: #fff;
 
+            & a {
+                color: #f0f0f0 !important;
+            }
+
             &.active {
                 background: #242424;
                 border: 1px solid rgb(46, 46, 46);
                 border-bottom: none;
+
+                & a {
+                    color: #0066aa !important;
+                }
             }
         }
 
