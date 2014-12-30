@@ -106,7 +106,7 @@ module AlienTube {
                                 }
 
                                 // Generate tabs.
-                                var tabContainerTemplate = this.template.getExtensionTemplateItem("tabcontainer");
+                                var tabContainerTemplate = Main.getExtensionTemplateItem(this.template, "tabcontainer");
                                 var tabContainer = <HTMLDivElement> tabContainerTemplate.querySelector("#at_tabcontainer");
                                 this.insertTabsIntoDocument(tabContainer, 0);
                                 window.addEventListener("resize", this.updateTabsToFitToBoundingContainer.bind(this), false);
@@ -201,7 +201,7 @@ module AlienTube {
             /* Add the "switch to Reddit" button in the google+ comment section */
             var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
             if (!redditButton) {
-                var redditButtonTemplate = this.template.getExtensionTemplateItem("switchtoreddit");
+                var redditButtonTemplate = Main.getExtensionTemplateItem(this.template, "switchtoreddit");
                 redditButton = <HTMLDivElement> redditButtonTemplate.querySelector("#at_switchtoreddit");
                 var redditText = <HTMLSpanElement> redditButton.querySelector("#at_reddittext");
                 redditText.textContent = Main.localisationManager.get("post_button_comments");
@@ -348,7 +348,7 @@ module AlienTube {
         * Set the comment section to the "No Results" page.
         */
         returnNoResults () {
-            var template = this.template.getExtensionTemplateItem("noposts");
+            var template = Main.getExtensionTemplateItem(this.template, "noposts");
             var message = template.querySelector(".single_line");
             message.textContent = Main.localisationManager.get("post_label_noresults");
 

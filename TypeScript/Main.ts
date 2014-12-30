@@ -161,6 +161,15 @@ module AlienTube {
                 document.head.appendChild(templateLink);
             }
         }
+
+        static getExtensionTemplateItem (templateCollection : any, id : string) {
+            if (window.getCurrentBrowser() === Browser.FIREFOX) {
+                return templateCollection.querySelector("#" + id).content.cloneNode(true);
+            } else {
+                return templateCollection.getElementById(id).content.cloneNode(true);
+            }
+        }
+
         /**
         * Generate a UUID 4 sequence.
         * @returns A UUID 4 sequence as string.

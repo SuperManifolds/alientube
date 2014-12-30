@@ -4,16 +4,11 @@
 
 interface Object {
     isRedditPreservedPost: () => boolean;
-    getExtensionTemplateItem: (id : string) => HTMLDivElement;
 }
 
 interface Window {
     isYouTubeVideoPage: () => boolean;
     getCurrentBrowser: () => Browser;
-}
-
-interface HTMLElement {
-    getExtensionTemplateItem: (id : string) => HTMLDivElement;
 }
 
 /**
@@ -30,25 +25,6 @@ if (!Object.prototype.isRedditPreservedPost) {
         return ((currentEpochTime - this.created_utc) >= 15552000);
     }
 }
-
-function getExtensionTemplateItem(id) {
-    if (!this) {
-        return false;
-    }
-    if (window.getCurrentBrowser() === Browser.FIREFOX) {
-        return this.querySelector("#" + id).content.cloneNode(true);
-    } else {
-        return this.getElementById(id).content.cloneNode(true);
-    }
-}
-
-if (!Object.prototype.getExtensionTemplateItem) {
-    Object.prototype.getExtensionTemplateItem = getExtensionTemplateItem;
-}
-if (!HTMLElement.prototype.getExtensionTemplateItem) {
-    HTMLElement.prototype.getExtensionTemplateItem = getExtensionTemplateItem;
-}
-
 
 /**
     Determine whether the current url of the tab is a YouTube video page.

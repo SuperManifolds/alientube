@@ -15,7 +15,7 @@ module AlienTube {
         private reportContainer;
 
         constructor (thing : string, commentThread : CommentThread, isThread : boolean) {
-            var reportTemplate = commentThread.commentSection.template.getElementById("report").content.cloneNode(true);
+            var reportTemplate = Main.getExtensionTemplateItem(commentThread.commentSection.template, "report");
             this.reportContainer = reportTemplate.querySelector(".at_report");
 
             /* Set localisation text for the various report reasons */

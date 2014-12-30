@@ -21,7 +21,7 @@ module AlienTube {
             this.commentObject = commentData;
             this.commentThread = commentThread;
 
-            var template = this.commentThread.commentSection.template.getExtensionTemplateItem("comment");
+            var template = Main.getExtensionTemplateItem(this.commentThread.commentSection.template, "comment");
             this.representedHTMLElement = <HTMLDivElement> template.querySelector(".at_comment");
 
             /* Set the id for the comment in question so it can be correlated with the Comment Object */

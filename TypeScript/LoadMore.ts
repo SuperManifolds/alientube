@@ -21,7 +21,7 @@ module AlienTube {
             this.commentThread = commentThread;
             this.referenceParent = referenceParent;
 
-            this.representedHTMLElement = commentThread.commentSection.template.getExtensionTemplateItem("loadmore");
+            this.representedHTMLElement = Main.getExtensionTemplateItem(commentThread.commentSection.template, "loadmore");
 
             /* Display the amount of replies available to load */
             var replyCount = this.representedHTMLElement.querySelector(".at_replycount");
