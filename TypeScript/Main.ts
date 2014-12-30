@@ -101,12 +101,12 @@ module AlienTube {
                     if (timeUnits[timeUnit] > 1) {
                         return Main.localisationManager.get("timestamp_format", [
                             timeUnits[timeUnit],
-                            Main.localisationManager.get("timestamp_format_" + timeUnit + "_plural")
+                            Main.localisationManager.get("timestamp_format_" + timeUnit.toLowerCase() + "_plural")
                         ]);
                     } else {
                         return Main.localisationManager.get("timestamp_format", [
                             timeUnits[timeUnit],
-                            Main.localisationManager.get("timestamp_format_" + timeUnit)
+                            Main.localisationManager.get("timestamp_format_" + timeUnit.toLowerCase())
                         ]);
                     }
                 }
