@@ -398,6 +398,10 @@ module AlienTube {
             be rendered and is pointless. */
             window.requestAnimationFrame(() => {
                 var tabContainer = document.getElementById("at_tabcontainer");
+
+                if (!tabContainer) {
+                    return;
+                }
                 var overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
 
                 /* Iterate over the tabs until we find the one that is currently selected, and store its value. */
