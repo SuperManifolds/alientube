@@ -41,8 +41,10 @@ module AlienTube {
                         if (localisationItem) {
                             var message = localisationItem.message;
                             for (var placeholder in localisationItem.placeholders) {
-                                var placeHolderArgumentIndex = parseInt(localisationItem.placeholders[placeholder].content.substring(1), 10);
-                                message = message.replace("$" + placeholder.toUpperCase() + "$", placeholders[placeHolderArgumentIndex - 1]);
+                                if (localisationItem.placeholders.hasOwnProperty(placeholder)) {
+                                    var placeHolderArgumentIndex = parseInt(localisationItem.placeholders[placeholder].content.substring(1), 10);
+                                    message = message.replace("$" + placeholder.toUpperCase() + "$", placeholders[placeHolderArgumentIndex - 1]);
+                                }
                             }
                             return message;
                         }
