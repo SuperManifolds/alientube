@@ -18,7 +18,8 @@ var contentScriptData = {
 
     preferences: {},
     localisation: data.load('_locales/' + locale + '/messages.json'),
-    template: data.load('templates.html')
+    template: data.load('templates.html'),
+    version: require('sdk/self').version
 };
 
 preferences.keys("extensions." + addonid).forEach(function(key) {

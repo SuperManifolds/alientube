@@ -103,6 +103,11 @@ module AlienTube {
             switch (window.getCurrentBrowser()) {
                 case Browser.CHROME:
                     return chrome.app.getDetails().version;
+                    break;
+
+                case Browser.FIREFOX:
+                    return self.options.version;
+                    break;
             }
             return "";
         }
