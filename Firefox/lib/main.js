@@ -23,7 +23,6 @@ var contentScriptData = {
 };
 
 preferences.keys("extensions." + addonid).forEach(function(key) {
-    console.log(key);
     contentScriptData.preferences[key.substr(key.lastIndexOf('.') + 1)] = preferences.get(key);
 });
 
