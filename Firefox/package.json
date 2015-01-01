@@ -11,39 +11,12 @@
         "cross-domain-content": ["https://api.reddit.com/"]
     },
 
-    "preferences": [{
-        "name": "hiddenPostScoreThreshold",
-        "title": "Do not display posts with a score less than",
-        "description": "",
-        "type": "integer",
-        "value": -5
-    },
-    {
-        "name": "hiddenCommentScoreThreshold",
-        "title": "Do not display comments with a score less than",
-        "description": "",
-        "type": "integer",
-        "value": -4
-    },
-    {
-        "name": "showGooglePlusWhenNoPosts",
-        "title": "Display Google+ comments if no Reddit comments are found",
-        "description": "",
-        "type": "bool",
-        "value": true
-    },
-    {
-        "name": "rememberTabsOnViewChange",
-        "title": "Remember the contents of tabs when you switch from them",
-        "description": "",
-        "type": "bool",
-        "value": true
-    },
-    {
-        "name": "displayGooglePlusByDefault",
-        "title": "Show the Google+ comments by default",
-        "description": "",
-        "type": "bool",
-        "value": false
-    }]
+    "preferences": [
+        {
+            "type": "control",
+            "label": "Open AlienTube Preferences",
+            "name": "openPreferences",
+            "title": "Click here to open preferences"
+        }
+    ]
 }

@@ -2,6 +2,7 @@ Chrome/js/*
 Chrome/res/*
 Chrome/_locales/*
 Chrome/TypeScript/*
+!Chrome/res/load_options.js
 
 Firefox/data/*
 Firefox/TypeScript/*

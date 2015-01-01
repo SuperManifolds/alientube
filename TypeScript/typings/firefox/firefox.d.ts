@@ -28,6 +28,7 @@ interface Apps {
 
 interface Window {
     on(id:string, callback:any): void;
+	port: any;
 	postMessage(object): void;
     options: any;
 }

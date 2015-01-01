@@ -29,7 +29,7 @@ module AlienTube {
                     chrome.storage.sync.get(null, (settings) => {
                         this.preferences = settings;
                         if (callback) {
-                            callback();
+                            callback(this);
                         }
                     });
                     break;
@@ -37,7 +37,7 @@ module AlienTube {
                 case Browser.FIREFOX:
                     this.preferences = self.options.preferences;
                     if (callback) {
-                        callback();
+                        callback(this);
                     }
                     break;
 
@@ -46,7 +46,7 @@ module AlienTube {
                         var safariPref = JSON.parse(event.message);
                         this.preferences = safariPref;
                         if (callback) {
-                            callback();
+                            callback(this);
                         }
                     }, false);
                     safari.self.tab.dispatchMessage("settings", {
@@ -69,8 +69,7 @@ module AlienTube {
                     break;
 
                 case Browser.FIREFOX:
-                    self.postMessage({
-                        type: 'setSettingsValues',
+                    self.port.emit("setSettingsValue", {
                         key: key,
                         value: value
                     });

@@ -43,17 +43,17 @@ module AlienTube {
             document.title = this.localisationManager.get("options_button_save");
             document.getElementById("versiontext").textContent = this.localisationManager.get("options_label_version");
 
-            this.preferences = new BrowserPreferenceManager(() => {
+            this.preferences = new BrowserPreferenceManager((preferences) => {
                 for (var i = 0, len = this.preferenceKeyList.length; i < len; i++) {
                     var label = <HTMLLabelElement> document.querySelector("label[for='" + this.preferenceKeyList[i] + "']");
                     label.textContent = this.localisationManager.get("options_label_" + this.preferenceKeyList[i]);
                 }
 
-                this.hiddenPostScoreThresholdElement.value       = this.preferences.get("hiddenPostScoreThreshold");
-                this.hiddenCommentScoreThresholdElement.value     = this.preferences.get("hiddenCommentScoreThreshold");
-                this.showGooglePlusWhenNoPostsElement.checked     = this.preferences.get("showGooglePlusWhenNoPosts");
-                this.rememberTabsOnViewChangeElement.checked      = this.preferences.get("rememberTabsOnViewChange");
-                this.displayGooglePlusByDefaultElement.checked    = this.preferences.get("displayGooglePlusByDefault");
+                this.hiddenPostScoreThresholdElement.value        = preferences.get("hiddenPostScoreThreshold");
+                this.hiddenCommentScoreThresholdElement.value     = preferences.get("hiddenCommentScoreThreshold");
+                this.showGooglePlusWhenNoPostsElement.checked     = preferences.get("showGooglePlusWhenNoPosts");
+                this.rememberTabsOnViewChangeElement.checked      = preferences.get("rememberTabsOnViewChange");
+                this.displayGooglePlusByDefaultElement.checked    = preferences.get("displayGooglePlusByDefault");
 
                 this.saveOptionsButton.addEventListener("click", this.saveOptions.bind(this), false);
                 this.displayAboutDialogButton.addEventListener("click", this.displayAboutDialog.bind(this), false);
@@ -72,17 +72,13 @@ module AlienTube {
                 this.hiddenCommentScoreThresholdElement.value = -4;
             }
 
-            switch (window.getCurrentBrowser()) {
-                case Browser.CHROME:
-                    chrome.storage.sync.set({
-                        'hiddenPostScoreThreshold' :    this.hiddenPostScoreThresholdElement.value,
-                        'hiddenCommentScoreThreshold':  this.hiddenCommentScoreThresholdElement.value,
-                        'showGooglePlusWhenNoPosts':    this.showGooglePlusWhenNoPostsElement.checked,
-                        'rememberTabsOnViewChange':     this.rememberTabsOnViewChangeElement.checked,
-                        'displayGooglePlusByDefault':   this.displayGooglePlusByDefaultElement.checked
-                    }, this.displayOptionsSavedTicker.bind(this));
-                    break;
-            }
+            this.preferences.set('hiddenPostScoreThreshold', this.hiddenPostScoreThresholdElement.value);
+            this.preferences.set('hiddenCommentScoreThreshold', this.hiddenCommentScoreThresholdElement.value);
+            this.preferences.set('showGooglePlusWhenNoPosts', this.showGooglePlusWhenNoPostsElement.checked);
+            this.preferences.set('rememberTabsOnViewChange', this.rememberTabsOnViewChangeElement.checked);
+            this.preferences.set('displayGooglePlusByDefault', this.displayGooglePlusByDefaultElement.checked);
+
+            this.displayOptionsSavedTicker.bind(this);
         }
 
         displayAboutDialog () {
@@ -121,6 +117,4 @@ module AlienTube {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    new AlienTube.Options();
-}, false);
+new AlienTube.Options();
