@@ -92,38 +92,40 @@ module AlienTube {
                                     }
                                 }
 
-                                // Sort subreddits so the one with the highest score/comment relation (or is in the description) is first in the list.
-                                this.threadCollection.sort(function(a, b) {
-                                    return ((b.score + (b.num_comments * 10)) - (a.score + (a.num_comments * 10)));
-                                });
-                                for (var i = 0, len = this.threadCollection.length; i < len; i++) {
-                                    if (this.threadCollection[i].subreddit === preferredSubreddit) {
-                                        var threadDataForFirstTab = this.threadCollection[i];
-                                        this.threadCollection.splice(i, 1);
-                                        this.threadCollection.splice(0, 0, threadDataForFirstTab);
-                                        break;
+                                if (this.threadCollection.length > 0) {
+                                    // Sort subreddits so the one with the highest score/comment relation (or is in the description) is first in the list.
+                                    this.threadCollection.sort(function(a, b) {
+                                        return ((b.score + (b.num_comments * 10)) - (a.score + (a.num_comments * 10)));
+                                    });
+                                    for (var i = 0, len = this.threadCollection.length; i < len; i++) {
+                                        if (this.threadCollection[i].subreddit === preferredSubreddit) {
+                                            var threadDataForFirstTab = this.threadCollection[i];
+                                            this.threadCollection.splice(i, 1);
+                                            this.threadCollection.splice(0, 0, threadDataForFirstTab);
+                                            break;
+                                        }
                                     }
+
+                                    // Generate tabs.
+                                    var tabContainerTemplate = Main.getExtensionTemplateItem(this.template, "tabcontainer");
+                                    var tabContainer = <HTMLDivElement> tabContainerTemplate.querySelector("#at_tabcontainer");
+                                    this.insertTabsIntoDocument(tabContainer, 0);
+                                    window.addEventListener("resize", this.updateTabsToFitToBoundingContainer.bind(this), false);
+
+                                    var mainContainer = this.set(tabContainer);
+                                    mainContainer.appendChild(tabContainerTemplate.querySelector("#at_comments"));
+
+                                    // If the selected post is prioritised, marked it as such
+                                    if (this.threadCollection[0].id === preferredPost || this.threadCollection[0].subreddit === preferredSubreddit) {
+                                        this.threadCollection[0].official = true;
+                                    }
+
+                                    // Load the first tab.
+                                    this.downloadThread(this.threadCollection[0]);
+                                    return;
                                 }
-
-                                // Generate tabs.
-                                var tabContainerTemplate = Main.getExtensionTemplateItem(this.template, "tabcontainer");
-                                var tabContainer = <HTMLDivElement> tabContainerTemplate.querySelector("#at_tabcontainer");
-                                this.insertTabsIntoDocument(tabContainer, 0);
-                                window.addEventListener("resize", this.updateTabsToFitToBoundingContainer.bind(this), false);
-
-                                var mainContainer = this.set(tabContainer);
-                                mainContainer.appendChild(tabContainerTemplate.querySelector("#at_comments"));
-
-                                // If the selected post is prioritised, marked it as such
-                                if (this.threadCollection[0].id === preferredPost || this.threadCollection[0].subreddit === preferredSubreddit) {
-                                    this.threadCollection[0].official = true;
-                                }
-
-                                // Load the first tab.
-                                this.downloadThread(this.threadCollection[0]);
-                            } else {
-                                this.returnNoResults();
                             }
+                            this.returnNoResults();
                         }
                     }, null, loadingScreen);
                 });
