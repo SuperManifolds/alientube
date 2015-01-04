@@ -1,6 +1,5 @@
 /* browser: true */
 /* global require */
-require("sdk/preferences/service").set("javascript.options.strict", false);
 var pageMod = require("sdk/page-mod");
 var data = require("sdk/self").data;
 var preferences = require("sdk/preferences/service");
