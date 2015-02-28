@@ -219,6 +219,13 @@ module AlienTube {
             googlePlusContainer.style.display = "block";
             var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
             redditButton.style.display = "block";
+
+            /* Terrible hack to force Google+ to reload the comments by making it think the user has resized the window.
+               Having to do this makes me sad.  */
+            document.body.style.width = document.body.offsetWidth + "px";
+            window.getComputedStyle(document.body, null);
+            document.body.style.width = "auto";
+            window.getComputedStyle(document.body, null);
         }
 
         onUpvoteControllerClick (eventObject : Event) {
