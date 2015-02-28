@@ -82,7 +82,7 @@ cp lib/script.js Firefox/data/script.map
 
 cp -fr TypeScript Chrome/
 cp -fr TypeScript Safari.safariextension/
-cp -fr TypeScript Firefox/data
+cp -fr TypeScript Firefox/data/TypeScript
 
 cp -fr _locales Chrome/
 cp -fr _locales Safari.safariextension/
