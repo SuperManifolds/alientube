@@ -21,6 +21,12 @@ module AlienTube {
             var errorHeader = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_errorheader");
             var errorText = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_errortext");
 
+            /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
+            var googlePlusButton = this.representedHTMLElement.querySelector("#at_switchtogplus");
+            var googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
+            googlePlusText.textContent = Main.localisationManager.get("post_button_comments");
+            googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
+
             switch (errorState) {
                 case ErrorState.NOT_FOUND:
                     /* Reddit.com uses 5 different randomly selected visuals for their 404 graphic, their path consists of a letter from
@@ -75,6 +81,15 @@ module AlienTube {
 
         private reload () {
             Main.commentSection = new CommentSection(Main.getCurrentVideoId());
+        }
+
+        private onGooglePlusClick (eventObject : Event) {
+            var alienTubeContainer = document.getElementById("alientube");
+            alienTubeContainer.style.display = "none";
+            var googlePlusContainer = document.getElementById("watch-discussion");
+            googlePlusContainer.style.display = "block";
+            var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
+            redditButton.style.display = "block";
         }
     }
 
