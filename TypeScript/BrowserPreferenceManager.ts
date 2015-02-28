@@ -113,7 +113,8 @@ module AlienTube {
                 "rights4men",
                 "muhfeelings",
                 "polistan",
-                "collapse"
+                "collapse",
+                "retardedcripples"
             ];
         }
     }
