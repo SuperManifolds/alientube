@@ -40,7 +40,7 @@ module AlienTube {
             this.displayAboutDialogButton.textContent = this.localisationManager.get("options_button_about");
             this.closeAboutDialogButton.textContent = this.localisationManager.get("options_button_close");
 
-            document.title = this.localisationManager.get("options_button_save");
+            document.title = this.localisationManager.get("options_button_title");
             document.getElementById("versiontext").textContent = this.localisationManager.get("options_label_version");
 
             this.preferences = new BrowserPreferenceManager((preferences) => {
