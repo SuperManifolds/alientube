@@ -200,22 +200,24 @@ module AlienTube {
                 document.body.classList.add("darkmode");
             }
 
-            /* Add the "switch to Reddit" button in the google+ comment section */
-            var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
-            if (!redditButton) {
-                var redditButtonTemplate = Main.getExtensionTemplateItem(this.template, "switchtoreddit");
-                redditButton = <HTMLDivElement> redditButtonTemplate.querySelector("#at_switchtoreddit");
-                var redditText = <HTMLSpanElement> redditButton.querySelector("#at_reddittext");
-                redditText.textContent = Main.localisationManager.get("post_button_comments");
-                redditButton.addEventListener("click", this.onRedditClick, true);
-                googlePlusContainer.parentNode.insertBefore(redditButton, googlePlusContainer);
-            }
+            if (googlePlusContainer) {
+                /* Add the "switch to Reddit" button in the google+ comment section */
+                var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
+                if (!redditButton) {
+                    var redditButtonTemplate = Main.getExtensionTemplateItem(this.template, "switchtoreddit");
+                    redditButton = <HTMLDivElement> redditButtonTemplate.querySelector("#at_switchtoreddit");
+                    var redditText = <HTMLSpanElement> redditButton.querySelector("#at_reddittext");
+                    redditText.textContent = Main.localisationManager.get("post_button_comments");
+                    redditButton.addEventListener("click", this.onRedditClick, true);
+                    googlePlusContainer.parentNode.insertBefore(redditButton, googlePlusContainer);
+                }
 
-            if (Main.Preferences.get("displayGooglePlusByDefault")) {
-                redditContainer.style.display = "none"
-                redditButton.style.display = "block";
-            } else {
-                googlePlusContainer.style.display = "none";
+                if (Main.Preferences.get("displayGooglePlusByDefault")) {
+                    redditContainer.style.display = "none"
+                    redditButton.style.display = "block";
+                } else {
+                    googlePlusContainer.style.display = "none";
+                }
             }
 
             /* Add AlienTube contents*/
