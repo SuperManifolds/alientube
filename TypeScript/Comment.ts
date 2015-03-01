@@ -78,7 +78,7 @@ module AlienTube {
             /* Render the markdown and set the actual comement messsage of the comment */
             var contentTextOfComment = this.representedHTMLElement.querySelector(".at_commentcontent");
             var contentTextHolder = document.createElement("span");
-            contentTextHolder.innerHTML = SnuOwnd.getParser().render(this.commentObject.body);
+            contentTextHolder.innerHTML = SnuOwnd.getParser().render(he.decode(this.commentObject.body));
             contentTextOfComment.appendChild(contentTextHolder);
             if (this.commentObject.body === "[deleted]") {
                 this.representedHTMLElement.classList.add("deleted");

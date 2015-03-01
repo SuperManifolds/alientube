@@ -33,6 +33,7 @@ pageMod.PageMod({
     ],
     contentScriptFile: [
         data.url("snuownd.js"),
+        data.url("he.js"),
         data.url("script.js"),
     ],
     onAttach: function(worker) {

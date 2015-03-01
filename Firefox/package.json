@@ -5,7 +5,7 @@
   "description": "Reddit comments, in your YouTube!",
   "author": "Delexious",
   "license": "BSD 3",
-  "version": "2.1.4",
+  "version": "2.1.5",
 
     "permissions": {
         "cross-domain-content": ["https://api.reddit.com/"]

@@ -18,6 +18,7 @@ if [ "$1" == "--init" ]; then
     cp -fr res/icon128.png Chrome/res
     cp -fr res/widgets.css Chrome/res
     cp -fr lib/snuownd.js Chrome/js
+    cp -fr lib/he.js Chrome/js
 
     echo Copying Safari Resources
     cp -fr res/redditbroken.svg Safari.safariextension/res
@@ -26,6 +27,7 @@ if [ "$1" == "--init" ]; then
     cp -fr res/chrome_shared.css Safari.safariextension/res
     cp -fr res/widgets.css Safari.safariextension/res
     cp -fr lib/snuownd.js Safari.safariextension/js
+    cp -fr lib/he.js Safari.safariextension/js
 
     echo Copying Firefox Resources
     cp -fr res/redditbroken.svg Firefox/data
@@ -34,6 +36,7 @@ if [ "$1" == "--init" ]; then
     cp -fr res/chrome_shared.css Firefox/data
     cp -fr res/widgets.css Firefox/data
     cp -fr lib/snuownd.js Firefox/data
+    cp -fr lib/he.js Firefox/data
     echo
 
     echo Updating Options HTML Page
