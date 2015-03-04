@@ -32,7 +32,7 @@ module AlienTube {
                     this.set(loadingScreen.HTMLElement);
 
                     // Open a search request to Reddit for the video identfiier
-                    var videoSearchString = encodeURI("(url:3D" + currentVideoIdentifier + " OR url:" + currentVideoIdentifier + ") (site:youtube.com OR site:youtu.be)");
+                    var videoSearchString = encodeURI("(url:\"3D" + currentVideoIdentifier + "\" OR url:\"" + currentVideoIdentifier + "\") (site:youtube.com OR site:youtu.be)");
                     new RedditRequest("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (results) => {
 
                         // There are a number of ways the Reddit API can arbitrarily explode, here are some of them.
