@@ -87,7 +87,6 @@ module AlienTube {
             var timeUnits = {
                 Year:   Math.floor(secs / 60 / 60 / 24 / 365.27),
                 Month:  Math.floor(secs / 60 / 60 / 24 / 30),
-                Week:   Math.floor(secs / 60 / 60 / 24 / 7),
                 Day:    Math.floor(secs / 60 / 60 / 24),
                 Hour:   Math.floor(secs / 60 / 60),
                 Minute: Math.floor(secs / 60),

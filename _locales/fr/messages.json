@@ -21,14 +21,6 @@
         "message": "mois",
         "description": "Plural form of the date unit 'Month' for timestamps."
     },
-    "timestamp_format_week": {
-        "message": "semaine",
-        "description": "Singular form of the date unit 'Week' for timestamps."
-    },
-    "timestamp_format_week_plural": {
-        "message": "semaines",
-        "description": "Plural form of the date unit 'Week' for timestamps."
-    },
     "timestamp_format_day": {
         "message": "jour",
         "description": "Singular form of the date unit 'Day' for timestamps."
