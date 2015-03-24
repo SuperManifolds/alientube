@@ -37,6 +37,7 @@ if [ "$1" == "--init" ]; then
     cp -fr res/widgets.css Firefox/data
     cp -fr lib/snuownd.js Firefox/data
     cp -fr lib/he.js Firefox/data
+    cp -fr lib/handlebars-v3.0.0.js Firefox/data
     echo
 
     echo Updating Options HTML Page

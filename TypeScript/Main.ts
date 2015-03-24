@@ -140,12 +140,12 @@ module AlienTube {
         static getExtensionTemplates (callback : any) {
             if (window.getCurrentBrowser() === Browser.FIREFOX) {
                 var templateHTML = self.options.template;
-                var templateContainer = document.createElement('div');
-                templateContainer.id = "alientubeTemplate";
-                templateContainer.innerHTML = templateHTML;
-                document.body.appendChild(templateContainer);
+                var template = document.createElement("div");
+                var handlebarHTML = Handlebars.compile(templateHTML);
+                template.innerHTML = handlebarHTML();
+
                 if (callback) {
-                    callback(templateContainer);
+                    callback(template);
                 }
             } else {
                 var templateLink = document.createElement("link");
