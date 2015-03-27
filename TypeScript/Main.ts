@@ -17,26 +17,27 @@ module AlienTube {
         constructor () {
             // Load stylesheet from disk.
             Main.Preferences = new BrowserPreferenceManager();
-            Main.localisationManager = new LocalisationManager();
+            Main.localisationManager = new LocalisationManager(() => {
+                if (window.getCurrentBrowser() == Browser.SAFARI) {
+                    var stylesheet = document.createElement("link");
+                    stylesheet.setAttribute("href", Main.getExtensionRessourcePath("style.css"));
+                    stylesheet.setAttribute("type", "text/css");
+                    stylesheet.setAttribute("rel", "stylesheet");
+                    document.head.appendChild(stylesheet);
+                }
 
-            if (window.getCurrentBrowser() == Browser.SAFARI) {
-                var stylesheet = document.createElement("link");
-                stylesheet.setAttribute("href", Main.getExtensionRessourcePath("style.css"));
-                stylesheet.setAttribute("type", "text/css");
-                stylesheet.setAttribute("rel", "stylesheet");
-                document.head.appendChild(stylesheet);
-            }
+                // Start observer to detect when a new video is loaded.
+                var observer = new MutationObserver(this.mutationObserver);
+                var config = { attributes : true, childList : true, characterData : true };
+                observer.observe(document.getElementById("content"), config);
 
-            // Start observer to detect when a new video is loaded.
-            var observer = new MutationObserver(this.mutationObserver);
-            var config = { attributes : true, childList : true, characterData : true };
-            observer.observe(document.getElementById("content"), config);
+                // Start a new comment section.
+                this.currentVideoIdentifier = Main.getCurrentVideoId();
+                if (window.isYouTubeVideoPage) {
+                    Main.commentSection = new CommentSection(this.currentVideoIdentifier);
+                }
+            });
 
-            // Start a new comment section.
-            this.currentVideoIdentifier = Main.getCurrentVideoId();
-            if (window.isYouTubeVideoPage) {
-                Main.commentSection = new CommentSection(this.currentVideoIdentifier);
-            }
         }
 
         /**
@@ -138,47 +139,50 @@ module AlienTube {
             Get the HTML templates for the extension
         */
         static getExtensionTemplates (callback : any) {
-            if (window.getCurrentBrowser() === Browser.FIREFOX) {
-                var templateHTML = self.options.template;
-                var template = document.createElement("div");
-                var handlebarHTML = Handlebars.compile(templateHTML);
-                template.innerHTML = handlebarHTML();
+            switch(window.getCurrentBrowser()) {
+                case Browser.FIREFOX:
+                    var templateHTML = self.options.template;
+                    var template = document.createElement("div");
+                    var handlebarHTML = Handlebars.compile(templateHTML);
+                    template.innerHTML = handlebarHTML();
 
-                if (callback) {
-                    callback(template);
-                }
-            } else {
-                var templateLink = document.createElement("link");
-                templateLink.id = "alientubeTemplate";
-                templateLink.onload = () => {
                     if (callback) {
-                        callback(templateLink.import);
+                        callback(template);
                     }
-                }
-                templateLink.setAttribute("rel", "import");
-                templateLink.setAttribute("href", Main.getExtensionRessourcePath("templates.html"));
-                document.head.appendChild(templateLink);
+                    break;
+
+                case Browser.SAFARI:
+                    new HttpRequest(Main.getExtensionRessourcePath("templates.html"), RequestType.GET, (data) => {
+                        var template = document.createElement("div");
+                        template.innerHTML = data;
+                        document.head.appendChild(template);
+                        if (callback) {
+                            callback(template);
+                        }
+                    }, null, null);
+                    break;
+
+                case Browser.CHROME:
+                    var templateLink = document.createElement("link");
+                    templateLink.id = "alientubeTemplate";
+                    templateLink.onload = () => {
+                        if (callback) {
+                            callback(templateLink.import);
+                        }
+                    }
+                    templateLink.setAttribute("rel", "import");
+                    templateLink.setAttribute("href", Main.getExtensionRessourcePath("templates.html"));
+                    document.head.appendChild(templateLink);
+                    break;
             }
         }
 
         static getExtensionTemplateItem (templateCollection : any, id : string) {
-            if (window.getCurrentBrowser() === Browser.FIREFOX) {
-                return templateCollection.querySelector("#" + id).content.cloneNode(true);
-            } else {
+            if (window.getCurrentBrowser() === Browser.CHROME) {
                 return templateCollection.getElementById(id).content.cloneNode(true);
+            } else {
+                return templateCollection.querySelector("#" + id).content.cloneNode(true);
             }
-        }
-
-        /**
-        * Generate a UUID 4 sequence.
-        * @returns A UUID 4 sequence as string.
-        */
-        static generateUUID () : string {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                var r = Math.random() * 16 | 0,
-                v = c === 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
         }
     }
 }

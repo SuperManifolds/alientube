@@ -42,23 +42,46 @@ module AlienTube {
                     break;
 
                 case Browser.SAFARI:
-                    var listener = safari.self.addEventListener('message', (event) => {
-                        var safariPref = JSON.parse(event.message);
-                        this.preferences = safariPref;
-                        if (callback) {
-                            callback(this);
+                    var listener = safari.self.addEventListener('message', function listenerFunction (event) {
+                        if (event.name == "preferences") {
+                            console.log("received");
+                            this.preferences = event.message;
+
+                            if (callback) {
+                                callback(this);
+                            }
                         }
                     }, false);
-                    safari.self.tab.dispatchMessage("settings", {
-                        'type': 'get'
-                    });
+                    safari.self.tab.dispatchMessage("getPreferences", null);
+                    if (callback) {
+                        callback(this);
+                    }
                     break;
             }
         }
 
 
-        get (key: string): any {
+        private get (key: string) : any {
             return this.preferences[key] !== null && typeof (this.preferences[key]) !== 'undefined' ? this.preferences[key] : this.defaults[key];
+        }
+
+        getString (key : string) : string {
+            return this.get(key);
+        }
+
+        getNumber (key : string) : number {
+            return parseInt(this.get(key), 10);
+        }
+
+        getBoolean (key : string) : boolean {
+            return window.parseBoolean(this.get(key));
+        }
+
+        getArray (key : string) : string[] {
+            if (this.get(key).constructor == Array) {
+                return this.get(key);
+            }
+            return JSON.parse(this.get(key));
         }
 
         set (key: string, value: any): void {
@@ -76,10 +99,9 @@ module AlienTube {
                     break;
 
                 case Browser.SAFARI:
-                    safari.self.tab.dispatchMessage(null, {
-                        type: 'setSettingsValue',
-                        key: key,
-                        value: value
+                    safari.self.tab.dispatchMessage("setPreference", {
+                        'key': key,
+                        'value': value
                     });
                     break;
             }

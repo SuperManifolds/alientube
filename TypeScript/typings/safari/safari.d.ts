@@ -7,6 +7,7 @@
 
 declare module safari.self {
     export function addEventListener(type: string, callback:any, useCapture:boolean);
+    export function removeEventListener(type: string, callback:any, useCapture:boolean);
 }
 
 declare module safari.self.tab {

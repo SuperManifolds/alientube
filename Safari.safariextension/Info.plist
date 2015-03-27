@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Delexious</string>
 	<key>Builder Version</key>
-	<string>10600.3.10.2</string>
+	<string>10600.3.14</string>
 	<key>CFBundleDisplayName</key>
 	<string>AlienTube</string>
 	<key>CFBundleIdentifier</key>
@@ -13,11 +13,13 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1.4</string>
+	<string>2.1.8</string>
 	<key>CFBundleVersion</key>
-	<string>2.1.4</string>
+	<string>2.1.8</string>
 	<key>Chrome</key>
 	<dict>
+		<key>Database Quota</key>
+		<real>5242880</real>
 		<key>Global Page</key>
 		<string>global.html</string>
 	</dict>
@@ -27,10 +29,8 @@
 		<dict>
 			<key>End</key>
 			<array>
-				<string>js/jquery-1.9.1.min.js</string>
-				<string>js/mustache.js</string>
 				<string>js/snuownd.js</string>
-				<string>js/raven.min.js</string>
+				<string>js/he.js</string>
 				<string>js/script.js</string>
 			</array>
 		</dict>

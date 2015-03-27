@@ -4,81 +4,13 @@
 <array>
 	<dict>
 		<key>DefaultValue</key>
-		<real>-4</real>
-		<key>Key</key>
-		<string>hiddenPostsScoreThreshold</string>
-		<key>Title</key>
-		<string>Don't show me submissions with a score less than</string>
-		<key>Type</key>
-		<string>TextField</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>-4</real>
-		<key>Key</key>
-		<string>hiddenCommentScoreThreshold</string>
-		<key>Title</key>
-		<string>Don't show me comments with a score less than</string>
-		<key>Type</key>
-		<string>TextField</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
 		<false/>
 		<key>Key</key>
-		<string>featherDescriptionPlacement</string>
+		<string>openSettings</string>
 		<key>Title</key>
-		<string>Collapse comment box into description in YouTube Feather</string>
+		<string>Click me to open AlienTube settings</string>
 		<key>Type</key>
 		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<false/>
-		<key>Key</key>
-		<string>disablePostHeader</string>
-		<key>Title</key>
-		<string>Hide the post header</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<false/>
-		<key>Key</key>
-		<string>disableTabs</string>
-		<key>Title</key>
-		<string>Hide the tab bar</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<false/>
-		<key>Key</key>
-		<string>minimiseCommentBox</string>
-		<key>Title</key>
-		<string>Minimise the comment box</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-    <dict>
-		<key>DefaultValue</key>
-		<false/>
-		<key>Key</key>
-		<string>dontShowGplus</string>
-		<key>Title</key>
-		<string>Do not display the Google Plus comment section when no results are found.</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>Key</key>
-		<string>modhash</string>
-	</dict>
-	<dict>
-		<key>Key</key>
-		<string>username</string>
 	</dict>
 </array>
 </plist>

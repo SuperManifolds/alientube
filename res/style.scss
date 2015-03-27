@@ -108,8 +108,8 @@
         position: relative;
         width:  100%;
         line-height: 1.25;
-        display: flex;
-        flex-direction: row;
+        @include display(flex);
+        @include flex-direction(row);
         padding-right: 110px;
         box-sizing: border-box;
 
@@ -479,7 +479,7 @@
 }
 
 .at_tab {
-    flex-grow: 1;
+    @include flex-grow(1);
     position: relative;
     z-index: 1;
     font-family: Verdana, sans-serif !important;
@@ -548,8 +548,8 @@
 #at_tabcontainer {
     margin-left: 4px;
     position: relative;
-    display: flex;
-    flex-direction: row;
+    @include display(flex);
+    @include flex-direction(row);
 }
 
 #at_comments {

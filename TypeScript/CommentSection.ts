@@ -72,11 +72,11 @@ module AlienTube {
                                 }
 
                                 // Sort threads into array groups by what subreddit they are in.
-                                var getExcludedSubreddits = Main.Preferences.enforcedExludedSubreddits.concat(Main.Preferences.get("excludedSubredditsSelectedByUser"));
+                                var getExcludedSubreddits = Main.Preferences.enforcedExludedSubreddits.concat(Main.Preferences.getArray("excludedSubredditsSelectedByUser"));
                                 var sortedResultCollection = {};
                                 finalResultCollection.forEach(function(thread) {
                                     if (getExcludedSubreddits.indexOf(thread.subreddit.toLowerCase()) !== -1) return;
-                                    if (thread.score < Main.Preferences.get("hiddenPostScoreThreshold")) return;
+                                    if (thread.score < Main.Preferences.getNumber("hiddenPostScoreThreshold")) return;
 
                                     if (!sortedResultCollection.hasOwnProperty(thread.subreddit)) sortedResultCollection[thread.subreddit] = [];
                                     sortedResultCollection[thread.subreddit].push(thread);
@@ -162,7 +162,7 @@ module AlienTube {
             var requestUrl = "https://api.reddit.com/r/" + threadData.subreddit + "/comments/" + threadData.id + ".json";
             new RedditRequest(requestUrl, RequestType.GET, (responseObject) => {
                 // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
-                if (!Main.Preferences.get("rememberTabsOnViewChange")) {
+                if (!Main.Preferences.getBoolean("rememberTabsOnViewChange")) {
                     this.storedTabCollection.length = 0;
                 }
                 responseObject[0].data.children[0].data.official = threadData.official;
@@ -212,7 +212,7 @@ module AlienTube {
                     googlePlusContainer.parentNode.insertBefore(redditButton, googlePlusContainer);
                 }
 
-                if (Main.Preferences.get("displayGooglePlusByDefault")) {
+                if (Main.Preferences.getBoolean("displayGooglePlusByDefault")) {
                     redditContainer.style.display = "none"
                     redditButton.style.display = "block";
                 } else {
@@ -364,7 +364,7 @@ module AlienTube {
 
             this.set(template);
 
-            if (Main.Preferences.get("showGooglePlusWhenNoPosts")) {
+            if (Main.Preferences.getBoolean("showGooglePlusWhenNoPosts")) {
                 document.getElementById("watch-discussion").style.display = "block";
                 document.getElementById("alientube").style.display = "none";
 

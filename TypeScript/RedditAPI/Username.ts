@@ -18,7 +18,7 @@ module AlienTube {
                 /* If possible we should set the username retroactively so the user doesn't need to reload the page */
                 var usernameField = document.querySelector(".at_writingauthor");
                 if (usernameField) {
-                    usernameField.textContent = Main.localisationManager.get("commentfield_label_author", [Main.Preferences.get("username")]);
+                    usernameField.textContent = Main.localisationManager.get("commentfield_label_author", [Main.Preferences.getString("username")]);
                 }
             });
         }

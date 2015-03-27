@@ -79,7 +79,7 @@ cp lib/script.js Chrome/js/script.js
 cp lib/script.js.map Chrome/js/script.js.map
 
 cp lib/script.js Safari.safariextension/js/script.js
-cp lib/script.js Safari.safariextension/js/script.js.map
+cp lib/script.js.map Safari.safariextension/js/script.js.map
 
 cp lib/script.js Firefox/data/script.js
 cp lib/script.js Firefox/data/script.map

@@ -9,6 +9,7 @@ interface Object {
 interface Window {
     isYouTubeVideoPage: () => boolean;
     getCurrentBrowser: () => Browser;
+    parseBoolean: (arg : any) => boolean; 
 }
 
 /**
@@ -42,6 +43,22 @@ if (!window.getCurrentBrowser) {
         else if (typeof(safari) !== 'undefined') return Browser.SAFARI;
         else {
             throw "Invalid Browser";
+        }
+    }
+}
+
+if (!window.parseBoolean) {
+    window.parseBoolean = function(arg) {
+        switch (typeof(arg)) {
+            case "string":
+                return arg.trim().toLowerCase() === "true";
+                break;
+
+            case "number":
+                return arg > 0;
+
+            default:
+                return arg;
         }
     }
 }

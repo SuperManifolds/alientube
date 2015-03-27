@@ -101,7 +101,7 @@ module AlienTube {
                         "reason": reportReason,
                         "other_reason": otherReason,
                         "thing_id": thing,
-                        "uh": Main.Preferences.get("redditUserIdentifierHash")
+                        "uh": Main.Preferences.getString("redditUserIdentifierHash")
                     });
 
             }, false);

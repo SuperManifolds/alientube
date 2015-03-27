@@ -2,34 +2,56 @@
     <head>
         <script>
             function onRequest(event) {
-                if (event.message.type == 'settings') {
-                    event.target.page.dispatchMessage(event.name, JSON.stringify(safari.extension.settings));
-                } else if (event.message.type == 'setSettingsValue') { 
-                    safari.extensions.settings[event.message.key] = event.message.value;
-                } else if (event.message.type == 'GETRequest') {
+                if (event.name == 'GET') {
                     var xhr = new XMLHttpRequest();
                     xhr.open("GET", event.message.url, true);
                     xhr.withCredentials = true;
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4) {
-                            event.target.page.dispatchMessage(event.name, JSON.stringify(xhr));
+                            event.target.page.dispatchMessage("GET", {
+                                'uuid': event.message.uuid,
+                                'data': JSON.stringify(xhr)
+                            });
                         }
                     }
                     xhr.send();
-                } else if (event.message.type == 'POSTRequest') {
+                } else if (event.name == 'POST') {
                     var xhr = new XMLHttpRequest();
                     xhr.open("POST", event.message.url, true);
                     xhr.withCredentials = true;
                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4) {
-                            event.target.page.dispatchMessage(event.name,JSON.stringify(xhr));
+                            event.target.page.dispatchMessage("POST", {
+                                'uuid': event.message.uuid,
+                                'data': JSON.stringify(xhr)
+                            });
                         }
                     }
                     xhr.send(event.message.data);
+                } else if (event.name == 'setPreference') {
+                    localStorage.setItem(event.message.key, event.message.value);
+                } else if (event.name == 'getPreferences') {
+                    console.log("message");
+                    var preferences = {};
+                    var numKeys = localStorage.length;
+                    for(var i = 0; i < numKeys; i++) {
+                        var keyName = localStorage.key(i);
+                        preferences[keyName] = localStorage.getItem(keyName);
+                    }
+                    event.target.page.dispatchMessage("preferences", preferences);
                 }
             };
             safari.application.addEventListener("message", onRequest, false);
+
+            function settingsChanged(event) {
+                if (event.key == "openSettings") {
+                    safari.extension.settings.volume = false;
+                    safari.application.activeBrowserWindow.openTab().url = safari.extension.baseURI + "res/options.html";
+                }
+            }
+
+            safari.extension.settings.addEventListener("change", settingsChanged, false);
         </script>
     </head>
 </html>

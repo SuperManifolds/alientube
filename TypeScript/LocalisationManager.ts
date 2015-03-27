@@ -1,4 +1,5 @@
 /// <reference path="Utilities.ts" />
+/// <reference path="HttpRequest.ts" />
 /**
     Namespace for All AlienTube operations.
     @namespace AlienTube
@@ -10,11 +11,33 @@ module AlienTube {
     */
     export class LocalisationManager {
         private localisationData : any;
+        private supportedLocalisations = [
+            'en',
+            'no',
+            'es',
+            'fr'
+        ];
 
-        constructor() {
+        constructor(callback?) {
             switch (window.getCurrentBrowser()) {
+                case Browser.SAFARI:
+                    var localisation = navigator.language.split('-')[0];
+                    if (this.supportedLocalisations.indexOf(localisation) == -1) {
+                        localisation = "en";
+                    }
+                    new HttpRequest(safari.extension.baseURI + '_locales/' + localisation + "/messages.json", RequestType.GET, (data) => {
+                        this.localisationData = JSON.parse(data);
+                        if (callback) callback();
+                    }, null, null);
+                break;
+
                 case Browser.FIREFOX:
                     this.localisationData = JSON.parse(self.options.localisation);
+                    if (callback) callback();
+                    break;
+
+                default:
+                    if (callback) callback();
                     break;
             }
         }
@@ -35,6 +58,7 @@ module AlienTube {
                     }
                     break;
 
+                case Browser.SAFARI:
                 case Browser.FIREFOX:
                     if (placeholders) {
                         var localisationItem = this.localisationData[key];

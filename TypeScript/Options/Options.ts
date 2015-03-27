@@ -25,43 +25,43 @@ module AlienTube {
         private preferences;
 
         constructor () {
-            this.localisationManager = new LocalisationManager();
-            this.hiddenPostScoreThresholdElement   = document.getElementById("hiddenPostScoreThreshold");
-            this.hiddenCommentScoreThresholdElement = document.getElementById("hiddenCommentScoreThreshold");
-            this.showGooglePlusWhenNoPostsElement   = document.getElementById("showGooglePlusWhenNoPosts");
-            this.rememberTabsOnViewChangeElement    = document.getElementById("rememberTabsOnViewChange");
-            this.displayGooglePlusByDefaultElement  = document.getElementById("displayGooglePlusByDefault");
+            this.localisationManager = new LocalisationManager(() => {
+                this.hiddenPostScoreThresholdElement   = document.getElementById("hiddenPostScoreThreshold");
+                this.hiddenCommentScoreThresholdElement = document.getElementById("hiddenCommentScoreThreshold");
+                this.showGooglePlusWhenNoPostsElement   = document.getElementById("showGooglePlusWhenNoPosts");
+                this.rememberTabsOnViewChangeElement    = document.getElementById("rememberTabsOnViewChange");
+                this.displayGooglePlusByDefaultElement  = document.getElementById("displayGooglePlusByDefault");
 
-            this.saveOptionsButton = document.getElementById("saveButton");
-            this.displayAboutDialogButton = document.getElementById("aboutButton");
-            this.closeAboutDialogButton = document.getElementById("closeButton");
+                this.saveOptionsButton = document.getElementById("saveButton");
+                this.displayAboutDialogButton = document.getElementById("aboutButton");
+                this.closeAboutDialogButton = document.getElementById("closeButton");
 
-            this.saveOptionsButton.textContent  = this.localisationManager.get("options_button_save");
-            this.displayAboutDialogButton.textContent = this.localisationManager.get("options_button_about");
-            this.closeAboutDialogButton.textContent = this.localisationManager.get("options_button_close");
+                this.saveOptionsButton.textContent  = this.localisationManager.get("options_button_save");
+                this.displayAboutDialogButton.textContent = this.localisationManager.get("options_button_about");
+                this.closeAboutDialogButton.textContent = this.localisationManager.get("options_button_close");
 
-            document.title = this.localisationManager.get("options_button_title");
-            document.getElementById("versiontext").textContent = this.localisationManager.get("options_label_version");
+                document.title = this.localisationManager.get("options_button_title");
+                document.getElementById("versiontext").textContent = this.localisationManager.get("options_label_version");
 
-            this.preferences = new BrowserPreferenceManager((preferences) => {
-                for (var i = 0, len = this.preferenceKeyList.length; i < len; i++) {
-                    var label = <HTMLLabelElement> document.querySelector("label[for='" + this.preferenceKeyList[i] + "']");
-                    label.textContent = this.localisationManager.get("options_label_" + this.preferenceKeyList[i]);
-                }
+                this.preferences = new BrowserPreferenceManager((preferences) => {
+                    for (var i = 0, len = this.preferenceKeyList.length; i < len; i++) {
+                        var label = <HTMLLabelElement> document.querySelector("label[for='" + this.preferenceKeyList[i] + "']");
+                        label.textContent = this.localisationManager.get("options_label_" + this.preferenceKeyList[i]);
+                    }
 
-                this.hiddenPostScoreThresholdElement.value        = preferences.get("hiddenPostScoreThreshold");
-                this.hiddenCommentScoreThresholdElement.value     = preferences.get("hiddenCommentScoreThreshold");
-                this.showGooglePlusWhenNoPostsElement.checked     = preferences.get("showGooglePlusWhenNoPosts");
-                this.rememberTabsOnViewChangeElement.checked      = preferences.get("rememberTabsOnViewChange");
-                this.displayGooglePlusByDefaultElement.checked    = preferences.get("displayGooglePlusByDefault");
+                    this.hiddenPostScoreThresholdElement.value        = preferences.getNumber("hiddenPostScoreThreshold");
+                    this.hiddenCommentScoreThresholdElement.value     = preferences.getNumber("hiddenCommentScoreThreshold");
+                    this.showGooglePlusWhenNoPostsElement.checked     = preferences.getBoolean("showGooglePlusWhenNoPosts");
+                    this.rememberTabsOnViewChangeElement.checked      = preferences.getBoolean("rememberTabsOnViewChange");
+                    this.displayGooglePlusByDefaultElement.checked    = preferences.getBoolean("displayGooglePlusByDefault");
 
-                this.saveOptionsButton.addEventListener("click", this.saveOptions.bind(this), false);
-                this.displayAboutDialogButton.addEventListener("click", this.displayAboutDialog.bind(this), false);
-                this.closeAboutDialogButton.addEventListener("click", this.closeAboutDialog.bind(this), false);
-                document.getElementById("cover").addEventListener("click", this.closeAboutDialog.bind(this), false);
-                document.getElementById('version').textContent = Options.getExtensionVersionNumber();
+                    this.saveOptionsButton.addEventListener("click", this.saveOptions.bind(this), false);
+                    this.displayAboutDialogButton.addEventListener("click", this.displayAboutDialog.bind(this), false);
+                    this.closeAboutDialogButton.addEventListener("click", this.closeAboutDialog.bind(this), false);
+                    document.getElementById("cover").addEventListener("click", this.closeAboutDialog.bind(this), false);
+                    document.getElementById('version').textContent = Options.getExtensionVersionNumber();
+                });
             });
-
         }
 
         saveOptions () {

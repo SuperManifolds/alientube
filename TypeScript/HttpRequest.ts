@@ -1,4 +1,3 @@
-/// <reference path="index.ts" />
 /**
     Namespace for All AlienTube operations.
     @namespace AlienTube
@@ -17,16 +16,40 @@ module AlienTube {
 
         constructor (url : string, type : RequestType, callback : any, postData? : any, errorHandler? : any) {
             if (window.getCurrentBrowser() == Browser.SAFARI) {
-                // TODO
+                var uuid = HttpRequest.generateUUID();
+                var listener = safari.self.addEventListener('message', function listenerFunction (event) {
+                    if (event.message.uuid !== uuid) return;
+
+                    var xhr = JSON.parse(event.message.data);
+                    if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
+                        if (callback) {
+                            callback(xhr.responseText);
+                        }
+                    } else {
+                        if (errorHandler) errorHandler(xhr);
+                    }
+                    safari.self.removeEventListener('message', listenerFunction, false);
+                }, false);
+
+                var query = [];
+                if (type == RequestType.POST) {
+                    var query = [];
+                    for (var key in postData) {
+                        query.push(encodeURIComponent(key) + '=' + encodeURIComponent(postData[key]));
+                    }
+                }
+
+                safari.self.tab.dispatchMessage(RequestType[type], {
+                    'url': url,
+                    'uuid': uuid,
+                    'data': query.join('&')
+                });
             } else {
                 var xhr = new XMLHttpRequest();
                 xhr.open(RequestType[type], url, true);
                 xhr.withCredentials = true;
                 if (type === RequestType.POST) {
                     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                }
-                if (url.indexOf("api.reddit.com") !== -1) {
-                    xhr.setRequestHeader("AlienTube", Main.localisationManager.get("api_header_message"));
                 }
                 xhr.onload = () => {
                     if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
@@ -47,6 +70,20 @@ module AlienTube {
                     xhr.send();
                 }
             }
+        }
+
+
+
+        /**
+        * Generate a UUID 4 sequence.
+        * @returns A UUID 4 sequence as string.
+        */
+        private static generateUUID () : string {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0,
+                v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
         }
     }
 
