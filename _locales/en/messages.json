@@ -261,8 +261,8 @@
         "description": "Title for error describing that comments failed because the connection was interrupted by something"
     },
     "error_message_interrupted": {
-        "message": "Something is interrupting the connection to reddit.com and we cannot proceed, please check your browser settings and extensions",
-        "description": "Message for error describing that comments failed because the connection was interrupted by somethingr"
+        "message": "Something is interrupting the connection to reddit.com and we cannot proceed, please check your internet connection, browser settings, firewall, or browser extensions",
+        "description": "Message for error describing that comments failed because the connection was interrupted by something"
     },
     "error_header_generic": {
         "message": "You broke Reddit :(",
