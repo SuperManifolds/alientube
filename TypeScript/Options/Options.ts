@@ -3,7 +3,6 @@
 
 module AlienTube {
     export class Options {
-        private localisationManager : LocalisationManager;
         private preferenceKeyList = [
             "hiddenPostScoreThreshold",
             "hiddenCommentScoreThreshold",
@@ -25,6 +24,7 @@ module AlienTube {
         private closeAboutDialogButton;
 
         private preferences;
+        private localisationManager;
 
         constructor () {
             this.localisationManager = new LocalisationManager(() => {
@@ -81,6 +81,7 @@ module AlienTube {
             this.preferences.set('showGooglePlusWhenNoPosts', this.showGooglePlusWhenNoPostsElement.checked);
             this.preferences.set('rememberTabsOnViewChange', this.rememberTabsOnViewChangeElement.checked);
             this.preferences.set('displayGooglePlusByDefault', this.displayGooglePlusByDefaultElement.checked);
+            this.preferences.set('showGooglePlusButton', this.showGooglePlusButtonElement.checked);
 
             this.displayOptionsSavedTicker.bind(this);
         }
@@ -123,6 +124,7 @@ module AlienTube {
         showGooglePlusWhenNoPosts : boolean;
         rememberTabsOnViewChange : boolean;
         displayGooglePlusByDefault : boolean;
+        showGooglePlusButton : boolean;
     }
 }
 
