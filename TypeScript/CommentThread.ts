@@ -16,6 +16,14 @@ module AlienTube {
 
         private postIsInPreservedMode : Boolean;
         private commentData : Array<any>;
+        private sortingTypes = [
+            "confidence",
+            "hot",
+            "top",
+            "new",
+            "controversial",
+            "old"
+        ];
         children : Array<any>;
 
         constructor (threadData : any, commentSection : CommentSection) {
@@ -127,6 +135,22 @@ module AlienTube {
             var reportToAdministrators = this.threadContainer.querySelector(".report");
             reportToAdministrators.textContent = Main.localisationManager.get("post_button_report");
             reportToAdministrators.addEventListener("click", this.onReportButtonClicked.bind(this), false);
+
+            /* Set the button text and event handler for the sort selector. */
+            var sortController = <HTMLSelectElement> this.threadContainer.querySelector(".sort");
+            for (var sortIndex = 0, sortLength = this.sortingTypes.length; sortIndex < sortLength; sortIndex++) {
+                sortController.children[sortIndex].textContent = Main.localisationManager.get("post_sort_" + this.sortingTypes[sortIndex]);
+            }
+            sortController.selectedIndex = this.sortingTypes.indexOf(Main.Preferences.getString("threadSortType"));
+            sortController.addEventListener("change", () => {
+                Main.Preferences.set("threadSortType", sortController.children[sortController.selectedIndex].getAttribute("value"));
+
+                this.commentSection.threadCollection.forEach((item) => {
+                    if (item.id === this.threadInformation.id) {
+                        this.commentSection.downloadThread(item);
+                    }
+                });
+            }, false);
 
             /* Set the state of the voting buttons */
             var voteController = <HTMLDivElement> this.threadContainer.querySelector(".vote");

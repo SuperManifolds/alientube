@@ -162,6 +162,15 @@
         font-weight: bold;
         display: block;
 
+        & .sort {
+            color: gray;
+            font-weight: bold;
+            border: none !important;
+            text-decoration: underline;
+            outline: 0;
+            background-color: transparent;
+        }
+
         & > span,
         & > a {
             cursor: pointer;

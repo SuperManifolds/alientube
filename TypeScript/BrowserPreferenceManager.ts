@@ -19,6 +19,7 @@ module AlienTube {
             rememberTabsOnViewChange: true,
             displayGooglePlusByDefault: false,
             showGooglePlusButton: true,
+            threadSortType: "confidence",
             redditUserIdentifierHash: "",
             excludedSubredditsSelectedByUser: []
         }

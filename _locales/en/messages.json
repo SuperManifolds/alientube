@@ -168,7 +168,30 @@
         "message": "This thread has been marked as official by the video author",
         "description": "Message explaining to the user that this reddit thread is official, that is promoted or endorsed by the author"
     },
-
+    "post_sort_confidence": {
+        "message": "best",
+        "description": "Label for the 'confidence' sort option"
+    },
+    "post_sort_top": {
+        "message": "top",
+        "description": "Label for the 'top' sort option"
+    },
+    "post_sort_new": {
+        "message": "new",
+        "description": "Label for the 'new' sort option"
+    },
+    "post_sort_hot": {
+        "message": "hot",
+        "description": "Label for the 'hot' sort option"
+    },
+    "post_sort_controversial": {
+        "message": "controversial",
+        "description": "Label for the 'controversial' sort option"
+    },
+    "post_sort_old": {
+        "message": "old",
+        "description": "Label for the 'old' sort option"
+    },
 
     "report_dialog_spam": {
         "message": "spam",

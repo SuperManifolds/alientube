@@ -165,6 +165,31 @@
     "message": "Denne tråden har blitt merket som offisiell av video forfatteren",
     "description": "Message explaining to the user that this reddit thread is official, that is promoted or endorsed by the author"
   },
+  "post_sort_confidence": {
+      "message": "beste",
+      "description": "Label for the 'confidence' sort option"
+  },
+  "post_sort_top": {
+      "message": "topp",
+      "description": "Label for the 'top' sort option"
+  },
+  "post_sort_new": {
+      "message": "nytt",
+      "description": "Label for the 'new' sort option"
+  },
+  "post_sort_hot": {
+      "message": "populære",
+      "description": "Label for the 'hot' sort option"
+  },
+  "post_sort_controversial": {
+      "message": "kontroversielt",
+      "description": "Label for the 'controversial' sort option"
+  },
+  "post_sort_old": {
+      "message": "eldre",
+      "description": "Label for the 'old' sort option"
+  },
+
   "report_dialog_spam": {
     "message": "spam",
     "description": "This user has been spamming (posted excessive advertisments without permission)"

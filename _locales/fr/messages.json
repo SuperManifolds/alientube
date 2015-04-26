@@ -164,6 +164,30 @@
         "message": "Etes-vous sûr que vous voulez supprimer ce commentaire?",
         "description": "Message asking the user whether they really want to delete this post."
     },
+    "post_sort_confidence": {
+        "message": "apprécié",
+        "description": "Label for the 'confidence' sort option"
+    },
+    "post_sort_top": {
+        "message": "le meilleur",
+        "description": "Label for the 'top' sort option"
+    },
+    "post_sort_new": {
+        "message": "nouveau",
+        "description": "Label for the 'new' sort option"
+    },
+    "post_sort_hot": {
+        "message": "populaire",
+        "description": "Label for the 'hot' sort option"
+    },
+    "post_sort_controversial": {
+        "message": "controversé",
+        "description": "Label for the 'controversial' sort option"
+    },
+    "post_sort_old": {
+        "message": "ancien",
+        "description": "Label for the 'old' sort option"
+    },
 
 
     "report_dialog_spam": {
