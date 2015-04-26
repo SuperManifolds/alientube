@@ -18,6 +18,7 @@ module AlienTube {
             showGooglePlusWhenNoPosts: true,
             rememberTabsOnViewChange: true,
             displayGooglePlusByDefault: false,
+            showGooglePlusButton: true,
             redditUserIdentifierHash: "",
             excludedSubredditsSelectedByUser: []
         }

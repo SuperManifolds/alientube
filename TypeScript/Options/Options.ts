@@ -9,7 +9,8 @@ module AlienTube {
             "hiddenCommentScoreThreshold",
             "showGooglePlusWhenNoPosts",
             "rememberTabsOnViewChange",
-            "displayGooglePlusByDefault"
+            "displayGooglePlusByDefault",
+            "showGooglePlusButton"
         ];
 
         private hiddenPostScoreThresholdElement;
@@ -17,6 +18,7 @@ module AlienTube {
         private showGooglePlusWhenNoPostsElement;
         private rememberTabsOnViewChangeElement;
         private displayGooglePlusByDefaultElement;
+        private showGooglePlusButtonElement;
 
         private saveOptionsButton;
         private displayAboutDialogButton;
@@ -26,11 +28,12 @@ module AlienTube {
 
         constructor () {
             this.localisationManager = new LocalisationManager(() => {
-                this.hiddenPostScoreThresholdElement   = document.getElementById("hiddenPostScoreThreshold");
+                this.hiddenPostScoreThresholdElement    = document.getElementById("hiddenPostScoreThreshold");
                 this.hiddenCommentScoreThresholdElement = document.getElementById("hiddenCommentScoreThreshold");
                 this.showGooglePlusWhenNoPostsElement   = document.getElementById("showGooglePlusWhenNoPosts");
                 this.rememberTabsOnViewChangeElement    = document.getElementById("rememberTabsOnViewChange");
                 this.displayGooglePlusByDefaultElement  = document.getElementById("displayGooglePlusByDefault");
+                this.showGooglePlusButtonElement        = document.getElementById("showGooglePlusButton");
 
                 this.saveOptionsButton = document.getElementById("saveButton");
                 this.displayAboutDialogButton = document.getElementById("aboutButton");
@@ -54,6 +57,7 @@ module AlienTube {
                     this.showGooglePlusWhenNoPostsElement.checked     = preferences.getBoolean("showGooglePlusWhenNoPosts");
                     this.rememberTabsOnViewChangeElement.checked      = preferences.getBoolean("rememberTabsOnViewChange");
                     this.displayGooglePlusByDefaultElement.checked    = preferences.getBoolean("displayGooglePlusByDefault");
+                    this.showGooglePlusButtonElement.checked          = preferences.getBoolean("showGooglePlusButton");
 
                     this.saveOptionsButton.addEventListener("click", this.saveOptions.bind(this), false);
                     this.displayAboutDialogButton.addEventListener("click", this.displayAboutDialog.bind(this), false);

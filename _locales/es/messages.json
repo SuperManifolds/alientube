@@ -305,6 +305,10 @@
     "message": "Mostrar Google+ al iniciar",
     "description": "This option will show the Google+ comments by default instead of the Reddit comments"
   },
+  "options_label_showGooglePlusButton": {
+      "message": "Botón Mostrar Google+",
+      "description": "This option will toggle the visibility of the Google+ comments button."
+  },
   "options_button_save": {
     "message": "Guardar",
     "description": "Button for saving settings"

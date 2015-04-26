@@ -145,10 +145,14 @@ module AlienTube {
             }
 
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
-            var googlePlusButton = this.threadContainer.querySelector("#at_switchtogplus");
+            var googlePlusButton = <HTMLButtonElement> this.threadContainer.querySelector("#at_switchtogplus");
             var googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
             googlePlusText.textContent = Main.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
+
+            if (Main.Preferences.getBoolean("showGooglePlusButton") == false) {
+                googlePlusButton.style.display = "none";
+            }
 
             /* Mark the post as preserved if applicable */
             if (this.postIsInPreservedMode) {

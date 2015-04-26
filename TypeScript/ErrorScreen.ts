@@ -22,10 +22,15 @@ module AlienTube {
             var errorText = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_errortext");
 
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
-            var googlePlusButton = this.representedHTMLElement.querySelector("#at_switchtogplus");
+            var googlePlusButton = <HTMLButtonElement> this.representedHTMLElement.querySelector("#at_switchtogplus");
             var googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
             googlePlusText.textContent = Main.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
+
+
+            if (Main.Preferences.getBoolean("showGooglePlusButton") == false) {
+                googlePlusButton.style.display = "none";
+            }
 
             switch (errorState) {
                 case ErrorState.NOT_FOUND:
