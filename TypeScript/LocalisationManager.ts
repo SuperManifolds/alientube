@@ -27,17 +27,17 @@ module AlienTube {
                     }
                     new HttpRequest(safari.extension.baseURI + '_locales/' + localisation + "/messages.json", RequestType.GET, (data) => {
                         this.localisationData = JSON.parse(data);
-                        if (callback) callback();
+                        if (callback) setTimeout(callback, 0);
                     }, null, null);
                 break;
 
                 case Browser.FIREFOX:
                     this.localisationData = JSON.parse(self.options.localisation);
-                    if (callback) callback();
+                    if (callback) setTimeout(callback, 0);
                     break;
 
                 default:
-                    if (callback) callback();
+                    if (callback) setTimeout(callback, 0);
                     break;
             }
         }
