@@ -20,6 +20,7 @@ module AlienTube {
         private attempts : number;
 
         private loadTimer = 0;
+        private timeoutTimer = 0;
 
         constructor (url : string, type : RequestType, callback : any, postData? : any, loadingScreen? : LoadingScreen) {
             this.requestUrl = url;
@@ -40,6 +41,12 @@ module AlienTube {
                 loadingText.textContent = Main.localisationManager.get("loading_slow_message");
             }, 3000);
 
+            /* Kick of a 10 second timer that will cancel the connection attempt and display an error to the user letting them know
+            something is probably blocking the connection. */
+            this.timeoutTimer = setTimeout(() => {
+                new ErrorScreen(Main.commentSection, ErrorState.CONNECTERROR);
+            }, 10000);
+
             /* Perform the reddit api request */
             new HttpRequest(this.requestUrl, this.requestType, this.onSuccess.bind(this), this.postData, this.onRequestError.bind(this));
         }
@@ -47,6 +54,7 @@ module AlienTube {
         private onSuccess (responseText) {
             /* Cancel the slow load timer */
             clearTimeout(this.loadTimer);
+            clearTimeout(this.timeoutTimer);
 
             /* Dismiss the loading screen, perform the callback and clear ourselves out of memory. */
             this.loadingScreen.updateProgress(LoadingState.COMPLETE);
@@ -66,6 +74,7 @@ module AlienTube {
         private onRequestError (xhr) {
             /* Cancel the slow load timer */
             clearTimeout(this.loadTimer);
+            clearTimeout(this.timeoutTimer);
 
             if (this.attempts <= 3 && xhr.status !== 404) {
                 /* Up to 3 attempts, retry the loading process automatically. */
