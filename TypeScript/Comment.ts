@@ -78,7 +78,14 @@ module AlienTube {
             /* Render the markdown and set the actual comement messsage of the comment */
             var contentTextOfComment = this.representedHTMLElement.querySelector(".at_commentcontent");
             var contentTextHolder = document.createElement("span");
-            contentTextHolder.innerHTML = SnuOwnd.getParser().render(he.decode(this.commentObject.body));
+
+            /* Terrible workaround: Reddit text is double encoded with html entities for some reason, so we have to insert it into the DOM
+            twice to make the browser decode it. */
+            var textParsingElement = document.createElement("span");
+            textParsingElement.innerHTML = this.commentObject.body;
+
+            /* Set the comment text */
+            contentTextHolder.innerHTML = SnuOwnd.getParser().render(textParsingElement.textContent);
             contentTextOfComment.appendChild(contentTextHolder);
             if (this.commentObject.body === "[deleted]") {
                 this.representedHTMLElement.classList.add("deleted");

@@ -17,7 +17,7 @@
   "content_scripts": [
     {
       "matches": ["*://www.youtube.com/*", "*://alientube.co/"],
-      "js": ["js/snuownd.js", "js/he.js", "js/script.js"],
+      "js": ["js/snuownd.js", "js/script.js"],
       "css": ["res/style.css"],
       "run_at": "document_start"
     }

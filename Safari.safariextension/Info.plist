@@ -30,7 +30,6 @@
 			<key>End</key>
 			<array>
 				<string>js/snuownd.js</string>
-				<string>js/he.js</string>
 				<string>js/script.js</string>
 			</array>
 		</dict>
