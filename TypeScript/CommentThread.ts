@@ -90,9 +90,9 @@ module AlienTube {
             var submittedByUsernameText = this.threadContainer.querySelector(".templateSubmittedByUsernameText");
             submittedByUsernameText.textContent = Main.localisationManager.get("post_submitted_preposition");
 
-            /* Set the button text and the event handler for the "comment" button */
+            /* Set the text for the comments button  */
             var openNewCommentBox = this.threadContainer.querySelector(".commentTo");
-            openNewCommentBox.textContent = Main.localisationManager.get("post_button_comment");
+            openNewCommentBox.textContent = this.threadInformation.num_comments + " " + Main.localisationManager.get("post_button_comments").toLowerCase();
             openNewCommentBox.addEventListener("click", this.onCommentButtonClick.bind(this), false);
 
             /* Set the button text and the event handler for the "save" button */
