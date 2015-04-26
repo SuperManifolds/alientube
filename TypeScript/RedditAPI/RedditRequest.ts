@@ -45,7 +45,7 @@ module AlienTube {
             something is probably blocking the connection. */
             this.timeoutTimer = setTimeout(() => {
                 new ErrorScreen(Main.commentSection, ErrorState.CONNECTERROR);
-            }, 10000);
+            }, 15000);
 
             /* Perform the reddit api request */
             new HttpRequest(this.requestUrl, this.requestType, this.onSuccess.bind(this), this.postData, this.onRequestError.bind(this));
