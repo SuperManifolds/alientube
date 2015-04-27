@@ -27,8 +27,8 @@ module AlienTube {
             googlePlusText.textContent = Main.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
-
-            if (Main.Preferences.getBoolean("showGooglePlusButton") == false) {
+            var googlePlusContainer = document.getElementById("watch-discussion");
+            if (Main.Preferences.getBoolean("showGooglePlusButton") == false || googlePlusContainer == null) {
                 googlePlusButton.style.display = "none";
             }
 
