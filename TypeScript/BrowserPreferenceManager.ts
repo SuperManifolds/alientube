@@ -138,7 +138,8 @@ module AlienTube {
                 "muhfeelings",
                 "polistan",
                 "collapse",
-                "retardedcripples"
+                "retardedcripples",
+                "killingboys"
             ];
         }
     }
