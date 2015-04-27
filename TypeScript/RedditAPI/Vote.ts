@@ -3,6 +3,7 @@
     Namespace for All AlienTube operations.
     @namespace AlienTube
 */
+"use strict";
 module AlienTube {
     /**
         Perform a request to Reddit to either save or unsave an item.

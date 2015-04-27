@@ -3,6 +3,7 @@
     Namespace for All AlienTube operations.
     @namespace AlienTube
 */
+"use strict";
 module AlienTube {
     /**
         Perform a request to Reddit. Embedded error handling.
@@ -32,7 +33,7 @@ module AlienTube {
         }
 
         private performRequest () {
-            this.attempts++;
+            this.attempts += 1;
 
             /* Kick of a 3 second timer that will confirm to the user that the loading process is taking unusually long, unless cancelled
             by a successful load (or an error) */
@@ -52,6 +53,8 @@ module AlienTube {
         }
 
         private onSuccess (responseText) {
+            var responseObject;
+
             /* Cancel the slow load timer */
             clearTimeout(this.loadTimer);
             clearTimeout(this.timeoutTimer);
@@ -59,7 +62,7 @@ module AlienTube {
             /* Dismiss the loading screen, perform the callback and clear ourselves out of memory. */
             this.loadingScreen.updateProgress(LoadingState.COMPLETE);
             try {
-                var responseObject = JSON.parse(responseText);
+                responseObject = JSON.parse(responseText);
                 this.finalCallback(responseObject);
             } catch (e) {
                 if (e.toString().indexOf("SyntaxError: Unexpected end of input") !== -1) {

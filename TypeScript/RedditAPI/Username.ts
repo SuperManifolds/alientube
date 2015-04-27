@@ -3,6 +3,7 @@
     Namespace for All AlienTube operations.
     @namespace AlienTube
 */
+"use strict";
 module AlienTube {
     /**
         Perform a request to Reddit asking for the user's username so we can save and display it.

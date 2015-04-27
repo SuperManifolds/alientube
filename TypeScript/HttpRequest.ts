@@ -2,6 +2,7 @@
     Namespace for All AlienTube operations.
     @namespace AlienTube
 */
+"use strict";
 module AlienTube {
     /**
         HttpRequest interface across Browsers.
@@ -15,12 +16,14 @@ module AlienTube {
         private static acceptableResponseTypes = [200, 201, 202, 301, 302, 303, 0];
 
         constructor (url : string, type : RequestType, callback : any, postData? : any, errorHandler? : any) {
+            var uuid, listener, xhr, query, key, postData;
+
             if (window.getCurrentBrowser() == Browser.SAFARI) {
-                var uuid = HttpRequest.generateUUID();
-                var listener = safari.self.addEventListener('message', function listenerFunction (event) {
+                uuid = HttpRequest.generateUUID();
+                listener = safari.self.addEventListener('message', function listenerFunction (event) {
                     if (event.message.uuid !== uuid) return;
 
-                    var xhr = JSON.parse(event.message.data);
+                    xhr = JSON.parse(event.message.data);
                     if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
                         if (callback) {
                             callback(xhr.responseText);
@@ -31,10 +34,10 @@ module AlienTube {
                     safari.self.removeEventListener('message', listenerFunction, false);
                 }, false);
 
-                var query = [];
+                query = [];
                 if (type == RequestType.POST) {
-                    var query = [];
-                    for (var key in postData) {
+                    query = [];
+                    for (key in postData) {
                         query.push(encodeURIComponent(key) + '=' + encodeURIComponent(postData[key]));
                     }
                 }
@@ -45,7 +48,7 @@ module AlienTube {
                     'data': query.join('&')
                 });
             } else {
-                var xhr = new XMLHttpRequest();
+                xhr = new XMLHttpRequest();
                 xhr.open(RequestType[type], url, true);
                 xhr.withCredentials = true;
                 if (type === RequestType.POST) {
@@ -61,8 +64,8 @@ module AlienTube {
                     }
                 }
                 if (type == RequestType.POST) {
-                    var query = [];
-                    for (var key in postData) {
+                    query = [];
+                    for (key in postData) {
                         query.push(encodeURIComponent(key) + '=' + encodeURIComponent(postData[key]));
                     }
                     xhr.send(query.join('&'));

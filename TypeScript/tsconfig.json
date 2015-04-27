@@ -1,0 +1,45 @@
+{
+    "version": "1.5.0-alpha",
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "compileOnSave": false
+    },
+    "filesGlob": [
+        "./**/*.ts",
+        "!./node_modules/**/*.ts"
+    ],
+    "files": [
+        "./BrowserPreferenceManager.ts",
+        "./Comment.ts",
+        "./CommentField.ts",
+        "./CommentSection.ts",
+        "./CommentThread.ts",
+        "./ErrorScreen.ts",
+        "./HttpRequest.ts",
+        "./LoadMore.ts",
+        "./LoadingScreen.ts",
+        "./LocalisationManager.ts",
+        "./Main.ts",
+        "./Options/Options.ts",
+        "./RedditAPI/Comment.ts",
+        "./RedditAPI/EditComment.ts",
+        "./RedditAPI/RedditRequest.ts",
+        "./RedditAPI/Report.ts",
+        "./RedditAPI/Save.ts",
+        "./RedditAPI/Username.ts",
+        "./RedditAPI/Vote.ts",
+        "./Utilities.ts",
+        "./index.ts",
+        "./typings/chrome/chrome.d.ts",
+        "./typings/firefox/firefox.d.ts",
+        "./typings/handlebars.d.ts",
+        "./typings/he.d.ts",
+        "./typings/safari/safari.d.ts",
+        "./typings/snuownd.d.ts"
+    ]
+}

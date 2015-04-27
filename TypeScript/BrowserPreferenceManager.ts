@@ -3,6 +3,7 @@
     Namespace for All AlienTube operations.
     @namespace AlienTube
 */
+"use strict";
 module AlienTube {
     /**
         Manages the Preferences across browsers.

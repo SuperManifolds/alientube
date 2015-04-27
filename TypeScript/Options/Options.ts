@@ -1,6 +1,7 @@
 /// <reference path="../LocalisationManager.ts" />
 /// <reference path="../BrowserPreferenceManager.ts" />
 
+"use strict";
 module AlienTube {
     export class Options {
         private preferenceKeyList = [
@@ -28,6 +29,8 @@ module AlienTube {
 
         constructor () {
             this.localisationManager = new LocalisationManager(() => {
+                var i, len, label;
+
                 this.hiddenPostScoreThresholdElement    = document.getElementById("hiddenPostScoreThreshold");
                 this.hiddenCommentScoreThresholdElement = document.getElementById("hiddenCommentScoreThreshold");
                 this.showGooglePlusWhenNoPostsElement   = document.getElementById("showGooglePlusWhenNoPosts");
@@ -47,8 +50,8 @@ module AlienTube {
                 document.getElementById("versiontext").textContent = this.localisationManager.get("options_label_version");
 
                 this.preferences = new BrowserPreferenceManager((preferences) => {
-                    for (var i = 0, len = this.preferenceKeyList.length; i < len; i++) {
-                        var label = <HTMLLabelElement> document.querySelector("label[for='" + this.preferenceKeyList[i] + "']");
+                    for (i = 0, len = this.preferenceKeyList.length; i < len; i += 1) {
+                        label = <HTMLLabelElement> document.querySelector("label[for='" + this.preferenceKeyList[i] + "']");
                         label.textContent = this.localisationManager.get("options_label_" + this.preferenceKeyList[i]);
                     }
 

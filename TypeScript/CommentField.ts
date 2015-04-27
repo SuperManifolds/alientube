@@ -3,6 +3,7 @@
     Namespace for All AlienTube operations.
     @namespace AlienTube
 */
+"use strict";
 module AlienTube {
     /**
         The representation and management of an AlienTube loading screen.
@@ -20,6 +21,8 @@ module AlienTube {
         private edit : boolean;
 
         constructor (parent : any, initialText? : string, edit? : boolean) {
+            var template, authorName, submitButton, cancelButton, previewHeader, inputField;
+
             /* Check if the paramter is a Coment Thread and assign the correct parent HTML element .*/
             if (parent instanceof CommentThread) {
                 this.parentClass = <CommentThread> parent;
@@ -41,26 +44,26 @@ module AlienTube {
             this.representedHTMLElement = <HTMLDivElement> template.querySelector(".at_commentfield");
 
             /* Set the "You are now commenting as" text under the comment field. */
-            var authorName = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_writingauthor");
+            authorName = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_writingauthor");
             authorName.textContent = Main.localisationManager.get("commentfield_label_author", [Main.Preferences.getString("username")]);
 
             /* Set the button text and event listener for the submit button */
-            var submitButton = <HTMLButtonElement> this.representedHTMLElement.querySelector(".at_submit");
+            submitButton = <HTMLButtonElement> this.representedHTMLElement.querySelector(".at_submit");
             submitButton.textContent = Main.localisationManager.get("commentfield_button_submit");
             submitButton.addEventListener("click", this.onSubmitButtonClick.bind(this), false);
 
             /* Set the button text and event listener for the cancel button */
-            var cancelButton = <HTMLButtonElement> this.representedHTMLElement.querySelector(".at_cancel");
+            cancelButton = <HTMLButtonElement> this.representedHTMLElement.querySelector(".at_cancel");
             cancelButton.textContent = Main.localisationManager.get("commentfield_button_cancel")
             cancelButton.addEventListener("click", this.onCancelButtonClick.bind(this), false);
 
             /* Set the text for the markdown preview header */
-            var previewHeader = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_preview_header");
+            previewHeader = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_preview_header");
             previewHeader.textContent = Main.localisationManager.get("commentfield_label_preview");
 
             /* Check if we were initialised with some text (most likely from the show source button) and add event listener for input
             change */
-            var inputField = <HTMLInputElement> this.representedHTMLElement.querySelector(".at_textarea");
+            inputField = <HTMLInputElement> this.representedHTMLElement.querySelector(".at_textarea");
             if (initialText) {
                 inputField.value = initialText;
             }
@@ -76,12 +79,14 @@ module AlienTube {
         }
 
         onSubmitButtonClick (eventObject : Event) {
+            var submitButton, inputField, thing_id;
+
             /* Disable the button on click so the user does not accidentally press it multiple times */
-            var submitButton = <HTMLButtonElement> eventObject.target;
+            submitButton = <HTMLButtonElement> eventObject.target;
             submitButton.disabled = true;
 
-            var inputField = <HTMLInputElement> this.representedHTMLElement.querySelector(".at_textarea");
-            var thing_id = (this.parentClass instanceof CommentThread)
+            inputField = <HTMLInputElement> this.representedHTMLElement.querySelector(".at_textarea");
+            thing_id = (this.parentClass instanceof CommentThread)
                 ? this.parentClass.threadInformation.name : this.parentClass.commentObject.name;
 
             if (this.edit) {
@@ -95,7 +100,6 @@ module AlienTube {
 
                     /* The comment box is no longer needed, remove it and clear outselves out of memory */
                     this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
-                    delete this;
                 });
             } else {
                 /* Send the comment to Reddit */
@@ -109,8 +113,7 @@ module AlienTube {
                         this.parentClass.threadContainer.appendChild(comment.representedHTMLElement);
                         new CommentField(this.parentClass);
                     } else {
-                        var replyContainer = this.parentClass.representedHTMLElement.querySelector(".at_replies");
-                        replyContainer.appendChild(comment.representedHTMLElement);
+                        this.parentClass.representedHTMLElement.querySelector(".at_replies").appendChild(comment.representedHTMLElement);
                     }
                     this.parentClass.children.push(comment);
 
@@ -119,14 +122,12 @@ module AlienTube {
 
                     /* The comment box is no longer needed, remove it and clear outselves out of memory */
                     this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
-                    delete this;
                 });
             }
         }
 
         onCancelButtonClick () {
             this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
-            delete this;
         }
 
         onInputFieldChange (eventObject : Event) {

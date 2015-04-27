@@ -3,6 +3,7 @@
 Namespace for All AlienTube operations.
 @namespace AlienTube
 */
+"use strict";
 module AlienTube {
     /**
         Main class for AlienTube
@@ -63,11 +64,13 @@ module AlienTube {
         * @returns YouTube video identifier.
         */
         static getCurrentVideoId() : string {
+            var s, requestObjects, i, len, obj;
+
             if (window.location.search.length > 0) {
-                var s = window.location.search.substring(1);
-                var requestObjects = s.split('&');
-                for (var i = 0, len = requestObjects.length; i < len; i++) {
-                    var obj = requestObjects[i].split('=');
+                s = window.location.search.substring(1);
+                requestObjects = s.split('&');
+                for (i = 0, len = requestObjects.length; i < len; i += 1) {
+                    obj = requestObjects[i].split('=');
                     if (obj[0] === "v") {
                         return obj[1];
                     }
@@ -82,10 +85,12 @@ module AlienTube {
         * @returns A string with a human readable time.
         */
         static getHumanReadableTimestamp (epochTime : number) : string {
-            var secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
+            var secs, timeUnits, timeUnit;
+
+            secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
             secs = Math.abs(secs);
 
-            var timeUnits = {
+            timeUnits = {
                 Year:   Math.floor(secs / 60 / 60 / 24 / 365.27),
                 Month:  Math.floor(secs / 60 / 60 / 24 / 30),
                 Day:    Math.floor(secs / 60 / 60 / 24),
@@ -96,7 +101,7 @@ module AlienTube {
 
             /* Retrieve the most relevant number by retrieving the first one that is "1" or more.
             Decide if it is plural and retrieve the correct localisation */
-            for (var timeUnit in timeUnits) {
+            for (timeUnit in timeUnits) {
                 if (timeUnits.hasOwnProperty(timeUnit) && timeUnits[timeUnit] >= 1) {
                     if (timeUnits[timeUnit] > 1) {
                         return Main.localisationManager.get("timestamp_format", [
@@ -139,11 +144,12 @@ module AlienTube {
             Get the HTML templates for the extension
         */
         static getExtensionTemplates (callback : any) {
+            var template, handlebarHTML, templateLink;
+
             switch(window.getCurrentBrowser()) {
                 case Browser.FIREFOX:
-                    var templateHTML = self.options.template;
-                    var template = document.createElement("div");
-                    var handlebarHTML = Handlebars.compile(templateHTML);
+                    template = document.createElement("div");
+                    handlebarHTML = Handlebars.compile(self.options.template);
                     template.innerHTML = handlebarHTML();
 
                     if (callback) {
@@ -153,7 +159,7 @@ module AlienTube {
 
                 case Browser.SAFARI:
                     new HttpRequest(Main.getExtensionRessourcePath("templates.html"), RequestType.GET, (data) => {
-                        var template = document.createElement("div");
+                        template = document.createElement("div");
                         template.innerHTML = data;
                         document.head.appendChild(template);
                         if (callback) {
@@ -163,7 +169,7 @@ module AlienTube {
                     break;
 
                 case Browser.CHROME:
-                    var templateLink = document.createElement("link");
+                    templateLink = document.createElement("link");
                     templateLink.id = "alientubeTemplate";
                     templateLink.onload = () => {
                         if (callback) {

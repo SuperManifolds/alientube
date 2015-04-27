@@ -3,6 +3,7 @@
     Namespace for All AlienTube operations.
     @namespace AlienTube
 */
+"use strict";
 module AlienTube {
     /**
         Creates a new instance of a Comment Thread and adds it to DOM.
@@ -27,6 +28,10 @@ module AlienTube {
         children : Array<any>;
 
         constructor (threadData : any, commentSection : CommentSection) {
+            var template, title, username, flair, optionsElement, nsfwElement, gildCountElement, timestamp, submittedByUsernameText, openNewCommentBox;
+            var saveItemToRedditList, refreshCommentThread, giveGoldToUser, reportToAdministrators, sortController, voteController;
+            var googlePlusText, googlePlusButton, googlePlusContainer, officialLabel;
+
             this.children = new Array();
             this.commentSection = commentSection;
             this.threadInformation = threadData[0].data.children[0].data;
@@ -35,7 +40,7 @@ module AlienTube {
             Main.Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
             this.postIsInPreservedMode = this.threadInformation.isRedditPreservedPost();
 
-            var template = Main.getExtensionTemplateItem(this.commentSection.template, "threadcontainer");
+            template = Main.getExtensionTemplateItem(this.commentSection.template, "threadcontainer");
             this.threadContainer = <HTMLDivElement> template.querySelector("#at_comments");
 
             if (threadData[0].data.modhash.length > 0) {
@@ -52,12 +57,12 @@ module AlienTube {
 
             /* Set the thread title and link to it, because Reddit for some reason encodes html entities in the title, we must use
             innerHTML. */
-            var title = <HTMLParagraphElement> this.threadContainer.querySelector(".title");
+            title = <HTMLParagraphElement> this.threadContainer.querySelector(".title");
             title.innerHTML = this.threadInformation.title;
             title.setAttribute("href", "http://reddit.com" + this.threadInformation.permalink);
 
             /* Set the username of the author and link to them */
-            var username = this.threadContainer.querySelector(".at_author");
+            username = this.threadContainer.querySelector(".at_author");
             username.textContent = this.threadInformation.author;
             username.setAttribute("href", "http://www.reddit.com/u/" + this.threadInformation.author);
             username.setAttribute("data-username", this.threadInformation.author);
@@ -66,7 +71,7 @@ module AlienTube {
             }
 
             /* Add flair to the user */
-            var flair = <HTMLSpanElement> this.threadContainer.querySelector(".at_flair");
+            flair = <HTMLSpanElement> this.threadContainer.querySelector(".at_flair");
             if (this.threadInformation.author_flair_text) {
                 flair.textContent = this.threadInformation.author_flair_text;
             } else {
@@ -75,8 +80,8 @@ module AlienTube {
 
             /* Set the NSFW label on the post if applicable */
             if (this.threadInformation.over_18) {
-                var optionsElement = this.threadContainer.querySelector(".options");
-                var nsfwElement = document.createElement("acronym");
+                optionsElement = this.threadContainer.querySelector(".options");
+                nsfwElement = document.createElement("acronym");
                 nsfwElement.classList.add("nsfw");
                 nsfwElement.setAttribute("title", Main.localisationManager.get("post_badge_NSFW_message"));
                 nsfwElement.textContent = Main.localisationManager.get("post_badge_NSFW");
@@ -85,26 +90,26 @@ module AlienTube {
 
             /* Set the gild (how many times the user has been given gold for this post) if any */
             if (this.threadInformation.gilded) {
-                var gildCountElement = this.threadContainer.querySelector(".at_gilded");
+                gildCountElement = this.threadContainer.querySelector(".at_gilded");
                 gildCountElement.setAttribute("data-count", this.threadInformation.gilded);
             }
 
             /* Set the the thread posted time */
-            var timestamp = this.threadContainer.querySelector(".at_timestamp");
+            timestamp = this.threadContainer.querySelector(".at_timestamp");
             timestamp.textContent = Main.getHumanReadableTimestamp(this.threadInformation.created_utc);
             timestamp.setAttribute("timestamp", new Date(this.threadInformation.created_utc).toISOString());
 
             /* Set the localised text for "by {username}" */
-            var submittedByUsernameText = this.threadContainer.querySelector(".templateSubmittedByUsernameText");
+            submittedByUsernameText = this.threadContainer.querySelector(".templateSubmittedByUsernameText");
             submittedByUsernameText.textContent = Main.localisationManager.get("post_submitted_preposition");
 
             /* Set the text for the comments button  */
-            var openNewCommentBox = this.threadContainer.querySelector(".commentTo");
+            openNewCommentBox = this.threadContainer.querySelector(".commentTo");
             openNewCommentBox.textContent = this.threadInformation.num_comments + " " + Main.localisationManager.get("post_button_comments").toLowerCase();
             openNewCommentBox.addEventListener("click", this.onCommentButtonClick.bind(this), false);
 
             /* Set the button text and the event handler for the "save" button */
-            var saveItemToRedditList = this.threadContainer.querySelector(".save");
+            saveItemToRedditList = this.threadContainer.querySelector(".save");
             if (this.threadInformation.saved) {
                 saveItemToRedditList.textContent = Main.localisationManager.get("post_button_unsave");
                 saveItemToRedditList.setAttribute("saved", "true");
@@ -115,7 +120,7 @@ module AlienTube {
 
 
             /* Set the button text and the event handler for the "refresh" button */
-            var refreshCommentThread = this.threadContainer.querySelector(".refresh");
+            refreshCommentThread = this.threadContainer.querySelector(".refresh");
             this.commentSection.storedTabCollection.splice(this.commentSection.storedTabCollection.indexOf(threadData), 1);
             refreshCommentThread.addEventListener("click", () => {
                 this.commentSection.threadCollection.forEach((item) => {
@@ -127,18 +132,18 @@ module AlienTube {
             refreshCommentThread.textContent = Main.localisationManager.get("post_button_refresh");
 
             /* Set the button text and the link for the "give gold" button */
-            var giveGoldToUser = this.threadContainer.querySelector(".giveGold");
+            giveGoldToUser = this.threadContainer.querySelector(".giveGold");
             giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.threadInformation.name);
             giveGoldToUser.textContent = Main.localisationManager.get("post_button_gold");
 
             /* Set the button text and the event handler for the "report post" button */
-            var reportToAdministrators = this.threadContainer.querySelector(".report");
+            reportToAdministrators = this.threadContainer.querySelector(".report");
             reportToAdministrators.textContent = Main.localisationManager.get("post_button_report");
             reportToAdministrators.addEventListener("click", this.onReportButtonClicked.bind(this), false);
 
             /* Set the button text and event handler for the sort selector. */
-            var sortController = <HTMLSelectElement> this.threadContainer.querySelector(".sort");
-            for (var sortIndex = 0, sortLength = this.sortingTypes.length; sortIndex < sortLength; sortIndex++) {
+            sortController = <HTMLSelectElement> this.threadContainer.querySelector(".sort");
+            for (var sortIndex = 0, sortLength = this.sortingTypes.length; sortIndex < sortLength; sortIndex += 1) {
                 sortController.children[sortIndex].textContent = Main.localisationManager.get("post_sort_" + this.sortingTypes[sortIndex]);
             }
             sortController.selectedIndex = this.sortingTypes.indexOf(Main.Preferences.getString("threadSortType"));
@@ -153,14 +158,11 @@ module AlienTube {
             }, false);
 
             /* Set the state of the voting buttons */
-            var voteController = <HTMLDivElement> this.threadContainer.querySelector(".vote");
-            var voteButtonScoreCountElement = voteController.querySelector(".score");
-            voteButtonScoreCountElement.textContent = this.threadInformation.score;
+            voteController = <HTMLDivElement> this.threadContainer.querySelector(".vote");
+            voteController.querySelector(".score").textContent = this.threadInformation.score;
 
-            var upvoteController = voteController.querySelector(".arrow.up");
-            var downvoteController = voteController.querySelector(".arrow.down");
-            upvoteController.addEventListener("click", this.onUpvoteControllerClick.bind(this), false);
-            downvoteController.addEventListener("click", this.onDownvoteControllerClick.bind(this), false);
+            voteController.querySelector(".arrow.up").addEventListener("click", this.onUpvoteControllerClick.bind(this), false);
+            voteController.querySelector(".arrow.down").addEventListener("click", this.onDownvoteControllerClick.bind(this), false);
 
             if (this.threadInformation.likes === true) {
                 voteController.classList.add("liked");
@@ -169,12 +171,12 @@ module AlienTube {
             }
 
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
-            var googlePlusButton = <HTMLButtonElement> this.threadContainer.querySelector("#at_switchtogplus");
-            var googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
+            googlePlusButton = <HTMLButtonElement> this.threadContainer.querySelector("#at_switchtogplus");
+            googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
             googlePlusText.textContent = Main.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
-            var googlePlusContainer = document.getElementById("watch-discussion");
+            googlePlusContainer = document.getElementById("watch-discussion");
             if (Main.Preferences.getBoolean("showGooglePlusButton") == false || googlePlusContainer == null) {
                 googlePlusButton.style.display = "none";
             }
@@ -190,19 +192,20 @@ module AlienTube {
 
             /* If this post is prioritised (official) mark it as such in the header */
             if (this.threadInformation.official) {
-                var officialLabel = <HTMLSpanElement> this.threadContainer.querySelector(".at_official");
+                 officialLabel = <HTMLSpanElement> this.threadContainer.querySelector(".at_official");
                 officialLabel.textContent = Main.localisationManager.get("post_message_official");
                 officialLabel.style.display = "inline-block";
             }
 
             /* Start iterating the top level comments in the comment section */
             this.commentData.forEach((commentObject) => {
+                var readmore, comment;
                 if (commentObject.kind === "more") {
-                    var readmore = new LoadMore(commentObject.data, this, this);
+                    readmore = new LoadMore(commentObject.data, this, this);
                     this.children.push(readmore);
                     this.threadContainer.appendChild(readmore.representedHTMLElement);
                 } else {
-                    var comment = new Comment(commentObject.data, this);
+                    comment = new Comment(commentObject.data, this);
                     this.children.push(comment);
                     this.threadContainer.appendChild(comment.representedHTMLElement);
                 }
@@ -243,11 +246,13 @@ module AlienTube {
         }
 
         onGooglePlusClick (eventObject : Event) {
-            var alienTubeContainer = document.getElementById("alientube");
+            var alienTubeContainer, googlePlusContainer, redditButton;
+
+            alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "none";
-            var googlePlusContainer = document.getElementById("watch-discussion");
+            googlePlusContainer = document.getElementById("watch-discussion");
             googlePlusContainer.style.display = "block";
-            var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
+            redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
             redditButton.style.display = "block";
 
             /* Terrible hack to force Google+ to reload the comments by making it think the user has resized the window.

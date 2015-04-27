@@ -3,6 +3,7 @@
     Namespace for All AlienTube operations.
     @namespace AlienTube
 */
+"use strict";
 module AlienTube {
     /**
         The representation and management of an AlienTube loading screen.
@@ -27,6 +28,7 @@ module AlienTube {
         }
 
         public updateProgress(state : LoadingState, alternativeText? : string) {
+            var parentNode;
             this.currentProgressState = state;
             var loadingText = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingtext");
             var loadingHeader = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingheader");
@@ -39,7 +41,7 @@ module AlienTube {
                     break;
 
                 case LoadingState.RETRY:
-                    this.loadingAttempts++;
+                    this.loadingAttempts += 1;
                     loadingText.textContent = Main.localisationManager.get("loading_retry_message", [
                         this.loadingAttempts.toString(),
                         "3"
@@ -48,7 +50,7 @@ module AlienTube {
 
                 case LoadingState.ERROR:
                 case LoadingState.COMPLETE:
-                    var parentNode = this.representedHTMLElement.parentNode;
+                    parentNode = this.representedHTMLElement.parentNode;
                     if (parentNode) {
                         this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
                     }
