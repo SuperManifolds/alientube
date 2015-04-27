@@ -3,12 +3,12 @@
 Namespace for All AlienTube operations.
 @namespace AlienTube
 */
-"use strict";
 module AlienTube {
     /**
         Main class for AlienTube
         @class Main
     */
+    "use strict";
     export class Main {
         static Preferences : BrowserPreferenceManager;
         static localisationManager : LocalisationManager;
@@ -16,11 +16,13 @@ module AlienTube {
         currentVideoIdentifier : string;
 
         constructor () {
+            var stylesheet, observer, config;
+
             // Load stylesheet from disk.
             Main.Preferences = new BrowserPreferenceManager();
             Main.localisationManager = new LocalisationManager(() => {
-                if (window.getCurrentBrowser() == Browser.SAFARI) {
-                    var stylesheet = document.createElement("link");
+                if (window.getCurrentBrowser() === Browser.SAFARI) {
+                    stylesheet = document.createElement("link");
                     stylesheet.setAttribute("href", Main.getExtensionRessourcePath("style.css"));
                     stylesheet.setAttribute("type", "text/css");
                     stylesheet.setAttribute("rel", "stylesheet");
@@ -28,8 +30,8 @@ module AlienTube {
                 }
 
                 // Start observer to detect when a new video is loaded.
-                var observer = new MutationObserver(this.mutationObserver);
-                var config = { attributes : true, childList : true, characterData : true };
+                observer = new MutationObserver(this.mutationObserver);
+                config = { attributes : true, childList : true, characterData : true };
                 observer.observe(document.getElementById("content"), config);
 
                 // Start a new comment section.
@@ -46,9 +48,11 @@ module AlienTube {
         */
         private mutationObserver (mutations : Array<MutationRecord>) {
             mutations.forEach(function(mutation) {
-                var target = <HTMLElement>mutation.target;
+                var target, reportedVideoId;
+
+                target = <HTMLElement>mutation.target;
                 if (target.classList.contains("yt-card") || target.id === "content") {
-                    var reportedVideoId = Main.getCurrentVideoId();
+                    reportedVideoId = Main.getCurrentVideoId();
                     if (reportedVideoId !== this.currentVideoIdentifier) {
                         this.currentVideoIdentifier = reportedVideoId;
                         if (window.isYouTubeVideoPage) {

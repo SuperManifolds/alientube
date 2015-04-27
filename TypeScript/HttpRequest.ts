@@ -18,7 +18,7 @@ module AlienTube {
         constructor (url : string, type : RequestType, callback : any, postData? : any, errorHandler? : any) {
             var uuid, listener, xhr, query, key, postData;
 
-            if (window.getCurrentBrowser() == Browser.SAFARI) {
+            if (window.getCurrentBrowser() === Browser.SAFARI) {
                 uuid = HttpRequest.generateUUID();
                 listener = safari.self.addEventListener('message', function listenerFunction (event) {
                     if (event.message.uuid !== uuid) return;
@@ -35,7 +35,7 @@ module AlienTube {
                 }, false);
 
                 query = [];
-                if (type == RequestType.POST) {
+                if (type === RequestType.POST) {
                     query = [];
                     for (key in postData) {
                         query.push(encodeURIComponent(key) + '=' + encodeURIComponent(postData[key]));
@@ -63,7 +63,7 @@ module AlienTube {
                         if (errorHandler) errorHandler(xhr);
                     }
                 }
-                if (type == RequestType.POST) {
+                if (type === RequestType.POST) {
                     query = [];
                     for (key in postData) {
                         query.push(encodeURIComponent(key) + '=' + encodeURIComponent(postData[key]));

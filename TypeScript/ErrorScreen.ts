@@ -31,7 +31,7 @@ module AlienTube {
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
             googlePlusContainer = document.getElementById("watch-discussion");
-            if (Main.Preferences.getBoolean("showGooglePlusButton") == false || googlePlusContainer == null) {
+            if (Main.Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
                 googlePlusButton.style.display = "none";
             }
 

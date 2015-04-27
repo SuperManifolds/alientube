@@ -46,7 +46,7 @@ module AlienTube {
 
                 case Browser.SAFARI:
                     var listener = safari.self.addEventListener('message', function listenerFunction (event) {
-                        if (event.name == "preferences") {
+                        if (event.name === "preferences") {
                             console.log("received");
                             this.preferences = event.message;
 
@@ -81,7 +81,7 @@ module AlienTube {
         }
 
         getArray (key : string) : string[] {
-            if (this.get(key).constructor == Array) {
+            if (this.get(key).isArray()) {
                 return this.get(key);
             }
             return JSON.parse(this.get(key));

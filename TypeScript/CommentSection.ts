@@ -42,7 +42,7 @@ module AlienTube {
                         var mRegex = /(?:http|https):\/\/(.[^/]+)\/r\/([A-Za-z0-9][A-Za-z0-9_]{2,20})(?:\/comments\/)?([A-Za-z0-9]*)/g;
 
                         // There are a number of ways the Reddit API can arbitrarily explode, here are some of them.
-                        if (results == '{}' || results.kind !== 'Listing' || results.data.children.length === 0) {
+                        if (results === {} || results.kind !== 'Listing' || results.data.children.length === 0) {
                             this.returnNoResults();
                         } else {
                             searchResults = results.data.children;
@@ -257,7 +257,7 @@ module AlienTube {
                     if (requestPair[0] === "v" && requestPair[1] === currentVideoIdentifier) {
                         return true;
                     }
-                    if (requestPair[0] == "amp;u") {
+                    if (requestPair[0] === "amp;u") {
                         component = decodeURIComponent(requestPair[1]);
                         component = component.replace("/watch?", "");
                         var shareRequestItems = component.split('&');
@@ -472,7 +472,7 @@ module AlienTube {
             tabElementClickedByUser = <HTMLButtonElement> eventObject.target;
 
             /* Only continue if the user did not click a tab that is already selected. */
-            if (!tabElementClickedByUser.classList.contains("active") && tabElementClickedByUser.tagName == "BUTTON") {
+            if (!tabElementClickedByUser.classList.contains("active") && tabElementClickedByUser.tagName === "BUTTON") {
                 tabContainer = document.getElementById("at_tabcontainer");
                 currentIndexOfNewTab = 0;
 

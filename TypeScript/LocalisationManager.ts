@@ -25,7 +25,7 @@ module AlienTube {
             switch (window.getCurrentBrowser()) {
                 case Browser.SAFARI:
                     localisation = navigator.language.split('-')[0];
-                    if (this.supportedLocalisations.indexOf(localisation) == -1) {
+                    if (this.supportedLocalisations.indexOf(localisation) === -1) {
                         localisation = "en";
                     }
                     new HttpRequest(safari.extension.baseURI + '_locales/' + localisation + "/messages.json", RequestType.GET, (data) => {
