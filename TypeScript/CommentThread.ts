@@ -19,11 +19,11 @@ module AlienTube {
         private commentData : Array<any>;
         private sortingTypes = [
             "confidence",
-            "hot",
             "top",
             "new",
             "controversial",
-            "old"
+            "old",
+            "qa"
         ];
         children : Array<any>;
 

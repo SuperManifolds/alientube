@@ -177,10 +177,6 @@
       "message": "nytt",
       "description": "Label for the 'new' sort option"
   },
-  "post_sort_hot": {
-      "message": "populære",
-      "description": "Label for the 'hot' sort option"
-  },
   "post_sort_controversial": {
       "message": "kontroversielt",
       "description": "Label for the 'controversial' sort option"
@@ -188,6 +184,10 @@
   "post_sort_old": {
       "message": "eldre",
       "description": "Label for the 'old' sort option"
+  },
+  "post_sort_qa": {
+      "message": "q&a",
+      "description": "Label for the 'q&a' sort option"
   },
 
   "report_dialog_spam": {
