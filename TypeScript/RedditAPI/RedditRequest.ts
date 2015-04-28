@@ -71,7 +71,6 @@ module AlienTube {
                     new ErrorScreen(Main.commentSection, ErrorState.ERROR, e.toString());
                 }
             }
-            delete this;
         }
 
         private onRequestError (xhr) {
