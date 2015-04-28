@@ -81,7 +81,7 @@ module AlienTube {
         }
 
         getArray (key : string) : string[] {
-            if (this.get(key).isArray()) {
+            if (Array.isArray(this.get(key))) {
                 return this.get(key);
             }
             return JSON.parse(this.get(key));
