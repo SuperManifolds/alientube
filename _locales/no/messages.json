@@ -322,10 +322,6 @@
     "message": "Vis Google+ kommentarer hvis ingen Reddit kommentarer finnes",
     "description": "Show the Google+ comments like usual if there are no Reddit comments to see"
   },
-  "options_label_rememberTabsOnViewChange": {
-    "message": "Husk inneholdet av faner når du bytter mellom dem",
-    "description": "If this option is unticked we will forget the contents of the tabs if they move away from them, and comments will have to be redownloaded"
-  },
   "options_label_displayGooglePlusByDefault": {
     "message": "Vis Google+ kommentarer først når en video laster",
     "description": "This option will show the Google+ comments by default instead of the Reddit comments"

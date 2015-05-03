@@ -326,10 +326,6 @@
         "message": "Voir les commentaires Google+ s'il n'y a pas de résultats",
         "description": "Show the Google+ comments like usual if there are no Reddit comments to see"
     },
-    "options_label_rememberTabsOnViewChange": {
-        "message": "N'oubliez pas de contenu lorsque vous passez loin de pattes",
-        "description": "If this option is unticked we will forget the contents of the tabs if they move away from them, and comments will have to be redownloaded"
-    },
     "options_label_showGooglePlusButton": {
         "message": "Bouton Afficher Google+",
         "description": "This option will toggle the visibility of the Google+ comments button."

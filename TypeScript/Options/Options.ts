@@ -8,7 +8,6 @@ module AlienTube {
             "hiddenPostScoreThreshold",
             "hiddenCommentScoreThreshold",
             "showGooglePlusWhenNoPosts",
-            "rememberTabsOnViewChange",
             "showGooglePlusButton",
             "defaultDisplayAction"
         ];
@@ -16,7 +15,6 @@ module AlienTube {
         private hiddenPostScoreThresholdElement;
         private hiddenCommentScoreThresholdElement;
         private showGooglePlusWhenNoPostsElement;
-        private rememberTabsOnViewChangeElement;
         private showGooglePlusButtonElement;
         private defaultDisplayActionElement;
 
@@ -34,7 +32,6 @@ module AlienTube {
                 this.hiddenPostScoreThresholdElement    = document.getElementById("hiddenPostScoreThreshold");
                 this.hiddenCommentScoreThresholdElement = document.getElementById("hiddenCommentScoreThreshold");
                 this.showGooglePlusWhenNoPostsElement   = document.getElementById("showGooglePlusWhenNoPosts");
-                this.rememberTabsOnViewChangeElement    = document.getElementById("rememberTabsOnViewChange");
                 this.showGooglePlusButtonElement        = document.getElementById("showGooglePlusButton");
                 this.defaultDisplayActionElement        = document.getElementById("defaultDisplayAction");
 
@@ -62,7 +59,6 @@ module AlienTube {
                     this.hiddenPostScoreThresholdElement.value        = preferences.getNumber("hiddenPostScoreThreshold");
                     this.hiddenCommentScoreThresholdElement.value     = preferences.getNumber("hiddenCommentScoreThreshold");
                     this.showGooglePlusWhenNoPostsElement.checked     = preferences.getBoolean("showGooglePlusWhenNoPosts");
-                    this.rememberTabsOnViewChangeElement.checked      = preferences.getBoolean("rememberTabsOnViewChange");
                     this.showGooglePlusButtonElement.checked          = preferences.getBoolean("showGooglePlusButton");
                     this.defaultDisplayActionElement.selectedIndex    = preferences.getString("defaultDisplayAction") === "alientube" ? 0 : 1;
 
@@ -86,7 +82,6 @@ module AlienTube {
             this.preferences.set('hiddenPostScoreThreshold', this.hiddenPostScoreThresholdElement.value);
             this.preferences.set('hiddenCommentScoreThreshold', this.hiddenCommentScoreThresholdElement.value);
             this.preferences.set('showGooglePlusWhenNoPosts', this.showGooglePlusWhenNoPostsElement.checked);
-            this.preferences.set('rememberTabsOnViewChange', this.rememberTabsOnViewChangeElement.checked);
             this.preferences.set('showGooglePlusButton', this.showGooglePlusButtonElement.checked);
             this.preferences.set('defaultDisplayAction', this.defaultDisplayActionElement.value);
 
@@ -129,7 +124,6 @@ module AlienTube {
         hiddenPostScoreThreshold    	: number;
         hiddenCommentScoreThreshold     : number;
         showGooglePlusWhenNoPosts       : boolean;
-        rememberTabsOnViewChange        : boolean;
         showGooglePlusButton            : boolean;
         defaultDisplayAction            : string;
     }

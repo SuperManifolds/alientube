@@ -17,7 +17,6 @@ module AlienTube {
             hiddenPostScoreThreshold: -4,
             hiddenCommentScoreThreshold: -4,
             showGooglePlusWhenNoPosts: true,
-            rememberTabsOnViewChange: true,
             showGooglePlusButton: true,
             threadSortType: "confidence",
             redditUserIdentifierHash: "",

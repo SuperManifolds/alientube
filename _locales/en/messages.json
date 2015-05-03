@@ -333,10 +333,6 @@
         "message": "Display Google+ comments if no Reddit comments are found",
         "description": "Show the Google+ comments like usual if there are no Reddit comments to see"
     },
-    "options_label_rememberTabsOnViewChange": {
-        "message": "Remember the contents of tabs when you switch from them",
-        "description": "If this option is unticked we will forget the contents of the tabs if they move away from them, and comments will have to be redownloaded"
-    },
     "options_label_showGooglePlusButton": {
         "message": "Show the Google+ Comments Button",
         "description": "This option will toggle the visibility of the Google+ comments button."

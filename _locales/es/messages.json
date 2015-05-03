@@ -322,10 +322,6 @@
     "message": "Mostrar Google+ si hay cero resultados",
     "description": "Show the Google+ comments like usual if there are no Reddit comments to see"
   },
-  "options_label_rememberTabsOnViewChange": {
-    "message": "Recuerde pestañas cuando se cambia de ellos",
-    "description": "If this option is unticked we will forget the contents of the tabs if they move away from them, and comments will have to be redownloaded"
-  },
   "options_label_showGooglePlusButton": {
       "message": "Botón Mostrar Google+",
       "description": "This option will toggle the visibility of the Google+ comments button."
