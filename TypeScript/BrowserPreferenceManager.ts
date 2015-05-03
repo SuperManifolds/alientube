@@ -18,11 +18,13 @@ module AlienTube {
             hiddenCommentScoreThreshold: -4,
             showGooglePlusWhenNoPosts: true,
             rememberTabsOnViewChange: true,
-            displayGooglePlusByDefault: false,
             showGooglePlusButton: true,
             threadSortType: "confidence",
             redditUserIdentifierHash: "",
-            excludedSubredditsSelectedByUser: []
+            excludedSubredditsSelectedByUser: [],
+            displayGooglePlusByDefault: false,
+            defaultDisplayAction: "alientube",
+            channelDisplayActions: {}
         }
 
         constructor (callback?) {
@@ -82,6 +84,13 @@ module AlienTube {
 
         getArray (key : string) : string[] {
             if (Array.isArray(this.get(key))) {
+                return this.get(key);
+            }
+            return JSON.parse(this.get(key));
+        }
+        
+        getObject (key : string) : Object {
+            if (typeof this.get(key) === 'object') {
                 return this.get(key);
             }
             return JSON.parse(this.get(key));

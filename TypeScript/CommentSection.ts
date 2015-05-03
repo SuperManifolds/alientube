@@ -216,15 +216,27 @@ module AlienTube {
                     googlePlusContainer.parentNode.insertBefore(redditButton, googlePlusContainer);
                 }
 
-                if (Main.Preferences.getBoolean("displayGooglePlusByDefault")) {
+                if (this.getDisplayActionForCurrentChannel() === "gplus") {
                     redditContainer.style.display = "none"
                     redditButton.style.display = "block";
                 } else {
                     googlePlusContainer.style.display = "none";
                 }
             }
+            
+            /* Set the setting for whether or not AlienTube should show itself on this YouTube channel */
+            var allowOnChannelContainer = document.getElementById("allowOnChannelContainer");
+            if (! allowOnChannelContainer) {
+                var youTubeActionsContainer = document.getElementById("watch8-secondary-actions");
+                var allowOnChannel =  Main.getExtensionTemplateItem(this.template, "allowonchannel");
+                allowOnChannel.children[0].appendChild(document.createTextNode("Show AlienTube on this channel"));
+                var allowOnChannelCheckbox = allowOnChannel.querySelector("#allowonchannel");
+                allowOnChannelCheckbox.checked = (this.getDisplayActionForCurrentChannel() === "alientube");
+                allowOnChannelCheckbox.addEventListener("change", this.allowOnChannelChange, false);
+                youTubeActionsContainer.appendChild(allowOnChannel);
+            }
 
-            /* Add AlienTube contents*/
+            /* Add AlienTube contents */
             redditContainer.appendChild(contents);
             commentsContainer.appendChild(redditContainer);
             return redditContainer;
@@ -521,6 +533,23 @@ module AlienTube {
             /* Start downloading the new tab. */
             this.showTab(this.threadCollection[0]);
             eventObject.stopPropagation();
+        }
+        
+        private allowOnChannelChange (eventObject : Event) {
+            var allowedOnChannel = (<HTMLInputElement>eventObject.target).checked;
+            var channelName = document.querySelector(".yt-user-info .yt-uix-sessionlink").textContent;
+            var channelDisplayActions = Main.Preferences.getObject("channelDisplayActions");
+            channelDisplayActions[channelName] = allowedOnChannel ? "alientube" : "gplus";
+            Main.Preferences.set("channelDisplayActions", channelDisplayActions);
+        }
+        
+        private getDisplayActionForCurrentChannel () {
+            var channelName = document.querySelector(".yt-user-info .yt-uix-sessionlink").textContent;
+            var displayActionByUser = Main.Preferences.getObject("channelDisplayActions")[channelName];
+            if (displayActionByUser) {
+                return displayActionByUser;
+            }
+            return Main.Preferences.getString("defaultDisplayAction");
         }
     }
 }

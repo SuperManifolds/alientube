@@ -4,21 +4,21 @@
 "use strict";
 module AlienTube {
     export class Options {
-        private preferenceKeyList = [
+        private static preferenceKeyList = [
             "hiddenPostScoreThreshold",
             "hiddenCommentScoreThreshold",
             "showGooglePlusWhenNoPosts",
             "rememberTabsOnViewChange",
-            "displayGooglePlusByDefault",
-            "showGooglePlusButton"
+            "showGooglePlusButton",
+            "defaultDisplayAction"
         ];
 
         private hiddenPostScoreThresholdElement;
         private hiddenCommentScoreThresholdElement;
         private showGooglePlusWhenNoPostsElement;
         private rememberTabsOnViewChangeElement;
-        private displayGooglePlusByDefaultElement;
         private showGooglePlusButtonElement;
+        private defaultDisplayActionElement;
 
         private saveOptionsButton;
         private displayAboutDialogButton;
@@ -35,8 +35,8 @@ module AlienTube {
                 this.hiddenCommentScoreThresholdElement = document.getElementById("hiddenCommentScoreThreshold");
                 this.showGooglePlusWhenNoPostsElement   = document.getElementById("showGooglePlusWhenNoPosts");
                 this.rememberTabsOnViewChangeElement    = document.getElementById("rememberTabsOnViewChange");
-                this.displayGooglePlusByDefaultElement  = document.getElementById("displayGooglePlusByDefault");
                 this.showGooglePlusButtonElement        = document.getElementById("showGooglePlusButton");
+                this.defaultDisplayActionElement        = document.getElementById("defaultDisplayAction");
 
                 this.saveOptionsButton = document.getElementById("saveButton");
                 this.displayAboutDialogButton = document.getElementById("aboutButton");
@@ -50,17 +50,21 @@ module AlienTube {
                 document.getElementById("versiontext").textContent = this.localisationManager.get("options_label_version");
 
                 this.preferences = new BrowserPreferenceManager((preferences) => {
-                    for (i = 0, len = this.preferenceKeyList.length; i < len; i += 1) {
-                        label = <HTMLLabelElement> document.querySelector("label[for='" + this.preferenceKeyList[i] + "']");
-                        label.textContent = this.localisationManager.get("options_label_" + this.preferenceKeyList[i]);
+                    for (i = 0, len = Options.preferenceKeyList.length; i < len; i += 1) {
+                        console.log("label[for='" + Options.preferenceKeyList[i] + "']");
+                        label = <HTMLLabelElement> document.querySelector("label[for='" + Options.preferenceKeyList[i] + "']");
+                        label.textContent = this.localisationManager.get("options_label_" + Options.preferenceKeyList[i]);
                     }
+                    
+                    this.defaultDisplayActionElement.options[0].textContent = this.localisationManager.get("options_label_alientube");
+                    this.defaultDisplayActionElement.options[1].textContent = this.localisationManager.get("options_label_gplus");
 
                     this.hiddenPostScoreThresholdElement.value        = preferences.getNumber("hiddenPostScoreThreshold");
                     this.hiddenCommentScoreThresholdElement.value     = preferences.getNumber("hiddenCommentScoreThreshold");
                     this.showGooglePlusWhenNoPostsElement.checked     = preferences.getBoolean("showGooglePlusWhenNoPosts");
                     this.rememberTabsOnViewChangeElement.checked      = preferences.getBoolean("rememberTabsOnViewChange");
-                    this.displayGooglePlusByDefaultElement.checked    = preferences.getBoolean("displayGooglePlusByDefault");
                     this.showGooglePlusButtonElement.checked          = preferences.getBoolean("showGooglePlusButton");
+                    this.defaultDisplayActionElement.selectedIndex    = preferences.getString("defaultDisplayAction") === "alientube" ? 0 : 1;
 
                     this.saveOptionsButton.addEventListener("click", this.saveOptions.bind(this), false);
                     this.displayAboutDialogButton.addEventListener("click", this.displayAboutDialog.bind(this), false);
@@ -83,8 +87,8 @@ module AlienTube {
             this.preferences.set('hiddenCommentScoreThreshold', this.hiddenCommentScoreThresholdElement.value);
             this.preferences.set('showGooglePlusWhenNoPosts', this.showGooglePlusWhenNoPostsElement.checked);
             this.preferences.set('rememberTabsOnViewChange', this.rememberTabsOnViewChangeElement.checked);
-            this.preferences.set('displayGooglePlusByDefault', this.displayGooglePlusByDefaultElement.checked);
             this.preferences.set('showGooglePlusButton', this.showGooglePlusButtonElement.checked);
+            this.preferences.set('defaultDisplayAction', this.defaultDisplayActionElement.value);
 
             this.displayOptionsSavedTicker.bind(this);
         }
@@ -122,12 +126,12 @@ module AlienTube {
     }
 
     interface AlienTubePreferenceKeys {
-        hiddenPostScoreThreshold : number;
-        hiddenCommentScoreThreshold : number;
-        showGooglePlusWhenNoPosts : boolean;
-        rememberTabsOnViewChange : boolean;
-        displayGooglePlusByDefault : boolean;
-        showGooglePlusButton : boolean;
+        hiddenPostScoreThreshold    	: number;
+        hiddenCommentScoreThreshold     : number;
+        showGooglePlusWhenNoPosts       : boolean;
+        rememberTabsOnViewChange        : boolean;
+        showGooglePlusButton            : boolean;
+        defaultDisplayAction            : string;
     }
 }
 
