@@ -1,10 +1,10 @@
 /// <reference path="../index.ts" />
 /**
-    Namespace for All AlienTube operations.
-    @namespace AlienTube
+    Namespace for requests to the Reddit API operations.
+    @namespace AlienTube.Reddit
 */
 "use strict";
-module AlienTube {
+module AlienTube.Reddit {
     /**
         Report a post or comment to moderators.
         @class RedditReport
@@ -12,7 +12,7 @@ module AlienTube {
         @param commentThread CommentThread object representing the container of the comment.
         @param isThread Whether the thing being reported is an entire thread.
     */
-    export class RedditReport {
+    export class Report {
         private reportContainer;
 
         constructor (thing : string, commentThread : CommentThread, isThread : boolean) {

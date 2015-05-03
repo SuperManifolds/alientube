@@ -1,10 +1,10 @@
 /// <reference path="../index.ts" />
 /**
-    Namespace for All AlienTube operations.
-    @namespace AlienTube
+    Namespace for requests to the Reddit API operations.
+    @namespace AlienTube.Reddit
 */
 "use strict";
-module AlienTube {
+module AlienTube.Reddit {
     /**
         Perform a request to Reddit to either save or unsave an item.
         @class RedditVoteRequest
@@ -12,7 +12,7 @@ module AlienTube {
         @param type Whether the user wants to upvote, downvote, or remove their vote.
         @param callback Callback handler for the event when loaded.
     */
-    export class RedditVoteRequest {
+    export class VoteRequest {
         constructor (thing : string, type : VoteType, callback? : any) {
             var url = "https://api.reddit.com/api/vote";
             new HttpRequest(url, RequestType.POST, callback, {

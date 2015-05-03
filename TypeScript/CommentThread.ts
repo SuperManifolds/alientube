@@ -47,7 +47,7 @@ module AlienTube {
                 this.commentSection.userIsSignedIn = true;
                 if (!threadData[0].data.modhash || ! Main.Preferences.getString("username")) {
                     console.log("no username stored");
-                    new RedditUsernameRequest();
+                    new AlienTube.Reddit.RetreiveUsernameRequest();
                 }
             } else {
                 this.commentSection.userIsSignedIn = false;
@@ -229,9 +229,9 @@ module AlienTube {
 
         onSaveButtonClick (eventObject : Event) {
             var saveButton = <HTMLSpanElement> eventObject.target;
-            var savedType = saveButton.getAttribute("saved") ? SaveType.UNSAVE : SaveType.SAVE;
-            new RedditSaveRequest(this.threadInformation.name, savedType, () => {
-                if (savedType === SaveType.SAVE) {
+            var savedType = saveButton.getAttribute("saved") ? AlienTube.Reddit.SaveType.UNSAVE : AlienTube.Reddit.SaveType.SAVE;
+            new AlienTube.Reddit.SaveRequest(this.threadInformation.name, savedType, () => {
+                if (savedType === AlienTube.Reddit.SaveType.SAVE) {
                     saveButton.setAttribute("saved", "true");
                     saveButton.textContent = Main.localisationManager.get("post_button_unsave");
                 } else {
@@ -242,7 +242,7 @@ module AlienTube {
         }
 
         onReportButtonClicked (eventObject : Event) {
-            new RedditReport(this.threadInformation.name, this, true);
+            new AlienTube.Reddit.Report(this.threadInformation.name, this, true);
         }
 
         onGooglePlusClick (eventObject : Event) {
@@ -275,7 +275,7 @@ module AlienTube {
                 this.threadInformation.score = this.threadInformation.score - 1;
                 scoreValue.textContent = this.threadInformation.score;
 
-                new RedditVoteRequest(this.threadInformation.name, VoteType.NONE);
+                new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.VoteType.NONE);
             } else {
                 /* The user wishes to like this post */
                 if (this.threadInformation.likes === false) {
@@ -289,7 +289,7 @@ module AlienTube {
                 this.threadInformation.likes = true;
                 scoreValue.textContent = this.threadInformation.score;
 
-                new RedditVoteRequest(this.threadInformation.name, VoteType.UPVOTE);
+                new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.VoteType.UPVOTE);
             }
         }
 
@@ -305,7 +305,7 @@ module AlienTube {
                 this.threadInformation.score = this.threadInformation.score + 1;
                 scoreValue.textContent = this.threadInformation.score;
 
-                new RedditVoteRequest(this.threadInformation.name, VoteType.NONE);
+                new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.VoteType.NONE);
             } else {
                 /* The user wishes to dislike this post */
                 if (this.threadInformation.likes === true) {
@@ -319,7 +319,7 @@ module AlienTube {
                 this.threadInformation.likes = false;
                 scoreValue.textContent = this.threadInformation.score;
 
-                new RedditVoteRequest(this.threadInformation.name, VoteType.DOWNVOTE);
+                new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.VoteType.DOWNVOTE);
             }
         }
 

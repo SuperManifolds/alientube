@@ -36,7 +36,7 @@ module AlienTube {
 
                     // Open a search request to Reddit for the video identfiier
                     videoSearchString = encodeURI("(url:\"3D" + currentVideoIdentifier + "\" OR url:\"" + currentVideoIdentifier + "\") (site:youtube.com OR site:youtu.be)");
-                    new RedditRequest("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (results) => {
+                    new AlienTube.Reddit.Request("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (results) => {
                         var searchResults, finalResultCollection, preferredPost, preferredSubreddit, commentLinks, getExcludedSubreddits, sortedResultCollection;
                         var tabContainer, tabContainerTemplate, mainContainer, linkElement, url, match;
                         var mRegex = /(?:http|https):\/\/(.[^/]+)\/r\/([A-Za-z0-9][A-Za-z0-9_]{2,20})(?:\/comments\/)?([A-Za-z0-9]*)/g;
@@ -162,7 +162,7 @@ module AlienTube {
             alientubeCommentContainer.appendChild(loadingScreen.HTMLElement);
 
             var requestUrl = "https://api.reddit.com/r/" + threadData.subreddit + "/comments/" + threadData.id + ".json?sort=" + Main.Preferences.getString("threadSortType");
-            new RedditRequest(requestUrl, RequestType.GET, (responseObject) => {
+            new AlienTube.Reddit.Request(requestUrl, RequestType.GET, (responseObject) => {
                 // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
                 if (!Main.Preferences.getBoolean("rememberTabsOnViewChange")) {
                     this.storedTabCollection.length = 0;

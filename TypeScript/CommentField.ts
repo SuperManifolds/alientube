@@ -91,7 +91,7 @@ module AlienTube {
 
             if (this.edit) {
                 /* Send the edit comment request to reddit */
-                new RedditEditCommentRequest(thing_id, inputField.value, (responseText) => {
+                new AlienTube.Reddit.EditCommentRequest(thing_id, inputField.value, (responseText) => {
                     this.parentClass.commentObject.body = inputField.value;
                     var editedCommentBody = this.parentClass.representedHTMLElement.querySelector(".at_commentcontent");
                     editedCommentBody.innerHTML = SnuOwnd.getParser().render(inputField.value);
@@ -103,7 +103,7 @@ module AlienTube {
                 });
             } else {
                 /* Send the comment to Reddit */
-                new RedditCommentRequest(thing_id, inputField.value, (responseText) => {
+                new AlienTube.Reddit.CommentRequest(thing_id, inputField.value, (responseText) => {
                     var responseObject = JSON.parse(responseText);
                     var comment = new Comment(responseObject.json.data.things[0].data, this.commentThread);
                     this.parentClass.children.push(comment);

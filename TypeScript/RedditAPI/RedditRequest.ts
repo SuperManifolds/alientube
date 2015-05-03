@@ -1,10 +1,10 @@
 /// <reference path="../index.ts" />
 /**
-    Namespace for All AlienTube operations.
-    @namespace AlienTube
+    Namespace for requests to the Reddit API operations.
+    @namespace AlienTube.Reddit
 */
 "use strict";
-module AlienTube {
+module AlienTube.Reddit {
     /**
         Perform a request to Reddit. Embedded error handling.
         @class RedditRequest
@@ -12,7 +12,7 @@ module AlienTube {
         @param type Whether to save or unsave
         @param callback Callback handler for the event when loaded.
     */
-    export class RedditRequest {
+    export class Request {
         private requestUrl : string;
         private requestType : RequestType;
         private finalCallback : any;

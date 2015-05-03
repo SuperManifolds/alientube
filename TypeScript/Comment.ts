@@ -189,9 +189,9 @@ module AlienTube {
 
         onSaveButtonClick (eventObject : Event) {
             var saveButton = <HTMLSpanElement> eventObject.target;
-            var savedType = saveButton.getAttribute("saved") ? SaveType.UNSAVE : SaveType.SAVE;
-            new RedditSaveRequest(this.commentObject.name, savedType, () => {
-                if (savedType === SaveType.SAVE) {
+            var savedType = saveButton.getAttribute("saved") ? AlienTube.Reddit.SaveType.UNSAVE : AlienTube.Reddit.SaveType.SAVE;
+            new AlienTube.Reddit.SaveRequest(this.commentObject.name, savedType, () => {
+                if (savedType === AlienTube.Reddit.SaveType.SAVE) {
                     saveButton.setAttribute("saved", "true");
                     saveButton.textContent = Main.localisationManager.get("post_button_unsave");
                 } else {
@@ -202,7 +202,7 @@ module AlienTube {
         }
 
         onReportButtonClicked (eventObject : Event) {
-            new RedditReport(this.commentObject.name, this.commentThread, false);
+            new AlienTube.Reddit.Report(this.commentObject.name, this.commentThread, false);
         }
 
         onUpvoteControllerClick (eventObject : Event) {
@@ -221,7 +221,7 @@ module AlienTube {
                 scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
                 scoreValue.textContent = this.commentObject.score + scorePointsText;
 
-                new RedditVoteRequest(this.commentObject.name, VoteType.NONE);
+                new AlienTube.Reddit.VoteRequest(this.commentObject.name, AlienTube.Reddit.VoteType.NONE);
             } else {
                 /* The user wishes to like this post */
                 if (this.commentObject.likes === false) {
@@ -236,7 +236,7 @@ module AlienTube {
                 scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
                 scoreValue.textContent = this.commentObject.score + scorePointsText;
 
-                new RedditVoteRequest(this.commentObject.name, VoteType.UPVOTE);
+                new AlienTube.Reddit.VoteRequest(this.commentObject.name, AlienTube.Reddit.VoteType.UPVOTE);
             }
         }
 
@@ -254,7 +254,7 @@ module AlienTube {
                 var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
                 scoreValue.textContent = this.commentObject.score + scorePointsText;
 
-                new RedditVoteRequest(this.commentObject.name, VoteType.NONE);
+                new AlienTube.Reddit.VoteRequest(this.commentObject.name, AlienTube.Reddit.VoteType.NONE);
             } else {
                 /* The user wishes to dislike this post */
                 if (this.commentObject.likes === true) {
@@ -269,7 +269,7 @@ module AlienTube {
                 var scorePointsText = this.commentObject.score === 1 ? Main.localisationManager.get("post_current_score") : Main.localisationManager.get("post_current_score_plural");
                 scoreValue.textContent = this.commentObject.score + scorePointsText;
 
-                new RedditVoteRequest(this.commentObject.name, VoteType.DOWNVOTE);
+                new AlienTube.Reddit.VoteRequest(this.commentObject.name, AlienTube.Reddit.VoteType.DOWNVOTE);
             }
         }
 

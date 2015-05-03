@@ -1,15 +1,15 @@
 /// <reference path="../index.ts" />
 /**
-    Namespace for All AlienTube operations.
-    @namespace AlienTube
+    Namespace for requests to the Reddit API operations.
+    @namespace AlienTube.Reddit
 */
 "use strict";
-module AlienTube {
+module AlienTube.Reddit {
     /**
         Perform a request to Reddit asking for the user's username so we can save and display it.
         @class RedditUsernameRequest
     */
-    export class RedditUsernameRequest {
+    export class RetreiveUsernameRequest {
         constructor () {
             var url = "https://api.reddit.com/api/me.json";
             new HttpRequest(url, RequestType.GET, (responseText) => {
