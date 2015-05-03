@@ -148,7 +148,8 @@ module AlienTube {
                 "polistan",
                 "collapse",
                 "retardedcripples",
-                "killingboys"
+                "killingboys",
+                "arandabottest"
             ];
         }
     }
