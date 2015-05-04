@@ -21,20 +21,20 @@ module AlienTube.Reddit {
 
             reportTemplate = Main.getExtensionTemplateItem(commentThread.commentSection.template, "report");
             this.reportContainer = reportTemplate.querySelector(".at_report");
-
+            
+            var report_options = [
+                "spam",
+                "vote_manipulation",
+                "personal_information",
+                "sexualising_minors",
+                "breaking_reddit",
+                "other"
+            ];
+            
             /* Set localisation text for the various report reasons */
-            report_spam = this.reportContainer.querySelector("label[for='report_spam']");
-            report_spam.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_spam")));
-            report_vote_manipulation = this.reportContainer.querySelector("label[for='report_vote_manipulation']");
-            report_vote_manipulation.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_vote_manipulation")));
-            report_personal_information = this.reportContainer.querySelector("label[for='report_personal_information']");
-            report_personal_information.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_personal_information")));
-            report_sexualising_minors = this.reportContainer.querySelector("label[for='report_sexualising_minors']");
-            report_sexualising_minors.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_seuxalising_minors")));
-            report_breaking_reddit = this.reportContainer.querySelector("label[for='report_breaking_reddit']");
-            report_breaking_reddit.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_breaking_reddit")));
-            report_other = this.reportContainer.querySelector("label[for='report_other']");
-            report_other.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_other")));
+            report_options.forEach(function (reportOption) {
+                document.querySelector("label[for='report_" + reportOption + "']").textContent = Main.localisationManager.get("report_dialog_" + reportOption);
+            });
 
             /* Set localisation text for the submit button */
             submitButton = this.reportContainer.querySelector(".at_report_submit");
