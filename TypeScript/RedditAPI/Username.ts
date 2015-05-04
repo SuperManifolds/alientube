@@ -7,7 +7,7 @@
 module AlienTube.Reddit {
     /**
         Perform a request to Reddit asking for the user's username so we can save and display it.
-        @class RedditUsernameRequest
+        @class RetreiveUsernameRequest
     */
     export class RetreiveUsernameRequest {
         constructor () {

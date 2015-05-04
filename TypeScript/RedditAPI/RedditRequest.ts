@@ -6,11 +6,13 @@
 "use strict";
 module AlienTube.Reddit {
     /**
-        Perform a request to Reddit. Embedded error handling.
-        @class RedditRequest
-        @param thing The Reddit ID of the item to either save or unsave
-        @param type Whether to save or unsave
-        @param callback Callback handler for the event when loaded.
+        Perform a request to Reddit with embedded error handling.
+        * @class Request
+        * @param url The Reddit URL to make the request to.
+        * @param type The type of request (POST or GET).
+        * @param callback A callback handler for when the request is completed.
+        * @param [postData] Eventual HTTP POST data to send with the request.
+        * @param [loadingScreen] A LoadingScreen object to use for updating the progress of the request.
     */
     export class Request {
         private requestUrl : string;
@@ -24,14 +26,20 @@ module AlienTube.Reddit {
         private timeoutTimer = 0;
 
         constructor (url : string, type : RequestType, callback : any, postData? : any, loadingScreen? : LoadingScreen) {
+            /* Move the request parameters so they are accessible from anywhere within the class. */
             this.requestUrl = url;
             this.requestType = type;
             this.finalCallback = callback;
             this.postData = postData;
             this.loadingScreen = loadingScreen;
+            
+            /* Perform the request. */
             this.performRequest();
         }
-
+        
+        /**
+         * Attempt to perform the request to the Reddit API.
+         */
         private performRequest () {
             this.attempts += 1;
 
@@ -42,7 +50,7 @@ module AlienTube.Reddit {
                 loadingText.textContent = Main.localisationManager.get("loading_slow_message");
             }, 3000);
 
-            /* Kick of a 10 second timer that will cancel the connection attempt and display an error to the user letting them know
+            /* Kick of a 15 second timer that will cancel the connection attempt and display an error to the user letting them know
             something is probably blocking the connection. */
             this.timeoutTimer = setTimeout(() => {
                 new ErrorScreen(Main.commentSection, ErrorState.CONNECTERROR);
@@ -51,12 +59,18 @@ module AlienTube.Reddit {
             /* Perform the reddit api request */
             new HttpRequest(this.requestUrl, this.requestType, this.onSuccess.bind(this), this.postData, this.onRequestError.bind(this));
         }
-
+    	
+        /**
+         * Called when a successful request has been made.
+         * @param responseText the response from the Reddit API.
+         */
         private onSuccess (responseText) {
             var responseObject;
 
             /* Cancel the slow load timer */
             clearTimeout(this.loadTimer);
+            
+            /* Cancel the unsuccessful load timer */
             clearTimeout(this.timeoutTimer);
 
             /* Dismiss the loading screen, perform the callback and clear ourselves out of memory. */
@@ -72,7 +86,11 @@ module AlienTube.Reddit {
                 }
             }
         }
-
+    	
+        /**
+         * Called when a request was unsuccessful.
+         * @param xhr the javascript XHR object of the request.
+         */
         private onRequestError (xhr) {
             /* Cancel the slow load timer */
             clearTimeout(this.loadTimer);

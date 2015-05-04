@@ -6,9 +6,9 @@
 "use strict";
 module AlienTube.Reddit {
     /**
-        Perform a request to Reddit to either save or unsave an item.
+        Perform a request to Reddit to submit a comment.
         @class CommentRequest
-        @param thing The Reddit ID of the item the user wants to vote on
+        @param thing The Reddit ID of the item the user wants to comment on.
         @param comment A markdown string containing the user's comment
         @param callback Callback handler for the event when loaded.
     */

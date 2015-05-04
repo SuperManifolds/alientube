@@ -22,6 +22,7 @@ module AlienTube.Reddit {
             reportTemplate = Main.getExtensionTemplateItem(commentThread.commentSection.template, "report");
             this.reportContainer = reportTemplate.querySelector(".at_report");
             
+            /* Set localisation text for the various report reasons */
             var report_options = [
                 "spam",
                 "vote_manipulation",
@@ -31,7 +32,6 @@ module AlienTube.Reddit {
                 "other"
             ];
             
-            /* Set localisation text for the various report reasons */
             report_options.forEach(function (reportOption) {
                 document.querySelector("label[for='report_" + reportOption + "']").textContent = Main.localisationManager.get("report_dialog_" + reportOption);
             });
