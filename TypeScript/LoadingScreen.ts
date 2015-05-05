@@ -1,16 +1,16 @@
 /// <reference path="index.ts" />
 /**
-    Namespace for All AlienTube operations.
-    @namespace AlienTube
+    * Namespace for All AlienTube operations.
+    * @namespace AlienTube
 */
 "use strict";
 module AlienTube {
     /**
-        The representation and management of an AlienTube loading screen.
-        @class LoadingScreen
-        @param commentSection The active CommentSection to retrieve data from.
-        @param insertionPoint The DOM element in which the loading screen should be appended to as a child.
-        @param [initialState] An optional initial state for the loading screen, the default is "Loading"
+        * The representation and management of an AlienTube loading screen.
+        * @class LoadingScreen
+        * @param commentSection The active CommentSection to retrieve data from.
+        * @param insertionPoint The DOM element in which the loading screen should be appended to as a child.
+        * @param [initialState] An optional initial state for the loading screen, the default is "Loading"
     */
     export class LoadingScreen {
         private representedHTMLElement : HTMLDivElement;
@@ -22,11 +22,19 @@ module AlienTube {
             this.representedHTMLElement = Main.getExtensionTemplateItem(commentSection.template, "loading");
             this.updateProgress(loadingState, alternativeText);
         }
-
+    	
+        /**
+         * Get the HTML element of the loading screen container.
+         */
         get HTMLElement () {
             return this.representedHTMLElement;
         }
-
+    	
+        /**
+         * Update the current progress of the loading screen.
+         * @param state The new state of the loading screen.
+         * @param [alternativeText] A custom message to put on the loading screen for the user.
+         */
         public updateProgress(state : LoadingState, alternativeText? : string) {
             var parentNode;
             this.currentProgressState = state;

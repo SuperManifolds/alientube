@@ -1,16 +1,16 @@
 /// <reference path="index.ts" />
 /**
-    Namespace for All AlienTube operations.
-    @namespace AlienTube
+    * Namespace for All AlienTube operations.
+    * @namespace AlienTube
 */
 "use strict";
 module AlienTube {
     /**
-        The representation and management of an AlienTube loading screen.
-        @class ErrorScreen
-        @param commentSection The active CommentSection to retrieve data from.
-        @param errorState The error state of the error screen, defines what visuals and titles will be displayed.
-        @param [message] Optional message to be displayed if the error state is set to regular "ERROR"
+        * The representation and management of an AlienTube loading screen.
+        * @class ErrorScreen
+        * @param commentSection The active CommentSection to retrieve data from.
+        * @param errorState The error state of the error screen, defines what visuals and titles will be displayed.
+        * @param [message] Optional message to be displayed if the error state is set to regular "ERROR"
     */
     export class ErrorScreen {
         private representedHTMLElement : HTMLDivElement;
@@ -86,11 +86,19 @@ module AlienTube {
 
             commentSection.set(this.representedHTMLElement);
         }
-
+    	
+        /**
+         * Reload the comment section.
+         * @private
+         */
         private reload () {
             Main.commentSection = new CommentSection(Main.getCurrentVideoId());
         }
-
+    	
+        /**
+         * Handle the click of the Google+ Button to change to the Google+ comments.
+         * @private
+         */
         private onGooglePlusClick (eventObject : Event) {
             var alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "none";

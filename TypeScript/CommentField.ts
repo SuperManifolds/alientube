@@ -1,16 +1,16 @@
 /// <reference path="index.ts" />
 /**
-    Namespace for All AlienTube operations.
-    @namespace AlienTube
+    * Namespace for All AlienTube operations.
+    * @namespace AlienTube
 */
 "use strict";
 module AlienTube {
     /**
-        The representation and management of an AlienTube loading screen.
-        @class CommentField
-        @param commentSection The active CommentSection to retrieve data from.
-        @param insertionPoint The DOM element in which the loading screen should be appended to as a child.
-        @param [initialState] An optional initial state for the loading screen, the default is "Loading"
+        * The representation and management of an AlienTube loading screen.
+        * @class CommentField
+        * @param commentSection The active CommentSection to retrieve data from.
+        * @param insertionPoint The DOM element in which the loading screen should be appended to as a child.
+        * @param [initialState] An optional initial state for the loading screen, the default is "Loading"
     */
     export class CommentField {
         private representedHTMLElement : HTMLDivElement;
@@ -74,11 +74,19 @@ module AlienTube {
             this.parentHTMLElement.appendChild(this.representedHTMLElement);
         }
 
+        /**
+         * Get the HTML element of the comment field.
+         */
         get HTMLElement () {
             return this.representedHTMLElement;
         }
-
-        onSubmitButtonClick (eventObject : Event) {
+    	
+        /**
+         * Handle the click of the submit button of the comment field.
+         * @param eventObject The event object of the click of the submit button.
+         * @private
+         */
+        private onSubmitButtonClick (eventObject : Event) {
             var submitButton, inputField, thing_id;
 
             /* Disable the button on click so the user does not accidentally press it multiple times */
@@ -125,12 +133,21 @@ module AlienTube {
                 });
             }
         }
-
-        onCancelButtonClick () {
+    	
+        /**
+         * Cancel / Remove the comment field.
+         * @private
+         */
+        private onCancelButtonClick () {
             this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
         }
-
-        onInputFieldChange (eventObject : Event) {
+    	
+        /**
+         * Handle the contents of the comment field changing.
+         * @param eventObject The event object of the input field change.
+         * @private
+         */
+        private onInputFieldChange (eventObject : Event) {
             var inputField = <HTMLInputElement> eventObject.target;
 
             /* If there is any contents of the input box, display the markdown preview and populate it. */

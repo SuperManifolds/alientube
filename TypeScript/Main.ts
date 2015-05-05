@@ -1,7 +1,7 @@
 /// <reference path="index.ts" />
 /**
-Namespace for All AlienTube operations.
-@namespace AlienTube
+    * Namespace for All AlienTube operations.
+    * @namespace AlienTube
 */
 module AlienTube {
     /**
@@ -44,7 +44,9 @@ module AlienTube {
         }
 
         /**
-            Mutation Observer for monitoring for whenver the user changes to a new "page"
+            * Mutation Observer for monitoring for whenver the user changes to a new "page"
+            * @param mutations A collection of mutation records
+            * @private
         */
         private mutationObserver (mutations : Array<MutationRecord>) {
             mutations.forEach(function(mutation) {
@@ -67,7 +69,7 @@ module AlienTube {
         * Get the current YouTube video identifier of the window.
         * @returns YouTube video identifier.
         */
-        static getCurrentVideoId() : string {
+        public static getCurrentVideoId() : string {
             var s, requestObjects, i, len, obj;
 
             if (window.location.search.length > 0) {
@@ -88,7 +90,7 @@ module AlienTube {
         * @param epochTime Epoch timestamp to calculate from.
         * @returns A string with a human readable time.
         */
-        static getHumanReadableTimestamp (epochTime : number) : string {
+        public static getHumanReadableTimestamp (epochTime : number) : string {
             var secs, timeUnits, timeUnit;
 
             secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
@@ -131,7 +133,7 @@ module AlienTube {
         * @param path Filename to the ressource.
         * @returns Ressource path (file://)
         */
-        static getExtensionRessourcePath (path : string) : string {
+        public static getExtensionRessourcePath (path : string) : string {
             switch (window.getCurrentBrowser()) {
                 case Browser.SAFARI:
                     return safari.extension.baseURI + 'res/' + path;
@@ -145,9 +147,10 @@ module AlienTube {
         }
 
         /**
-            Get the HTML templates for the extension
+            * Get the HTML templates for the extension
+            * @param callback A callback to be called when the extension templates has been loaded.
         */
-        static getExtensionTemplates (callback : any) {
+        public static getExtensionTemplates (callback : any) {
             var template, handlebarHTML, templateLink;
 
             switch(window.getCurrentBrowser()) {
@@ -186,8 +189,13 @@ module AlienTube {
                     break;
             }
         }
-
-        static getExtensionTemplateItem (templateCollection : any, id : string) {
+        
+        /**
+         * Get an element from the template collection.
+         * @param templateCollection The template collection to use.
+         * @param id The id of the element you want to retreive.
+         */
+        public static getExtensionTemplateItem (templateCollection : any, id : string) {
             if (window.getCurrentBrowser() === Browser.CHROME) {
                 return templateCollection.getElementById(id).content.cloneNode(true);
             } else {

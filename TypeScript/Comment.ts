@@ -1,14 +1,14 @@
 /// <reference path="index.ts" />
 /**
-    Namespace for All AlienTube operations.
-    @namespace AlienTube
+    * Namespace for All AlienTube operations.
+    * @namespace AlienTube
 */
 module AlienTube {
     /**
-        A class representation and container of a single Reddit comment.
-        @class Comment
-        @param commentData Object containing the comment data from the Reddit API.
-        @param commentThread CommentThread object representing the container of the comment.
+        * A class representation and container of a single Reddit comment.
+        * @class Comment
+        * @param commentData Object containing the comment data from the Reddit API.
+        * @param commentThread CommentThread object representing the container of the comment.
     */
     export class Comment {
         representedHTMLElement : HTMLDivElement;
@@ -186,8 +186,13 @@ module AlienTube {
                 });
             }
         }
-
-        onSaveButtonClick (eventObject : Event) {
+    	
+        /**
+         * Either save a comment or unsave an already saved comment.
+         * @param eventObject The event object for the click of the save button.
+         * @private
+         */
+        private onSaveButtonClick (eventObject : Event) {
             var saveButton = <HTMLSpanElement> eventObject.target;
             var savedType = saveButton.getAttribute("saved") ? AlienTube.Reddit.SaveType.UNSAVE : AlienTube.Reddit.SaveType.SAVE;
             new AlienTube.Reddit.SaveRequest(this.commentObject.name, savedType, () => {
@@ -200,12 +205,22 @@ module AlienTube {
                 }
             });
         }
-
-        onReportButtonClicked (eventObject : Event) {
+        
+        /**
+         * Show the report comment form.
+         * @param eventObject The event object for the click of the report button.
+         * @private
+         */
+        private onReportButtonClicked (eventObject : Event) {
             new AlienTube.Reddit.Report(this.commentObject.name, this.commentThread, false);
         }
-
-        onUpvoteControllerClick (eventObject : Event) {
+        
+        /**
+         * Upvote a comment or remove an existing upvote.
+         * @param eventObject The event object for the click of the upvote button.
+         * @private
+         */
+        private onUpvoteControllerClick (eventObject : Event) {
             var scorePointsText;
 
             var upvoteController = <HTMLDivElement> eventObject.target;
@@ -239,8 +254,13 @@ module AlienTube {
                 new AlienTube.Reddit.VoteRequest(this.commentObject.name, AlienTube.Reddit.VoteType.UPVOTE);
             }
         }
-
-        onDownvoteControllerClick (eventObject : Event) {
+    	
+        /**
+         * Downvote a comment or remove an existing downvote
+         * @param eventObject The event object for the click of the downvote button.
+         * @private
+         */
+        private onDownvoteControllerClick (eventObject : Event) {
             var downvoteController = <HTMLDivElement> eventObject.target;
             var voteController = <HTMLDivElement> downvoteController.parentNode;
             var parentNode = <HTMLDivElement> voteController.parentNode;
@@ -273,31 +293,47 @@ module AlienTube {
             }
         }
 
-        onCommentButtonClick () {
+        /**
+         * Show or hide the comment/reply box. 
+         * @private
+         */
+        private onCommentButtonClick () {
             var previousCommentBox = this.representedHTMLElement.querySelector(".at_commentfield");
             if (previousCommentBox) {
                 previousCommentBox.parentNode.removeChild(previousCommentBox);
             }
             new CommentField(this);
         }
-
-        onSourceButtonClick () {
+    	
+        /**
+         * Show the source of the comment.
+         * @private
+         */
+        private onSourceButtonClick () {
             var previousCommentBox = this.representedHTMLElement.querySelector(".at_commentfield");
             if (previousCommentBox) {
                 previousCommentBox.parentNode.removeChild(previousCommentBox);
             }
             new CommentField(this, this.commentObject.body);
         }
-
-        onEditPostButtonClick () {
+    	
+        /**
+         * Edit a comment.
+         * @private
+         */
+        private onEditPostButtonClick () {
             var previousCommentBox = this.representedHTMLElement.querySelector(".at_commentfield");
             if (previousCommentBox) {
                 previousCommentBox.parentNode.removeChild(previousCommentBox);
             }
             new CommentField(this, this.commentObject.body, true);
         }
-
-        onDeletePostButtonClick () {
+    	
+        /**
+         * Delete a comment.
+         * @private
+         */
+        private onDeletePostButtonClick () {
             var confirmation = window.confirm(Main.localisationManager.get("post_delete_confirm"));
             if (confirmation) {
                 var url = "https://api.reddit.com/api/del";

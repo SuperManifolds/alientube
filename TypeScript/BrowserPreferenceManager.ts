@@ -175,10 +175,9 @@ module AlienTube {
 
         /**
          * Get a list of subreddits that will not be displayed by AlienTube, either because they are not meant to show up in searches (bot accunulation subreddits) or because they are deemed too unsettling.
-         * @private
          * @returns An array list of subreddit names as strings.
          */
-        private get enforcedExludedSubreddits () {
+        public get enforcedExludedSubreddits () {
             return [
                 "mensrights",
                 "beatingcripples",

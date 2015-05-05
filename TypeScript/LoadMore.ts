@@ -1,15 +1,15 @@
 /// <reference path="index.ts" />
 /**
-    Namespace for All AlienTube operations.
-    @namespace AlienTube
+    * Namespace for All AlienTube operations.
+    * @namespace AlienTube
 */
 "use strict";
 module AlienTube {
     /**
-        A class representation and container of a single Reddit comment.
-        @class ReadMore
-        @param data Object containing the "load more comments" links.
-        @param commentThread CommentThread object representing the container of the load more link.
+        * A class representation and container of a single Reddit comment.
+        * @class ReadMore
+        * @param data Object containing the "load more comments" links.
+        * @param commentThread CommentThread object representing the container of the load more link.
     */
     export class LoadMore {
         representedHTMLElement : HTMLDivElement;
@@ -36,7 +36,12 @@ module AlienTube {
             loadMoreText.textContent = Main.localisationManager.get("post_button_load_more");
             loadMoreText.addEventListener("click", this.onLoadMoreClick.bind(this), false);
         }
-
+    	
+        /**
+         * Handle a click on the "load more" button.
+         * @param eventObject The event object of the load more button click.
+         * @private
+         */
         private onLoadMoreClick (eventObject : Event) {
             var loadingText, generateRequestUrl;
 

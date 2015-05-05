@@ -1,14 +1,15 @@
 /// <reference path="Utilities.ts" />
 /// <reference path="HttpRequest.ts" />
 /**
-    Namespace for All AlienTube operations.
-    @namespace AlienTube
+    * Namespace for All AlienTube operations.
+    * @namespace AlienTube
 */
 "use strict";
 module AlienTube {
     /**
-        Starts a new instance of the Localisation Manager, for handling language.
-        @class LocalisationManager
+        * Starts a new instance of the Localisation Manager, for handling language.
+        * @class LocalisationManager
+        * @param [callback] a callback method to be called after the localisation files has been loaded.
     */
     export class LocalisationManager {
         private localisationData : any;
@@ -46,12 +47,12 @@ module AlienTube {
         }
 
         /**
-            Retrieve a localised string by key
-            @param key The key in the localisation file representing a language string.
-            @param [placeholders] An array of values for the placeholders in the string.
-            @returns The requested language string.
+            * Retrieve a localised string by key
+            * @param key The key in the localisation file representing a language string.
+            * @param [placeholders] An array of values for the placeholders in the string.
+            * @returns The requested language string.
         */
-        get (key : string, placeholders? : Array<string>) {
+        public get (key : string, placeholders? : Array<string>) {
             var localisationItem, message, placeholder, placeHolderArgumentIndex;
 
             switch (window.getCurrentBrowser()) {

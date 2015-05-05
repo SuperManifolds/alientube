@@ -1,7 +1,7 @@
 /// <reference path="../index.ts" />
 /**
-    Namespace for requests to the Reddit API operations.
-    @namespace AlienTube.Reddit
+    * Namespace for requests to the Reddit API operations.
+    * @namespace AlienTube.Reddit
 */
 "use strict";
 module AlienTube.Reddit {

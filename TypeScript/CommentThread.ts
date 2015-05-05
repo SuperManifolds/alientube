@@ -1,14 +1,15 @@
 /// <reference path="index.ts" />
 /**
-    Namespace for All AlienTube operations.
-    @namespace AlienTube
+    * Namespace for All AlienTube operations.
+    * @namespace AlienTube
 */
 "use strict";
 module AlienTube {
     /**
-        Creates a new instance of a Comment Thread and adds it to DOM.
-        @class CommentThread
-        @param threadData JavaScript object containing all information about the Reddit thread.
+        * Creates a new instance of a Comment Thread and adds it to DOM.
+        * @class CommentThread
+        * @param threadData JavaScript object containing all information about the Reddit thread.
+        * @param commentSection The comment section object the thread exists within.
     */
     export class CommentThread {
         commentSection : CommentSection;
@@ -25,7 +26,7 @@ module AlienTube {
             "old",
             "qa"
         ];
-        children : Array<any>;
+        public children : Array<any>;
 
         constructor (threadData : any, commentSection : CommentSection) {
             var template, title, username, flair, optionsElement, nsfwElement, gildCountElement, timestamp, submittedByUsernameText, openNewCommentBox;
@@ -226,8 +227,13 @@ module AlienTube {
             }
             alientube.appendChild(contents);
         }
-
-        onSaveButtonClick (eventObject : Event) {
+    	
+        /**
+         * Either save a post or unsave an already saved post.
+         * @param eventObject The event object for the click of the save button.
+         * @private
+         */
+        private onSaveButtonClick (eventObject : Event) {
             var saveButton = <HTMLSpanElement> eventObject.target;
             var savedType = saveButton.getAttribute("saved") ? AlienTube.Reddit.SaveType.UNSAVE : AlienTube.Reddit.SaveType.SAVE;
             new AlienTube.Reddit.SaveRequest(this.threadInformation.name, savedType, () => {
@@ -240,12 +246,21 @@ module AlienTube {
                 }
             });
         }
-
-        onReportButtonClicked (eventObject : Event) {
+        
+    	/**
+         * Show the report post form.
+         * @param eventObject The event object for the click of the report button.
+         * @private
+         */
+        private onReportButtonClicked (eventObject : Event) {
             new AlienTube.Reddit.Report(this.threadInformation.name, this, true);
         }
-
-        onGooglePlusClick (eventObject : Event) {
+    	
+        /**
+         * Handle the click of the Google+ Button to change to the Google+ comments.
+         * @private
+         */
+        private onGooglePlusClick (eventObject : Event) {
             var alienTubeContainer, googlePlusContainer, redditButton;
 
             alienTubeContainer = document.getElementById("alientube");
@@ -262,8 +277,13 @@ module AlienTube {
             document.body.style.width = "auto";
             window.getComputedStyle(document.body, null);
         }
-
-        onUpvoteControllerClick (eventObject : Event) {
+        
+        /**
+         * Upvote a post or remove an existing upvote.
+         * @param eventObject The event object for the click of the upvote button.
+         * @private
+         */
+        private onUpvoteControllerClick (eventObject : Event) {
             var upvoteController = <HTMLDivElement> eventObject.target;
             var voteController = <HTMLDivElement> upvoteController.parentNode;
             var scoreValue = <HTMLDivElement> voteController.querySelector(".score");
@@ -292,8 +312,13 @@ module AlienTube {
                 new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.VoteType.UPVOTE);
             }
         }
-
-        onDownvoteControllerClick (eventObject : Event) {
+        
+        /**
+         * Downvote a comment or remove an existing downvote
+         * @param eventObject The event object for the click of the downvote button.
+         * @private
+         */
+        private onDownvoteControllerClick (eventObject : Event) {
             var downvoteController = <HTMLDivElement> eventObject.target;
             var voteController = <HTMLDivElement> downvoteController.parentNode;
             var scoreValue = <HTMLDivElement> voteController.querySelector(".score");
@@ -322,8 +347,12 @@ module AlienTube {
                 new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.VoteType.DOWNVOTE);
             }
         }
-
-        onCommentButtonClick () {
+    	
+        /**
+         * Handle the click of the "comment" button, to show or hide the post comment box.
+         * @private
+         */
+        private onCommentButtonClick () {
             var header = document.querySelector(".at_thread");
             var previousCommentBox = header.querySelector(".at_commentfield");
             if (previousCommentBox) {

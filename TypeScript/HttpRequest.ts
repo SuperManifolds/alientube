@@ -1,16 +1,16 @@
 /**
-    Namespace for All AlienTube operations.
-    @namespace AlienTube
+    * Namespace for All AlienTube operations.
+    * @namespace AlienTube
 */
 "use strict";
 module AlienTube {
     /**
-        HttpRequest interface across Browsers.
-        @class HttpRequest
-        @param url URL to make the request to.
-        @param type Type of request to make (GET or POST)
-        @param callback Callback handler for the event when loaded.
-        @param [postdata] Key-Value object containing POST data.
+        * HttpRequest interface across Browsers.
+        * @class HttpRequest
+        * @param url URL to make the request to.
+        * @param type Type of request to make (GET or POST)
+        * @param callback Callback handler for the event when loaded.
+        * @param [postdata] Key-Value object containing POST data.
     */
     export class HttpRequest {
         private static acceptableResponseTypes = [200, 201, 202, 301, 302, 303, 0];
@@ -19,21 +19,28 @@ module AlienTube {
             var uuid, listener, xhr, query, key, postData;
 
             if (window.getCurrentBrowser() === Browser.SAFARI) {
+                /* Generate a unique identifier to identify our request and response through Safari's message system. */
                 uuid = HttpRequest.generateUUID();
+                
+                /* Message the global page to have it perform a web request for us. */
                 listener = safari.self.addEventListener('message', function listenerFunction (event) {
                     if (event.message.uuid !== uuid) return;
-
+    	           
+                    /* Parse the received data */
                     xhr = JSON.parse(event.message.data);
                     if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
+                        /* This is an acceptable response, we can now call the callback and end successfuly. */
                         if (callback) {
                             callback(xhr.responseText);
                         }
                     } else {
+                        /* There was an error */
                         if (errorHandler) errorHandler(xhr);
                     }
                     safari.self.removeEventListener('message', listenerFunction, false);
                 }, false);
-
+    	       
+                /* Convert the post data array to a query string. */
                 query = [];
                 if (type === RequestType.POST) {
                     query = [];
@@ -48,6 +55,7 @@ module AlienTube {
                     'data': query.join('&')
                 });
             } else {
+                /* Make the web request */
                 xhr = new XMLHttpRequest();
                 xhr.open(RequestType[type], url, true);
                 xhr.withCredentials = true;
@@ -56,13 +64,17 @@ module AlienTube {
                 }
                 xhr.onload = () => {
                     if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
+                        /* This is an acceptable response, we can now call the callback and end successfuly. */
                         if (callback) {
                             callback(xhr.responseText);
                         }
                     } else {
+                        /* There was an error */
                         if (errorHandler) errorHandler(xhr);
                     }
                 }
+                
+                /* Convert the post data array to a query string. */
                 if (type === RequestType.POST) {
                     query = [];
                     for (key in postData) {
@@ -80,6 +92,7 @@ module AlienTube {
         /**
         * Generate a UUID 4 sequence.
         * @returns A UUID 4 sequence as string.
+        * @private
         */
         private static generateUUID () : string {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

@@ -2,8 +2,8 @@
 /// <reference path="../BrowserPreferenceManager.ts" />
 
 /**
-    Namespace for All AlienTube operations.
-    @namespace AlienTube
+    * Namespace for All AlienTube operations.
+    * @namespace AlienTube
 */
 "use strict";
 module AlienTube {
@@ -115,6 +115,7 @@ module AlienTube {
         
         /**
          * Display the "About AlienTube" dialog.
+         * @private
          */
         private displayAboutDialog () {
             document.getElementById('about').style.visibility="visible";
@@ -123,6 +124,7 @@ module AlienTube {
         
         /**
          * Close the "About AlienTube" dialog.
+         * @private
          */
         private closeAboutDialog () {
             document.getElementById('about').style.visibility="collapse";
@@ -131,6 +133,7 @@ module AlienTube {
         
         /**
          * Display a small status message informing the user that their settings has been saved.
+         * @private
          */
         private displayOptionsSavedTicker () {
             var status = document.getElementById("status");
@@ -142,6 +145,7 @@ module AlienTube {
         
         /**
          * Get the current version of the extension running on this machine.
+         * @private
          */
         private static getExtensionVersionNumber () : string {
             switch (window.getCurrentBrowser()) {
