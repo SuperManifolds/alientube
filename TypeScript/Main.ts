@@ -49,7 +49,7 @@ module AlienTube {
             * @private
         */
         private mutationObserver (mutations : Array<MutationRecord>) {
-            mutations.forEach(function(mutation) {
+            mutations.forEach((mutation) => {
                 var target, reportedVideoId;
 
                 target = <HTMLElement>mutation.target;
