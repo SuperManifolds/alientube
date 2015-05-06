@@ -165,9 +165,6 @@ module AlienTube {
             var requestUrl = "https://api.reddit.com/r/" + threadData.subreddit + "/comments/" + threadData.id + ".json?sort=" + Main.Preferences.getString("threadSortType");
             new AlienTube.Reddit.Request(requestUrl, RequestType.GET, (responseObject) => {
                 // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
-                if (!Main.Preferences.getBoolean("rememberTabsOnViewChange")) {
-                    this.storedTabCollection.length = 0;
-                }
                 responseObject[0].data.children[0].data.official = threadData.official;
 
                 new CommentThread(responseObject, this)
