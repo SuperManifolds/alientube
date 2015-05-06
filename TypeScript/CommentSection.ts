@@ -538,7 +538,6 @@ module AlienTube {
              with the total length of the visible non overflow tabs */
             currentIndexOfNewTab = (tabContainer.children.length) + currentIndexOfNewTab - 1;
             threadDataForNewTab = this.threadCollection[currentIndexOfNewTab];
-            console.log(threadDataForNewTab);
 
             /* Move the new item frontmost in the array so it will be the first tab, and force a re-render of the tab control. */
             this.threadCollection.splice(currentIndexOfNewTab, 1);
