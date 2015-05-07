@@ -225,7 +225,7 @@ module AlienTube {
             /* Set the setting for whether or not AlienTube should show itself on this YouTube channel */
             var allowOnChannelContainer = document.getElementById("allowOnChannelContainer");
             if (! allowOnChannelContainer) {
-                var youTubeActionsContainer = document.getElementById("watch8-secondary-actions");
+                var youTubeActionsContainer = document.getElementById("watch7-user-header");
                 var allowOnChannel =  Application.getExtensionTemplateItem(this.template, "allowonchannel");
                 allowOnChannel.children[0].appendChild(document.createTextNode("Show AlienTube on this channel"));
                 var allowOnChannelCheckbox = allowOnChannel.querySelector("#allowonchannel");
