@@ -31,7 +31,6 @@ module AlienTube {
         private closeAboutDialogButton;
 
         /* Declare the preferences object and the localisation object. */
-        private preferences;
         private localisationManager;
 
         constructor () {
@@ -58,7 +57,7 @@ module AlienTube {
                 /* Set the page title */
                 document.title = this.localisationManager.get("options_button_title");
 
-                this.preferences = new BrowserPreferenceManager((preferences) => {
+                Preferences.initialise((preferences) => {
                     /* Set the localisation text for the labels of every setting in the options panel. */
                     for (i = 0, len = Options.preferenceKeyList.length; i < len; i += 1) {
                         console.log("label[for='" + Options.preferenceKeyList[i] + "']");
@@ -71,11 +70,11 @@ module AlienTube {
                     this.defaultDisplayActionElement.options[1].textContent = this.localisationManager.get("options_label_gplus");
 
                     /* Set the option input element values to what we have stored in preferences or their default values. */
-                    this.hiddenPostScoreThresholdElement.value        = preferences.getNumber("hiddenPostScoreThreshold");
-                    this.hiddenCommentScoreThresholdElement.value     = preferences.getNumber("hiddenCommentScoreThreshold");
-                    this.showGooglePlusWhenNoPostsElement.checked     = preferences.getBoolean("showGooglePlusWhenNoPosts");
-                    this.showGooglePlusButtonElement.checked          = preferences.getBoolean("showGooglePlusButton");
-                    this.defaultDisplayActionElement.selectedIndex    = preferences.getString("defaultDisplayAction") === "alientube" ? 0 : 1;
+                    this.hiddenPostScoreThresholdElement.value        = Preferences.getNumber("hiddenPostScoreThreshold");
+                    this.hiddenCommentScoreThresholdElement.value     = Preferences.getNumber("hiddenCommentScoreThreshold");
+                    this.showGooglePlusWhenNoPostsElement.checked     = Preferences.getBoolean("showGooglePlusWhenNoPosts");
+                    this.showGooglePlusButtonElement.checked          = Preferences.getBoolean("showGooglePlusButton");
+                    this.defaultDisplayActionElement.selectedIndex    = Preferences.getString("defaultDisplayAction") === "alientube" ? 0 : 1;
 
                     /* Set the event listeners for the buttons on the page. */
                     this.saveOptionsButton.addEventListener("click", this.save.bind(this), false);
@@ -103,11 +102,11 @@ module AlienTube {
             }
             
             /* Save the preferences to disk. */
-            this.preferences.set('hiddenPostScoreThreshold', this.hiddenPostScoreThresholdElement.value);
-            this.preferences.set('hiddenCommentScoreThreshold', this.hiddenCommentScoreThresholdElement.value);
-            this.preferences.set('showGooglePlusWhenNoPosts', this.showGooglePlusWhenNoPostsElement.checked);
-            this.preferences.set('showGooglePlusButton', this.showGooglePlusButtonElement.checked);
-            this.preferences.set('defaultDisplayAction', this.defaultDisplayActionElement.value);
+            Preferences.set('hiddenPostScoreThreshold', this.hiddenPostScoreThresholdElement.value);
+            Preferences.set('hiddenCommentScoreThreshold', this.hiddenCommentScoreThresholdElement.value);
+            Preferences.set('showGooglePlusWhenNoPosts', this.showGooglePlusWhenNoPostsElement.checked);
+            Preferences.set('showGooglePlusButton', this.showGooglePlusButtonElement.checked);
+            Preferences.set('defaultDisplayAction', this.defaultDisplayActionElement.value);
             
             /* Display a small message to let the user know their settings has been saved. */
             this.displayOptionsSavedTicker.bind(this);

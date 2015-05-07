@@ -16,7 +16,7 @@ module AlienTube.Reddit {
         constructor (thing : string, type : VoteType, callback? : any) {
             var url = "https://api.reddit.com/api/vote";
             new HttpRequest(url, RequestType.POST, callback, {
-                "uh": Application.Preferences.getString("redditUserIdentifierHash"),
+                "uh": Preferences.getString("redditUserIdentifierHash"),
                 "id": thing,
                 "dir": type
             });

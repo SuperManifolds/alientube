@@ -42,7 +42,7 @@ module AlienTube {
             }.bind(this), false);
 
             /* Hide comments with a score less than the threshold set by the user  */
-            if (this.commentObject.score < Application.Preferences.getNumber("hiddenCommentScoreThreshold")) {
+            if (this.commentObject.score < Preferences.getNumber("hiddenCommentScoreThreshold")) {
                 this.representedHTMLElement.classList.add("hidden");
             }
 
@@ -137,7 +137,7 @@ module AlienTube {
             reportToAdministrators = this.representedHTMLElement.querySelector(".report");
             editPost = this.representedHTMLElement.querySelector(".at_edit");
             deletePost = this.representedHTMLElement.querySelector(".at_delete");
-            if (this.commentObject.author === Application.Preferences.getString("username")) {
+            if (this.commentObject.author === Preferences.getString("username")) {
                 /* Report button does not make sense on our own post, so let's get rid of it */
                 reportToAdministrators.parentNode.removeChild(reportToAdministrators);
 
@@ -344,7 +344,7 @@ module AlienTube {
                         this.commentThread.children.splice(getIndexInParentList, 1);
                     }
                 }, {
-                        "uh": Application.Preferences.getString("redditUserIdentifierHash"),
+                        "uh": Preferences.getString("redditUserIdentifierHash"),
                         "id": this.commentObject.name,
                     });
             }

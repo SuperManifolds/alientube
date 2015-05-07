@@ -45,7 +45,7 @@ module AlienTube {
 
             /* Set the "You are now commenting as" text under the comment field. */
             authorName = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_writingauthor");
-            authorName.textContent = Application.localisationManager.get("commentfield_label_author", [Application.Preferences.getString("username")]);
+            authorName.textContent = Application.localisationManager.get("commentfield_label_author", [Preferences.getString("username")]);
 
             /* Set the button text and event listener for the submit button */
             submitButton = <HTMLButtonElement> this.representedHTMLElement.querySelector(".at_submit");

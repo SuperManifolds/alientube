@@ -74,11 +74,11 @@ module AlienTube {
                                 }
     	                       
                                 // Sort threads into array groups by what subreddit they are in.
-                                getExcludedSubreddits = Application.Preferences.enforcedExludedSubreddits.concat(Application.Preferences.getArray("excludedSubredditsSelectedByUser"));
+                                getExcludedSubreddits = Preferences.enforcedExludedSubreddits.concat(Preferences.getArray("excludedSubredditsSelectedByUser"));
                                 sortedResultCollection = {};
                                 finalResultCollection.forEach(function(thread) {
                                     if (getExcludedSubreddits.indexOf(thread.subreddit.toLowerCase()) !== -1) return;
-                                    if (thread.score < Application.Preferences.getNumber("hiddenPostScoreThreshold")) return;
+                                    if (thread.score < Preferences.getNumber("hiddenPostScoreThreshold")) return;
 
                                     if (!sortedResultCollection.hasOwnProperty(thread.subreddit)) sortedResultCollection[thread.subreddit] = [];
                                     sortedResultCollection[thread.subreddit].push(thread);
@@ -162,7 +162,7 @@ module AlienTube {
             }
             alientubeCommentContainer.appendChild(loadingScreen.HTMLElement);
 
-            var requestUrl = "https://api.reddit.com/r/" + threadData.subreddit + "/comments/" + threadData.id + ".json?sort=" + Application.Preferences.getString("threadSortType");
+            var requestUrl = "https://api.reddit.com/r/" + threadData.subreddit + "/comments/" + threadData.id + ".json?sort=" + Preferences.getString("threadSortType");
             new AlienTube.Reddit.Request(requestUrl, RequestType.GET, (responseObject) => {
                 // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
                 responseObject[0].data.children[0].data.official = threadData.official;
@@ -387,7 +387,7 @@ module AlienTube {
 
             googlePlusContainer = document.getElementById("watch-discussion");
 
-            if (Application.Preferences.getBoolean("showGooglePlusWhenNoPosts") && googlePlusContainer) {
+            if (Preferences.getBoolean("showGooglePlusWhenNoPosts") && googlePlusContainer) {
                 googlePlusContainer.style.display = "block";
                 document.getElementById("alientube").style.display = "none";
 
@@ -558,9 +558,9 @@ module AlienTube {
         private allowOnChannelChange (eventObject : Event) {
             var allowedOnChannel = (<HTMLInputElement>eventObject.target).checked;
             var channelName = document.querySelector(".yt-user-info .yt-uix-sessionlink").textContent;
-            var channelDisplayActions = Application.Preferences.getObject("channelDisplayActions");
+            var channelDisplayActions = Preferences.getObject("channelDisplayActions");
             channelDisplayActions[channelName] = allowedOnChannel ? "alientube" : "gplus";
-            Application.Preferences.set("channelDisplayActions", channelDisplayActions);
+            Preferences.set("channelDisplayActions", channelDisplayActions);
         }
         
         /**
@@ -569,11 +569,11 @@ module AlienTube {
          */
         private getDisplayActionForCurrentChannel () {
             var channelName = document.querySelector(".yt-user-info .yt-uix-sessionlink").textContent;
-            var displayActionByUser = Application.Preferences.getObject("channelDisplayActions")[channelName];
+            var displayActionByUser = Preferences.getObject("channelDisplayActions")[channelName];
             if (displayActionByUser) {
                 return displayActionByUser;
             }
-            return Application.Preferences.getString("defaultDisplayAction");
+            return Preferences.getString("defaultDisplayAction");
         }
     }
 }

@@ -10,7 +10,6 @@ module AlienTube {
     */
     "use strict";
     export class Application {
-        static Preferences : BrowserPreferenceManager;
         static localisationManager : LocalisationManager;
         static commentSection : CommentSection;
         currentVideoIdentifier : string;
@@ -19,7 +18,7 @@ module AlienTube {
             var stylesheet, observer, config;
 
             // Load stylesheet from disk.
-            Application.Preferences = new BrowserPreferenceManager();
+            Preferences.initialise();
             Application.localisationManager = new LocalisationManager(() => {
                 if (window.getCurrentBrowser() === Browser.SAFARI) {
                     stylesheet = document.createElement("link");

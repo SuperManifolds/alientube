@@ -38,7 +38,7 @@ module AlienTube {
             this.threadInformation = threadData[0].data.children[0].data;
             this.commentData = threadData[1].data.children;
 
-            Application.Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
+            Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
             this.postIsInPreservedMode = this.threadInformation.isRedditPreservedPost();
 
             template = Application.getExtensionTemplateItem(this.commentSection.template, "threadcontainer");
@@ -46,12 +46,12 @@ module AlienTube {
 
             if (threadData[0].data.modhash.length > 0) {
                 this.commentSection.userIsSignedIn = true;
-                if (!threadData[0].data.modhash || ! Application.Preferences.getString("username")) {
+                if (!threadData[0].data.modhash || ! Preferences.getString("username")) {
                     new AlienTube.Reddit.RetreiveUsernameRequest();
                 }
             } else {
                 this.commentSection.userIsSignedIn = false;
-                Application.Preferences.set("username", "");
+                Preferences.set("username", "");
                 this.threadContainer.classList.add("signedout");
             }
 
@@ -145,9 +145,9 @@ module AlienTube {
             for (var sortIndex = 0, sortLength = this.sortingTypes.length; sortIndex < sortLength; sortIndex += 1) {
                 sortController.children[sortIndex].textContent = Application.localisationManager.get("post_sort_" + this.sortingTypes[sortIndex]);
             }
-            sortController.selectedIndex = this.sortingTypes.indexOf(Application.Preferences.getString("threadSortType"));
+            sortController.selectedIndex = this.sortingTypes.indexOf(Preferences.getString("threadSortType"));
             sortController.addEventListener("change", () => {
-                Application.Preferences.set("threadSortType", sortController.children[sortController.selectedIndex].getAttribute("value"));
+                Preferences.set("threadSortType", sortController.children[sortController.selectedIndex].getAttribute("value"));
 
                 this.commentSection.threadCollection.forEach((item) => {
                     if (item.id === this.threadInformation.id) {
@@ -176,7 +176,7 @@ module AlienTube {
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
             googlePlusContainer = document.getElementById("watch-discussion");
-            if (Application.Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
+            if (Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
                 googlePlusButton.style.display = "none";
             }
 
