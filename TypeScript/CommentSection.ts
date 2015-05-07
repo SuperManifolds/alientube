@@ -72,7 +72,7 @@ module AlienTube {
                                         }
                                     }
                                 }
-
+    	                       
                                 // Sort threads into array groups by what subreddit they are in.
                                 getExcludedSubreddits = Application.Preferences.enforcedExludedSubreddits.concat(Application.Preferences.getArray("excludedSubredditsSelectedByUser"));
                                 sortedResultCollection = {};
@@ -254,13 +254,13 @@ module AlienTube {
         */
         private static validateItemFromResultSet (itemFromResultSet : any, currentVideoIdentifier : string) : Boolean {
             var urlSearch, requestItems, requestPair, component, shareRequestPair, shareRequestItems, urlSearch, obj;
-
+            
             if (itemFromResultSet.isRedditPreservedPost() && itemFromResultSet.num_comments < 1) {
                 return false;
             }
 
-            if (itemFromResultSet.doApplication === "youtube.com") {
-                // For urls based on the full youtube.com doApplication, retrieve the value of the "v" query parameter and compare it.
+            if (itemFromResultSet.domain === "youtube.com") {
+                // For urls based on the full youtube.com domain, retrieve the value of the "v" query parameter and compare it.
                 urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.indexOf("?") + 1);
                 requestItems = urlSearch.split('&');
                 for (var i = 0, len = requestItems.length; i < len; i+= 1) {
@@ -280,8 +280,8 @@ module AlienTube {
                         }
                     }
                 }
-            } else if (itemFromResultSet.doApplication === "youtu.be") {
-                // For urls based on the shortened youtu.be doApplication, retrieve everything the path after the doApplication and compare it.
+            } else if (itemFromResultSet.domain === "youtu.be") {
+                // For urls based on the shortened youtu.be domain, retrieve everything the path after the domain and compare it.
                 urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.lastIndexOf("/") + 1);
                 obj = urlSearch.split('?');
                 if (obj[0] === currentVideoIdentifier) {
