@@ -24,16 +24,16 @@ module AlienTube {
             this.commentThread = commentThread;
             this.referenceParent = referenceParent;
 
-            this.representedHTMLElement = Main.getExtensionTemplateItem(commentThread.commentSection.template, "loadmore");
+            this.representedHTMLElement = Application.getExtensionTemplateItem(commentThread.commentSection.template, "loadmore");
 
             /* Display the amount of replies available to load */
             replyCount = this.representedHTMLElement.querySelector(".at_replycount");
-            replyCountText = data.count > 1 ? Main.localisationManager.get("post_label_reply_plural") : Main.localisationManager.get("post_label_reply");
+            replyCountText = data.count > 1 ? Application.localisationManager.get("post_label_reply_plural") : Application.localisationManager.get("post_label_reply");
             replyCount.textContent = "(" + data.count + " " + replyCountText + ")";
 
             /* Set the localisation for the "load more" button, and the event listener. */
             loadMoreText = this.representedHTMLElement.querySelector(".at_load");
-            loadMoreText.textContent = Main.localisationManager.get("post_button_load_more");
+            loadMoreText.textContent = Application.localisationManager.get("post_button_load_more");
             loadMoreText.addEventListener("click", this.onLoadMoreClick.bind(this), false);
         }
     	
@@ -48,7 +48,7 @@ module AlienTube {
             /* Display "loading comments" text */
             loadingText = <HTMLAnchorElement> eventObject.target;
             loadingText.classList.add("loading");
-            loadingText.textContent = Main.localisationManager.get("loading_generic_message");
+            loadingText.textContent = Application.localisationManager.get("loading_generic_message");
 
             generateRequestUrl = "https://api.reddit.com/r/" + this.commentThread.threadInformation.subreddit +
                 "/comments/" + this.commentThread.threadInformation.id + "/z/" + this.data.id + ".json";

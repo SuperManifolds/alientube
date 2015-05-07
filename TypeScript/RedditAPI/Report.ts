@@ -17,9 +17,9 @@ module AlienTube.Reddit {
 
         constructor (thing : string, commentThread : CommentThread, isThread : boolean) {
             var reportTemplate, report_spam, report_vote_manipulation, report_personal_information, report_sexualising_minors, report_breaking_reddit, report_other;
-            var submitButton, cancelButton, reportOtherButton, reportOtherField, radioButtonControllers, i, len, parentContainer, commentMain;
+            var submitButton, cancelButton, reportOtherButton, reportOtherField, radioButtonControllers, i, len, parentContainer, commentApplication;
 
-            reportTemplate = Main.getExtensionTemplateItem(commentThread.commentSection.template, "report");
+            reportTemplate = Application.getExtensionTemplateItem(commentThread.commentSection.template, "report");
             this.reportContainer = reportTemplate.querySelector(".at_report");
             
             /* Set localisation text for the various report reasons */
@@ -33,16 +33,16 @@ module AlienTube.Reddit {
             ];
             
             report_options.forEach(function (reportOption) {
-                document.querySelector("label[for='report_" + reportOption + "']").textContent = Main.localisationManager.get("report_dialog_" + reportOption);
+                document.querySelector("label[for='report_" + reportOption + "']").textContent = Application.localisationManager.get("report_dialog_" + reportOption);
             });
 
             /* Set localisation text for the submit button */
             submitButton = this.reportContainer.querySelector(".at_report_submit");
-            submitButton.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_button_submit")));
+            submitButton.appendChild(document.createTextNode(Application.localisationManager.get("report_dialog_button_submit")));
 
             /* Set localisation text for the cancel button */
             cancelButton = this.reportContainer.querySelector(".at_report_cancel");
-            cancelButton.appendChild(document.createTextNode(Main.localisationManager.get("report_dialog_button_cancel")));
+            cancelButton.appendChild(document.createTextNode(Application.localisationManager.get("report_dialog_button_cancel")));
 
             /* Assign an event listener to all the buttons, checking if the one that is being selected is the "other" button.
             If so, re-enable the "other reason" text field, if not, disable it. */
@@ -109,7 +109,7 @@ module AlienTube.Reddit {
                         "reason": reportReason,
                         "other_reason": otherReason,
                         "thing_id": thing,
-                        "uh": Main.Preferences.getString("redditUserIdentifierHash")
+                        "uh": Application.Preferences.getString("redditUserIdentifierHash")
                     });
 
             }, false);
@@ -124,8 +124,8 @@ module AlienTube.Reddit {
                 parentContainer = document.querySelector("header .info");
                 parentContainer.appendChild(this.reportContainer);
             } else {
-                commentMain = document.querySelector("article[data-reddit-id='" + thing.substring(3) + "'] .at_commentmain");
-                commentMain.appendChild(this.reportContainer);
+                commentApplication = document.querySelector("article[data-reddit-id='" + thing.substring(3) + "'] .at_commentApplication");
+                commentApplication.appendChild(this.reportContainer);
             }
         }
 

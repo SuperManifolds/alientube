@@ -16,7 +16,7 @@ module AlienTube.Reddit {
         constructor (thing : string, comment : string, callback? : any) {
             var url = "https://api.reddit.com/api/comment";
             new HttpRequest(url, RequestType.POST, callback, {
-                "uh": Main.Preferences.getString("redditUserIdentifierHash"),
+                "uh": Application.Preferences.getString("redditUserIdentifierHash"),
                 "thing_id": thing,
                 "text": comment,
                 "api_type": "json"

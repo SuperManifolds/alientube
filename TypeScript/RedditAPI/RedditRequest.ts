@@ -47,13 +47,13 @@ module AlienTube.Reddit {
             by a successful load (or an error) */
             this.loadTimer = setTimeout(() => {
                 var loadingText = document.getElementById("at_loadingtext");
-                loadingText.textContent = Main.localisationManager.get("loading_slow_message");
+                loadingText.textContent = Application.localisationManager.get("loading_slow_message");
             }, 3000);
 
             /* Kick of a 15 second timer that will cancel the connection attempt and display an error to the user letting them know
             something is probably blocking the connection. */
             this.timeoutTimer = setTimeout(() => {
-                new ErrorScreen(Main.commentSection, ErrorState.CONNECTERROR);
+                new ErrorScreen(Application.commentSection, ErrorState.CONNECTERROR);
             }, 15000);
 
             /* Perform the reddit api request */
@@ -80,9 +80,9 @@ module AlienTube.Reddit {
                 this.finalCallback(responseObject);
             } catch (e) {
                 if (e.toString().indexOf("SyntaxError: Unexpected end of input") !== -1) {
-                    new ErrorScreen(Main.commentSection, ErrorState.CONNECTERROR);
+                    new ErrorScreen(Application.commentSection, ErrorState.CONNECTERROR);
                 } else {
-                    new ErrorScreen(Main.commentSection, ErrorState.ERROR, e.toString());
+                    new ErrorScreen(Application.commentSection, ErrorState.ERROR, e.toString());
                 }
             }
         }
@@ -105,18 +105,18 @@ module AlienTube.Reddit {
                 this.loadingScreen.updateProgress(LoadingState.ERROR);
                 switch (xhr.status) {
                     case 404:
-                        new ErrorScreen(Main.commentSection, ErrorState.NOT_FOUND);
+                        new ErrorScreen(Application.commentSection, ErrorState.NOT_FOUND);
                         break;
 
                     case 503:
                     case 504:
                     case 520:
                     case 521:
-                        new ErrorScreen(Main.commentSection, ErrorState.OVERLOAD);
+                        new ErrorScreen(Application.commentSection, ErrorState.OVERLOAD);
                         break;
 
                     default:
-                        new ErrorScreen(Main.commentSection, ErrorState.REDDITERROR, xhr.responseText);
+                        new ErrorScreen(Application.commentSection, ErrorState.REDDITERROR, xhr.responseText);
                 }
             }
         }

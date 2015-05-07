@@ -27,18 +27,18 @@ module AlienTube {
                 // Load the html5 template file from disk and wait for it to load.
                 templateLink = document.createElement("link");
                 templateLink.id = "alientubeTemplate";
-                Main.getExtensionTemplates((templateContainer) => {
+                Application.getExtensionTemplates((templateContainer) => {
                     this.template = templateContainer;
 
                     // Set Loading Screen
-                    loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Main.localisationManager.get("loading_search_message"));
+                    loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Application.localisationManager.get("loading_search_message"));
                     this.set(loadingScreen.HTMLElement);
 
                     // Open a search request to Reddit for the video identfiier
                     videoSearchString = encodeURI("(url:\"3D" + currentVideoIdentifier + "\" OR url:\"" + currentVideoIdentifier + "\") (site:youtube.com OR site:youtu.be)");
                     new AlienTube.Reddit.Request("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (results) => {
                         var searchResults, finalResultCollection, preferredPost, preferredSubreddit, commentLinks, getExcludedSubreddits, sortedResultCollection;
-                        var tabContainer, tabContainerTemplate, mainContainer, linkElement, url, match;
+                        var tabContainer, tabContainerTemplate, ApplicationContainer, linkElement, url, match;
                         var mRegex = /(?:http|https):\/\/(.[^/]+)\/r\/([A-Za-z0-9][A-Za-z0-9_]{2,20})(?:\/comments\/)?([A-Za-z0-9]*)/g;
 
                         // There are a number of ways the Reddit API can arbitrarily explode, here are some of them.
@@ -74,11 +74,11 @@ module AlienTube {
                                 }
 
                                 // Sort threads into array groups by what subreddit they are in.
-                                getExcludedSubreddits = Main.Preferences.enforcedExludedSubreddits.concat(Main.Preferences.getArray("excludedSubredditsSelectedByUser"));
+                                getExcludedSubreddits = Application.Preferences.enforcedExludedSubreddits.concat(Application.Preferences.getArray("excludedSubredditsSelectedByUser"));
                                 sortedResultCollection = {};
                                 finalResultCollection.forEach(function(thread) {
                                     if (getExcludedSubreddits.indexOf(thread.subreddit.toLowerCase()) !== -1) return;
-                                    if (thread.score < Main.Preferences.getNumber("hiddenPostScoreThreshold")) return;
+                                    if (thread.score < Application.Preferences.getNumber("hiddenPostScoreThreshold")) return;
 
                                     if (!sortedResultCollection.hasOwnProperty(thread.subreddit)) sortedResultCollection[thread.subreddit] = [];
                                     sortedResultCollection[thread.subreddit].push(thread);
@@ -109,13 +109,13 @@ module AlienTube {
                                     }
 
                                     // Generate tabs.
-                                    tabContainerTemplate = Main.getExtensionTemplateItem(this.template, "tabcontainer");
+                                    tabContainerTemplate = Application.getExtensionTemplateItem(this.template, "tabcontainer");
                                     tabContainer = <HTMLDivElement> tabContainerTemplate.querySelector("#at_tabcontainer");
                                     this.insertTabsIntoDocument(tabContainer, 0);
                                     window.addEventListener("resize", this.updateTabsToFitToBoundingContainer.bind(this), false);
 
-                                    mainContainer = this.set(tabContainer);
-                                    mainContainer.appendChild(tabContainerTemplate.querySelector("#at_comments"));
+                                    ApplicationContainer = this.set(tabContainer);
+                                    ApplicationContainer.appendChild(tabContainerTemplate.querySelector("#at_comments"));
 
                                     // If the selected post is prioritised, marked it as such
                                     if (this.threadCollection[0].id === preferredPost || this.threadCollection[0].subreddit === preferredSubreddit) {
@@ -155,14 +155,14 @@ module AlienTube {
             * @param threadData Data about the thread to download from a Reddit search page.
         */
         public downloadThread (threadData : any) {
-            var loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Main.localisationManager.get("loading_post_message"));
+            var loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Application.localisationManager.get("loading_post_message"));
             var alientubeCommentContainer = document.getElementById("at_comments");
             while (alientubeCommentContainer.firstChild) {
                 alientubeCommentContainer.removeChild(alientubeCommentContainer.firstChild);
             }
             alientubeCommentContainer.appendChild(loadingScreen.HTMLElement);
 
-            var requestUrl = "https://api.reddit.com/r/" + threadData.subreddit + "/comments/" + threadData.id + ".json?sort=" + Main.Preferences.getString("threadSortType");
+            var requestUrl = "https://api.reddit.com/r/" + threadData.subreddit + "/comments/" + threadData.id + ".json?sort=" + Application.Preferences.getString("threadSortType");
             new AlienTube.Reddit.Request(requestUrl, RequestType.GET, (responseObject) => {
                 // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
                 responseObject[0].data.children[0].data.official = threadData.official;
@@ -206,10 +206,10 @@ module AlienTube {
                 /* Add the "switch to Reddit" button in the google+ comment section */
                 redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
                 if (!redditButton) {
-                    redditButtonTemplate = Main.getExtensionTemplateItem(this.template, "switchtoreddit");
+                    redditButtonTemplate = Application.getExtensionTemplateItem(this.template, "switchtoreddit");
                     redditButton = <HTMLDivElement> redditButtonTemplate.querySelector("#at_switchtoreddit");
                     redditText = <HTMLSpanElement> redditButton.querySelector("#at_reddittext");
-                    redditText.textContent = Main.localisationManager.get("post_button_comments");
+                    redditText.textContent = Application.localisationManager.get("post_button_comments");
                     redditButton.addEventListener("click", this.onRedditClick, true);
                     googlePlusContainer.parentNode.insertBefore(redditButton, googlePlusContainer);
                 }
@@ -226,7 +226,7 @@ module AlienTube {
             var allowOnChannelContainer = document.getElementById("allowOnChannelContainer");
             if (! allowOnChannelContainer) {
                 var youTubeActionsContainer = document.getElementById("watch8-secondary-actions");
-                var allowOnChannel =  Main.getExtensionTemplateItem(this.template, "allowonchannel");
+                var allowOnChannel =  Application.getExtensionTemplateItem(this.template, "allowonchannel");
                 allowOnChannel.children[0].appendChild(document.createTextNode("Show AlienTube on this channel"));
                 var allowOnChannelCheckbox = allowOnChannel.querySelector("#allowonchannel");
                 allowOnChannelCheckbox.checked = (this.getDisplayActionForCurrentChannel() === "alientube");
@@ -259,8 +259,8 @@ module AlienTube {
                 return false;
             }
 
-            if (itemFromResultSet.domain === "youtube.com") {
-                // For urls based on the full youtube.com domain, retrieve the value of the "v" query parameter and compare it.
+            if (itemFromResultSet.doApplication === "youtube.com") {
+                // For urls based on the full youtube.com doApplication, retrieve the value of the "v" query parameter and compare it.
                 urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.indexOf("?") + 1);
                 requestItems = urlSearch.split('&');
                 for (var i = 0, len = requestItems.length; i < len; i+= 1) {
@@ -280,8 +280,8 @@ module AlienTube {
                         }
                     }
                 }
-            } else if (itemFromResultSet.domain === "youtu.be") {
-                // For urls based on the shortened youtu.be domain, retrieve everything the path after the domain and compare it.
+            } else if (itemFromResultSet.doApplication === "youtu.be") {
+                // For urls based on the shortened youtu.be doApplication, retrieve everything the path after the doApplication and compare it.
                 urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.lastIndexOf("/") + 1);
                 obj = urlSearch.split('?');
                 if (obj[0] === currentVideoIdentifier) {
@@ -373,28 +373,28 @@ module AlienTube {
         private returnNoResults () {
             var template, message, googlePlusText, googlePlusButton, googlePlusContainer, redditButton;
 
-            template = Main.getExtensionTemplateItem(this.template, "noposts");
+            template = Application.getExtensionTemplateItem(this.template, "noposts");
             message = template.querySelector(".single_line");
-            message.textContent = Main.localisationManager.get("post_label_noresults");
+            message.textContent = Application.localisationManager.get("post_label_noresults");
 
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
             googlePlusButton = template.querySelector("#at_switchtogplus");
             googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
-            googlePlusText.textContent = Main.localisationManager.get("post_button_comments");
+            googlePlusText.textContent = Application.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
             this.set(template);
 
             googlePlusContainer = document.getElementById("watch-discussion");
 
-            if (Main.Preferences.getBoolean("showGooglePlusWhenNoPosts") && googlePlusContainer) {
+            if (Application.Preferences.getBoolean("showGooglePlusWhenNoPosts") && googlePlusContainer) {
                 googlePlusContainer.style.display = "block";
                 document.getElementById("alientube").style.display = "none";
 
                 redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
                 if (redditButton) {
                     redditButton.classList.add("noresults");
-                    document.getElementById("at_reddittext").textContent = Main.localisationManager.get("post_label_noresults");
+                    document.getElementById("at_reddittext").textContent = Application.localisationManager.get("post_label_noresults");
                 }
             }
         }
@@ -558,9 +558,9 @@ module AlienTube {
         private allowOnChannelChange (eventObject : Event) {
             var allowedOnChannel = (<HTMLInputElement>eventObject.target).checked;
             var channelName = document.querySelector(".yt-user-info .yt-uix-sessionlink").textContent;
-            var channelDisplayActions = Main.Preferences.getObject("channelDisplayActions");
+            var channelDisplayActions = Application.Preferences.getObject("channelDisplayActions");
             channelDisplayActions[channelName] = allowedOnChannel ? "alientube" : "gplus";
-            Main.Preferences.set("channelDisplayActions", channelDisplayActions);
+            Application.Preferences.set("channelDisplayActions", channelDisplayActions);
         }
         
         /**
@@ -569,11 +569,11 @@ module AlienTube {
          */
         private getDisplayActionForCurrentChannel () {
             var channelName = document.querySelector(".yt-user-info .yt-uix-sessionlink").textContent;
-            var displayActionByUser = Main.Preferences.getObject("channelDisplayActions")[channelName];
+            var displayActionByUser = Application.Preferences.getObject("channelDisplayActions")[channelName];
             if (displayActionByUser) {
                 return displayActionByUser;
             }
-            return Main.Preferences.getString("defaultDisplayAction");
+            return Application.Preferences.getString("defaultDisplayAction");
         }
     }
 }

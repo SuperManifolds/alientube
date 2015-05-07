@@ -38,21 +38,21 @@ module AlienTube {
             this.threadInformation = threadData[0].data.children[0].data;
             this.commentData = threadData[1].data.children;
 
-            Main.Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
+            Application.Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
             this.postIsInPreservedMode = this.threadInformation.isRedditPreservedPost();
 
-            template = Main.getExtensionTemplateItem(this.commentSection.template, "threadcontainer");
+            template = Application.getExtensionTemplateItem(this.commentSection.template, "threadcontainer");
             this.threadContainer = <HTMLDivElement> template.querySelector("#at_comments");
 
             if (threadData[0].data.modhash.length > 0) {
                 this.commentSection.userIsSignedIn = true;
-                if (!threadData[0].data.modhash || ! Main.Preferences.getString("username")) {
+                if (!threadData[0].data.modhash || ! Application.Preferences.getString("username")) {
                     console.log("no username stored");
                     new AlienTube.Reddit.RetreiveUsernameRequest();
                 }
             } else {
                 this.commentSection.userIsSignedIn = false;
-                Main.Preferences.set("username", "");
+                Application.Preferences.set("username", "");
                 this.threadContainer.classList.add("signedout");
             }
 
@@ -84,8 +84,8 @@ module AlienTube {
                 optionsElement = this.threadContainer.querySelector(".options");
                 nsfwElement = document.createElement("acronym");
                 nsfwElement.classList.add("nsfw");
-                nsfwElement.setAttribute("title", Main.localisationManager.get("post_badge_NSFW_message"));
-                nsfwElement.textContent = Main.localisationManager.get("post_badge_NSFW");
+                nsfwElement.setAttribute("title", Application.localisationManager.get("post_badge_NSFW_message"));
+                nsfwElement.textContent = Application.localisationManager.get("post_badge_NSFW");
                 optionsElement.insertBefore(nsfwElement, optionsElement.firstChild);
             }
 
@@ -97,25 +97,25 @@ module AlienTube {
 
             /* Set the the thread posted time */
             timestamp = this.threadContainer.querySelector(".at_timestamp");
-            timestamp.textContent = Main.getHumanReadableTimestamp(this.threadInformation.created_utc);
+            timestamp.textContent = Application.getHumanReadableTimestamp(this.threadInformation.created_utc);
             timestamp.setAttribute("timestamp", new Date(this.threadInformation.created_utc).toISOString());
 
             /* Set the localised text for "by {username}" */
             submittedByUsernameText = this.threadContainer.querySelector(".templateSubmittedByUsernameText");
-            submittedByUsernameText.textContent = Main.localisationManager.get("post_submitted_preposition");
+            submittedByUsernameText.textContent = Application.localisationManager.get("post_submitted_preposition");
 
             /* Set the text for the comments button  */
             openNewCommentBox = this.threadContainer.querySelector(".commentTo");
-            openNewCommentBox.textContent = this.threadInformation.num_comments + " " + Main.localisationManager.get("post_button_comments").toLowerCase();
+            openNewCommentBox.textContent = this.threadInformation.num_comments + " " + Application.localisationManager.get("post_button_comments").toLowerCase();
             openNewCommentBox.addEventListener("click", this.onCommentButtonClick.bind(this), false);
 
             /* Set the button text and the event handler for the "save" button */
             saveItemToRedditList = this.threadContainer.querySelector(".save");
             if (this.threadInformation.saved) {
-                saveItemToRedditList.textContent = Main.localisationManager.get("post_button_unsave");
+                saveItemToRedditList.textContent = Application.localisationManager.get("post_button_unsave");
                 saveItemToRedditList.setAttribute("saved", "true");
             } else {
-                saveItemToRedditList.textContent = Main.localisationManager.get("post_button_save");
+                saveItemToRedditList.textContent = Application.localisationManager.get("post_button_save");
             }
             saveItemToRedditList.addEventListener("click", this.onSaveButtonClick.bind(this), false);
 
@@ -129,26 +129,26 @@ module AlienTube {
                     }
                 });
             }, false);
-            refreshCommentThread.textContent = Main.localisationManager.get("post_button_refresh");
+            refreshCommentThread.textContent = Application.localisationManager.get("post_button_refresh");
 
             /* Set the button text and the link for the "give gold" button */
             giveGoldToUser = this.threadContainer.querySelector(".giveGold");
             giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.threadInformation.name);
-            giveGoldToUser.textContent = Main.localisationManager.get("post_button_gold");
+            giveGoldToUser.textContent = Application.localisationManager.get("post_button_gold");
 
             /* Set the button text and the event handler for the "report post" button */
             reportToAdministrators = this.threadContainer.querySelector(".report");
-            reportToAdministrators.textContent = Main.localisationManager.get("post_button_report");
+            reportToAdministrators.textContent = Application.localisationManager.get("post_button_report");
             reportToAdministrators.addEventListener("click", this.onReportButtonClicked.bind(this), false);
 
             /* Set the button text and event handler for the sort selector. */
             sortController = <HTMLSelectElement> this.threadContainer.querySelector(".sort");
             for (var sortIndex = 0, sortLength = this.sortingTypes.length; sortIndex < sortLength; sortIndex += 1) {
-                sortController.children[sortIndex].textContent = Main.localisationManager.get("post_sort_" + this.sortingTypes[sortIndex]);
+                sortController.children[sortIndex].textContent = Application.localisationManager.get("post_sort_" + this.sortingTypes[sortIndex]);
             }
-            sortController.selectedIndex = this.sortingTypes.indexOf(Main.Preferences.getString("threadSortType"));
+            sortController.selectedIndex = this.sortingTypes.indexOf(Application.Preferences.getString("threadSortType"));
             sortController.addEventListener("change", () => {
-                Main.Preferences.set("threadSortType", sortController.children[sortController.selectedIndex].getAttribute("value"));
+                Application.Preferences.set("threadSortType", sortController.children[sortController.selectedIndex].getAttribute("value"));
 
                 this.commentSection.threadCollection.forEach((item) => {
                     if (item.id === this.threadInformation.id) {
@@ -173,11 +173,11 @@ module AlienTube {
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
             googlePlusButton = <HTMLButtonElement> this.threadContainer.querySelector("#at_switchtogplus");
             googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
-            googlePlusText.textContent = Main.localisationManager.get("post_button_comments");
+            googlePlusText.textContent = Application.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
             googlePlusContainer = document.getElementById("watch-discussion");
-            if (Main.Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
+            if (Application.Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
                 googlePlusButton.style.display = "none";
             }
 
@@ -193,7 +193,7 @@ module AlienTube {
             /* If this post is prioritised (official) mark it as such in the header */
             if (this.threadInformation.official) {
                  officialLabel = <HTMLSpanElement> this.threadContainer.querySelector(".at_official");
-                officialLabel.textContent = Main.localisationManager.get("post_message_official");
+                officialLabel.textContent = Application.localisationManager.get("post_message_official");
                 officialLabel.style.display = "inline-block";
             }
 
@@ -238,10 +238,10 @@ module AlienTube {
             new AlienTube.Reddit.SaveRequest(this.threadInformation.name, savedType, () => {
                 if (savedType === AlienTube.Reddit.SaveType.SAVE) {
                     saveButton.setAttribute("saved", "true");
-                    saveButton.textContent = Main.localisationManager.get("post_button_unsave");
+                    saveButton.textContent = Application.localisationManager.get("post_button_unsave");
                 } else {
                     saveButton.removeAttribute("saved");
-                    saveButton.textContent = Main.localisationManager.get("post_button_save");
+                    saveButton.textContent = Application.localisationManager.get("post_button_save");
                 }
             });
         }

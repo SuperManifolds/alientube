@@ -18,7 +18,7 @@ module AlienTube {
         constructor (commentSection : CommentSection, errorState : ErrorState, message? : string) {
             var errorImage, errorHeader, errorText, googlePlusText, googlePlusButton, googlePlusContainer, getRandom404Id, retryButton;
 
-            this.representedHTMLElement = Main.getExtensionTemplateItem(commentSection.template, "error");
+            this.representedHTMLElement = Application.getExtensionTemplateItem(commentSection.template, "error");
 
             errorImage = <HTMLImageElement> this.representedHTMLElement.querySelector("img");
             errorHeader = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_errorheader");
@@ -27,11 +27,11 @@ module AlienTube {
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
             googlePlusButton = <HTMLButtonElement> this.representedHTMLElement.querySelector("#at_switchtogplus");
             googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
-            googlePlusText.textContent = Main.localisationManager.get("post_button_comments");
+            googlePlusText.textContent = Application.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
             googlePlusContainer = document.getElementById("watch-discussion");
-            if (Main.Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
+            if (Application.Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
                 googlePlusButton.style.display = "none";
             }
 
@@ -43,26 +43,26 @@ module AlienTube {
                     errorImage.setAttribute("src", "https://www.redditstatic.com/reddit404" + getRandom404Id + ".png");
 
                     /* Set page not found localisation text */
-                    errorHeader.textContent = Main.localisationManager.get("error_header_not_found");
-                    errorText.textContent = Main.localisationManager.get("error_message_not_found");
+                    errorHeader.textContent = Application.localisationManager.get("error_header_not_found");
+                    errorText.textContent = Application.localisationManager.get("error_message_not_found");
                     break;
 
                 case ErrorState.OVERLOAD:
                     /* Retrieve the Reddit overloaded svg graphic from the ressource directory. */
-                    errorImage.setAttribute("src", Main.getExtensionRessourcePath("redditoverload.svg"));
+                    errorImage.setAttribute("src", Application.getExtensionRessourcePath("redditoverload.svg"));
 
                     /* Set reddit overloaded localisation text */
-                    errorHeader.textContent = Main.localisationManager.get("error_header_overloaded");
-                    errorText.textContent = Main.localisationManager.get("error_message_overloaded");
+                    errorHeader.textContent = Application.localisationManager.get("error_header_overloaded");
+                    errorText.textContent = Application.localisationManager.get("error_message_overloaded");
                     break;
 
                 case ErrorState.ERROR:
                 case ErrorState.REDDITERROR:
                     /* Retrieve the generic "Reddit is broken" svg graphic from the ressource directory */
-                    errorImage.setAttribute("src", Main.getExtensionRessourcePath("redditbroken.svg"));
+                    errorImage.setAttribute("src", Application.getExtensionRessourcePath("redditbroken.svg"));
 
                     /* Set "you broke reddit" localisation text, and a custom message if provided */
-                    errorHeader.textContent = Main.localisationManager.get("error_header_generic");
+                    errorHeader.textContent = Application.localisationManager.get("error_header_generic");
                     if (message) {
                         errorText.textContent = message;
                     }
@@ -70,18 +70,18 @@ module AlienTube {
 
                 case ErrorState.CONNECTERROR:
                     /* Retrieve the generic "Reddit is broken" svg graphic from the ressource directory */
-                    errorImage.setAttribute("src", Main.getExtensionRessourcePath("redditbroken.svg"));
+                    errorImage.setAttribute("src", Application.getExtensionRessourcePath("redditbroken.svg"));
 
                     /* Set "connection is being interrupted" localisation text */
-                    errorHeader.textContent = Main.localisationManager.get("error_header_interrupted");
-                    errorText.textContent = Main.localisationManager.get("error_message_interrupted");
+                    errorHeader.textContent = Application.localisationManager.get("error_header_interrupted");
+                    errorText.textContent = Application.localisationManager.get("error_message_interrupted");
 
                     break;
             }
 
             /* Provide a retry button which reloads AlienTube completely and tries again. */
             retryButton = <HTMLButtonElement> this.representedHTMLElement.querySelector(".at_retry");
-            retryButton.textContent = Main.localisationManager.get("error_button_retry");
+            retryButton.textContent = Application.localisationManager.get("error_button_retry");
             retryButton.addEventListener("click", this.reload, false);
 
             commentSection.set(this.representedHTMLElement);
@@ -92,7 +92,7 @@ module AlienTube {
          * @private
          */
         private reload () {
-            Main.commentSection = new CommentSection(Main.getCurrentVideoId());
+            Application.commentSection = new CommentSection(Application.getCurrentVideoId());
         }
     	
         /**

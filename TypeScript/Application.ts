@@ -5,11 +5,11 @@
 */
 module AlienTube {
     /**
-        Main class for AlienTube
-        @class Main
+        Application class for AlienTube
+        @class Application
     */
     "use strict";
-    export class Main {
+    export class Application {
         static Preferences : BrowserPreferenceManager;
         static localisationManager : LocalisationManager;
         static commentSection : CommentSection;
@@ -19,11 +19,11 @@ module AlienTube {
             var stylesheet, observer, config;
 
             // Load stylesheet from disk.
-            Main.Preferences = new BrowserPreferenceManager();
-            Main.localisationManager = new LocalisationManager(() => {
+            Application.Preferences = new BrowserPreferenceManager();
+            Application.localisationManager = new LocalisationManager(() => {
                 if (window.getCurrentBrowser() === Browser.SAFARI) {
                     stylesheet = document.createElement("link");
-                    stylesheet.setAttribute("href", Main.getExtensionRessourcePath("style.css"));
+                    stylesheet.setAttribute("href", Application.getExtensionRessourcePath("style.css"));
                     stylesheet.setAttribute("type", "text/css");
                     stylesheet.setAttribute("rel", "stylesheet");
                     document.head.appendChild(stylesheet);
@@ -35,9 +35,9 @@ module AlienTube {
                 observer.observe(document.getElementById("content"), config);
 
                 // Start a new comment section.
-                this.currentVideoIdentifier = Main.getCurrentVideoId();
+                this.currentVideoIdentifier = Application.getCurrentVideoId();
                 if (window.isYouTubeVideoPage) {
-                    Main.commentSection = new CommentSection(this.currentVideoIdentifier);
+                    Application.commentSection = new CommentSection(this.currentVideoIdentifier);
                 }
             });
 
@@ -54,11 +54,11 @@ module AlienTube {
 
                 target = <HTMLElement>mutation.target;
                 if (target.classList.contains("yt-card") || target.id === "content") {
-                    reportedVideoId = Main.getCurrentVideoId();
+                    reportedVideoId = Application.getCurrentVideoId();
                     if (reportedVideoId !== this.currentVideoIdentifier) {
                         this.currentVideoIdentifier = reportedVideoId;
                         if (window.isYouTubeVideoPage) {
-                            Main.commentSection = new CommentSection(this.currentVideoIdentifier);
+                            Application.commentSection = new CommentSection(this.currentVideoIdentifier);
                         }
                     }
                 }
@@ -110,21 +110,21 @@ module AlienTube {
             for (timeUnit in timeUnits) {
                 if (timeUnits.hasOwnProperty(timeUnit) && timeUnits[timeUnit] >= 1) {
                     if (timeUnits[timeUnit] > 1) {
-                        return Main.localisationManager.get("timestamp_format", [
+                        return Application.localisationManager.get("timestamp_format", [
                             timeUnits[timeUnit],
-                            Main.localisationManager.get("timestamp_format_" + timeUnit.toLowerCase() + "_plural")
+                            Application.localisationManager.get("timestamp_format_" + timeUnit.toLowerCase() + "_plural")
                         ]);
                     } else {
-                        return Main.localisationManager.get("timestamp_format", [
+                        return Application.localisationManager.get("timestamp_format", [
                             timeUnits[timeUnit],
-                            Main.localisationManager.get("timestamp_format_" + timeUnit.toLowerCase())
+                            Application.localisationManager.get("timestamp_format_" + timeUnit.toLowerCase())
                         ]);
                     }
                 }
             }
-            return Main.localisationManager.get("timestamp_format", [
+            return Application.localisationManager.get("timestamp_format", [
                 "0",
-                Main.localisationManager.get("timestamp_format_second_plural")
+                Application.localisationManager.get("timestamp_format_second_plural")
             ]);
         }
 
@@ -165,7 +165,7 @@ module AlienTube {
                     break;
 
                 case Browser.SAFARI:
-                    new HttpRequest(Main.getExtensionRessourcePath("templates.html"), RequestType.GET, (data) => {
+                    new HttpRequest(Application.getExtensionRessourcePath("templates.html"), RequestType.GET, (data) => {
                         template = document.createElement("div");
                         template.innerHTML = data;
                         document.head.appendChild(template);
@@ -184,7 +184,7 @@ module AlienTube {
                         }
                     }
                     templateLink.setAttribute("rel", "import");
-                    templateLink.setAttribute("href", Main.getExtensionRessourcePath("templates.html"));
+                    templateLink.setAttribute("href", Application.getExtensionRessourcePath("templates.html"));
                     document.head.appendChild(templateLink);
                     break;
             }

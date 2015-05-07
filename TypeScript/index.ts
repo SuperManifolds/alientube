@@ -1,4 +1,4 @@
-/// <reference path="Main.ts" />
+/// <reference path="Application.ts" />
 /// <reference path="HttpRequest.ts" />
 /// <reference path="BrowserPreferenceManager.ts" />
 /// <reference path="CommentSection.ts" />
@@ -32,7 +32,7 @@ function at_initialise () {
         if (window.location.host === "alientube.co") {
             document.body.classList.add("installed");
         } else {
-            new AlienTube.Main();
+            new AlienTube.Application();
         }
     }
 }

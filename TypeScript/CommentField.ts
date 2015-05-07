@@ -40,26 +40,26 @@ module AlienTube {
             }
             this.edit = edit;
 
-            var template = Main.getExtensionTemplateItem(this.commentThread.commentSection.template, "commentfield");
+            var template = Application.getExtensionTemplateItem(this.commentThread.commentSection.template, "commentfield");
             this.representedHTMLElement = <HTMLDivElement> template.querySelector(".at_commentfield");
 
             /* Set the "You are now commenting as" text under the comment field. */
             authorName = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_writingauthor");
-            authorName.textContent = Main.localisationManager.get("commentfield_label_author", [Main.Preferences.getString("username")]);
+            authorName.textContent = Application.localisationManager.get("commentfield_label_author", [Application.Preferences.getString("username")]);
 
             /* Set the button text and event listener for the submit button */
             submitButton = <HTMLButtonElement> this.representedHTMLElement.querySelector(".at_submit");
-            submitButton.textContent = Main.localisationManager.get("commentfield_button_submit");
+            submitButton.textContent = Application.localisationManager.get("commentfield_button_submit");
             submitButton.addEventListener("click", this.onSubmitButtonClick.bind(this), false);
 
             /* Set the button text and event listener for the cancel button */
             cancelButton = <HTMLButtonElement> this.representedHTMLElement.querySelector(".at_cancel");
-            cancelButton.textContent = Main.localisationManager.get("commentfield_button_cancel")
+            cancelButton.textContent = Application.localisationManager.get("commentfield_button_cancel")
             cancelButton.addEventListener("click", this.onCancelButtonClick.bind(this), false);
 
             /* Set the text for the markdown preview header */
             previewHeader = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_preview_header");
-            previewHeader.textContent = Main.localisationManager.get("commentfield_label_preview");
+            previewHeader.textContent = Application.localisationManager.get("commentfield_label_preview");
 
             /* Check if we were initialised with some text (most likely from the show source button) and add event listener for input
             change */
