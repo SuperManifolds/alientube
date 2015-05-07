@@ -1,6 +1,6 @@
 /// <reference path="Application.ts" />
 /// <reference path="HttpRequest.ts" />
-/// <reference path="BrowserPreferenceManager.ts" />
+/// <reference path="Preferences.ts" />
 /// <reference path="CommentSection.ts" />
 /// <reference path="CommentThread.ts" />
 /// <reference path="CommentField.ts" />
