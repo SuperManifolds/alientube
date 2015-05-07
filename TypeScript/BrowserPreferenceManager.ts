@@ -57,7 +57,6 @@ module AlienTube {
                     /* Make a request to the global page to retreive the settings */
                     var listener = safari.self.addEventListener('message', function listenerFunction (event) {
                         if (event.name === "preferences") {
-                            console.log("received");
                             this.preferences = event.message;
 
                             if (callback) {
