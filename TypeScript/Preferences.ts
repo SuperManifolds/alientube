@@ -204,6 +204,7 @@ module AlienTube {
                 "collapse",
                 "retardedcripples",
                 "killingboys",
+                "coontown",
                 "arandabottest"
             ];
         }
