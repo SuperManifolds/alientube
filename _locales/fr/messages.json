@@ -3,8 +3,6 @@
         "message": "Hello Reddit! This request was made by the AlienTube Browser Extension (http://alientube.co/) If you have noticed unusual or overloading traffic here, you can contact the developer at alex@delexious.com",
         "description": "Message that is sent with every request to Reddit so they can identify our requests and potentially contact us should any issues arise"
     },
-
-
     "timestamp_format_year": {
         "message": "année",
         "description": "Singular form of the date unit 'Year' for timestamps."
@@ -67,7 +65,6 @@
             }
         }
     },
-
     "post_submitted_timestamp_text": {
         "message": "soumis ",
         "description": "Prefix describing that the following time description will say when the post was submitted"
@@ -188,8 +185,6 @@
         "message": "q&a",
         "description": "Label for the 'q&a' sort option"
     },
-
-
     "report_dialog_spam": {
         "message": "spam",
         "description": "This user has been spamming (posted excessive advertisments without permission)"
@@ -222,8 +217,6 @@
         "message": "annuler",
         "description": "Cancel this report to Reddit"
     },
-
-
     "loading_generic_message": {
         "message": "chargement...",
         "description": "Generic loading message to indicate to the user that content is being downloaded from Reddit"
@@ -254,8 +247,6 @@
             }
         }
     },
-
-
     "error_header_not_found": {
         "message": "la page est introuvable",
         "description": "Title for error describing that an attempt to load something failed because it went somewhere that does not exist (404)"
@@ -288,8 +279,6 @@
         "message": "réessayez",
         "description": "Button for attempting to load the comments again."
     },
-
-
     "commentfield_button_submit": {
         "message": "Soumettre",
         "description": "Button for submitting the comment to Reddit"
@@ -312,22 +301,20 @@
             }
         }
     },
-
-
     "options_label_hiddenPostScoreThreshold": {
-        "message": "Ne plus afficher discussions avec moins de points que:",
+        "message": "Ne plus afficher de discussions avec moins de points que:",
         "description": "If the score for this Reddit post is less than the input, it will not be shown in the list"
     },
     "options_label_hiddenCommentScoreThreshold": {
-        "message": "Ne pas afficher les commentaires avec moins de points que:",
+        "message": "Ne pas afficher de commentaires avec moins de points que:",
         "description": "If the score for this comment is less than the input, it will not be shown in the comment section"
     },
     "options_label_showGooglePlusWhenNoPosts": {
-        "message": "Voir les commentaires Google+ s'il n'y a pas de résultats",
+        "message": "Voir les commentaires de Google+ s'il n'y a pas de résultats",
         "description": "Show the Google+ comments like usual if there are no Reddit comments to see"
     },
     "options_label_showGooglePlusButton": {
-        "message": "Bouton Afficher Google+",
+        "message": "Afficher le bouton Google+",
         "description": "This option will toggle the visibility of the Google+ comments button."
     },
     "options_label_defaultDisplayAction": {
@@ -339,12 +326,20 @@
         "description": "Label for version number"
     },
     "options_label_title": {
-        "message": "AlienTube Options",
+        "message": "Options",
         "description": "Option page title"
     },
-    "options_label_saved": {
-        "message": "Réinitialisés",
+    "options_label_reset": {
+        "message": "Remettre les options par défaut",
         "description": "Button to reset all settings to their factory default."
+    },
+    "options_button_add": {
+        "message": "Insérer",
+        "description": "Add item button."
+    },
+    "options_label_hide_following": {
+        "message": "Cacher les subreddits suivants:",
+        "description": "Message explaining to the user that the list below is of subreddits that will not be shown"
     },
     "options_label_gplus": {
         "message": "Google+",

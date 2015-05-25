@@ -166,30 +166,29 @@
     "description": "Message explaining to the user that this reddit thread is official, that is promoted or endorsed by the author"
   },
   "post_sort_confidence": {
-      "message": "mejores",
-      "description": "Label for the 'confidence' sort option"
+    "message": "mejores",
+    "description": "Label for the 'confidence' sort option"
   },
   "post_sort_top": {
-      "message": "popular",
-      "description": "Label for the 'top' sort option"
+    "message": "popular",
+    "description": "Label for the 'top' sort option"
   },
   "post_sort_new": {
-      "message": "nuevo",
-      "description": "Label for the 'new' sort option"
+    "message": "nuevo",
+    "description": "Label for the 'new' sort option"
   },
   "post_sort_controversial": {
-      "message": "polémico",
-      "description": "Label for the 'controversial' sort option"
+    "message": "polémico",
+    "description": "Label for the 'controversial' sort option"
   },
   "post_sort_old": {
-      "message": "viejo",
-      "description": "Label for the 'old' sort option"
+    "message": "viejo",
+    "description": "Label for the 'old' sort option"
   },
   "post_sort_qa": {
-      "message": "q&a",
-      "description": "Label for the 'q&a' sort option"
+    "message": "q&a",
+    "description": "Label for the 'q&a' sort option"
   },
-
   "report_dialog_spam": {
     "message": "spam",
     "description": "This user has been spamming (posted excessive advertisments without permission)"
@@ -323,31 +322,39 @@
     "description": "Show the Google+ comments like usual if there are no Reddit comments to see"
   },
   "options_label_showGooglePlusButton": {
-      "message": "Botón Mostrar Google+",
-      "description": "This option will toggle the visibility of the Google+ comments button."
+    "message": "Botón Mostrar Google+",
+    "description": "This option will toggle the visibility of the Google+ comments button."
   },
   "options_label_defaultDisplayAction": {
-        "message": "Por defecto mostrar los comentarios de:",
-        "description": "This option will set whether AlienTube or Google+ is shown by default."
+    "message": "Por defecto mostrar los comentarios de:",
+    "description": "This option will set whether AlienTube or Google+ is shown by default."
   },
   "options_label_version": {
     "message": "versión",
     "description": "Label for version number"
   },
   "options_label_title": {
-    "message": "Opciones",
+    "message": "Configuración",
     "description": "Option page title"
   },
   "options_label_reset": {
-    "message": "Restablecer valores predeterminados",
+    "message": "Restaurar la configuración por defecto ",
     "description": "Button to reset all settings to their factory default."
   },
-    "options_label_gplus": {
-        "message": "Google+",
-        "description": "Google+ option for the default display option"
-    },
-    "options_label_alientube": {
-        "message": "Reddit",
-        "description": "AlienTube option for the default display option"
-    }
+  "options_button_add": {
+    "message": "Insertar",
+    "description": "Add item button."
+  },
+  "options_label_hide_following": {
+    "message": "Ocultar estos subreddits:",
+    "description": "Message explaining to the user that the list below is of subreddits that will not be shown"
+  },
+  "options_label_gplus": {
+    "message": "Google+",
+    "description": "Google+ option for the default display option"
+  },
+  "options_label_alientube": {
+    "message": "Reddit",
+    "description": "AlienTube option for the default display option"
+  }
 }
