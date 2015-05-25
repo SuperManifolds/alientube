@@ -342,9 +342,17 @@
     "message": "Instillinger",
     "description": "Option page title"
   },
-  "options_label_saved": {
+  "options_label_reset": {
     "message": "Tilbakestill.",
     "description": "Button to reset all settings to their factory default."
+  },
+  "options_button_add": {
+    "message": "Legg til",
+    "description": "Add item button."
+  },
+  "options_label_hide_following": {
+    "message": "Skjul tråder fra følgende subredditer:",
+    "description": "Message explaining to the user that the list below is of subreddits that will not be shown"
   },
     "options_label_gplus": {
         "message": "Google+",
