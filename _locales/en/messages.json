@@ -341,29 +341,17 @@
         "message": "By default show comments from:",
         "description": "This option will set whether AlienTube or Google+ is shown by default."
     },
-    "options_button_save": {
-        "message": "Save",
-        "description": "Button for saving settings"
-    },
-    "options_button_about": {
-        "message": "About",
-        "description": "Button to open a panel with a typical 'About' dialog, and license."
-    },
-    "options_button_close": {
-        "message": "Close",
-        "description": "Button to close the about dialog"
-    },
     "options_label_version": {
-        "message": "AlienTube version",
+        "message": "version",
         "description": "Label for version number"
     },
     "options_label_title": {
         "message": "AlienTube Options",
         "description": "Option page title"
     },
-    "options_label_saved": {
-        "message": "Changes has been saved",
-        "description": "Notification that lets the user know their changes to the options has been successfully saved"
+    "options_label_reset": {
+        "message": "Reset to default",
+        "description": "Button to reset all settings to their factory default."
     },
     "options_label_gplus": {
         "message": "Google+",

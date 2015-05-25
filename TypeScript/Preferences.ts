@@ -169,6 +169,26 @@ module AlienTube {
                     break;
             }
         }
+        
+        /**
+         * Reset all the settings for the extension.
+         */
+        public static reset () : void {
+            Preferences.preferenceCache = {};
+            switch (window.getCurrentBrowser()) {
+                case Browser.CHROME:
+                    chrome.storage.sync.remove(Object.keys(Preferences.defaults));
+                    break;
+                    
+                case Browser.FIREFOX:
+                    self.port.emit("eraseSettings", null);
+                    break;
+                    
+                case Browser.SAFARI:
+                    safari.self.tab.dispatchMessage("erasePreferences", null);
+                    break;
+            }
+        } 
 
         /**
          * Get a list of subreddits that will not be displayed by AlienTube, either because they are not meant to show up in searches (bot accunulation subreddits) or because they are deemed too unsettling.

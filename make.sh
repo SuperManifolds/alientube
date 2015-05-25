@@ -5,6 +5,8 @@ echo
 sass res/style.scss res/style.css
 
 if [ "$1" == "--init" ]; then
+    sass res/options.scss res/options.css
+
     mkdir -p Chrome/res
     mkdir -p Chrome/js
     mkdir -p Safari.safariextension/res
@@ -14,25 +16,22 @@ if [ "$1" == "--init" ]; then
     echo Copying Chrome Resources
     cp -fr res/redditbroken.svg Chrome/res
     cp -fr res/redditoverload.svg Chrome/res
-    cp -fr res/chrome_shared.css Chrome/res
     cp -fr res/icon128.png Chrome/res
-    cp -fr res/widgets.css Chrome/res
+    cp -fr res/options.css Chrome/res
     cp -fr lib/snuownd.js Chrome/js
 
     echo Copying Safari Resources
     cp -fr res/redditbroken.svg Safari.safariextension/res
     cp -fr res/redditoverload.svg Safari.safariextension/res
     cp -fr res/icon128.png Safari.safariextension/res
-    cp -fr res/chrome_shared.css Safari.safariextension/res
-    cp -fr res/widgets.css Safari.safariextension/res
+    cp -fr res/options.css Safari.safariextension/res
     cp -fr lib/snuownd.js Safari.safariextension/js
 
     echo Copying Firefox Resources
     cp -fr res/redditbroken.svg Firefox/data
     cp -fr res/redditoverload.svg Firefox/data
     cp -fr res/icon128.png Firefox/data
-    cp -fr res/chrome_shared.css Firefox/data
-    cp -fr res/widgets.css Firefox/data
+    cp -fr res/options.css Firefox/data
     cp -fr lib/snuownd.js Firefox/data
     cp -fr lib/handlebars-v3.0.0.js Firefox/data
     echo
@@ -40,7 +39,8 @@ if [ "$1" == "--init" ]; then
     echo Updating Options HTML Page
     cp options.html Chrome/res/options.html
     cp options.html Firefox/data/options.html
-    cp options.html Safari.safariextension/res/options.html
+    cp options.html Safari.safariextension/res/options.htm¨
+    echo
 
     echo Compiling Options TypeScript Files.
     tsc --target ES5 --out lib/options.js TypeScript/Options/Options.ts --removeComments --declaration
@@ -91,4 +91,3 @@ cp -fr _locales Firefox/data/
 echo
 
 echo Reloading Browsers
-osascript reloadExtension.scpt

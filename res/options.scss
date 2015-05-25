@@ -1,0 +1,154 @@
+@import 'bourbon/bourbon';
+
+main {
+	width: 640px;
+	min-height: 265px;
+	margin: auto;
+	position: absolute;
+	display: table;
+	height: auto;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+header {
+	background: #f8f8f8;
+	overflow: auto;
+	padding: 1rem;
+	position: relative;
+	
+	img, h1 {
+		float: left;
+	}
+	
+	h1 {
+		margin: 0;
+		margin-left: 20px;
+		line-height: 60px;
+		font-weight: 100;
+		font-size: 300%;
+		color: #8e8e8e;
+	}
+	
+	#versionContainer {
+		position: absolute;
+		bottom: 1rem;
+		right: 1rem;
+		color: #797979;
+	}
+}
+
+#options {
+	padding: 1rem;
+}
+
+button {
+	color: #d24545;
+	font-size: 120%;
+	font-weight: 100;
+	padding: 10px;
+	background: #fcfcfc;
+	border: 1px solid #d24545;
+	cursor: pointer;
+	
+	&:hover {
+		background: #f6f6f6;
+	}
+	
+	&:active {
+		background: #d9d9d9;
+	}
+	
+	&:focus {
+		outline: 0;
+	}
+}
+
+input[type='text'],
+input[type='number'] {
+	font-size: 150%;
+	height: 28px;
+	font-weight: 100;
+	float: right;
+	border: 1px solid #d24545;
+}
+
+input[type='number'] {
+	width: 64px;
+	@include box-sizing(border-box);
+	padding-left: 10px;
+	padding-right: 0px;
+}
+
+input[type='number'][invalidInput] {
+	background: #e45353;
+}
+
+select {
+	@include appearance(none);
+	border-radius: 0;
+	font-size: 120%;
+	width: 128px;
+	height: 28px;
+	padding-left: 10px;
+	padding-right: 10px;
+	background: #fff;
+	border: 1px solid #d24545;
+}
+
+.selectContainer {
+	float: right;
+	position: relative;
+	
+	&::after {
+		display: inline-block;
+		position: absolute;
+		right: 13px;
+		top: 12px;
+		content: " ";
+		border-left: 5px solid transparent;
+		border-right: 5px solid transparent;
+		border-top: 5px solid #d24545;
+		transition: all 0.3s linear;
+		margin-left: -15px;
+	}
+}
+
+.checkbox, .label-checkbox {
+    cursor: pointer;
+}
+
+label {
+	@include user-select(none);
+	line-height: 30px;
+	font-size: 125%;
+}
+
+.checkbox {
+	display: none;
+}
+
+.checkbox + .label-checkbox:after {
+	float: right;
+    content: '';
+    background: #fff;
+    border: 1px solid #d24545; 
+    width: 22px;
+    height: 22px; 
+    padding: 2px;
+    text-align: center;
+}
+
+.checkbox:checked + .label-checkbox:after {
+    content: '\2713';
+	font-size: 150%;
+	font-weight: 100;
+	line-height: 25px;
+	color: #d24545;
+}
+
+#reset {
+	margin-top: 10px;
+}

@@ -1,5 +1,5 @@
 /// <reference path="../LocalisationManager.ts" />
-/// <reference path="../BrowserPreferenceManager.ts" />
+/// <reference path="../Preferences.ts" />
 
 /**
     * Namespace for All AlienTube operations.
@@ -21,66 +21,77 @@ module AlienTube {
         ];
 
         /* Declare the page HTML elements. */
-        private hiddenPostScoreThresholdElement;
-        private hiddenCommentScoreThresholdElement;
-        private showGooglePlusWhenNoPostsElement;
-        private showGooglePlusButtonElement;
         private defaultDisplayActionElement;
-        private saveOptionsButton;
-        private displayAboutDialogButton;
-        private closeAboutDialogButton;
+        private resetButtonElement;
 
         /* Declare the preferences object and the localisation object. */
         private localisationManager;
 
         constructor () {
             this.localisationManager = new LocalisationManager(() => {
-                var i, len, label;
+                var i, len, label, inputElement, selectValue, optionElementIndex;
                 
-                /* Get the input elements for the various preferences on the option page. */
-                this.hiddenPostScoreThresholdElement    = document.getElementById("hiddenPostScoreThreshold");
-                this.hiddenCommentScoreThresholdElement = document.getElementById("hiddenCommentScoreThreshold");
-                this.showGooglePlusWhenNoPostsElement   = document.getElementById("showGooglePlusWhenNoPosts");
-                this.showGooglePlusButtonElement        = document.getElementById("showGooglePlusButton");
-                this.defaultDisplayActionElement        = document.getElementById("defaultDisplayAction");
+                /* Get the element for inputs we need to specifically modify. */
+                this.defaultDisplayActionElement = document.getElementById("defaultDisplayAction");
 
                 /* Get the various buttons for the page. */
-                this.saveOptionsButton = document.getElementById("saveButton");
-                this.displayAboutDialogButton = document.getElementById("aboutButton");
-                this.closeAboutDialogButton = document.getElementById("closeButton");
+                this.resetButtonElement = document.getElementById("reset");
                 
-                /* Set the localised text of the buttons. */
-                this.saveOptionsButton.textContent  = this.localisationManager.get("options_button_save");
-                this.displayAboutDialogButton.textContent = this.localisationManager.get("options_button_about");
-                this.closeAboutDialogButton.textContent = this.localisationManager.get("options_button_close");
+                /* Set the localised text of the reset button. */
+                this.resetButtonElement.textContent = this.localisationManager.get("options_label_reset");
                 
                 /* Set the page title */
-                document.title = this.localisationManager.get("options_button_title");
+                window.document.title = this.localisationManager.get("options_button_title");
 
                 Preferences.initialise((preferences) => {
-                    /* Set the localisation text for the labels of every setting in the options panel. */
+                    /* Go over every setting in the options panel. */
                     for (i = 0, len = Options.preferenceKeyList.length; i < len; i += 1) {
-                        console.log("label[for='" + Options.preferenceKeyList[i] + "']");
+                        /* Set the localised text for every setting. */
                         label = <HTMLLabelElement> document.querySelector("label[for='" + Options.preferenceKeyList[i] + "']");
                         label.textContent = this.localisationManager.get("options_label_" + Options.preferenceKeyList[i]);
+                        
+                        /* Get the control for the setting. */
+                        inputElement = document.getElementById(Options.preferenceKeyList[i]);
+                        if (inputElement.tagName === "SELECT") {
+                            /* This control is a select/dropdown element. Retreive the existing setting for this. */
+                            inputElement = <HTMLSelectElement> inputElement;
+                            selectValue = Preferences.getString(Options.preferenceKeyList[i]);
+                            
+                            /* Go over every dropdown item to find the one we need to set as selected. Unfortunately NodeList does not inherit from 
+                               Array and does not have forEach. Therefor we will force an iteration over it by calling Array.prototype.forEach.call */
+                            optionElementIndex = 0;
+                            Array.prototype.forEach.call(inputElement.options, (optionElement) => {
+                                if (optionElement.value === selectValue) {
+                                    inputElement.selectedIndex = optionElementIndex;
+                                }
+                                optionElementIndex += 1;
+                            });
+                            
+                            /* Call the settings changed event when the user has selected a different dropdown item.*/
+                            inputElement.addEventListener("change", this.saveUpdatedSettings, false);
+                        } else if (inputElement.getAttribute("type") === "number"){
+                            /* This control is a number input element. Retreive the existing setting for this. */
+                            inputElement.value = Preferences.getNumber(Options.preferenceKeyList[i]);
+                            
+                            /* Call the settings changed event when the user has pushed a key, cut to clipboard, or pasted, from clipboard */
+                            inputElement.addEventListener("keyup", this.saveUpdatedSettings, false);
+                            inputElement.addEventListener("cut", this.saveUpdatedSettings, false);
+                            inputElement.addEventListener("paste", this.saveUpdatedSettings, false);
+                        } else if (inputElement.getAttribute("type") === "checkbox") {
+                            /* This control is a checkbox. Retreive the existing setting for this. */
+                            inputElement.checked = Preferences.getBoolean(Options.preferenceKeyList[i]);
+                            
+                            /* Call the settings changed event when the user has changed the state of the checkbox. */
+                            inputElement.addEventListener("change", this.saveUpdatedSettings, false);
+                        }
                     }
+                    
+                    /* Set event handler for the reset button. */
+                    this.resetButtonElement.addEventListener("click", this.resetSettings, false);
                     
                     /* Set the localised text for the "default display action" dropdown options. */
                     this.defaultDisplayActionElement.options[0].textContent = this.localisationManager.get("options_label_alientube");
                     this.defaultDisplayActionElement.options[1].textContent = this.localisationManager.get("options_label_gplus");
-
-                    /* Set the option input element values to what we have stored in preferences or their default values. */
-                    this.hiddenPostScoreThresholdElement.value        = Preferences.getNumber("hiddenPostScoreThreshold");
-                    this.hiddenCommentScoreThresholdElement.value     = Preferences.getNumber("hiddenCommentScoreThreshold");
-                    this.showGooglePlusWhenNoPostsElement.checked     = Preferences.getBoolean("showGooglePlusWhenNoPosts");
-                    this.showGooglePlusButtonElement.checked          = Preferences.getBoolean("showGooglePlusButton");
-                    this.defaultDisplayActionElement.selectedIndex    = Preferences.getString("defaultDisplayAction") === "alientube" ? 0 : 1;
-
-                    /* Set the event listeners for the buttons on the page. */
-                    this.saveOptionsButton.addEventListener("click", this.save.bind(this), false);
-                    this.displayAboutDialogButton.addEventListener("click", this.displayAboutDialog.bind(this), false);
-                    this.closeAboutDialogButton.addEventListener("click", this.closeAboutDialog.bind(this), false);
-                    document.getElementById("cover").addEventListener("click", this.closeAboutDialog.bind(this), false);
                     
                     /* Set the extension version label. */
                     document.getElementById("versiontext").textContent = this.localisationManager.get("options_label_version");
@@ -90,56 +101,33 @@ module AlienTube {
         }
         
         /**
-         * Save all the settings on the page.
+         * Trigger when a setting has been changed by the user, update the control, and save the setting.
+         * @param event The event object.
          */
-        private save () {
-            /* If the user has entered an invalid input in the number fields, set them to the default. */
-            if (!this.hiddenPostScoreThresholdElement.value.match(/[0-9]+/)) {
-                this.hiddenPostScoreThresholdElement.value = -4;
-            }
-            if (!this.hiddenCommentScoreThresholdElement.value.match(/[0-9]+/)) {
-                this.hiddenCommentScoreThresholdElement.value = -4;
+        private saveUpdatedSettings(event : Event) {
+            var inputElement = <HTMLInputElement> event.target;
+            if (inputElement.getAttribute("type") === "number") {
+                if (inputElement.value.match(/[0-9]+/)) {
+                    inputElement.removeAttribute("invalidInput");
+                } else {
+                    inputElement.setAttribute("invalidInput", "true");
+                    return;
+                }
             }
             
-            /* Save the preferences to disk. */
-            Preferences.set('hiddenPostScoreThreshold', this.hiddenPostScoreThresholdElement.value);
-            Preferences.set('hiddenCommentScoreThreshold', this.hiddenCommentScoreThresholdElement.value);
-            Preferences.set('showGooglePlusWhenNoPosts', this.showGooglePlusWhenNoPostsElement.checked);
-            Preferences.set('showGooglePlusButton', this.showGooglePlusButtonElement.checked);
-            Preferences.set('defaultDisplayAction', this.defaultDisplayActionElement.value);
-            
-            /* Display a small message to let the user know their settings has been saved. */
-            this.displayOptionsSavedTicker.bind(this);
+            if (inputElement.getAttribute("type") === "checkbox") {
+                Preferences.set(inputElement.id, inputElement.checked);
+            } else {
+                Preferences.set(inputElement.id, inputElement.value);
+            }
         }
         
         /**
-         * Display the "About AlienTube" dialog.
-         * @private
+         * Reset all the settings to factory defaults.
          */
-        private displayAboutDialog () {
-            document.getElementById('about').style.visibility="visible";
-            document.getElementById('cover').style.visibility="visible";
-        }
-        
-        /**
-         * Close the "About AlienTube" dialog.
-         * @private
-         */
-        private closeAboutDialog () {
-            document.getElementById('about').style.visibility="collapse";
-            document.getElementById('cover').style.visibility="collapse";
-        }
-        
-        /**
-         * Display a small status message informing the user that their settings has been saved.
-         * @private
-         */
-        private displayOptionsSavedTicker () {
-            var status = document.getElementById("status");
-            status.textContent = this.localisationManager.get("options_label_saved");
-            setTimeout(function () {
-                status.textContent = "";
-            }, 3000);
+        private resetSettings() {
+            Preferences.reset();
+            new AlienTube.Options();
         }
         
         /**
