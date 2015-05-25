@@ -109,7 +109,10 @@ module AlienTube {
                         this.addSubredditExclusionItem(subreddit);
                     });
                     
-                    this.addToExcludeButton.addEventListener("click", this.addItemToExcludeList.bind(this), false);
+                    this.addToExcludeButton.addEventListener("click", this.addItemToExcludeList.bind(this), false);/* Call the settings changed event when the user has pushed a key, cut to clipboard, or pasted, from clipboard */
+                    this.excludeSubredditsField.addEventListener("keyup", this.onExcludeFieldKeyUp.bind(this), false);
+                    this.excludeSubredditsField.addEventListener("cut", this.validateExcludeField.bind(this), false);
+                    this.excludeSubredditsField.addEventListener("paste", this.validateExcludeField.bind(this), false);
                     
                     /* Set the extension version label. */
                     document.getElementById("versiontext").textContent = this.localisationManager.get("options_label_version");
@@ -169,6 +172,23 @@ module AlienTube {
            }
                         
            this.excludeListContainer.insertBefore(subredditElement, this.excludeListContainer.firstChild);
+        }
+        
+        private onExcludeFieldKeyUp(event : KeyboardEvent) {
+            if (!this.validateExcludeField(event)) return;
+            if (event.keyCode === 13) {
+                this.addItemToExcludeList(event);
+            }
+        }
+        
+        private validateExcludeField(event : Event) : boolean {
+            var textfield = <HTMLInputElement>event.target;
+            if (textfield.value.match(/([A-Za-z0-9_]+|[reddit.com]){3}/) !== null) {
+                this.addToExcludeButton.disabled = false;
+                return true;
+            }
+            this.addToExcludeButton.disabled = true;
+            return false;
         }
         
         private addItemToExcludeList(event : Event) {

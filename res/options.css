@@ -195,5 +195,8 @@ label {
 
 #addSubredditToList {
   padding: 5px; }
+  #addSubredditToList:disabled, #addSubredditToListdisabled:hover {
+    opacity: 0.5;
+    cursor: default; }
 
 /*# sourceMappingURL=options.css.map */

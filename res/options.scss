@@ -225,4 +225,9 @@ label {
 
 #addSubredditToList {
 	padding: 5px;
+	
+	&:disabled, &disabled:hover {
+		opacity: 0.5;
+		cursor: default;
+	}
 }
