@@ -23,9 +23,13 @@ module AlienTube {
         /* Declare the page HTML elements. */
         private defaultDisplayActionElement;
         private resetButtonElement;
+        private excludeSubredditsField;
+        private addToExcludeButton;
+        private excludeListContainer;
 
         /* Declare the preferences object and the localisation object. */
         private localisationManager;
+        private excludedSubreddits;
 
         constructor () {
             this.localisationManager = new LocalisationManager(() => {
@@ -36,9 +40,11 @@ module AlienTube {
 
                 /* Get the various buttons for the page. */
                 this.resetButtonElement = document.getElementById("reset");
+                this.addToExcludeButton = document.getElementById("addSubredditToList");
                 
                 /* Set the localised text of the reset button. */
                 this.resetButtonElement.textContent = this.localisationManager.get("options_label_reset");
+                this.addToExcludeButton.textContent = this.localisationManager.get("options_button_add");
                 
                 /* Set the page title */
                 window.document.title = this.localisationManager.get("options_label_title");
@@ -86,12 +92,24 @@ module AlienTube {
                         }
                     }
                     
+                    document.querySelector("label[for='addSubredditForExclusion']").textContent = this.localisationManager.get("options_label_hide_following");
+                    
                     /* Set event handler for the reset button. */
                     this.resetButtonElement.addEventListener("click", this.resetSettings, false);
                     
                     /* Set the localised text for the "default display action" dropdown options. */
                     this.defaultDisplayActionElement.options[0].textContent = this.localisationManager.get("options_label_alientube");
                     this.defaultDisplayActionElement.options[1].textContent = this.localisationManager.get("options_label_gplus");
+                    
+                    this.excludeSubredditsField = document.getElementById("addSubredditsForExclusion");
+                    
+                    this.excludeListContainer = document.getElementById("excludedSubreddits");
+                    this.excludedSubreddits = Preferences.getArray("excludedSubredditsSelectedByUser");
+                    this.excludedSubreddits.forEach((subreddit) => {
+                        this.addSubredditExclusionItem(subreddit);
+                    });
+                    
+                    this.addToExcludeButton.addEventListener("click", this.addItemToExcludeList.bind(this), false);
                     
                     /* Set the extension version label. */
                     document.getElementById("versiontext").textContent = this.localisationManager.get("options_label_version");
@@ -128,6 +146,52 @@ module AlienTube {
         private resetSettings() {
             Preferences.reset();
             new AlienTube.Options();
+        }
+        
+        private addSubredditExclusionItem(subreddit : string, animate? : boolean) {
+            var subredditElement = document.createElement("div");
+            subredditElement.setAttribute("subreddit", subreddit);
+                        
+            var subredditLabel = document.createElement("span");
+            subredditLabel.textContent = subreddit;
+            subredditElement.appendChild(subredditLabel);
+                        
+           var removeButton = document.createElement("button");
+           removeButton.textContent = '╳';
+           subredditElement.appendChild(removeButton);
+           removeButton.addEventListener("click", this.removeSubredditFromExcludeList.bind(this), false);
+           
+           if (animate) {
+               subredditElement.classList.add("new");
+                setTimeout(() => {
+                    subredditElement.classList.remove("new");
+                }, 100);
+           }
+                        
+           this.excludeListContainer.insertBefore(subredditElement, this.excludeListContainer.firstChild);
+        }
+        
+        private addItemToExcludeList(event : Event) {
+            var subredditName = this.excludeSubredditsField.value;
+            this.addSubredditExclusionItem(subredditName, true);
+            
+            this.excludedSubreddits.push(subredditName);
+            Preferences.set("excludedSubredditsSelectedByUser", this.excludedSubreddits);
+            
+            setTimeout(() => {
+                this.excludeSubredditsField.value = "";
+            }, 150);
+        }
+        
+        private removeSubredditFromExcludeList(event : Event) {
+            var subredditElement = <HTMLDivElement>(<HTMLButtonElement> event.target).parentNode;
+            this.excludedSubreddits.splice(this.excludedSubreddits.indexOf(subredditElement.getAttribute("subreddit")), 1);
+            Preferences.set("excludedSubredditsSelectedByUser", this.excludedSubreddits);
+            subredditElement.classList.add("removed");
+            
+            setTimeout(() => {
+                this.excludeListContainer.removeChild(subredditElement);
+            }, 500);
         }
         
         /**

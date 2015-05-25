@@ -3,14 +3,9 @@
 main {
 	width: 640px;
 	min-height: 265px;
-	margin: auto;
-	position: absolute;
-	display: table;
-	height: auto;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 200px; 
 }
 
 header {
@@ -150,5 +145,84 @@ label {
 }
 
 #reset {
+	@include transition(all 0.5s ease-in-out);
 	margin-top: 10px;
+}
+
+#exclusioncontainer {
+	position: relative;
+	
+	&:before {
+		content: '/r/';
+		color: #7f7f7f;
+		position: absolute;
+		
+		top: 5px;
+		left: 10px;
+		font-size: 150%;
+	}
+} 
+
+#excludedSubreddits {
+	margin-top: 10px;
+	position: relative;
+	
+	& > div {
+		@include box-sizing(border-box);
+		width: 340px;
+		padding: 5px 10px;
+		line-height: 18px;
+		font-size: 120%;
+		font-weight: 200;
+		color: #505050;
+		background: #f1f1f1;
+		opacity: 1;
+		@include transition(all 0.5s ease-in-out);
+		
+		&:hover {
+			background: #e9e9e9;
+		}
+		
+		& > button {
+			float: right;
+			width: 18px;
+			height: 18px;
+			margin: 0;
+			padding: 0;
+			background: 0;
+			border: none;
+			font-weight: 700;
+			font-size: 75%;
+			color: #a9a9a9;
+			
+			&:hover {
+				color: #cac6c6;
+			}
+			
+			&:active {
+				color: #cac6c6;
+			}
+		}
+		
+		&.new {
+			opacity: 0;
+			@include transform(translate(20px, -39px));
+		}
+		
+		&.removed {
+			opacity: 0;
+		}
+	}
+}
+
+#addSubredditsForExclusion {
+	float: none;
+	width: 340px;
+	font-size: 120%;
+	padding-left: 30px;
+	@include box-sizing(border-box);
+}
+
+#addSubredditToList {
+	padding: 5px;
 }
