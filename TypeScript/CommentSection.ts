@@ -84,21 +84,18 @@ module AlienTube {
                                     sortedResultCollection[thread.subreddit].push(thread);
                                 });
 
-                                // Retrieve the subreddit that has the best score/comment relation in each subreddit, or is in the description.
+                                // Sort posts into collections by what subreddit they appear in.
                                 this.threadCollection = [];
                                 for (var subreddit in sortedResultCollection) {
                                     if (sortedResultCollection.hasOwnProperty(subreddit)) {
                                         this.threadCollection.push(sortedResultCollection[subreddit].reduce(function(a, b) {
-                                            return ((a.score + (a.num_comments * 10)) > (b.score + (b.num_comments * 10)) || b.id === preferredPost) ? a : b;
+                                            return (b.id === preferredPost) ? a : b;
                                         }));
                                     }
                                 }
 
                                 if (this.threadCollection.length > 0) {
-                                    // Sort subreddits so the one with the highest score/comment relation (or is in the description) is first in the list.
-                                    this.threadCollection.sort(function(a, b) {
-                                        return ((b.score + (b.num_comments * 10)) - (a.score + (a.num_comments * 10)));
-                                    });
+                                    // Sort subreddits so there is only one post per subreddit, and that any subreddit or post that is linked to in the description appears first.
                                     for (var i = 0, len = this.threadCollection.length; i < len; i+= 1) {
                                         if (this.threadCollection[i].subreddit === preferredSubreddit) {
                                             var threadDataForFirstTab = this.threadCollection[i];
