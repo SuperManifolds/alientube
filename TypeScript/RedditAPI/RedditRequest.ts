@@ -50,11 +50,11 @@ module AlienTube.Reddit {
                 loadingText.textContent = Application.localisationManager.get("loading_slow_message");
             }, 3000);
 
-            /* Kick of a 15 second timer that will cancel the connection attempt and display an error to the user letting them know
+            /* Kick of a 30 second timer that will cancel the connection attempt and display an error to the user letting them know
             something is probably blocking the connection. */
             this.timeoutTimer = setTimeout(() => {
                 new ErrorScreen(Application.commentSection, ErrorState.CONNECTERROR);
-            }, 15000);
+            }, 30000);
 
             /* Perform the reddit api request */
             new HttpRequest(this.requestUrl, this.requestType, this.onSuccess.bind(this), this.postData, this.onRequestError.bind(this));
