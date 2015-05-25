@@ -90,20 +90,25 @@ module AlienTube.Reddit {
         /**
          * Called when a request was unsuccessful.
          * @param xhr the javascript XHR object of the request.
+         * @param [response] An optional error message.
          */
-        private onRequestError (xhr) {
+        private onRequestError (status, response?) {
             /* Cancel the slow load timer */
             clearTimeout(this.loadTimer);
             clearTimeout(this.timeoutTimer);
 
-            if (this.attempts <= 3 && xhr.status !== 404) {
+            if (this.attempts <= 3 && status !== 404) {
                 /* Up to 3 attempts, retry the loading process automatically. */
                 this.loadingScreen.updateProgress(LoadingState.RETRY);
                 this.performRequest();
             } else {
                 /* We have tried too many times without success, give up and display an error to the user. */
                 this.loadingScreen.updateProgress(LoadingState.ERROR);
-                switch (xhr.status) {
+                switch (status) {
+                    case 0:
+                        new ErrorScreen(Application.commentSection, ErrorState.BLOCKED);
+                        break;
+                    
                     case 404:
                         new ErrorScreen(Application.commentSection, ErrorState.NOT_FOUND);
                         break;
@@ -116,7 +121,7 @@ module AlienTube.Reddit {
                         break;
 
                     default:
-                        new ErrorScreen(Application.commentSection, ErrorState.REDDITERROR, xhr.responseText);
+                        new ErrorScreen(Application.commentSection, ErrorState.REDDITERROR, response);
                 }
             }
         }

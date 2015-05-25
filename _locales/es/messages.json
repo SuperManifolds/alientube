@@ -271,13 +271,21 @@
     "message": "Inténtalo más tarde.",
     "description": "Message describing that the user should wait a few minutes before trying again to give Reddi time to recover"
   },
+  "error_header_timeout": {
+    "message": "conexión agotado",
+    "description": "Title for error describing that comments failed because the connection timed out"
+  },
+  "error_message_timeout": {
+    "message": "La conexión a Reddit Tiempo de espera agotado, por favor, compruebe su conexión a Internet, la configuración del navegador, firewall y las extensiones del navegador",
+    "description": "Message for error describing that comments failed because the connection timed out"
+  },
   "error_header_interrupted": {
     "message": "conexión interrumpida",
     "description": "Title for error describing that comments failed because the connection was interrupted by something"
   },
   "error_message_interrupted": {
-    "message": "Hubo una interrupción cuando se conecta a reddit.com, por favor revise su navegador",
-    "description": "Message for error describing that comments failed because the connection was interrupted by somethingr"
+    "message": "Algo está interrumpiendo la conexión con reddit.com y no podemos proceder, si utiliza software o navegador extensiones para filtrar el tráfico de Internet como Disconnect.me es posible que necesite a la lista blanca Reddit.",
+    "description": "Message for error describing that comments failed because the connection was interrupted by something"
   },
   "error_header_generic": {
     "message": "Ha ocurrido un error",

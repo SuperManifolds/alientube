@@ -72,10 +72,19 @@ module AlienTube {
                     /* Retrieve the generic "Reddit is broken" svg graphic from the ressource directory */
                     errorImage.setAttribute("src", Application.getExtensionRessourcePath("redditbroken.svg"));
 
+                    /* Set "connection timed out" localisation text */
+                    errorHeader.textContent = Application.localisationManager.get("error_header_timeout");
+                    errorText.textContent = Application.localisationManager.get("error_message_timeout");
+
+                    break;
+                    
+                case ErrorState.BLOCKED:
+                    /* Retrieve the reddit blocked svg graphic from the ressource directory */
+                    errorImage.setAttribute("src", Application.getExtensionRessourcePath("redditblocked.svg"));
+
                     /* Set "connection is being interrupted" localisation text */
                     errorHeader.textContent = Application.localisationManager.get("error_header_interrupted");
                     errorText.textContent = Application.localisationManager.get("error_message_interrupted");
-
                     break;
             }
 
@@ -114,6 +123,7 @@ module AlienTube {
         OVERLOAD,
         REDDITERROR,
         CONNECTERROR,
+        BLOCKED,
         ERROR
     }
 }

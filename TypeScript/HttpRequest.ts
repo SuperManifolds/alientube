@@ -55,12 +55,15 @@ module AlienTube {
                     'data': query.join('&')
                 });
             } else {
-                /* Make the web request */
                 xhr = new XMLHttpRequest();
                 xhr.open(RequestType[type], url, true);
                 xhr.withCredentials = true;
                 if (type === RequestType.POST) {
                     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                }
+                
+                xhr.onerror = (e) => {
+                    if (errorHandler) errorHandler(e.target.status);
                 }
                 xhr.onload = () => {
                     if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
@@ -70,7 +73,7 @@ module AlienTube {
                         }
                     } else {
                         /* There was an error */
-                        if (errorHandler) errorHandler(xhr);
+                        if (errorHandler) errorHandler(xhr.status);
                     }
                 }
                 

@@ -166,30 +166,29 @@
     "description": "Message explaining to the user that this reddit thread is official, that is promoted or endorsed by the author"
   },
   "post_sort_confidence": {
-      "message": "beste",
-      "description": "Label for the 'confidence' sort option"
+    "message": "beste",
+    "description": "Label for the 'confidence' sort option"
   },
   "post_sort_top": {
-      "message": "topp",
-      "description": "Label for the 'top' sort option"
+    "message": "topp",
+    "description": "Label for the 'top' sort option"
   },
   "post_sort_new": {
-      "message": "nytt",
-      "description": "Label for the 'new' sort option"
+    "message": "nytt",
+    "description": "Label for the 'new' sort option"
   },
   "post_sort_controversial": {
-      "message": "kontroversielt",
-      "description": "Label for the 'controversial' sort option"
+    "message": "kontroversielt",
+    "description": "Label for the 'controversial' sort option"
   },
   "post_sort_old": {
-      "message": "eldre",
-      "description": "Label for the 'old' sort option"
+    "message": "eldre",
+    "description": "Label for the 'old' sort option"
   },
   "post_sort_qa": {
-      "message": "q&a",
-      "description": "Label for the 'q&a' sort option"
+    "message": "q&a",
+    "description": "Label for the 'q&a' sort option"
   },
-
   "report_dialog_spam": {
     "message": "spam",
     "description": "This user has been spamming (posted excessive advertisments without permission)"
@@ -272,13 +271,21 @@
     "message": "prøv igjen om noen få minutter",
     "description": "Message describing that the user should wait a few minutes before trying again to give Reddi time to recover"
   },
+  "error_header_timeout": {
+    "message": "tilkobling mislykket",
+    "description": "Title for error describing that comments failed because the connection timed out"
+  },
+  "error_message_timeout": {
+    "message": "Tilkoblingen til Reddit var mislykket, vennligst sjekk Internetttilkoblingen din, brannmuren din, og nettleserutvidelsene dine.",
+    "description": "Message for error describing that comments failed because the connection timed out"
+  },
   "error_header_interrupted": {
-    "message": "Tilkoblingen ble avbrutt",
+    "message": "tilkoblingen avbrytet uventet",
     "description": "Title for error describing that comments failed because the connection was interrupted by something"
   },
   "error_message_interrupted": {
-    "message": "Noe hindrer tilkoblingen til reddit.com så vi får ikke lastet kommentarene, vennligst sjekk instillingene til nettleseren din, og eventuelle nettleserutvidelser",
-    "description": "Message for error describing that comments failed because the connection was interrupted by somethingr"
+    "message": "Noe forstyrrer tilkoblingen til Reddit.com og vi kan ikke fortsette. Hvis du bruker programmer eller nettleserutvidelser som Disconnect.me må du kanskje godkjenne tilkoblinger til Reddit i disse.",
+    "description": "Message for error describing that comments failed because the connection was interrupted by something"
   },
   "error_header_generic": {
     "message": "Reddit kræsjet :(",
@@ -327,12 +334,12 @@
     "description": "This option will show the Google+ comments by default instead of the Reddit comments"
   },
   "options_label_showGooglePlusButton": {
-      "message": "Vis Google+ knapp",
-      "description": "This option will toggle the visibility of the Google+ comments button."
+    "message": "Vis Google+ knapp",
+    "description": "This option will toggle the visibility of the Google+ comments button."
   },
   "options_label_defaultDisplayAction": {
-        "message": "Vis kommentarer fra denne tjenesten først:",
-        "description": "This option will set whether AlienTube or Google+ is shown by default."
+    "message": "Vis kommentarer fra denne tjenesten først:",
+    "description": "This option will set whether AlienTube or Google+ is shown by default."
   },
   "options_label_version": {
     "message": "versjon",
@@ -354,12 +361,12 @@
     "message": "Skjul tråder fra følgende subredditer:",
     "description": "Message explaining to the user that the list below is of subreddits that will not be shown"
   },
-    "options_label_gplus": {
-        "message": "Google+",
-        "description": "Google+ option for the default display option"
-    },
-    "options_label_alientube": {
-        "message": "Reddit",
-        "description": "AlienTube option for the default display option"
-    }
+  "options_label_gplus": {
+    "message": "Google+",
+    "description": "Google+ option for the default display option"
+  },
+  "options_label_alientube": {
+    "message": "Reddit",
+    "description": "AlienTube option for the default display option"
+  }
 }

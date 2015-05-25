@@ -12,7 +12,8 @@ var addonid = require('sdk/self').id;
 var contentScriptData = {
     ressources: {
         "redditbroken.svg" : data.url("redditbroken.svg"),
-        "redditoverload.svg" : data.url("redditoverload.svg")
+        "redditoverload.svg" : data.url("redditoverload.svg"),
+        "redditblocked.svg": data.url("redditblocked.svg")
     },
 
     preferences: {},
