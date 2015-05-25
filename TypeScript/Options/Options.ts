@@ -41,7 +41,7 @@ module AlienTube {
                 this.resetButtonElement.textContent = this.localisationManager.get("options_label_reset");
                 
                 /* Set the page title */
-                window.document.title = this.localisationManager.get("options_button_title");
+                window.document.title = this.localisationManager.get("options_label_title");
 
                 Preferences.initialise((preferences) => {
                     /* Go over every setting in the options panel. */
