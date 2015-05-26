@@ -12,12 +12,12 @@ module AlienTube {
         * @param commentSection The comment section object the thread exists within.
     */
     export class CommentThread {
-        commentSection : CommentSection;
-        threadInformation : any;
-        threadContainer : HTMLDivElement;
+        commentSection: CommentSection;
+        threadInformation: any;
+        threadContainer: HTMLDivElement;
 
-        private postIsInPreservedMode : Boolean;
-        private commentData : Array<any>;
+        private postIsInPreservedMode: Boolean;
+        private commentData: Array<any>;
         private sortingTypes = [
             "confidence",
             "top",
@@ -26,9 +26,9 @@ module AlienTube {
             "old",
             "qa"
         ];
-        public children : Array<any>;
+        public children: Array<any>;
 
-        constructor (threadData : any, commentSection : CommentSection) {
+        constructor(threadData: any, commentSection: CommentSection) {
             var template, title, username, flair, optionsElement, nsfwElement, gildCountElement, timestamp, submittedByUsernameText, openNewCommentBox;
             var saveItemToRedditList, refreshCommentThread, giveGoldToUser, reportToAdministrators, sortController, voteController;
             var googlePlusText, googlePlusButton, googlePlusContainer, officialLabel;
@@ -46,7 +46,7 @@ module AlienTube {
 
             if (threadData[0].data.modhash.length > 0) {
                 this.commentSection.userIsSignedIn = true;
-                if (!threadData[0].data.modhash || ! Preferences.getString("username")) {
+                if (!threadData[0].data.modhash ||  !Preferences.getString("username")) {
                     new AlienTube.Reddit.RetreiveUsernameRequest();
                 }
             } else {
@@ -176,7 +176,7 @@ module AlienTube {
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
             googlePlusContainer = document.getElementById("watch-discussion");
-            if (Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
+            if (Preferences.getBoolean("showGooglePlusButton") === false ||  googlePlusContainer === null) {
                 googlePlusButton.style.display = "none";
             }
 
@@ -191,7 +191,7 @@ module AlienTube {
 
             /* If this post is prioritised (official) mark it as such in the header */
             if (this.threadInformation.official) {
-                 officialLabel = <HTMLSpanElement> this.threadContainer.querySelector(".at_official");
+                officialLabel = <HTMLSpanElement> this.threadContainer.querySelector(".at_official");
                 officialLabel.textContent = Application.localisationManager.get("post_message_official");
                 officialLabel.style.display = "inline-block";
             }
@@ -217,7 +217,7 @@ module AlienTube {
         * Sets the contents of the comment thread.
         * @param contents HTML DOM node or element to use.
         */
-        set (contents : Node) {
+        set(contents: Node) {
             var oldThread = document.getElementById("at_comments");
             var alientube = document.getElementById("alientube");
             if (alientube && oldThread) {
@@ -231,7 +231,7 @@ module AlienTube {
          * @param eventObject The event object for the click of the save button.
          * @private
          */
-        private onSaveButtonClick (eventObject : Event) {
+        private onSaveButtonClick(eventObject: Event) {
             var saveButton = <HTMLSpanElement> eventObject.target;
             var savedType = saveButton.getAttribute("saved") ? AlienTube.Reddit.SaveType.UNSAVE : AlienTube.Reddit.SaveType.SAVE;
             new AlienTube.Reddit.SaveRequest(this.threadInformation.name, savedType, () => {
@@ -250,7 +250,7 @@ module AlienTube {
          * @param eventObject The event object for the click of the report button.
          * @private
          */
-        private onReportButtonClicked (eventObject : Event) {
+        private onReportButtonClicked(eventObject: Event) {
             new AlienTube.Reddit.Report(this.threadInformation.name, this, true);
         }
     	
@@ -258,7 +258,7 @@ module AlienTube {
          * Handle the click of the Google+ Button to change to the Google+ comments.
          * @private
          */
-        private onGooglePlusClick (eventObject : Event) {
+        private onGooglePlusClick(eventObject: Event) {
             var alienTubeContainer, googlePlusContainer, redditButton;
 
             alienTubeContainer = document.getElementById("alientube");
@@ -281,7 +281,7 @@ module AlienTube {
          * @param eventObject The event object for the click of the upvote button.
          * @private
          */
-        private onUpvoteControllerClick (eventObject : Event) {
+        private onUpvoteControllerClick(eventObject: Event) {
             var upvoteController = <HTMLDivElement> eventObject.target;
             var voteController = <HTMLDivElement> upvoteController.parentNode;
             var scoreValue = <HTMLDivElement> voteController.querySelector(".score");
@@ -316,7 +316,7 @@ module AlienTube {
          * @param eventObject The event object for the click of the downvote button.
          * @private
          */
-        private onDownvoteControllerClick (eventObject : Event) {
+        private onDownvoteControllerClick(eventObject: Event) {
             var downvoteController = <HTMLDivElement> eventObject.target;
             var voteController = <HTMLDivElement> downvoteController.parentNode;
             var scoreValue = <HTMLDivElement> voteController.querySelector(".score");
@@ -350,7 +350,7 @@ module AlienTube {
          * Handle the click of the "comment" button, to show or hide the post comment box.
          * @private
          */
-        private onCommentButtonClick () {
+        private onCommentButtonClick() {
             var header = document.querySelector(".at_thread");
             var previousCommentBox = header.querySelector(".at_commentfield");
             if (previousCommentBox) {

@@ -11,12 +11,12 @@ module AlienTube {
         * @param commentThread CommentThread object representing the container of the comment.
     */
     export class Comment {
-        representedHTMLElement : HTMLDivElement;
-        commentObject : any;
-        children : Array<any>;
-        private commentThread : CommentThread;
+        representedHTMLElement: HTMLDivElement;
+        commentObject: any;
+        children: Array<any>;
+        private commentThread: CommentThread;
 
-        constructor (commentData : any, commentThread : CommentThread) {
+        constructor(commentData: any, commentThread: CommentThread) {
             var toggleHide, author, flair, score, scorePointsText, timestamp, contentTextHolder, contentTextOfComment, textParsingElement;
             var replyToComment, permalinkElement, parentLinkElement, displaySourceForComment, saveItemToRedditList, giveGoldToUser;
             var reportToAdministrators, editPost, deletePost, voteController, replyContainer;
@@ -33,7 +33,7 @@ module AlienTube {
 
             /* Show / collapse function for the comment */
             toggleHide = this.representedHTMLElement.querySelector(".at_togglehide");
-            toggleHide.addEventListener("click", function () {
+            toggleHide.addEventListener("click", function() {
                 if (this.representedHTMLElement.classList.contains("hidden")) {
                     this.representedHTMLElement.classList.remove("hidden")
                 } else {
@@ -192,7 +192,7 @@ module AlienTube {
          * @param eventObject The event object for the click of the save button.
          * @private
          */
-        private onSaveButtonClick (eventObject : Event) {
+        private onSaveButtonClick(eventObject: Event) {
             var saveButton = <HTMLSpanElement> eventObject.target;
             var savedType = saveButton.getAttribute("saved") ? AlienTube.Reddit.SaveType.UNSAVE : AlienTube.Reddit.SaveType.SAVE;
             new AlienTube.Reddit.SaveRequest(this.commentObject.name, savedType, () => {
@@ -211,7 +211,7 @@ module AlienTube {
          * @param eventObject The event object for the click of the report button.
          * @private
          */
-        private onReportButtonClicked (eventObject : Event) {
+        private onReportButtonClicked(eventObject: Event) {
             new AlienTube.Reddit.Report(this.commentObject.name, this.commentThread, false);
         }
         
@@ -220,7 +220,7 @@ module AlienTube {
          * @param eventObject The event object for the click of the upvote button.
          * @private
          */
-        private onUpvoteControllerClick (eventObject : Event) {
+        private onUpvoteControllerClick(eventObject: Event) {
             var scorePointsText;
 
             var upvoteController = <HTMLDivElement> eventObject.target;
@@ -260,7 +260,7 @@ module AlienTube {
          * @param eventObject The event object for the click of the downvote button.
          * @private
          */
-        private onDownvoteControllerClick (eventObject : Event) {
+        private onDownvoteControllerClick(eventObject: Event) {
             var downvoteController = <HTMLDivElement> eventObject.target;
             var voteController = <HTMLDivElement> downvoteController.parentNode;
             var parentNode = <HTMLDivElement> voteController.parentNode;
@@ -297,7 +297,7 @@ module AlienTube {
          * Show or hide the comment/reply box. 
          * @private
          */
-        private onCommentButtonClick () {
+        private onCommentButtonClick() {
             var previousCommentBox = this.representedHTMLElement.querySelector(".at_commentfield");
             if (previousCommentBox) {
                 previousCommentBox.parentNode.removeChild(previousCommentBox);
@@ -309,7 +309,7 @@ module AlienTube {
          * Show the source of the comment.
          * @private
          */
-        private onSourceButtonClick () {
+        private onSourceButtonClick() {
             var previousCommentBox = this.representedHTMLElement.querySelector(".at_commentfield");
             if (previousCommentBox) {
                 previousCommentBox.parentNode.removeChild(previousCommentBox);
@@ -321,7 +321,7 @@ module AlienTube {
          * Edit a comment.
          * @private
          */
-        private onEditPostButtonClick () {
+        private onEditPostButtonClick() {
             var previousCommentBox = this.representedHTMLElement.querySelector(".at_commentfield");
             if (previousCommentBox) {
                 previousCommentBox.parentNode.removeChild(previousCommentBox);
@@ -333,7 +333,7 @@ module AlienTube {
          * Delete a comment.
          * @private
          */
-        private onDeletePostButtonClick () {
+        private onDeletePostButtonClick() {
             var confirmation = window.confirm(Application.localisationManager.get("post_delete_confirm"));
             if (confirmation) {
                 var url = "https://api.reddit.com/api/del";

@@ -10,9 +10,9 @@ module AlienTube {
         * @class Preferences
     */
     export class Preferences {
-        private static preferenceCache : Object;
+        private static preferenceCache: Object;
 
-		private static defaults = {
+        private static defaults = {
             hiddenPostScoreThreshold: -4,
             hiddenCommentScoreThreshold: -4,
             showGooglePlusWhenNoPosts: true,
@@ -30,7 +30,7 @@ module AlienTube {
          * @param [callback] Callback for when the preferences has been loaded.
          * @constructor
          */
-         public static initialise(callback?) {
+        public static initialise(callback?) {
             Preferences.preferenceCache = {};
             switch (window.getCurrentBrowser()) {
                 case Browser.CHROME:
@@ -53,7 +53,7 @@ module AlienTube {
 
                 case Browser.SAFARI:
                     /* Make a request to the global page to retreive the settings */
-                    var listener = safari.self.addEventListener('message', function listenerFunction (event) {
+                    var listener = safari.self.addEventListener('message', function listenerFunction(event) {
                         if (event.name === "preferences") {
                             this.preferences = event.message;
 
@@ -68,7 +68,7 @@ module AlienTube {
                     }
                     break;
             }
-         }
+        }
 
     	/**
          * Retrieve a value from preferences, or the default value for that key.
@@ -78,7 +78,7 @@ module AlienTube {
          * @returns An object for the key as stored by the browser.
          * @see getString getNumber getBoolean getArray getObject
          */
-        private static get (key: string) : any {
+        private static get(key: string): any {
             if (Preferences.preferenceCache[key] !== null && typeof (Preferences.preferenceCache[key]) !== 'undefined') {
                 return Preferences.preferenceCache[key]
             }
@@ -91,7 +91,7 @@ module AlienTube {
          * @returns A string for the key as stored by the browser.
          * @see getNumber getBoolean getArray getObject
          */
-        public static getString (key : string) : string {
+        public static getString(key: string): string {
             return Preferences.get(key);
         }
 
@@ -101,7 +101,7 @@ module AlienTube {
          * @returns A number for the key as stored by the browser.
          * @see getString getBoolean getArray getObject
          */
-        public static getNumber (key : string) : number {
+        public static getNumber(key: string): number {
             return parseInt(Preferences.get(key), 10);
         }
 
@@ -111,7 +111,7 @@ module AlienTube {
          * @returns A boolean for the key as stored by the browser.
          * @see getString getNumber getArray getObject
          */
-        public static getBoolean (key : string) : boolean {
+        public static getBoolean(key: string): boolean {
             return window.parseBoolean(Preferences.get(key));
         }
 
@@ -121,7 +121,7 @@ module AlienTube {
          * @returns An array for the key as stored by the browser.
          * @see getString getNumber getBoolean getObject
          */
-        public static getArray (key : string) : string[] {
+        public static getArray(key: string): string[] {
             if (Array.isArray(Preferences.get(key))) {
                 return Preferences.get(key);
             }
@@ -135,7 +135,7 @@ module AlienTube {
          * @see getString getNumber getBoolean getArray
          * @throws SyntaxError
          */
-        public static getObject (key : string) : Object {
+        public static getObject(key: string): Object {
             if (typeof Preferences.get(key) === 'object') {
                 return Preferences.get(key);
             }
@@ -147,7 +147,7 @@ module AlienTube {
          * @param key The key of the preference item you wish to add or edit.
          * @param value The value you wish to insert.
          */
-        public static set (key: string, value: any): void {
+        public static set(key: string, value: any): void {
             Preferences.preferenceCache[key] = value;
             switch (window.getCurrentBrowser()) {
                 case Browser.CHROME:
@@ -173,17 +173,17 @@ module AlienTube {
         /**
          * Reset all the settings for the extension.
          */
-        public static reset () : void {
+        public static reset(): void {
             Preferences.preferenceCache = {};
             switch (window.getCurrentBrowser()) {
                 case Browser.CHROME:
                     chrome.storage.sync.remove(Object.keys(Preferences.defaults));
                     break;
-                    
+
                 case Browser.FIREFOX:
                     self.port.emit("eraseSettings", null);
                     break;
-                    
+
                 case Browser.SAFARI:
                     safari.self.tab.dispatchMessage("erasePreferences", null);
                     break;
@@ -194,7 +194,7 @@ module AlienTube {
          * Get a list of subreddits that will not be displayed by AlienTube, either because they are not meant to show up in searches (bot accunulation subreddits) or because they are deemed too unsettling.
          * @returns An array list of subreddit names as strings.
          */
-        public static get enforcedExludedSubreddits () {
+        public static get enforcedExludedSubreddits() {
             return [
                 "beatingcripples",
                 "rapingwomen",

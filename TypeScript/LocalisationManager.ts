@@ -12,7 +12,7 @@ module AlienTube {
         * @param [callback] a callback method to be called after the localisation files has been loaded.
     */
     export class LocalisationManager {
-        private localisationData : any;
+        private localisationData: any;
         private supportedLocalisations = [
             'en',
             'no',
@@ -33,7 +33,7 @@ module AlienTube {
                         this.localisationData = JSON.parse(data);
                         if (callback) setTimeout(callback, 0);
                     }, null, null);
-                break;
+                    break;
 
                 case Browser.FIREFOX:
                     this.localisationData = JSON.parse(self.options.localisation);
@@ -52,7 +52,7 @@ module AlienTube {
             * @param [placeholders] An array of values for the placeholders in the string.
             * @returns The requested language string.
         */
-        public get (key : string, placeholders? : Array<string>) {
+        public get(key: string, placeholders?: Array<string>) {
             var localisationItem, message, placeholder, placeHolderArgumentIndex;
 
             switch (window.getCurrentBrowser()) {
@@ -69,7 +69,7 @@ module AlienTube {
                     if (placeholders) {
                         localisationItem = this.localisationData[key];
                         if (localisationItem) {
-                             message = localisationItem.message;
+                            message = localisationItem.message;
                             for (placeholder in localisationItem.placeholders) {
                                 if (localisationItem.placeholders.hasOwnProperty(placeholder)) {
                                     placeHolderArgumentIndex = parseInt(localisationItem.placeholders[placeholder].content.substring(1), 10);

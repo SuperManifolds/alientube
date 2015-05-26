@@ -13,11 +13,11 @@ module AlienTube {
         * @param [initialState] An optional initial state for the loading screen, the default is "Loading"
     */
     export class LoadingScreen {
-        private representedHTMLElement : HTMLDivElement;
-        private currentProgressState : LoadingState;
-        private loadingAttempts : number;
+        private representedHTMLElement: HTMLDivElement;
+        private currentProgressState: LoadingState;
+        private loadingAttempts: number;
 
-        constructor (commentSection : CommentSection, initialState? : LoadingState, alternativeText? : string) {
+        constructor(commentSection: CommentSection, initialState?: LoadingState, alternativeText?: string) {
             var loadingState = initialState || LoadingState.LOADING;
             this.representedHTMLElement = Application.getExtensionTemplateItem(commentSection.template, "loading");
             this.updateProgress(loadingState, alternativeText);
@@ -26,7 +26,7 @@ module AlienTube {
         /**
          * Get the HTML element of the loading screen container.
          */
-        get HTMLElement () {
+        get HTMLElement() {
             return this.representedHTMLElement;
         }
     	
@@ -35,7 +35,7 @@ module AlienTube {
          * @param state The new state of the loading screen.
          * @param [alternativeText] A custom message to put on the loading screen for the user.
          */
-        public updateProgress(state : LoadingState, alternativeText? : string) {
+        public updateProgress(state: LoadingState, alternativeText?: string) {
             var parentNode;
             this.currentProgressState = state;
             var loadingText = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingtext");

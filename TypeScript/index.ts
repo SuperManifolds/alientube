@@ -27,7 +27,7 @@
 /// <reference path="typings/safari/safari.d.ts" />
 
 "use strict";
-function at_initialise () {
+function at_initialise() {
     if (window.top === window) {
         if (window.location.host === "alientube.co") {
             document.body.classList.add("installed");

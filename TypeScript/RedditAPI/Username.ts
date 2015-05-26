@@ -10,7 +10,7 @@ module AlienTube.Reddit {
         @class RetreiveUsernameRequest
     */
     export class RetreiveUsernameRequest {
-        constructor () {
+        constructor() {
             var url = "https://api.reddit.com/api/me.json";
             new HttpRequest(url, RequestType.GET, (responseText) => {
                 var responseData = JSON.parse(responseText);

@@ -15,7 +15,7 @@ module AlienTube.Reddit {
     export class Report {
         private reportContainer;
 
-        constructor (thing : string, commentThread : CommentThread, isThread : boolean) {
+        constructor(thing: string, commentThread: CommentThread, isThread: boolean) {
             var reportTemplate, report_spam, report_vote_manipulation, report_personal_information, report_sexualising_minors, report_breaking_reddit, report_other;
             var submitButton, cancelButton, reportOtherButton, reportOtherField, radioButtonControllers, i, len, parentContainer, commentApplication;
 
@@ -31,8 +31,8 @@ module AlienTube.Reddit {
                 "breaking_reddit",
                 "other"
             ];
-            
-            report_options.forEach(function (reportOption) {
+
+            report_options.forEach(function(reportOption) {
                 document.querySelector("label[for='report_" + reportOption + "']").textContent = Application.localisationManager.get("report_dialog_" + reportOption);
             });
 
@@ -130,7 +130,7 @@ module AlienTube.Reddit {
         }
 
         /* Method to iterate through the radio buttons and get the one with a selected (checked) status. */
-        getCurrentSelectedRadioButton () {
+        getCurrentSelectedRadioButton() {
             var radioButtonControllers = this.reportContainer.querySelectorAll("input[type=radio]");
             for (var i = 0, len = radioButtonControllers.length; i < len; i += 1) {
                 if (radioButtonControllers[i].checked) {

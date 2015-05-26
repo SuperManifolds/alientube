@@ -15,7 +15,7 @@ module AlienTube {
     export class HttpRequest {
         private static acceptableResponseTypes = [200, 201, 202, 301, 302, 303, 0];
 
-        constructor (url : string, type : RequestType, callback : any, postData? : any, errorHandler? : any) {
+        constructor(url: string, type: RequestType, callback: any, postData?: any, errorHandler?: any) {
             var uuid, listener, xhr, query, key, postData;
 
             if (window.getCurrentBrowser() === Browser.SAFARI) {
@@ -23,7 +23,7 @@ module AlienTube {
                 uuid = HttpRequest.generateUUID();
                 
                 /* Message the global page to have it perform a web request for us. */
-                listener = safari.self.addEventListener('message', function listenerFunction (event) {
+                listener = safari.self.addEventListener('message', function listenerFunction(event) {
                     if (event.message.uuid !== uuid) return;
     	           
                     /* Parse the received data */
@@ -61,7 +61,7 @@ module AlienTube {
                 if (type === RequestType.POST) {
                     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 }
-                
+
                 xhr.onerror = (e) => {
                     if (errorHandler) errorHandler(e.target.status);
                 }
@@ -97,10 +97,10 @@ module AlienTube {
         * @returns A UUID 4 sequence as string.
         * @private
         */
-        private static generateUUID () : string {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        private static generateUUID(): string {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 var r = Math.random() * 16 | 0,
-                v = c === 'x' ? r : (r & 0x3 | 0x8);
+                    v = c === 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
         }

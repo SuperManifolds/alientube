@@ -10,11 +10,11 @@ module AlienTube {
     */
     "use strict";
     export class Application {
-        static localisationManager : LocalisationManager;
-        static commentSection : CommentSection;
-        currentVideoIdentifier : string;
+        static localisationManager: LocalisationManager;
+        static commentSection: CommentSection;
+        currentVideoIdentifier: string;
 
-        constructor () {
+        constructor() {
             var stylesheet, observer, config;
 
             // Load stylesheet from disk.
@@ -30,7 +30,7 @@ module AlienTube {
 
                 // Start observer to detect when a new video is loaded.
                 observer = new MutationObserver(this.mutationObserver);
-                config = { attributes : true, childList : true, characterData : true };
+                config = { attributes: true, childList: true, characterData: true };
                 observer.observe(document.getElementById("content"), config);
 
                 // Start a new comment section.
@@ -47,12 +47,12 @@ module AlienTube {
             * @param mutations A collection of mutation records
             * @private
         */
-        private mutationObserver (mutations : Array<MutationRecord>) {
+        private mutationObserver(mutations: Array<MutationRecord>) {
             mutations.forEach((mutation) => {
                 var target, reportedVideoId;
 
                 target = <HTMLElement>mutation.target;
-                if (target.classList.contains("yt-card") || target.id === "content") {
+                if (target.classList.contains("yt-card") ||  target.id === "content") {
                     reportedVideoId = Application.getCurrentVideoId();
                     if (reportedVideoId !== this.currentVideoIdentifier) {
                         this.currentVideoIdentifier = reportedVideoId;
@@ -68,7 +68,7 @@ module AlienTube {
         * Get the current YouTube video identifier of the window.
         * @returns YouTube video identifier.
         */
-        public static getCurrentVideoId() : string {
+        public static getCurrentVideoId(): string {
             var s, requestObjects, i, len, obj;
 
             if (window.location.search.length > 0) {
@@ -89,7 +89,7 @@ module AlienTube {
         * @param epochTime Epoch timestamp to calculate from.
         * @returns A string with a human readable time.
         */
-        public static getHumanReadableTimestamp (epochTime : number) : string {
+        public static getHumanReadableTimestamp(epochTime: number): string {
             var secs, timeUnits, timeUnit;
 
             secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
@@ -132,7 +132,7 @@ module AlienTube {
         * @param path Filename to the ressource.
         * @returns Ressource path (file://)
         */
-        public static getExtensionRessourcePath (path : string) : string {
+        public static getExtensionRessourcePath(path: string): string {
             switch (window.getCurrentBrowser()) {
                 case Browser.SAFARI:
                     return safari.extension.baseURI + 'res/' + path;
@@ -149,10 +149,10 @@ module AlienTube {
             * Get the HTML templates for the extension
             * @param callback A callback to be called when the extension templates has been loaded.
         */
-        public static getExtensionTemplates (callback : any) {
+        public static getExtensionTemplates(callback: any) {
             var template, handlebarHTML, templateLink;
 
-            switch(window.getCurrentBrowser()) {
+            switch (window.getCurrentBrowser()) {
                 case Browser.FIREFOX:
                     template = document.createElement("div");
                     handlebarHTML = Handlebars.compile(self.options.template);
@@ -194,7 +194,7 @@ module AlienTube {
          * @param templateCollection The template collection to use.
          * @param id The id of the element you want to retreive.
          */
-        public static getExtensionTemplateItem (templateCollection : any, id : string) {
+        public static getExtensionTemplateItem(templateCollection: any, id: string) {
             if (window.getCurrentBrowser() === Browser.CHROME) {
                 return templateCollection.getElementById(id).content.cloneNode(true);
             } else {

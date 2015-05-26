@@ -13,7 +13,7 @@ module AlienTube.Reddit {
         * @param callback Callback handler for the event when loaded.
     */
     export class CommentRequest {
-        constructor (thing : string, comment : string, callback? : any) {
+        constructor(thing: string, comment: string, callback?: any) {
             var url = "https://api.reddit.com/api/comment";
             new HttpRequest(url, RequestType.POST, callback, {
                 "uh": Preferences.getString("redditUserIdentifierHash"),

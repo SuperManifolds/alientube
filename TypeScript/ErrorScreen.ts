@@ -13,9 +13,9 @@ module AlienTube {
         * @param [message] Optional message to be displayed if the error state is set to regular "ERROR"
     */
     export class ErrorScreen {
-        private representedHTMLElement : HTMLDivElement;
+        private representedHTMLElement: HTMLDivElement;
 
-        constructor (commentSection : CommentSection, errorState : ErrorState, message? : string) {
+        constructor(commentSection: CommentSection, errorState: ErrorState, message?: string) {
             var errorImage, errorHeader, errorText, googlePlusText, googlePlusButton, googlePlusContainer, getRandom404Id, retryButton;
 
             this.representedHTMLElement = Application.getExtensionTemplateItem(commentSection.template, "error");
@@ -31,7 +31,7 @@ module AlienTube {
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
             googlePlusContainer = document.getElementById("watch-discussion");
-            if (Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
+            if (Preferences.getBoolean("showGooglePlusButton") === false ||  googlePlusContainer === null) {
                 googlePlusButton.style.display = "none";
             }
 
@@ -77,7 +77,7 @@ module AlienTube {
                     errorText.textContent = Application.localisationManager.get("error_message_timeout");
 
                     break;
-                    
+
                 case ErrorState.BLOCKED:
                     /* Retrieve the reddit blocked svg graphic from the ressource directory */
                     errorImage.setAttribute("src", Application.getExtensionRessourcePath("redditblocked.svg"));
@@ -100,7 +100,7 @@ module AlienTube {
          * Reload the comment section.
          * @private
          */
-        private reload () {
+        private reload() {
             Application.commentSection = new CommentSection(Application.getCurrentVideoId());
         }
     	
@@ -108,7 +108,7 @@ module AlienTube {
          * Handle the click of the Google+ Button to change to the Google+ comments.
          * @private
          */
-        private onGooglePlusClick (eventObject : Event) {
+        private onGooglePlusClick(eventObject: Event) {
             var alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "none";
             var googlePlusContainer = document.getElementById("watch-discussion");

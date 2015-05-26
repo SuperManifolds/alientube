@@ -13,14 +13,14 @@ module AlienTube {
         * @param [initialState] An optional initial state for the loading screen, the default is "Loading"
     */
     export class CommentField {
-        private representedHTMLElement : HTMLDivElement;
-        private parentHTMLElement : HTMLDivElement;
-        private commentThread : CommentThread;
-        private parentClass : any;
-        private previewElement : HTMLDivElement;
-        private edit : boolean;
+        private representedHTMLElement: HTMLDivElement;
+        private parentHTMLElement: HTMLDivElement;
+        private commentThread: CommentThread;
+        private parentClass: any;
+        private previewElement: HTMLDivElement;
+        private edit: boolean;
 
-        constructor (parent : any, initialText? : string, edit? : boolean) {
+        constructor(parent: any, initialText?: string, edit?: boolean) {
             var template, authorName, submitButton, cancelButton, previewHeader, inputField;
 
             /* Check if the paramter is a Coment Thread and assign the correct parent HTML element .*/
@@ -77,7 +77,7 @@ module AlienTube {
         /**
          * Get the HTML element of the comment field.
          */
-        get HTMLElement () {
+        get HTMLElement() {
             return this.representedHTMLElement;
         }
     	
@@ -86,7 +86,7 @@ module AlienTube {
          * @param eventObject The event object of the click of the submit button.
          * @private
          */
-        private onSubmitButtonClick (eventObject : Event) {
+        private onSubmitButtonClick(eventObject: Event) {
             var submitButton, inputField, thing_id;
 
             /* Disable the button on click so the user does not accidentally press it multiple times */
@@ -138,7 +138,7 @@ module AlienTube {
          * Cancel / Remove the comment field.
          * @private
          */
-        private onCancelButtonClick () {
+        private onCancelButtonClick() {
             this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
         }
     	
@@ -147,7 +147,7 @@ module AlienTube {
          * @param eventObject The event object of the input field change.
          * @private
          */
-        private onInputFieldChange (eventObject : Event) {
+        private onInputFieldChange(eventObject: Event) {
             var inputField = <HTMLInputElement> eventObject.target;
 
             /* If there is any contents of the input box, display the markdown preview and populate it. */

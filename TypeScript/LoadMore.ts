@@ -12,12 +12,12 @@ module AlienTube {
         * @param commentThread CommentThread object representing the container of the load more link.
     */
     export class LoadMore {
-        representedHTMLElement : HTMLDivElement;
-        private data : any;
+        representedHTMLElement: HTMLDivElement;
+        private data: any;
         private commentThread;
         private referenceParent;
 
-        constructor (data : any, referenceParent : any, commentThread : CommentThread) {
+        constructor(data: any, referenceParent: any, commentThread: CommentThread) {
             var replyCount, replyCountText, loadMoreText;
 
             this.data = data;
@@ -42,7 +42,7 @@ module AlienTube {
          * @param eventObject The event object of the load more button click.
          * @private
          */
-        private onLoadMoreClick (eventObject : Event) {
+        private onLoadMoreClick(eventObject: Event) {
             var loadingText, generateRequestUrl;
 
             /* Display "loading comments" text */
@@ -51,7 +51,7 @@ module AlienTube {
             loadingText.textContent = Application.localisationManager.get("loading_generic_message");
 
             generateRequestUrl = "https://api.reddit.com/r/" + this.commentThread.threadInformation.subreddit +
-                "/comments/" + this.commentThread.threadInformation.id + "/z/" + this.data.id + ".json";
+            "/comments/" + this.commentThread.threadInformation.id + "/z/" + this.data.id + ".json";
 
             new HttpRequest(generateRequestUrl, RequestType.GET, (responseData) => {
                 var getParentNode, commentItems;

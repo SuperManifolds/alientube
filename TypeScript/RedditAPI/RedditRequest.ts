@@ -15,17 +15,17 @@ module AlienTube.Reddit {
         * @param [loadingScreen] A LoadingScreen object to use for updating the progress of the request.
     */
     export class Request {
-        private requestUrl : string;
-        private requestType : RequestType;
-        private finalCallback : any;
-        private postData : any;
-        private loadingScreen : LoadingScreen;
-        private attempts : number;
+        private requestUrl: string;
+        private requestType: RequestType;
+        private finalCallback: any;
+        private postData: any;
+        private loadingScreen: LoadingScreen;
+        private attempts: number;
 
         private loadTimer = 0;
         private timeoutTimer = 0;
 
-        constructor (url : string, type : RequestType, callback : any, postData? : any, loadingScreen? : LoadingScreen) {
+        constructor(url: string, type: RequestType, callback: any, postData?: any, loadingScreen?: LoadingScreen) {
             /* Move the request parameters so they are accessible from anywhere within the class. */
             this.requestUrl = url;
             this.requestType = type;
@@ -40,7 +40,7 @@ module AlienTube.Reddit {
         /**
          * Attempt to perform the request to the Reddit API.
          */
-        private performRequest () {
+        private performRequest() {
             this.attempts += 1;
 
             /* Kick of a 3 second timer that will confirm to the user that the loading process is taking unusually long, unless cancelled
@@ -64,7 +64,7 @@ module AlienTube.Reddit {
          * Called when a successful request has been made.
          * @param responseText the response from the Reddit API.
          */
-        private onSuccess (responseText) {
+        private onSuccess(responseText) {
             var responseObject;
 
             /* Cancel the slow load timer */
@@ -92,7 +92,7 @@ module AlienTube.Reddit {
          * @param xhr the javascript XHR object of the request.
          * @param [response] An optional error message.
          */
-        private onRequestError (status, response?) {
+        private onRequestError(status, response?) {
             /* Cancel the slow load timer */
             clearTimeout(this.loadTimer);
             clearTimeout(this.timeoutTimer);
@@ -108,7 +108,7 @@ module AlienTube.Reddit {
                     case 0:
                         new ErrorScreen(Application.commentSection, ErrorState.BLOCKED);
                         break;
-                    
+
                     case 404:
                         new ErrorScreen(Application.commentSection, ErrorState.NOT_FOUND);
                         break;
