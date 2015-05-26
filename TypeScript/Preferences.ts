@@ -19,7 +19,7 @@ module AlienTube {
             showGooglePlusButton: true,
             threadSortType: "confidence",
             redditUserIdentifierHash: "",
-            excludedSubredditsSelectedByUser: ["ShitRedditSays"],
+            excludedSubredditsSelectedByUser: [],
             displayGooglePlusByDefault: false,
             defaultDisplayAction: "alientube",
             channelDisplayActions: {}

@@ -105,6 +105,9 @@ module AlienTube {
                     
                     this.excludeListContainer = document.getElementById("excludedSubreddits");
                     this.excludedSubreddits = Preferences.getArray("excludedSubredditsSelectedByUser");
+                    while (this.excludeListContainer.firstChild !== null) {
+                        this.excludeListContainer.removeChild(this.excludeListContainer.firstChild);
+                    }
                     this.excludedSubreddits.forEach((subreddit) => {
                         this.addSubredditExclusionItem(subreddit);
                     });
