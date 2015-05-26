@@ -202,6 +202,7 @@ module AlienTube {
             Preferences.set("excludedSubredditsSelectedByUser", this.excludedSubreddits);
             
             setTimeout(() => {
+                this.addToExcludeButton.disabled = true;
                 this.excludeSubredditsField.value = "";
             }, 150);
         }
