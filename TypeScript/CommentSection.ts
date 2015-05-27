@@ -379,6 +379,10 @@ module AlienTube {
             googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
             googlePlusText.textContent = Application.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
+            
+            if (Preferences.getBoolean("showGooglePlusButton") === false ||  googlePlusContainer === null) {
+                googlePlusButton.style.display = "none";
+            }
 
             this.set(template);
 
