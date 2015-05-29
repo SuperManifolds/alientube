@@ -169,6 +169,14 @@
             text-decoration: underline;
             outline: 0;
             background-color: transparent;
+            padding-left: 8px;
+        }
+        
+        & .sortContainer:before {
+            content: '▼';
+            margin-right: -10px;
+            margin-top: 2px;
+            text-decoration: none;
         }
 
         & > span,
