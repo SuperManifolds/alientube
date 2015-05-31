@@ -42,7 +42,7 @@ if [ "$1" == "--init" ]; then
     echo Updating Options HTML Page
     cp options.html Chrome/res/options.html
     cp options.html Firefox/data/options.html
-    cp options.html Safari.safariextension/res/options.htm¨
+    cp options.html Safari.safariextension/res/options.html
     echo
 
     echo Compiling Options TypeScript Files.

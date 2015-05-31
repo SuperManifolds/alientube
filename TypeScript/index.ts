@@ -10,6 +10,7 @@
 /// <reference path="LoadingScreen.ts" />
 /// <reference path="ErrorScreen.ts" />
 /// <reference path="Utilities.ts" />
+/// <reference path="Migration.ts" />
 
 /// <reference path="RedditAPI/RedditRequest.ts" />
 /// <reference path="RedditAPI/Comment.ts" />

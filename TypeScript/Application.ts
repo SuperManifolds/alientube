@@ -17,9 +17,17 @@ module AlienTube {
         constructor() {
             var stylesheet, observer, config;
 
-            // Load stylesheet from disk.
-            Preferences.initialise();
+            // Load preferences from disk.
+            Preferences.initialise(() => {
+                // Check if a version migration is necessary.
+                if (Preferences.getString("lastRunVersion") !== Application.version()) {
+                    new Migration(Preferences.getString("lastRunVersion"));
+                }
+            });
+            
+            // Load language files. 
             Application.localisationManager = new LocalisationManager(() => {
+                // Load stylesheet
                 if (window.getCurrentBrowser() === Browser.SAFARI) {
                     stylesheet = document.createElement("link");
                     stylesheet.setAttribute("href", Application.getExtensionRessourcePath("style.css"));
@@ -190,15 +198,35 @@ module AlienTube {
         }
         
         /**
+         * Get the current version of the extension.
+         * @public
+         */
+        public static version(): string {
+            switch (window.getCurrentBrowser()) {
+                case Browser.CHROME:
+                    return chrome.runtime.getManifest()["version"];
+
+                case Browser.FIREFOX:
+                    return self.options.version;
+            }
+            return "";
+        }
+        
+        /**
          * Get an element from the template collection.
          * @param templateCollection The template collection to use.
          * @param id The id of the element you want to retreive.
          */
         public static getExtensionTemplateItem(templateCollection: any, id: string) {
-            if (window.getCurrentBrowser() === Browser.CHROME) {
-                return templateCollection.getElementById(id).content.cloneNode(true);
-            } else {
-                return templateCollection.querySelector("#" + id).content.cloneNode(true);
+            switch (window.getCurrentBrowser()) {
+                case Browser.CHROME:
+                    return templateCollection.getElementById(id).content.cloneNode(true);
+                    
+                case Browser.FIREFOX:
+                    return templateCollection.querySelector("#" + id).content.cloneNode(true);
+                    
+                case Browser.SAFARI:
+                    return templateCollection.querySelector("#" + id).cloneNode(true);
             }
         }
     }

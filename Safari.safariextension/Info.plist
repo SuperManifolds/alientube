@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Delexious</string>
 	<key>Builder Version</key>
-	<string>10600.3.14</string>
+	<string>10600.6.3</string>
 	<key>CFBundleDisplayName</key>
 	<string>AlienTube</string>
 	<key>CFBundleIdentifier</key>
@@ -30,6 +30,7 @@
 			<key>End</key>
 			<array>
 				<string>js/snuownd.js</string>
+				<string>js/webcomponents-lite.min.js</string>
 				<string>js/script.js</string>
 			</array>
 		</dict>

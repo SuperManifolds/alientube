@@ -1,3 +1,7 @@
+body {
+  font-family: 'Helvetica Neue', 'Lucida Grande', Arial, sans-serif;
+  font-size: 12px; }
+
 main {
   width: 640px;
   min-height: 265px;
@@ -31,7 +35,7 @@ header {
 button {
   color: #d24545;
   font-size: 120%;
-  font-weight: 100;
+  font-weight: 200;
   padding: 10px;
   background: #fcfcfc;
   border: 1px solid #d24545;
@@ -47,7 +51,6 @@ input[type='text'],
 input[type='number'] {
   font-size: 150%;
   height: 28px;
-  font-weight: 100;
   float: right;
   border: 1px solid #d24545; }
 
