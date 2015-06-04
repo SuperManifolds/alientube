@@ -169,6 +169,7 @@ module AlienTube {
         private resetSettings() {
             Preferences.reset();
             new AlienTube.Options();
+            Preferences.set("lastRunVersion", Options.getExtensionVersionNumber());
         }
         
         /**
