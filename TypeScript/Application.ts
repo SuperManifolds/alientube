@@ -22,6 +22,9 @@ module AlienTube {
                 // Check if a version migration is necessary.
                 if (Preferences.getString("lastRunVersion") !== Application.version()) {
                     new Migration(Preferences.getString("lastRunVersion"));
+                    
+                    /* Update the last run version paramater with the current version so we'll know not to run this migration again. */
+                    Preferences.set("lastRunVersion", Application.version());
                 }
             });
             

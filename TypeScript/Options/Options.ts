@@ -1,5 +1,6 @@
 /// <reference path="../LocalisationManager.ts" />
 /// <reference path="../Preferences.ts" />
+/// <reference path="../Migration.ts" />
 
 /**
     * Namespace for All AlienTube operations.
@@ -54,6 +55,14 @@ module AlienTube {
                 window.document.title = this.localisationManager.get("options_label_title");
 
                 Preferences.initialise((preferences) => {
+                    // Check if a version migration is necessary.
+                    if (Preferences.getString("lastRunVersion") !== Options.getExtensionVersionNumber()) {
+                        new Migration(Preferences.getString("lastRunVersion"));
+                        
+                        /* Update the last run version paramater with the current version so we'll know not to run this migration again. */
+                        Preferences.set("lastRunVersion", Options.getExtensionVersionNumber());
+                    }
+                    
                     /* Go over every setting in the options panel. */
                     for (i = 0, len = Options.preferenceKeyList.length; i < len; i += 1) {
                         /* Set the localised text for every setting. */

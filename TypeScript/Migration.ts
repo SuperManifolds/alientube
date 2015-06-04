@@ -33,9 +33,6 @@ module AlienTube {
             versions.forEach((version) => {
                 this.migrations[version].call(this, null);
             });
-            
-            /* Update the last run version paramater with the current version so we'll know not to run this migration again. */
-            //Preferences.set("lastRunVersion", Application.version());
 		}
         
         private migrations = {
