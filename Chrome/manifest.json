@@ -27,8 +27,7 @@
     "https://www.youtube.com/",
     "https://api.reddit.com/",
     "http://alientube.co/",
-    "storage",
-    "notifications"
+    "storage"
   ],
 
   "web_accessible_resources": [
