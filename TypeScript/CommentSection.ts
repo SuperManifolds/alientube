@@ -88,14 +88,18 @@ module AlienTube {
                                 this.threadCollection = [];
                                 for (var subreddit in sortedResultCollection) {
                                     if (sortedResultCollection.hasOwnProperty(subreddit)) {
-                                        this.threadCollection.push(sortedResultCollection[subreddit].reduce(function(a, b) {
-                                            return (b.id === preferredPost) ? a : b;
+                                        this.threadCollection.push(sortedResultCollection[subreddit].reduce((a, b) => {
+                                            return ((this.getConfidenceForRedditThread(b) - this.getConfidenceForRedditThread(a)) || b.id === preferredPost) ? a : b;
                                         }));
                                     }
                                 }
 
                                 if (this.threadCollection.length > 0) {
                                     // Sort subreddits so there is only one post per subreddit, and that any subreddit or post that is linked to in the description appears first.
+                                    this.threadCollection.sort((a, b) => {
+                                        return this.getConfidenceForRedditThread(b) - this.getConfidenceForRedditThread(a);
+                                    });
+                                    
                                     for (var i = 0, len = this.threadCollection.length; i < len; i += 1) {
                                         if (this.threadCollection[i].subreddit === preferredSubreddit) {
                                             var threadDataForFirstTab = this.threadCollection[i];
@@ -575,6 +579,26 @@ module AlienTube {
                 return displayActionByUser;
             }
             return Preferences.getString("defaultDisplayAction");
+        }
+        
+        /**
+         * Get the confidence vote of a thread using Reddit's 'hot' sorting algorithm.
+         * @private
+         */
+        private getConfidenceForRedditThread(thread : any) : number {
+            var order = Math.log(Math.max(Math.abs(thread.score), 1));
+            
+            var sign;
+            if (thread.score > 0) {
+                sign = 1;
+            } else if (thread.score < 0) {
+                sign = -1;
+            } else {
+                sign = 0;
+            }
+            
+            var seconds = <number> Math.floor(((new Date()).getTime() / 1000) - thread.created_utc) - 1134028003;
+            return Math.round((order + sign*seconds / 4500) * 10000000) / 10000000;
         }
     }
 }
