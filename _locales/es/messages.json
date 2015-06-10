@@ -1,6 +1,6 @@
 {
   "api_header_message": {
-    "message": "Hello Reddit! This request was made by the AlienTube Browser Extension (http://alientube.co/) If you have noticed unusual or overloading traffic here, you can contact the developer at alex@delexious.com",
+    "message": "Hello Reddit! This request was made by the AlienTube Browser Extension (http://alientube.co/) If you have noticed unusual or overloading traffic here, you can contact the developer at alex@sorlie.co.uk",
     "description": "Message that is sent with every request to Reddit so they can identify our requests and potentially contact us should any issues arise"
   },
   "timestamp_format_year": {
