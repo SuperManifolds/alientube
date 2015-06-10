@@ -66,19 +66,19 @@
     }
   },
   "post_submitted_timestamp_text": {
-    "message": "sendt inn  ",
+    "message": "sendt inn ",
     "description": "Prefix describing that the following time description will say when the post was submitted"
   },
   "post_submitted_preposition": {
-    "message": " av  ",
+    "message": " av ",
     "description": "Prefix preposition describing that the following will be the author of this post"
   },
   "post_current_score": {
-    "message": "  poeng",
+    "message": " poeng",
     "description": "Singular form describing that the previous number was the score of this post (points)"
   },
   "post_current_score_plural": {
-    "message": "  poeng",
+    "message": " poeng",
     "description": "Plural form describing that the previous number was the score of this post (points)"
   },
   "post_button_refresh": {
@@ -174,23 +174,23 @@
     "description": "Label for the 'top' sort option"
   },
   "post_sort_new": {
-    "message": "nytt",
+    "message": "ny",
     "description": "Label for the 'new' sort option"
   },
   "post_sort_controversial": {
-    "message": "kontroversielt",
+    "message": "kontroversiell",
     "description": "Label for the 'controversial' sort option"
   },
   "post_sort_old": {
-    "message": "eldre",
+    "message": "gammel",
     "description": "Label for the 'old' sort option"
   },
   "post_sort_qa": {
-    "message": "q&a",
+    "message": "spørsmål & svar",
     "description": "Label for the 'q&a' sort option"
   },
   "report_dialog_spam": {
-    "message": "spam",
+    "message": "søppelpost",
     "description": "This user has been spamming (posted excessive advertisments without permission)"
   },
   "report_dialog_vote_manipulation": {
@@ -226,7 +226,7 @@
     "description": "Generic loading message to indicate to the user that content is being downloaded from Reddit"
   },
   "loading_generic_text": {
-    "message": "",
+    "message": "Kobler til Reddit, vennligst vent..",
     "description": "Generic loading message, a joke Doctor Who reference."
   },
   "loading_search_message": {
@@ -234,7 +234,7 @@
     "description": "Message indicating that AlienTube is currently searching for Reddit posts that have linked to this video"
   },
   "loading_post_message": {
-    "message": "Laster innlegget ..",
+    "message": "Laster innlegg ..",
     "description": "Message indicating that AlienTube is loading a specific post from Reddit"
   },
   "loading_slow_message": {
@@ -264,27 +264,27 @@
     "description": "Message for error describing that an attempt to load something failed because it went somewhere that does not exist (404)"
   },
   "error_header_overloaded": {
-    "message": "reddit har for mye trafikk akkurat nå",
+    "message": "reddit er overbelastet akkuratt nå",
     "description": "Title for error describing that comments failed to load because Reddit is too overloaded and couldn't give us what we wanted"
   },
   "error_message_overloaded": {
-    "message": "prøv igjen om noen få minutter",
+    "message": "Prøv igjen om noen få minutter",
     "description": "Message describing that the user should wait a few minutes before trying again to give Reddi time to recover"
   },
   "error_header_timeout": {
-    "message": "tilkobling mislykket",
+    "message": "tilkoblingen utløpte",
     "description": "Title for error describing that comments failed because the connection timed out"
   },
   "error_message_timeout": {
-    "message": "Tilkoblingen til Reddit var mislykket, vennligst sjekk Internetttilkoblingen din, brannmuren din, og nettleserutvidelsene dine.",
+    "message": "Tilkoblingen til Reddit tidsavbrudd, kan du sjekke din internettforbindelse, nettleserinnstillinger, brannmur og nettleserutvidelser",
     "description": "Message for error describing that comments failed because the connection timed out"
   },
   "error_header_interrupted": {
-    "message": "tilkoblingen avbrytet uventet",
+    "message": "tilkoblingen ble avbrutt",
     "description": "Title for error describing that comments failed because the connection was interrupted by something"
   },
   "error_message_interrupted": {
-    "message": "Noe forstyrrer tilkoblingen til Reddit.com og vi kan ikke fortsette. Hvis du bruker programmer eller nettleserutvidelser som Disconnect.me må du kanskje godkjenne tilkoblinger til Reddit i disse.",
+    "message": "Noe avbrutte forbindelsen til reddit.com og vi kan ikke fortsette, hvis du bruker programvare eller nettleserutvidelser for å filtrere Internett-trafikk som Disconnect.me du trenger å godkjenne Reddit.",
     "description": "Message for error describing that comments failed because the connection was interrupted by something"
   },
   "error_header_generic": {
@@ -296,7 +296,7 @@
     "description": "Button for attempting to load the comments again."
   },
   "commentfield_button_submit": {
-    "message": "Send inn",
+    "message": "Send",
     "description": "Button for submitting the comment to Reddit"
   },
   "commentfield_button_cancel": {
@@ -329,12 +329,8 @@
     "message": "Vis Google+ kommentarer hvis ingen Reddit kommentarer finnes",
     "description": "Show the Google+ comments like usual if there are no Reddit comments to see"
   },
-  "options_label_displayGooglePlusByDefault": {
-    "message": "Vis Google+ kommentarer først når en video laster",
-    "description": "This option will show the Google+ comments by default instead of the Reddit comments"
-  },
   "options_label_showGooglePlusButton": {
-    "message": "Vis Google+ knapp",
+    "message": "Vis knapp for Google+ kommentarer",
     "description": "This option will toggle the visibility of the Google+ comments button."
   },
   "options_label_defaultDisplayAction": {
@@ -350,7 +346,7 @@
     "description": "Option page title"
   },
   "options_label_reset": {
-    "message": "Tilbakestill.",
+    "message": "Tilbakestill instillinger",
     "description": "Button to reset all settings to their factory default."
   },
   "options_button_add": {
