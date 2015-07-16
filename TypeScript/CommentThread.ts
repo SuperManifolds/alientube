@@ -66,8 +66,10 @@ module AlienTube {
             username.textContent = this.threadInformation.author;
             username.setAttribute("href", "http://www.reddit.com/u/" + this.threadInformation.author);
             username.setAttribute("data-username", this.threadInformation.author);
-            if (this.threadInformation.distinguished === "moderator") {
-                username.setAttribute("data-reddit-moderator", "true");
+            if (this.threadInformation.distinguished === "admin") {
+                username.setAttribute("data-reddit-admin", "true");
+            } else if (this.threadInformation.distinguished === "moderator") {
+                username.setAttribute("data-reddit-mod", "true");
             }
 
             /* Add flair to the user */

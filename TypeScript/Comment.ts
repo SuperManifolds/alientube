@@ -51,7 +51,11 @@ module AlienTube {
             author.textContent = this.commentObject.author;
             author.setAttribute("href", "http://reddit.com/u/" + this.commentObject.author);
             author.setAttribute("data-username", this.commentObject.author);
-            if (commentData.author === commentThread.threadInformation.author) {
+            if (commentData.distinguished = "admin") {
+                author.setAttribute("data-reddit-admin", "true");
+            } else if (commentData.distinguished = "moderator") {
+                author.setAttribute("data-reddit-mod", "true");
+            } else if (commentData.author === commentThread.threadInformation.author) {
                 author.setAttribute("data-reddit-op", "true");
             }
 
