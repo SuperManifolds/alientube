@@ -168,7 +168,7 @@ module AlienTube {
                 // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
                 responseObject[0].data.children[0].data.official = threadData.official;
 
-                new CommentThread(responseObject, this)
+                new CommentThread(responseObject, this);
                 this.storedTabCollection.push(responseObject);
             }, null, loadingScreen);
         }
