@@ -145,13 +145,16 @@
             display: none;
             font-size: x-small;
         }
+        
+        & .options {
+            margin-top: 5px;
+        }
     }
 
 
     & .tagline {
         font-size: x-small;
         color: #a2a2a2;
-        margin-top: 3px;
         display: block;
     }
 
@@ -163,7 +166,7 @@
 
         & .sort {
             -webkit-appearance: none;
-            font-size: 80%;
+            font-size: x-small;
             color: gray;
             font-weight: bold;
             border: none !important;
@@ -262,7 +265,6 @@
 
         & .info {
             font-size: x-small;
-            padding-bottom: 5px;
             margin-left: 0;
             color: #a2a2a2;
         }
@@ -647,20 +649,32 @@
     background-color: #fff;
     border-left: none;
     border-bottom: none;
+    cursor: pointer;
+    
+    &.show {
+        background: #f8f8f8;
+        
+        & ul {
+            display: block;
+        }
+    }
 
     &:focus {
         outline: 0;
     }
 
     &:hover {
-        opacity: 1;
+        background: #f8f8f8;
     }
 
     & img {
         opacity: 0.5;
         position: absolute;
-        top: 50%;
-        left: 8px;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
     }
 
     & ul {
@@ -683,6 +697,7 @@
             line-height: 2.5;
             padding-left: 10px;
             padding-right: 10px;
+            cursor: pointer;
 
             &:hover {
                 background: #fd4040;

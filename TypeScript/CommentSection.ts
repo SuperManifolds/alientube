@@ -333,14 +333,14 @@ module AlienTube {
                     /* Click handler for the overflow menu button, displays the overflow menu. */
                     overflowContainer.addEventListener("click", () => {
                         overflowContainerMenu = <HTMLUListElement> overflowContainer.querySelector("ul");
-                        overflowContainerMenu.style.display = "block";
+                        overflowContainer.classList.add("show");
                     }, false);
 
                     /* Document body click handler that closes the overflow menu when the user clicks outside of it.
                     by defining event bubbling in the third argument we are preventing clicks on the menu from triggering this event */
                     document.body.addEventListener("click", () => {
                         overflowContainerMenu = <HTMLUListElement> overflowContainer.querySelector("ul");
-                        overflowContainerMenu.style.display = "none";
+                        overflowContainer.classList.remove("show");
                     }, true);
 
                     /* Continue iterating through the items we couldn't fit into tabs and populate the overflow menu. */
