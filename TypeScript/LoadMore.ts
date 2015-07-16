@@ -61,7 +61,7 @@ module AlienTube {
                 getParentNode.removeChild(loadingText.parentNode);
 
                 /* Traverse the retrieved comments and append them to the comment section */
-                commentItems = JSON.parse(responseData)[1].data.children[0].data.replies.data.children;
+                commentItems = JSON.parse(responseData)[1].data.children;
                 if (commentItems.length > 0) {
                     commentItems.forEach((commentObject) => {
                         var readmore, comment;
