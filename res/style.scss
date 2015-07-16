@@ -163,6 +163,7 @@
         display: block;
 
         & .sort {
+            -webkit-appearance: none;
             color: gray;
             font-weight: bold;
             border: none !important;
