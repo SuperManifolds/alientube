@@ -162,7 +162,7 @@
     "description": "Message asking the user whether they really want to delete this post."
   },
   "post_message_official": {
-    "message": "Denne tråden har blitt merket som offisiell av video forfatteren",
+    "message": "Dette er den offisielle diskusjonstråden til denne videoen",
     "description": "Message explaining to the user that this reddit thread is official, that is promoted or endorsed by the author"
   },
   "post_sort_confidence": {

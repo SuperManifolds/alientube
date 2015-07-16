@@ -162,7 +162,7 @@
     "description": "Message asking the user whether they really want to delete this post."
   },
   "post_message_official": {
-    "message": "Este mensaje ha sido marcado como oficial por parte del autor de video",
+    "message": "Esta es la discusión oficial de este vídeo",
     "description": "Message explaining to the user that this reddit thread is official, that is promoted or endorsed by the author"
   },
   "post_sort_confidence": {

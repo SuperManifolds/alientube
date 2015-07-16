@@ -161,6 +161,10 @@
         "message": "Etes-vous sûr que vous voulez supprimer ce commentaire?",
         "description": "Message asking the user whether they really want to delete this post."
     },
+    "post_message_official": {
+        "message": "Ceci est la discussion officielle pour cette vidéo",
+        "description": "Message explaining to the user that this reddit thread is official, that is promoted or endorsed by the author"
+    },
     "post_sort_confidence": {
         "message": "apprécié",
         "description": "Label for the 'confidence' sort option"
