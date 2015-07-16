@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Delexious</string>
 	<key>Builder Version</key>
-	<string>10600.6.3</string>
+	<string>11601.1.37.1</string>
 	<key>CFBundleDisplayName</key>
 	<string>AlienTube</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.3</string>
+	<string>2.5</string>
 	<key>CFBundleVersion</key>
 	<string>2.3</string>
 	<key>Chrome</key>
@@ -30,7 +30,6 @@
 			<key>End</key>
 			<array>
 				<string>js/snuownd.js</string>
-				<string>js/webcomponents-lite.min.js</string>
 				<string>js/script.js</string>
 			</array>
 		</dict>
@@ -63,9 +62,7 @@
 			<string>Some</string>
 		</dict>
 	</dict>
-	<key>Update Manifest URL</key>
-	<string>http://update.alientube.co/AppleExtensionUpdateProperties.plist</string>
 	<key>Website</key>
-	<string>http://delexious.com</string>
+	<string>http://alientube.co/</string>
 </dict>
 </plist>

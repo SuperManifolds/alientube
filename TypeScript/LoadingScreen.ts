@@ -38,6 +38,7 @@ module AlienTube {
         public updateProgress(state: LoadingState, alternativeText?: string) {
             var parentNode;
             this.currentProgressState = state;
+            console.log(this.representedHTMLElement);
             var loadingText = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingtext");
             var loadingHeader = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingheader");
 

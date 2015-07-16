@@ -15,7 +15,7 @@ module AlienTube {
         currentVideoIdentifier: string;
 
         constructor() {
-            var stylesheet, observer, config;
+            var observer, config;
 
             // Load preferences from disk.
             Preferences.initialise(() => {
@@ -32,11 +32,12 @@ module AlienTube {
             Application.localisationManager = new LocalisationManager(() => {
                 // Load stylesheet
                 if (window.getCurrentBrowser() === Browser.SAFARI) {
-                    stylesheet = document.createElement("link");
-                    stylesheet.setAttribute("href", Application.getExtensionRessourcePath("style.css"));
-                    stylesheet.setAttribute("type", "text/css");
-                    stylesheet.setAttribute("rel", "stylesheet");
-                    document.head.appendChild(stylesheet);
+                    new HttpRequest(Application.getExtensionRessourcePath("style.css"), RequestType.GET, (data) => {
+                        var stylesheet = document.createElement("style");
+                        stylesheet.setAttribute("type", "text/css");
+                        stylesheet.textContent = data;
+                        document.head.appendChild(stylesheet);
+                    });
                 }
 
                 // Start observer to detect when a new video is loaded.
@@ -229,7 +230,7 @@ module AlienTube {
                     return templateCollection.querySelector("#" + id).content.cloneNode(true);
                     
                 case Browser.SAFARI:
-                    return templateCollection.querySelector("#" + id).cloneNode(true);
+                    return templateCollection.querySelector("#" + id).content.cloneNode(true);
             }
         }
     }
