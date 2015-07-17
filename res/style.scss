@@ -1,7 +1,7 @@
 @import 'bourbon/bourbon';
 
 #alientube {
-    font-family: -apple-system, "Helvetica Neue", "Helvetica", Arial, sans-serif;
+    font-family: -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", "Helvetica", Arial, sans-serif;
     margin-top: 30px;
     padding-bottom: 20px;
     width: 100%;
@@ -253,7 +253,7 @@
     }
 
     & article {
-        font-family: -apple-system, "Helvetica Neue", "Helvetica", Arial, sans-serif;
+        font-family: -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", "Helvetica", Arial, sans-serif;
         word-wrap:break-word;
         break-word: all;
         padding-bottom: 10px;
@@ -485,7 +485,7 @@
 
     & .at_commentfield {
         margin-top: 10px;
-        font-family: -apple-system, "Helvetica Neue", "Helvetica", Arial, sans-serif;
+        font-family: -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", "Helvetica", Arial, sans-serif;
         color: #000;
         text-decoration: none;
         font-size: 13px;
@@ -539,7 +539,7 @@
 
 .at_tab {
     @include flex-grow(1);
-    font-family: -apple-system, "Helvetica Neue", "Helvetica", Arial, sans-serif !important;
+    font-family: -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", "Helvetica", Arial, sans-serif !important;
     padding-left: 10px;
     padding-right: 10px;
     margin: 0;
@@ -860,7 +860,7 @@ a[href$="/spoiler"]::before {
     right: 0;
     opacity: 0.5;
     cursor: pointer;
-    font-family: -apple-system, "Helvetica Neue", "Helvetica", Arial, sans-serif;
+    font-family: -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", "Helvetica", Arial, sans-serif;
     font-size: 13px;
 
     &.noresults {
