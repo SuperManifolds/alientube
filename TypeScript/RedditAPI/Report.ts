@@ -33,7 +33,7 @@ module AlienTube.Reddit {
             ];
 
             report_options.forEach(function(reportOption) {
-                document.querySelector("label[for='report_" + reportOption + "']").textContent = Application.localisationManager.get("report_dialog_" + reportOption);
+                document.querySelector(`label[for='report_${reportOption}']`).textContent = Application.localisationManager.get("report_dialog_" + reportOption);
             });
 
             /* Set localisation text for the submit button */
@@ -99,7 +99,7 @@ module AlienTube.Reddit {
                     } else {
                         /* If the "thing" that was reported was a comment, we will locate it on the page and delete it from DOM,
                         effectively hiding it. */
-                        comment = document.querySelector("article[data-reddit-id='" + thing.substring(3) + "']");
+                        comment = document.querySelector(`article[data-reddit-id='${thing.substring(3)}']`);
                         if (comment) {
                             comment.parentNode.removeChild(comment);
                         }
@@ -124,7 +124,7 @@ module AlienTube.Reddit {
                 parentContainer = document.querySelector("header .info");
                 parentContainer.appendChild(this.reportContainer);
             } else {
-                commentApplication = document.querySelector("article[data-reddit-id='" + thing.substring(3) + "'] .at_commentApplication");
+                commentApplication = document.querySelector(`article[data-reddit-id='${thing.substring(3)}'] .at_commentApplication`);
                 commentApplication.appendChild(this.reportContainer);
             }
         }

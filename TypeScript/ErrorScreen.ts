@@ -40,7 +40,7 @@ module AlienTube {
                     /* Reddit.com uses 5 different randomly selected visuals for their 404 graphic, their path consists of a letter from
                     "a" to "e" just like Reddit we are randomly choosing one of these letters and retrieving the image. */
                     getRandom404Id = String.fromCharCode(97 + Math.floor(Math.random() * 5));
-                    errorImage.setAttribute("src", "https://www.redditstatic.com/reddit404" + getRandom404Id + ".png");
+                    errorImage.setAttribute("src", `https://www.redditstatic.com/reddit404${getRandom404Id}.png`);
 
                     /* Set page not found localisation text */
                     errorHeader.textContent = Application.localisationManager.get("error_header_not_found");

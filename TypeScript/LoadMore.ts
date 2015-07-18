@@ -50,8 +50,7 @@ module AlienTube {
             loadingText.classList.add("loading");
             loadingText.textContent = Application.localisationManager.get("loading_generic_message");
 
-            generateRequestUrl = "https://api.reddit.com/r/" + this.commentThread.threadInformation.subreddit +
-            "/comments/" + this.commentThread.threadInformation.id + "/z/" + this.data.id + ".json";
+            generateRequestUrl = `https://api.reddit.com/r/${this.commentThread.threadInformation.subreddit}"/comments/${this.commentThread.threadInformation.id}/z/${this.data.id}.json`;
 
             new HttpRequest(generateRequestUrl, RequestType.GET, (responseData) => {
                 var getParentNode, commentItems;

@@ -123,7 +123,7 @@ module AlienTube {
                     if (timeUnits[timeUnit] > 1) {
                         return Application.localisationManager.get("timestamp_format", [
                             timeUnits[timeUnit],
-                            Application.localisationManager.get("timestamp_format_" + timeUnit.toLowerCase() + "_plural")
+                            Application.localisationManager.get(`timestamp_format_${ timeUnit.toLowerCase() }_plural`)
                         ]);
                     } else {
                         return Application.localisationManager.get("timestamp_format", [

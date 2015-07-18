@@ -106,12 +106,12 @@ module AlienTube {
             /* Set the button text and link for the "permalink" button */
             permalinkElement = this.representedHTMLElement.querySelector(".at_permalink");
             permalinkElement.textContent = Application.localisationManager.get("post_button_permalink");
-            permalinkElement.setAttribute("href", "http://www.reddit.com" + commentThread.threadInformation.permalink + this.commentObject.id);
+            permalinkElement.setAttribute("href", `http://www.reddit.com${commentThread.threadInformation.permalink}${this.commentObject.id}`);
 
             /* Set the button text and link for the "parent" link button */
             parentLinkElement = this.representedHTMLElement.querySelector(".at_parentlink");
             parentLinkElement.textContent = Application.localisationManager.get("post_button_parent");
-            parentLinkElement.setAttribute("href", "http://www.reddit.com" + commentThread.threadInformation.permalink + "#" + this.commentObject.parent_id.substring(3));
+            parentLinkElement.setAttribute("href", `http://www.reddit.com${commentThread.threadInformation.permalink}#${this.commentObject.parent_id.substring(3)}`);
 
             /* Set the button text and the event handler for the "show source" button */
             displaySourceForComment = this.representedHTMLElement.querySelector(".at_displaysource");
