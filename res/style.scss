@@ -351,6 +351,16 @@
                 border: 1px solid #999;
                 padding: 0.5rem;
             }
+            
+            sup {
+                font-size: smaller;
+                vertical-align: super;
+            }
+            
+            sub {
+                font-size: smaller;
+                vertical-align: sub;
+            }
         }
 
         &.hidden {
@@ -573,6 +583,11 @@
         background-image: none;
         padding-bottom: 0;
         border-bottom: 5px solid #fd4040;
+        
+        &::only-child {
+            padding-bottom: 5px;
+            border-bottom: 0;
+        }
 
         & > a {
             pointer-events: auto;
@@ -697,6 +712,7 @@
             padding-left: 10px;
             padding-right: 10px;
             cursor: pointer;
+            color: #a2a2a2;
 
             &:hover {
                 background: #fd4040;
@@ -794,16 +810,13 @@ a[href$="/spoiler"]::before {
     border-radius: 50%;
     margin: 36px auto;
     position: relative;
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-animation: load6 1.7s infinite ease;
-    animation: load6 1.7s infinite ease;
+    @include transform(translateZ(0));
+    @include animation(load6 1.7s infinite ease);
 }
 @-webkit-keyframes load6 {
     0% {
+        @include transform(rotate(0deg));
         -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
         box-shadow: 0 -0.415em 0 -0.2em #fd4040, 0 -0.415em 0 -0.21em #fd4040, 0 -0.415em 0 -0.22em #fd4040, 0 -0.415em 0 -0.23em #fd4040, 0 -0.415em 0 -0.2375em #fd4040;
     }
     5%,
@@ -821,8 +834,7 @@ a[href$="/spoiler"]::before {
         box-shadow: 0 -0.415em 0 -0.4em #fd4040, -0.1885em -0.37em 0 -0.21em #fd4040, -0.3225em -0.261em 0 -0.22em #fd4040, -0.3775em -0.1335em 0 -0.23em #fd4040, -0.41em -0.045em 0 -0.2385em #fd4040;
     }
     100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
+        @include transform(rotate(0deg));
         box-shadow: 0 -0.415em 0 -0.2em #fd4040, 0 -0.415em 0 -0.21em #fd4040, 0 -0.415em 0 -0.22em #fd4040, 0 -0.415em 0 -0.23em #fd4040, 0 -0.415em 0 -0.2385em #fd4040;
     }
 }
