@@ -28,3 +28,5 @@ res/style.css.map
 .sass-cache/*
 
 reloadExtension.scpt
+
+TypeScript/APIKeys.ts
