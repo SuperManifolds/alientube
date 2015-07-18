@@ -10,6 +10,6 @@ module AlienTube {
     */
     "use strict";
     export class APIKeys {
-		static youtubeAPIKey = "AIzaSyDhFeHd0SgekhvvmMZ1GwncnWW5i5iCGqk";
+		static youtubeAPIKey = "";
 	}
 }
