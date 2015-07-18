@@ -1,6 +1,7 @@
 /// <reference path="typings/chrome/chrome.d.ts" />
 /// <reference path="typings/firefox/firefox.d.ts" />
 /// <reference path="typings/safari/safari.d.ts" />
+/// <reference path="typings/es6-promise.d.ts" />
 
 interface Object {
     isRedditPreservedPost: () => boolean;

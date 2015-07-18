@@ -562,9 +562,9 @@ module AlienTube {
          */
         private allowOnChannelChange(eventObject: Event) {
             var allowedOnChannel = (<HTMLInputElement>eventObject.target).checked;
-            var channelName = document.querySelector(".yt-user-info .yt-uix-sessionlink").textContent;
+            var channelId = document.querySelector("meta[itemprop='channelId']").getAttribute("content");
             var channelDisplayActions = Preferences.getObject("channelDisplayActions");
-            channelDisplayActions[channelName] = allowedOnChannel ? "alientube" : "gplus";
+            channelDisplayActions[channelId] = allowedOnChannel ? "alientube" : "gplus";
             Preferences.set("channelDisplayActions", channelDisplayActions);
         }
         
@@ -573,8 +573,8 @@ module AlienTube {
          * @private
          */
         private getDisplayActionForCurrentChannel() {
-            var channelName = document.querySelector(".yt-user-info .yt-uix-sessionlink").textContent;
-            var displayActionByUser = Preferences.getObject("channelDisplayActions")[channelName];
+            var channelId = document.querySelector("meta[itemprop='channelId']").getAttribute("content");
+            var displayActionByUser = Preferences.getObject("channelDisplayActions")[channelId];
             if (displayActionByUser) {
                 return displayActionByUser;
             }

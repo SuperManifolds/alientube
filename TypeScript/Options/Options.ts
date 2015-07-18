@@ -1,5 +1,6 @@
 /// <reference path="../LocalisationManager.ts" />
 /// <reference path="../Preferences.ts" />
+/// <reference path="../APIKeys.ts" />
 /// <reference path="../Migration.ts" />
 
 /**
