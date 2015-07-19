@@ -209,8 +209,6 @@ module AlienTube {
                 if (!redditButton) {
                     redditButtonTemplate = Application.getExtensionTemplateItem(this.template, "switchtoreddit");
                     redditButton = <HTMLDivElement> redditButtonTemplate.querySelector("#at_switchtoreddit");
-                    redditText = <HTMLSpanElement> redditButton.querySelector("#at_reddittext");
-                    redditText.textContent = Application.localisationManager.get("post_button_comments");
                     redditButton.addEventListener("click", this.onRedditClick, true);
                     googlePlusContainer.parentNode.insertBefore(redditButton, googlePlusContainer);
                 }
@@ -380,8 +378,6 @@ module AlienTube {
 
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
             googlePlusButton = template.querySelector("#at_switchtogplus");
-            googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
-            googlePlusText.textContent = Application.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
             
             if (Preferences.getBoolean("showGooglePlusButton") === false ||  googlePlusContainer === null) {
@@ -399,7 +395,6 @@ module AlienTube {
                 redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
                 if (redditButton) {
                     redditButton.classList.add("noresults");
-                    document.getElementById("at_reddittext").textContent = Application.localisationManager.get("post_label_noresults");
                 }
             }
         }

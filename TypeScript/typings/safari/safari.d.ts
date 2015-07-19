@@ -16,5 +16,6 @@ declare module safari.self.tab {
 
 declare module safari.extension {
     var baseURI: string;
+    var displayVersion: string;
     export function getURL(path: string);
 }

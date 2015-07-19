@@ -110,7 +110,7 @@
         line-height: 1.25;
         @include display(flex);
         @include flex-direction(row);
-        padding-right: 110px;
+        padding-right: 50px;
         box-sizing: border-box;
 
         & .info {
@@ -539,7 +539,7 @@
     }
 
     #at_switchtogplus {
-        right: 20px;
+        right: 15px;
     }
 }
 

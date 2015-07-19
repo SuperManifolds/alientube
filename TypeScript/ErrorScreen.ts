@@ -26,8 +26,6 @@ module AlienTube {
 
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
             googlePlusButton = <HTMLButtonElement> this.representedHTMLElement.querySelector("#at_switchtogplus");
-            googlePlusText = <HTMLSpanElement> googlePlusButton.querySelector("#at_gplustext");
-            googlePlusText.textContent = Application.localisationManager.get("post_button_comments");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
             googlePlusContainer = document.getElementById("watch-discussion");
