@@ -282,16 +282,21 @@ module AlienTube {
          * @private
          */
         private static getExtensionVersionNumber(): string {
+            var version = "";
             switch (window.getCurrentBrowser()) {
                 case Browser.CHROME:
-                    return chrome.app.getDetails().version;
+                    version = chrome.app.getDetails().version;
                     break;
 
                 case Browser.FIREFOX:
-                    return self.options.version;
+                    version = self.options.version;
+                    break;
+                    
+                case Browser.SAFARI:
+                    version = safari.extension.displayVersion;
                     break;
             }
-            return "";
+            return version;
         }
     }
 
