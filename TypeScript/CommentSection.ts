@@ -357,6 +357,13 @@ module AlienTube {
             } else {
                 overflowContainer.style.display = "none";
             }
+            
+            // If there is only one thread available the container should be displayed differently.
+            if (this.threadCollection[0].subreddit.length === 1) {
+                tabContainer.classList.add("single");
+            } else {
+                tabContainer.classList.remove("single");
+            }
 
             // Set the active tab if provided
             if (selectTabAtIndex != null) {

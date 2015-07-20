@@ -583,11 +583,6 @@
         background-image: none;
         padding-bottom: 0;
         border-bottom: 5px solid #fd4040;
-        
-        &::only-child {
-            padding-bottom: 5px;
-            border-bottom: 0;
-        }
 
         & > a {
             pointer-events: auto;
@@ -616,6 +611,11 @@
     position: relative;
     @include display(flex);
     @include flex-direction(row);
+    
+    &.single .at_tab.active {
+        padding-bottom: 5px;
+        border-bottom: 0;
+    }
 }
 
 #at_comments {
