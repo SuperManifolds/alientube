@@ -178,8 +178,9 @@ module AlienTube {
                 case Browser.SAFARI:
                     new HttpRequest(Application.getExtensionRessourcePath("templates.html"), RequestType.GET, (data) => {
                         template = document.createElement("div");
-                        template.innerHTML = data;
-                        document.head.appendChild(template);
+                        handlebarHTML = Handlebars.compile(data);
+                        template.innerHTML = handlebarHTML();
+    
                         if (callback) {
                             callback(template);
                         }

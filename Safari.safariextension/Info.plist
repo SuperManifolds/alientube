@@ -30,6 +30,7 @@
 			<key>End</key>
 			<array>
 				<string>js/snuownd.js</string>
+				<string>js/handlebars-v3.0.0.js</string>
 				<string>js/script.js</string>
 			</array>
 		</dict>

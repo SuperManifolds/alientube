@@ -47,6 +47,7 @@ cp -fr res/redditblocked.svg Safari.safariextension/res
 cp -fr res/icon128.png Safari.safariextension/res
 cp -fr res/options.css Safari.safariextension/res
 cp -fr lib/snuownd.js Safari.safariextension/js
+cp -fr lib/handlebars-v3.0.0.js Safari.safariextension/js
 
 echo Copying Firefox Resources
 mkdir -p Firefox/data
