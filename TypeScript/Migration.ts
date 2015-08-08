@@ -54,7 +54,6 @@ module AlienTube {
                     for each channel, we will make each request a Promise so we can be informed when they have all been completed,
                     and work with the final result. */
                     Object.keys(previousDisplayActions).forEach((channelName) => {
-                        channelNameMigrationTasks.push(promise);
                         if (previousDisplayActions.hasOwnProperty(channelName)) {
                             var promise = new Promise((fulfill, reject) => { 
                                 var encodedChannelName = encodeURIComponent(channelName);
@@ -71,6 +70,7 @@ module AlienTube {
                                     reject(error);
                                 });
                             });
+                            channelNameMigrationTasks.push(promise);
                         }
                     });
                     
