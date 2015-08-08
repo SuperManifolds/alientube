@@ -15,6 +15,7 @@ module AlienTube {
         private localisationData: any;
         private supportedLocalisations = [
             'en',
+            'en-US',
             'no',
             'es',
             'fr'
@@ -29,10 +30,11 @@ module AlienTube {
                     if (this.supportedLocalisations.indexOf(localisation) === -1) {
                         localisation = "en";
                     }
+                    
                     new HttpRequest(`${safari.extension.baseURI}_locales/${localisation}/messages.json`, RequestType.GET, (data) => {
                         this.localisationData = JSON.parse(data);
                         if (callback) setTimeout(callback, 0);
-                    }, null, null);
+                    });
                     break;
 
                 case Browser.FIREFOX:
