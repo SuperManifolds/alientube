@@ -1,16 +1,18 @@
 {
-  "name": "alientube",
-  "fullName": "AlienTube",
-  "id": "jid1-0GRQcsmyXNQRlg",
-  "description": "Reddit comments, in your YouTube!",
-  "author": "Delexious",
-  "license": "BSD 3",
-  "version": "2.3",
+    "name": "alientube",
+    "fullName": "AlienTube",
+    "title": "AlienTube",
+    "id": "jid1-0GRQcsmyXNQRlg@jetpack",
+    "description": "Reddit comments, in your YouTube!",
+    "author": "Delexious",
+    "license": "BSD 3",
+    "version": "2.5.0",
+    "main": "lib/main.js",
 
     "permissions": {
         "cross-domain-content": ["https://api.reddit.com/"]
     },
-
+    
     "preferences": [
         {
             "type": "control",
