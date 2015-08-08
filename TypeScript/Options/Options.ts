@@ -297,7 +297,7 @@ module AlienTube {
                     version = safari.extension.displayVersion;
                     break;
             }
-            return version;
+            return version || "";
         }
     }
 
