@@ -293,7 +293,7 @@ module AlienTube {
                 this.threadInformation.score = this.threadInformation.score - 1;
                 scoreValue.textContent = this.threadInformation.score;
 
-                new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.VoteType.NONE);
+                new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.Vote.REMOVE);
             } else {
                 /* The user wishes to like this post */
                 if (this.threadInformation.likes === false) {
@@ -307,7 +307,7 @@ module AlienTube {
                 this.threadInformation.likes = true;
                 scoreValue.textContent = this.threadInformation.score;
 
-                new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.VoteType.UPVOTE);
+                new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.Vote.UPVOTE);
             }
         }
         
@@ -328,7 +328,7 @@ module AlienTube {
                 this.threadInformation.score = this.threadInformation.score + 1;
                 scoreValue.textContent = this.threadInformation.score;
 
-                new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.VoteType.NONE);
+                new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.Vote.REMOVE);
             } else {
                 /* The user wishes to dislike this post */
                 if (this.threadInformation.likes === true) {
@@ -342,7 +342,7 @@ module AlienTube {
                 this.threadInformation.likes = false;
                 scoreValue.textContent = this.threadInformation.score;
 
-                new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.VoteType.DOWNVOTE);
+                new AlienTube.Reddit.VoteRequest(this.threadInformation.name, AlienTube.Reddit.Vote.DOWNVOTE);
             }
         }
     	

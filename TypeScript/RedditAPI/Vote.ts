@@ -13,7 +13,7 @@ module AlienTube.Reddit {
         @param callback Callback handler for the event when loaded.
     */
     export class VoteRequest {
-        constructor(thing: string, type: VoteType, callback?: any) {
+        constructor(thing: string, type: Vote, callback?: any) {
             var url = "https://api.reddit.com/api/vote";
             new HttpRequest(url, RequestType.POST, callback, {
                 "uh": Preferences.getString("redditUserIdentifierHash"),
@@ -23,9 +23,9 @@ module AlienTube.Reddit {
         }
     }
 
-    export enum VoteType {
+    export enum Vote {
         UPVOTE = 1,
         DOWNVOTE = -1,
-        NONE = 0
+        REMOVE = 0
     }
 }

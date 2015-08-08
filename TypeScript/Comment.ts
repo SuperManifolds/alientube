@@ -240,7 +240,7 @@ module AlienTube {
                 scorePointsText = this.commentObject.score === 1 ? Application.localisationManager.get("post_current_score") : Application.localisationManager.get("post_current_score_plural");
                 scoreValue.textContent = this.commentObject.score + scorePointsText;
 
-                new AlienTube.Reddit.VoteRequest(this.commentObject.name, AlienTube.Reddit.VoteType.NONE);
+                new AlienTube.Reddit.VoteRequest(this.commentObject.name, AlienTube.Reddit.Vote.REMOVE);
             } else {
                 /* The user wishes to like this post */
                 if (this.commentObject.likes === false) {
@@ -255,7 +255,7 @@ module AlienTube {
                 scorePointsText = this.commentObject.score === 1 ? Application.localisationManager.get("post_current_score") : Application.localisationManager.get("post_current_score_plural");
                 scoreValue.textContent = this.commentObject.score + scorePointsText;
 
-                new AlienTube.Reddit.VoteRequest(this.commentObject.name, AlienTube.Reddit.VoteType.UPVOTE);
+                new AlienTube.Reddit.VoteRequest(this.commentObject.name, AlienTube.Reddit.Vote.UPVOTE);
             }
         }
     	
@@ -278,7 +278,7 @@ module AlienTube {
                 var scorePointsText = this.commentObject.score === 1 ? Application.localisationManager.get("post_current_score") : Application.localisationManager.get("post_current_score_plural");
                 scoreValue.textContent = this.commentObject.score + scorePointsText;
 
-                new AlienTube.Reddit.VoteRequest(this.commentObject.name, AlienTube.Reddit.VoteType.NONE);
+                new AlienTube.Reddit.VoteRequest(this.commentObject.name, AlienTube.Reddit.Vote.REMOVE);
             } else {
                 /* The user wishes to dislike this post */
                 if (this.commentObject.likes === true) {
@@ -293,7 +293,7 @@ module AlienTube {
                 var scorePointsText = this.commentObject.score === 1 ? Application.localisationManager.get("post_current_score") : Application.localisationManager.get("post_current_score_plural");
                 scoreValue.textContent = this.commentObject.score + scorePointsText;
 
-                new AlienTube.Reddit.VoteRequest(this.commentObject.name, AlienTube.Reddit.VoteType.DOWNVOTE);
+                new AlienTube.Reddit.VoteRequest(this.commentObject.name, AlienTube.Reddit.Vote.DOWNVOTE);
             }
         }
 
