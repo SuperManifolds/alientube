@@ -34,7 +34,7 @@ pageMod.PageMod({
     ],
     contentScriptFile: [
         data.url("snuownd.js"),
-        data.url("handlebars-v3.0.0.js"),
+        data.url("handlebars-v3.0.3.js"),
         data.url("script.js"),
     ],
     onAttach: function(worker) {
