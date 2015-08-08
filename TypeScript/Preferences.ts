@@ -175,7 +175,6 @@ module AlienTube {
                     break;
 
                 case Browser.SAFARI:
-                    console.log(key, value, typeof value);
                     if (typeof value === "object") {
                         value = JSON.stringify(value);
                     }

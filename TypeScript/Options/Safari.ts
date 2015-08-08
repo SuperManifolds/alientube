@@ -25,7 +25,6 @@ module AlienTube {
                     });
                 });
             } else if (event.name == "setPreference") {
-                console.log("setting preference");
                 localStorage.setItem(event.message.key, event.message.value);
             } else if (event.name === "getPreferences") {
                 var preferences = {};
