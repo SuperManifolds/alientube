@@ -18,42 +18,29 @@ module AlienTube {
         constructor(url: string, type: RequestType, callback: any, postData?: any, errorHandler?: any) {
             var uuid, listener, xhr, query, key, postData;
 
-            if (window.getCurrentBrowser() === Browser.SAFARI) {
+            if (window.getCurrentBrowser() === Browser.SAFARI && safari.self.addEventListener) {
                 /* Generate a unique identifier to identify our request and response through Safari's message system. */
                 uuid = HttpRequest.generateUUID();
                 
                 /* Message the global page to have it perform a web request for us. */
                 listener = safari.self.addEventListener('message', function listenerFunction(event) {
                     if (event.message.uuid !== uuid) return;
-    	           
-                    /* Parse the received data */
-                    xhr = JSON.parse(event.message.data);
-                    if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
-                        /* This is an acceptable response, we can now call the callback and end successfuly. */
-                        if (callback) {
-                            callback(xhr.responseText);
-                        }
-                    } else {
-                        /* There was an error */
-                        if (errorHandler) errorHandler(xhr);
+                    
+                    if (event.message.data && callback) {
+                        callback(event.message.data);
+                    } else if (event.message.error && errorHandler) {
+                        errorHandler(event.message.error);
                     }
                     safari.self.removeEventListener('message', listenerFunction, false);
                 }, false);
     	       
-                /* Convert the post data array to a query string. */
-                query = [];
-                if (type === RequestType.POST) {
-                    query = [];
-                    for (key in postData) {
-                        query.push(encodeURIComponent(key) + '=' + encodeURIComponent(postData[key]));
-                    }
-                }
-
-                safari.self.tab.dispatchMessage(RequestType[type], {
+                safari.self.tab.dispatchMessage("XHR", {
                     'url': url,
                     'uuid': uuid,
-                    'data': query.join('&')
+                    'requestType': type,
+                    'postData': postData
                 });
+                
             } else {
                 xhr = new XMLHttpRequest();
                 xhr.open(RequestType[type], url, true);

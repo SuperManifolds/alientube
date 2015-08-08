@@ -2,6 +2,7 @@
 /// <reference path="../Preferences.ts" />
 /// <reference path="../APIKeys.ts" />
 /// <reference path="../Migration.ts" />
+/// <reference path="Safari.ts" />
 
 /**
     * Namespace for All AlienTube operations.

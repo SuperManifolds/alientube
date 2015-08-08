@@ -8,7 +8,7 @@
 		<key>Key</key>
 		<string>openSettings</string>
 		<key>Title</key>
-		<string>Click me to open AlienTube settings</string>
+		<string>Click here to open AlienTube settings</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>

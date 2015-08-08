@@ -52,19 +52,32 @@ module AlienTube {
                     break;
 
                 case Browser.SAFARI:
-                    /* Make a request to the global page to retreive the settings */
-                    var listener = safari.self.addEventListener('message', function listenerFunction(event) {
-                        if (event.name === "preferences") {
-                            this.preferences = event.message;
-
-                            if (callback) {
-                                callback();
+                    if (safari.self.addEventListener) {
+                        /* Make a request to the global page to retreive the settings */
+                        var listener = safari.self.addEventListener('message', function listenerFunction(event) {
+                            if (event.name === "preferences") {
+                                Preferences.preferenceCache = event.message;
+    
+                                if (callback) {
+                                    callback();
+                                }
                             }
+                        }, false);
+                        safari.self.tab.dispatchMessage("getPreferences", null);
+                        if (callback) {
+                            callback();
                         }
-                    }, false);
-                    safari.self.tab.dispatchMessage("getPreferences", null);
-                    if (callback) {
-                        callback();
+                    } else {
+                        var preferences = {};
+                        var numKeys = localStorage.length;
+                        for (var i = 0; i < numKeys; i++) {
+                            var keyName = localStorage.key(i);
+                            preferences[keyName] = localStorage.getItem(keyName);
+                        }
+                        Preferences.preferenceCache = preferences;
+                        if (callback) {
+                            callback();
+                        }
                     }
                     break;
             }
@@ -162,10 +175,19 @@ module AlienTube {
                     break;
 
                 case Browser.SAFARI:
-                    safari.self.tab.dispatchMessage("setPreference", {
-                        'key': key,
-                        'value': value
-                    });
+                    console.log(key, value, typeof value);
+                    if (typeof value === "object") {
+                        value = JSON.stringify(value);
+                    }
+                
+                    if (safari.self.addEventListener) {
+                        safari.self.tab.dispatchMessage("setPreference", {
+                            'key': key,
+                            'value': value
+                        });
+                    } else {
+                        localStorage.setItem(key, value);
+                    }
                     break;
             }
         }
