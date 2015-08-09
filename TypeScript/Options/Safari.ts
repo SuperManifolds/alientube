@@ -1,5 +1,6 @@
 /// <reference path="../typings/safari/safari.d.ts" />
 /// <reference path="../HttpRequest.ts" />
+/// <reference path="../Utilities.ts" />
 /**
     * Namespace for All AlienTube operations.
     * @namespace AlienTube
@@ -44,14 +45,16 @@ module AlienTube {
 	}
 }
 
-if (safari.application) {
-    safari.application.addEventListener("message", function (e) {
-        new AlienTube.Safari(e);
-    }, false);
-    
-    safari.extension.settings.addEventListener("change", function (event) {
-        if (event.key === "openSettings") {
-            AlienTube.Safari.openPreferences();
-        }
-    }, false);
+if (AlienTube.Utilities.getCurrentBrowser() === Browser.SAFARI) {
+    if (safari.application) {
+        safari.application.addEventListener("message", function (e) {
+            new AlienTube.Safari(e);
+        }, false);
+        
+        safari.extension.settings.addEventListener("change", function (event) {
+            if (event.key === "openSettings") {
+                AlienTube.Safari.openPreferences();
+            }
+        }, false);
+    }
 }
