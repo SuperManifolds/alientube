@@ -284,7 +284,7 @@ module AlienTube {
          */
         private static getExtensionVersionNumber(): string {
             var version = "";
-            switch (window.getCurrentBrowser()) {
+            switch (Utilities.getCurrentBrowser()) {
                 case Browser.CHROME:
                     version = chrome.app.getDetails().version;
                     break;

@@ -18,7 +18,7 @@ module AlienTube {
         constructor(url: string, type: RequestType, callback: any, postData?: any, errorHandler?: any) {
             var uuid, listener, xhr, query, key, postData;
 
-            if (window.getCurrentBrowser() === Browser.SAFARI && safari.self.addEventListener) {
+            if (Utilities.getCurrentBrowser() === Browser.SAFARI && safari.self.addEventListener) {
                 /* Generate a unique identifier to identify our request and response through Safari's message system. */
                 uuid = HttpRequest.generateUUID();
                 

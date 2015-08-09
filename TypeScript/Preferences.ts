@@ -32,7 +32,7 @@ module AlienTube {
          */
         public static initialise(callback?) {
             Preferences.preferenceCache = {};
-            switch (window.getCurrentBrowser()) {
+            switch (Utilities.getCurrentBrowser()) {
                 case Browser.CHROME:
                     /* Get the Chrome cloud sync preferences stored for AlienTube. */
                     chrome.storage.sync.get(null, (settings) => {
@@ -125,7 +125,7 @@ module AlienTube {
          * @see getString getNumber getArray getObject
          */
         public static getBoolean(key: string): boolean {
-            return window.parseBoolean(Preferences.get(key));
+            return Utilities.parseBoolean(Preferences.get(key));
         }
 
         /**
@@ -162,12 +162,15 @@ module AlienTube {
          */
         public static set(key: string, value: any): void {
             Preferences.preferenceCache[key] = value;
-            switch (window.getCurrentBrowser()) {
+            switch (Utilities.getCurrentBrowser()) {
                 case Browser.CHROME:
                     chrome.storage.sync.set(Preferences.preferenceCache);
                     break;
 
                 case Browser.FIREFOX:
+                    if (typeof value === "object") {
+                        value = JSON.stringify(value);
+                    }
                     self.port.emit("setSettingsValue", {
                         key: key,
                         value: value
@@ -196,7 +199,7 @@ module AlienTube {
          */
         public static reset(): void {
             Preferences.preferenceCache = {};
-            switch (window.getCurrentBrowser()) {
+            switch (Utilities.getCurrentBrowser()) {
                 case Browser.CHROME:
                     chrome.storage.sync.remove(Object.keys(Preferences.defaults));
                     break;

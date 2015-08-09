@@ -33,7 +33,6 @@ module AlienTube {
                     // Set Loading Screen
                     loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Application.localisationManager.get("loading_search_message"));
                     this.set(loadingScreen.HTMLElement);
-
                     // Open a search request to Reddit for the video identfiier
                     videoSearchString = encodeURI(`(url:3D${currentVideoIdentifier} OR url:${currentVideoIdentifier}) (site:youtube.com OR site:youtu.be)`);
                     new AlienTube.Reddit.Request("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (results) => {

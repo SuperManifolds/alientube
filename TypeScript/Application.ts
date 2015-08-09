@@ -31,7 +31,7 @@ module AlienTube {
             // Load language files. 
             Application.localisationManager = new LocalisationManager(() => {
                 // Load stylesheet
-                if (window.getCurrentBrowser() === Browser.SAFARI) {
+                if (Application.getCurrentBrowser() === Browser.SAFARI) {
                     new HttpRequest(Application.getExtensionRessourcePath("style.css"), RequestType.GET, (data) => {
                         var stylesheet = document.createElement("style");
                         stylesheet.setAttribute("type", "text/css");
@@ -47,7 +47,7 @@ module AlienTube {
 
                 // Start a new comment section.
                 this.currentVideoIdentifier = Application.getCurrentVideoId();
-                if (window.isYouTubeVideoPage) {
+                if (Utilities.isYouTubeVideoPage) {
                     Application.commentSection = new CommentSection(this.currentVideoIdentifier);
                 }
             });
@@ -68,7 +68,7 @@ module AlienTube {
                     reportedVideoId = Application.getCurrentVideoId();
                     if (reportedVideoId !== this.currentVideoIdentifier) {
                         this.currentVideoIdentifier = reportedVideoId;
-                        if (window.isYouTubeVideoPage) {
+                        if (Utilities.isYouTubeVideoPage) {
                             Application.commentSection = new CommentSection(this.currentVideoIdentifier);
                         }
                     }
@@ -145,7 +145,7 @@ module AlienTube {
         * @returns Ressource path (file://)
         */
         public static getExtensionRessourcePath(path: string): string {
-            switch (window.getCurrentBrowser()) {
+            switch (Application.getCurrentBrowser()) {
                 case Browser.SAFARI:
                     return safari.extension.baseURI + 'res/' + path;
                 case Browser.CHROME:
@@ -164,7 +164,7 @@ module AlienTube {
         public static getExtensionTemplates(callback: any) {
             var template, handlebarHTML, templateLink;
 
-            switch (window.getCurrentBrowser()) {
+            switch (Application.getCurrentBrowser()) {
                 case Browser.FIREFOX:
                     template = document.createElement("div");
                     handlebarHTML = Handlebars.compile(self.options.template);
@@ -208,7 +208,7 @@ module AlienTube {
          */
         public static version(): string {
             var version = "";
-            switch (window.getCurrentBrowser()) {
+            switch (Application.getCurrentBrowser()) {
                 case Browser.CHROME:
                     version = chrome.runtime.getManifest()["version"];
                     break;
@@ -230,7 +230,7 @@ module AlienTube {
          * @param id The id of the element you want to retreive.
          */
         public static getExtensionTemplateItem(templateCollection: any, id: string) {
-            switch (window.getCurrentBrowser()) {
+            switch (Application.getCurrentBrowser()) {
                 case Browser.CHROME:
                     return templateCollection.getElementById(id).content.cloneNode(true);
                     
@@ -239,6 +239,15 @@ module AlienTube {
                     
                 case Browser.SAFARI:
                     return templateCollection.querySelector("#" + id).content.cloneNode(true);
+            }
+        }
+        
+        static getCurrentBrowser() {
+            if (typeof (chrome) !== 'undefined') return Browser.CHROME;
+            else if (typeof (self.on) !== 'undefined') return Browser.FIREFOX;
+            else if (typeof (safari) !== 'undefined') return Browser.SAFARI;
+            else {
+                throw "Invalid Browser";
             }
         }
     }

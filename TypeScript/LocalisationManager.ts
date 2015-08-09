@@ -24,7 +24,7 @@ module AlienTube {
         constructor(callback?) {
             var localisation;
 
-            switch (window.getCurrentBrowser()) {
+            switch (Utilities.getCurrentBrowser()) {
                 case Browser.SAFARI:
                     localisation = navigator.language.split('-')[0];
                     if (this.supportedLocalisations.indexOf(localisation) === -1) {
@@ -33,17 +33,23 @@ module AlienTube {
                     
                     new HttpRequest(`${safari.extension.baseURI}_locales/${localisation}/messages.json`, RequestType.GET, (data) => {
                         this.localisationData = JSON.parse(data);
-                        if (callback) setTimeout(callback, 0);
+                        if (callback) {
+                            requestAnimationFrame(callback);
+                        }
                     });
                     break;
 
                 case Browser.FIREFOX:
                     this.localisationData = JSON.parse(self.options.localisation);
-                    if (callback) setTimeout(callback, 0);
+                    if (callback) {
+                        requestAnimationFrame(callback);
+                    }
                     break;
 
                 default:
-                    if (callback) setTimeout(callback, 0);
+                    if (callback) {
+                        requestAnimationFrame(callback);
+                    }
                     break;
             }
         }
@@ -57,7 +63,7 @@ module AlienTube {
         public get(key: string, placeholders?: Array<string>) {
             var localisationItem, message, placeholder, placeHolderArgumentIndex;
 
-            switch (window.getCurrentBrowser()) {
+            switch (Utilities.getCurrentBrowser()) {
                 case Browser.CHROME:
                     if (placeholders) {
                         return chrome.i18n.getMessage(key, placeholders);
