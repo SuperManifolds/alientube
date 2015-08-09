@@ -402,7 +402,7 @@
         }
 
         &.edited {
-            .at_timestamp:after {
+            & > .at_commentmain > .info > .at_timestamp:after {
                 content: "*";
             }
         }
