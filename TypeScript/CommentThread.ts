@@ -39,7 +39,7 @@ module AlienTube {
             this.commentData = threadData[1].data.children;
 
             Preferences.set("redditUserIdentifierHash", threadData[0].data.modhash);
-            this.postIsInPreservedMode = this.threadInformation.isRedditPreservedPost();
+            this.postIsInPreservedMode = Utilities.isRedditPreservedPost(this.threadInformation);
 
             template = Application.getExtensionTemplateItem(this.commentSection.template, "threadcontainer");
             this.threadContainer = <HTMLDivElement> template.querySelector("#at_comments");

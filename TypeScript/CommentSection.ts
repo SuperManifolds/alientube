@@ -253,7 +253,7 @@ module AlienTube {
         private static validateItemFromResultSet(itemFromResultSet: any, currentVideoIdentifier: string): Boolean {
             var urlSearch, requestItems, requestPair, component, shareRequestPair, shareRequestItems, urlSearch, obj;
 
-            if (itemFromResultSet.isRedditPreservedPost() && itemFromResultSet.num_comments < 1) {
+            if (Utilities.isRedditPreservedPost(itemFromResultSet) && itemFromResultSet.num_comments < 1) {
                 return false;
             }
 
