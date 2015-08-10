@@ -103,10 +103,14 @@ echo
 
 echo ${standout}Compiling TypeScript Files.${normal}
 if [ "$1" == "--debug" ]; then
+    echo Compiling Options page TypeScript file without comments with with source map.
     tsc --target ES5 --out lib/options.js TypeScript/Options/Options.ts --removeComments --sourcemap
+    echo Compiling Application TypeScript file without comments with with source map.
     tsc --target ES5 --out lib/script.js TypeScript/index.ts --removeComments --sourcemap
 else
+    echo Compiling Options page TypeScript file with comments.
     tsc --target ES5 --out lib/options.js TypeScript/Options/Options.ts
+    echo Compiling Application page TypeScript file with comments.
     tsc --target ES5 --out lib/script.js TypeScript/index.ts
 fi
 echo
