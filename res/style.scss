@@ -1,5 +1,9 @@
 @import 'bourbon/bourbon';
 
+body {
+    transition: background-color 1ms linear !important;
+}
+
 #alientube {
     font-family: -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", "Helvetica", Arial, sans-serif;
     margin-top: 30px;
@@ -907,58 +911,76 @@ a[href$="/spoiler"]::before {
     float: right;
 }
 
-body.darkmode {
-    & #alientube {
+.darkmode {
+    background: #242424 !important;
+    color: #fff;
+    
+    select {
         background: #242424 !important;
-        color: #fff;
+    }
+    
+    textarea {
+        background: #3e3e3e!important;
+    }
 
-        & .at_tab {
-            background: linear-gradient(rgb(65, 65, 65) 0px, rgb(46, 46, 46) 100%);
-            border: 1px solid rgb(46, 46, 46);
-            text-shadow: none;
-            color: #fff;
+    & .at_tab {
+        text-shadow: none;
+        background: #242424 !important;
+
+        & a {
+            color: #555555 !important;
+        }
+        
+        &:hover {
+            background: #2f2f2f !important;
+        }
+
+        &.active {
+            padding-bottom: 0;
+            border-bottom: 5px solid #ff5353;
 
             & a {
-                color: #f0f0f0 !important;
+                color: #0066aa !important;
             }
-
-            &.active {
-                background: #242424;
-                border: 1px solid rgb(46, 46, 46);
-                border-bottom: none;
-
-                & a {
-                    color: #0066aa !important;
-                }
-            }
-        }
-
-        & #at_overflow {
-            background-image: linear-gradient(rgb(65, 65, 65) 0px, rgb(60, 60, 60) 100%);
-            border: 1px solid rgb(46, 46, 46);
-
+            
             &:hover {
-                background-image: rgb(87, 87, 87);
-            }
-
-            & ul {
-                background: #262626;
+                background: #242424 !important;
             }
         }
+    }
 
-        & .at_score,
-        & .at_commentcontent > span > p {
-            color: #f6f6f6 !important;
+    & #at_overflow {
+        background: #242424 !important;
+
+        &:hover {
+            background-image: rgb(87, 87, 87);
         }
 
-        & article.deleted > .at_commentmain > .at_commentcontent {
-            background: rgb(79, 79, 79);
+        & ul {
+            background: #262626;
         }
+    }
+
+    & .at_score,
+    & .at_commentcontent > span > p {
+        color: #f6f6f6 !important;
+    }
+
+    & article.deleted > .at_commentmain > .at_commentcontent {
+        background: rgb(79, 79, 79);
     }
 
     & #at_switchtogplus svg,
     & #at_switchtoreddit svg {
         fill: #fff;
+    }
+    
+    & .at_writingauthor {
+        color: #acacac;
+    }
+    
+    & .at_replies article {
+        border-left: 1px dotted #7c7c7c !important;
     }
 }
 
