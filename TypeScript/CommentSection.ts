@@ -191,16 +191,15 @@ module AlienTube {
 
 
             /* Check if Dark Mode is activated, and set AlienTube to dark mode */
-            bodyBackgroundColor = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
-            bodyBackgroundColorArray = bodyBackgroundColor.substring(4, bodyBackgroundColor.length - 1).replace(/ /g, '').split(',');
-            bodyBackgroundColorAverage = 0;
-            for (var i = 0; i < 3; i += 1) {
-                bodyBackgroundColorAverage = bodyBackgroundColorAverage + parseInt(bodyBackgroundColorArray[i], 10);
-            }
-            bodyBackgroundColorAverage = bodyBackgroundColorAverage / 3;
-            if (bodyBackgroundColorAverage < 100) {
-                document.body.classList.add("darkmode");
-            }
+            this.checkEnvironmentDarkModestatus(redditContainer);
+            
+            /* Since there is no implicit event for a css property has changed, I have set a small transition on the body background colour.
+               this transition will trigger the transitionend event and we can use that to check if the background colour has changed, thereby activating dark mode. */
+            document.body.addEventListener("transitionend", (e : TransitionEvent) => {
+                if (e.propertyName === "background-color" && e.srcElement.tagName === "BODY") {
+                    this.checkEnvironmentDarkModestatus(document.getElementById("alientube"));
+                }
+            }, false);
 
             if (googlePlusContainer) {
                 /* Add the "switch to Reddit" button in the google+ comment section */
@@ -600,6 +599,23 @@ module AlienTube {
             
             var seconds = <number> Math.floor(((new Date()).getTime() / 1000) - thread.created_utc) - 1134028003;
             return Math.round((order + sign*seconds / 4500) * 10000000) / 10000000;
+        }
+        
+        private checkEnvironmentDarkModestatus(alientubeContainer : any) {
+            var bodyBackgroundColour, bodyBackgroundColourArray, bodyBackgroundColourAverage;
+            
+            bodyBackgroundColour = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
+            bodyBackgroundColourArray = bodyBackgroundColour.substring(4, bodyBackgroundColour.length - 1).replace(/ /g, '').split(',');
+            bodyBackgroundColourAverage = 0;
+            for (var i = 0; i < 3; i += 1) {
+                bodyBackgroundColourAverage = bodyBackgroundColourAverage + parseInt(bodyBackgroundColourArray[i], 10);
+            }
+            bodyBackgroundColourAverage = bodyBackgroundColourAverage / 3;
+            if (bodyBackgroundColourAverage < 100) {
+                alientubeContainer.classList.add("darkmode");
+            } else {
+                alientubeContainer.classList.remove("darkmode");
+            }
         }
     }
 }
