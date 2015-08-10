@@ -1,33 +1,65 @@
 #!/bin/bash
-echo Removing old files
+bold=$(tput bold)
+standout=$(tput smso)
+normal=$(tput sgr0)
+green=$(tput setaf 2)
+red=$(tput setaf 1)
+
+abort() {
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \#
+    echo
+    echo ${red}Operation failed${normal}
+    echo
+    echo
+    exit 1
+}
+
+trap 'abort' 0
+set -e
+
+echo
+if [ "$1" == "--debug" ]; then
+    echo Compiling AlienTube in ${standout}debug${normal} mode.
+else
+    echo Compiling AlienTube in ${standout}production${normal} mode.
+fi
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \#
+echo
+
+echo ${standout}Removing old files${normal}
+echo Removing TypeScript mapping folders.
 rm -rf Chrome/TypeScript
 rm -rf Safari.safariextension/TypeScript
 rm -rf Firefox/data/TypeScript
 
+echo Removing TypeScript code-mapping file.
 rm -f Chrome/js/script.js.map
 rm -f Safari.safariextension/js/script.js.map
 rm -f Firefox/data/script.js.map
+rm -f lib/script.js.map
 
+echo Removing options page TypeScript code-mapping file.
 rm -f Chrome/js/options.js.map
 rm -f Safari.safariextension/js/options.js.map
 rm -f Firefox/data/options.js.map
-
-rm -f lib/script.js.map
 rm -f lib/options.js.map
 
+echo Removing SASS stylesheet code-mapping file.
 rm -f Chrome/res/style.css.map
 rm -f Safari.safariextension/res/style.css.map
 rm -f Firefox/data/style.css.map
 echo
 echo
 
-echo Compiling SASS style files.
+echo ${standout}Compiling SASS style files.${normal}
+echo Compiling Main SASS stylesheet.
 sass res/style.scss res/style.css
+echo Compiling Options SASS stylesheet
 sass res/options.scss res/options.css
 echo
 echo
 
-
+echo ${standout}Copying static browser resources${normal}
 echo Copying Chrome Resources
 mkdir -p Chrome/res
 mkdir -p Chrome/js
@@ -50,7 +82,7 @@ cp -fr lib/snuownd.js Safari.safariextension/js
 cp -fr lib/handlebars-v3.0.3.js Safari.safariextension/js
 
 echo Copying Firefox Resources
-mkdir -p Firefox/data
+mkdir -pv Firefox/data
 cp -fr res/redditbroken.svg Firefox/data
 cp -fr res/redditoverload.svg Firefox/data
 cp -fr res/redditblocked.svg Firefox/data
@@ -59,15 +91,17 @@ cp -fr res/options.css Firefox/data
 cp -fr lib/snuownd.js Firefox/data
 cp -fr lib/handlebars-v3.0.3.js Firefox/data
 echo
+echo
 
-echo Updating Options HTML Page
-cp options.html Chrome/res/options.html
-cp options.html Firefox/data/options.html
-cp options.html Safari.safariextension/res/options.html
+echo ${standout}Updating Options HTML Page${normal}
+cp -vf  options.html Chrome/res/options.html
+cp -vf options.html Firefox/data/options.html
+cp -vf options.html Safari.safariextension/res/options.html
+echo
 echo
 
 
-echo Compiling TypeScript Files.
+echo ${standout}Compiling TypeScript Files.${normal}
 if [ "$1" == "--debug" ]; then
     tsc --target ES5 --out lib/options.js TypeScript/Options/Options.ts --removeComments --sourcemap
     tsc --target ES5 --out lib/script.js TypeScript/index.ts --removeComments --sourcemap
@@ -75,50 +109,44 @@ else
     tsc --target ES5 --out lib/options.js TypeScript/Options/Options.ts
     tsc --target ES5 --out lib/script.js TypeScript/index.ts
 fi
-
 echo
-echo
-    
 echo Copying TypeScript Files
-cp lib/options.js Chrome/res/options.js
-cp lib/options.js Firefox/data/options.js
-cp lib/options.js Safari.safariextension/res/options.js
-cp lib/script.js Chrome/js/script.js
-cp lib/script.js Safari.safariextension/js/script.js
-cp lib/script.js Firefox/data/script.js
+cp -vf lib/options.js Chrome/res/options.js
+cp -vf lib/options.js Firefox/data/options.js
+cp -vf lib/options.js Safari.safariextension/res/options.js
+cp -vf lib/script.js Chrome/js/script.js
+cp -vf lib/script.js Safari.safariextension/js/script.js
+cp -vf lib/script.js Firefox/data/script.js
 echo
 echo
 
-echo Copying Chrome Style Files
-cp res/style.css Chrome/res/style.css
-echo Copying Safari Style Files
-cp res/style.css Safari.safariextension/res/style.css
-echo Copying Firefox Style Files
-cp res/style.css Firefox/data/style.css
+echo ${standout}Copying Style Files${normal}
+cp -vf res/style.css Chrome/res/style.css
+cp -vf res/style.css Safari.safariextension/res/style.css
+cp -vf res/style.css Firefox/data/style.css
 echo
 
-echo Copying Chrome Template Files
-cp res/templates.html Chrome/res/templates.html
-echo Copying Safari Template Files
-cp res/templates.html Safari.safariextension/res/templates.html
-echo Copying Firefox Template Files
-cp res/templates.html Firefox/data/templates.html
+echo ${standout}Copying Template Files${normal}
+cp -vf res/templates.html Chrome/res/templates.html
+cp -vf res/templates.html Safari.safariextension/res/templates.html
+cp -vf res/templates.html Firefox/data/templates.html
 echo
 echo
 
 if [ "$1" == "--debug" ]; then
-    echo Copying Development Sourcemaps
-    cp lib/script.js.map Chrome/js/script.js.map
-    cp lib/options.js.map Chrome/js/options.js.map
-    cp lib/script.js.map Safari.safariextension/js/script.js.map
-    cp lib/options.js.map Safari.safariextension/js/options.js.map
-    cp lib/script.js.map Firefox/data/script.js.map
-    cp lib/options.js.map Firefox/data/options.js.map
-    
-    cp res/style.css.map Chrome/res/style.css.map
-    cp res/style.css.map Safari.safariextension/res/style.css.map
-    cp res/style.css.map Firefox/data/style.css.map
-    
+    echo ${standout}Copying Development Sourcemaps${normal}
+    cp -vf lib/script.js.map Chrome/js/script.js.map
+    cp -vf lib/options.js.map Chrome/js/options.js.map
+    cp -vf lib/script.js.map Safari.safariextension/js/script.js.map
+    cp -vf lib/options.js.map Safari.safariextension/js/options.js.map
+    cp -vf lib/script.js.map Firefox/data/script.js.map
+    cp -vf lib/options.js.map Firefox/data/options.js.map
+    echo 
+    cp -vf res/style.css.map Chrome/res/style.css.map
+    cp -vf res/style.css.map Safari.safariextension/res/style.css.map
+    cp -vf res/style.css.map Firefox/data/style.css.map
+    echo 
+    echo Copying TypeScript source folders.
     cp -fr TypeScript Chrome/
     cp -fr TypeScript Safari.safariextension/
     cp -fr TypeScript Firefox/data/TypeScript
@@ -126,8 +154,19 @@ if [ "$1" == "--debug" ]; then
     echo
 fi
 
-echo Copying Localisation Files
-cp -fr _locales Chrome/
-cp -fr _locales Safari.safariextension/
-cp -fr _locales Firefox/data/
+echo ${standout}Copying Localisation Files${normal}
+echo Copying localisation files to Chrome
+rsync -a --exclude=".*" _locales Chrome/
+echo Copying localisation files to Safari
+rsync -a --exclude=".*" _locales Safari.safariextension/
+echo Copying localisation files to Firefox
+rsync -a --exclude=".*" _locales Firefox/data/
 echo
+echo
+
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \#
+echo
+echo ${green}Operation completed sucessfully${normal}
+echo
+echo
+trap : 0
