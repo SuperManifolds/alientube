@@ -22,7 +22,6 @@
 /// <reference path="RedditAPI/Username.ts" />
 
 /// <reference path="typings/snuownd.d.ts" />
-/// <reference path="typings/es6-promise.d.ts" />
 /// <reference path="typings/he.d.ts" />
 /// <reference path="typings/handlebars.d.ts" />
 /// <reference path="typings/chrome/chrome.d.ts" />

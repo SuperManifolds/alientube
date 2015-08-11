@@ -6,6 +6,8 @@ green=$(tput setaf 2)
 red=$(tput setaf 1)
 
 abort() {
+    echo
+    echo
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \#
     echo
     echo ${red}Operation failed${normal}
@@ -37,12 +39,14 @@ rm -f Chrome/js/script.js.map
 rm -f Safari.safariextension/js/script.js.map
 rm -f Firefox/data/script.js.map
 rm -f lib/script.js.map
+rm -f lib/script-es5.js.map
 
 echo Removing options page TypeScript code-mapping file.
 rm -f Chrome/js/options.js.map
 rm -f Safari.safariextension/js/options.js.map
 rm -f Firefox/data/options.js.map
 rm -f lib/options.js.map
+rm -f lib/options-es5.js.map
 
 echo Removing SASS stylesheet code-mapping file.
 rm -f Chrome/res/style.css.map
@@ -103,23 +107,33 @@ echo
 
 echo ${standout}Compiling TypeScript Files.${normal}
 if [ "$1" == "--debug" ]; then
+    echo Compiling Options page TypeScript in ES5 compatibility mode without comments with with source map.
+    tsc --target ES5 --out lib/options-es5.js TypeScript/typings/es5-compatibility.ts TypeScript/Options/Options.ts --removeComments --sourcemap
+    echo Compiling Application TypeScript in ES5 compatibility mode without comments with with source map.
+    tsc --target ES5 --out lib/script-es5.js TypeScript/typings/es5-compatibility.ts TypeScript/index.ts --removeComments --sourcemap
+    
     echo Compiling Options page TypeScript file without comments with with source map.
-    tsc --target ES5 --out lib/options.js TypeScript/Options/Options.ts --removeComments --sourcemap
+    tsc --target ES6 --out lib/options.js TypeScript/Options/Options.ts --removeComments --sourcemap
     echo Compiling Application TypeScript file without comments with with source map.
-    tsc --target ES5 --out lib/script.js TypeScript/index.ts --removeComments --sourcemap
+    tsc --target ES6 --out lib/script.js TypeScript/index.ts --removeComments --sourcemap
 else
+    echo Compiling Options page TypeScript in ES5 compatibility mode with comments.
+    tsc --target ES5 --out lib/options-es5.js TypeScript/typings/es5-compatibility.ts TypeScript/Options/Options.ts
+    echo Compiling Application page TypeScript in ES5 compatibility mode with comments.
+    tsc --target ES5 --out lib/script-es5.js TypeScript/typings/es5-compatibility.ts TypeScript/index.ts
+    
     echo Compiling Options page TypeScript file with comments.
-    tsc --target ES5 --out lib/options.js TypeScript/Options/Options.ts
+    tsc --target ES6 --out lib/options.js TypeScript/Options/Options.ts
     echo Compiling Application page TypeScript file with comments.
-    tsc --target ES5 --out lib/script.js TypeScript/index.ts
+    tsc --target ES6 --out lib/script.js TypeScript/index.ts
 fi
 echo
 echo Copying TypeScript Files
 cp -vf lib/options.js Chrome/res/options.js
 cp -vf lib/options.js Firefox/data/options.js
-cp -vf lib/options.js Safari.safariextension/res/options.js
+cp -vf lib/options-es5.js Safari.safariextension/res/options.js
 cp -vf lib/script.js Chrome/js/script.js
-cp -vf lib/script.js Safari.safariextension/js/script.js
+cp -vf lib/script-es5.js Safari.safariextension/js/script.js
 cp -vf lib/script.js Firefox/data/script.js
 echo
 echo
@@ -141,8 +155,8 @@ if [ "$1" == "--debug" ]; then
     echo ${standout}Copying Development Sourcemaps${normal}
     cp -vf lib/script.js.map Chrome/js/script.js.map
     cp -vf lib/options.js.map Chrome/js/options.js.map
-    cp -vf lib/script.js.map Safari.safariextension/js/script.js.map
-    cp -vf lib/options.js.map Safari.safariextension/js/options.js.map
+    cp -vf lib/script-es5.js.map Safari.safariextension/js/script.js.map
+    cp -vf lib/options-es5.js.map Safari.safariextension/js/options.js.map
     cp -vf lib/script.js.map Firefox/data/script.js.map
     cp -vf lib/options.js.map Firefox/data/options.js.map
     echo 
@@ -165,16 +179,14 @@ echo Copying localisation files to Safari
 rsync -a --exclude=".*" _locales Safari.safariextension/
 echo Copying localisation files to Firefox
 rsync -a --exclude=".*" _locales Firefox/data/
-echo
-echo
 
 if [ "$1" == "--debug" ] && [[ "$OSTYPE" == "darwin"* ]]; then
     echo ${standout}Reloading Development Browsers${normal}
-    osascript -e reload.scpt
-    echo
-    echo
+    osascript reload.scpt
 fi
 
+echo
+echo
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \#
 echo
 echo ${green}Operation completed sucessfully${normal}

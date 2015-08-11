@@ -27,3 +27,7 @@ res/style.css
 .sass-cache/*
 
 reloadExtension.scpt
+
+lib/options-es5.js
+
+lib/script-es5.js
