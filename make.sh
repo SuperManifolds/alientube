@@ -168,6 +168,13 @@ rsync -a --exclude=".*" _locales Firefox/data/
 echo
 echo
 
+if [ "$1" == "--debug" ] && [[ "$OSTYPE" == "darwin"* ]]; then
+    echo ${standout}Reloading Development Browsers${normal}
+    osascript -e reload.scpt
+    echo
+    echo
+fi
+
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' \#
 echo
 echo ${green}Operation completed sucessfully${normal}
