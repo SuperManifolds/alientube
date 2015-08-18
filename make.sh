@@ -130,11 +130,11 @@ fi
 echo
 echo Copying TypeScript Files
 cp -vf lib/options.js Chrome/res/options.js
-cp -vf lib/options.js Firefox/data/options.js
+cp -vf lib/options-es5.js Firefox/data/options.js
 cp -vf lib/options-es5.js Safari.safariextension/res/options.js
 cp -vf lib/script.js Chrome/js/script.js
 cp -vf lib/script-es5.js Safari.safariextension/js/script.js
-cp -vf lib/script.js Firefox/data/script.js
+cp -vf lib/script-es5.js Firefox/data/script.js
 echo
 echo
 
