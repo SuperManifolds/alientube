@@ -18,8 +18,6 @@ module AlienTube {
         private referenceParent;
 
         constructor(data: any, referenceParent: any, commentThread: CommentThread) {
-            var replyCount, replyCountText, loadMoreText;
-
             this.data = data;
             this.commentThread = commentThread;
             this.referenceParent = referenceParent;
@@ -27,12 +25,12 @@ module AlienTube {
             this.representedHTMLElement = Application.getExtensionTemplateItem(commentThread.commentSection.template, "loadmore");
 
             /* Display the amount of replies available to load */
-            replyCount = this.representedHTMLElement.querySelector(".at_replycount");
-            replyCountText = data.count > 1 ? Application.localisationManager.get("post_label_reply_plural") : Application.localisationManager.get("post_label_reply");
+            let replyCount = this.representedHTMLElement.querySelector(".at_replycount");
+            let replyCountText = data.count > 1 ? Application.localisationManager.get("post_label_reply_plural") : Application.localisationManager.get("post_label_reply");
             replyCount.textContent = "(" + data.count + " " + replyCountText + ")";
 
             /* Set the localisation for the "load more" button, and the event listener. */
-            loadMoreText = this.representedHTMLElement.querySelector(".at_load");
+            let loadMoreText = this.representedHTMLElement.querySelector(".at_load");
             loadMoreText.textContent = Application.localisationManager.get("post_button_load_more");
             loadMoreText.addEventListener("click", this.onLoadMoreClick.bind(this), false);
         }
@@ -43,24 +41,20 @@ module AlienTube {
          * @private
          */
         private onLoadMoreClick(eventObject: Event) {
-            var loadingText, generateRequestUrl;
-
             /* Display "loading comments" text */
-            loadingText = <HTMLAnchorElement> eventObject.target;
+            let loadingText = <HTMLAnchorElement> eventObject.target;
             loadingText.classList.add("loading");
             loadingText.textContent = Application.localisationManager.get("loading_generic_message");
 
-            generateRequestUrl = `https://api.reddit.com/r/${this.commentThread.threadInformation.subreddit}"/comments/${this.commentThread.threadInformation.id}/z/${this.data.id}.json`;
+            let generateRequestUrl = `https://api.reddit.com/r/${this.commentThread.threadInformation.subreddit}"/comments/${this.commentThread.threadInformation.id}/z/${this.data.id}.json`;
 
             new HttpRequest(generateRequestUrl, RequestType.GET, (responseData) => {
-                var getParentNode, commentItems;
-
                 /* Remove "loading comments" text */
-                getParentNode = loadingText.parentNode.parentNode;
+                let getParentNode = loadingText.parentNode.parentNode;
                 getParentNode.removeChild(loadingText.parentNode);
 
                 /* Traverse the retrieved comments and append them to the comment section */
-                commentItems = JSON.parse(responseData)[1].data.children;
+                let commentItems = JSON.parse(responseData)[1].data.children;
                 if (commentItems.length > 0) {
                     commentItems.forEach((commentObject) => {
                         var readmore, comment;

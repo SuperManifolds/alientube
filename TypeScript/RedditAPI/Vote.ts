@@ -14,7 +14,7 @@ module AlienTube.Reddit {
     */
     export class VoteRequest {
         constructor(thing: string, type: Vote, callback?: any) {
-            var url = "https://api.reddit.com/api/vote";
+            let url = "https://api.reddit.com/api/vote";
             new HttpRequest(url, RequestType.POST, callback, {
                 "uh": Preferences.getString("redditUserIdentifierHash"),
                 "id": thing,

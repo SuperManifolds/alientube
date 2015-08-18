@@ -14,7 +14,7 @@ module AlienTube.Reddit {
     */
     export class CommentRequest {
         constructor(thing: string, comment: string, callback?: any) {
-            var url = "https://api.reddit.com/api/comment";
+            let url = "https://api.reddit.com/api/comment";
             new HttpRequest(url, RequestType.POST, callback, {
                 "uh": Preferences.getString("redditUserIdentifierHash"),
                 "thing_id": thing,

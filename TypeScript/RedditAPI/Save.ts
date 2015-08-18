@@ -14,7 +14,7 @@ module AlienTube.Reddit {
     */
     export class SaveRequest {
         constructor(thing: string, type: SaveType, callback: any) {
-            var url = "https://api.reddit.com/api/" + SaveType[type].toLowerCase();
+            let url = "https://api.reddit.com/api/" + SaveType[type].toLowerCase();
             new HttpRequest(url, RequestType.POST, callback, {
                 "uh": Preferences.getString("redditUserIdentifierHash"),
                 "id": thing

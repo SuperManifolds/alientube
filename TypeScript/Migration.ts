@@ -15,7 +15,7 @@ module AlienTube {
             lastVersion = lastVersion || "2.2";
             
             /* Get an array of the different version migrations available. */
-            var versions = Object.keys(this.migrations);
+            let versions = Object.keys(this.migrations);
             
             /* If our previous version is not in the list, insert it so we will know our place in the version history. */
             versions.push(lastVersion);
@@ -24,7 +24,7 @@ module AlienTube {
             versions.sort();
             
             /* Get the index of the previous version, and remove it and all migrations before it, leaving migrations for newer versions behind */
-            var positionOfPreviousVersion = versions.indexOf(lastVersion) + 1;
+            let positionOfPreviousVersion = versions.indexOf(lastVersion) + 1;
             versions.splice(0, positionOfPreviousVersion);
             
             /* Call the migrations to newer versions in sucession. */
@@ -36,7 +36,7 @@ module AlienTube {
         private migrations = {
             "2.3": function () {
                 /* Migrate the previous "Display Google+ by default" setting into the "Default display action" setting. */
-                var displayGplusPreviousSetting = Preferences.getBoolean("displayGooglePlusByDefault");
+                let displayGplusPreviousSetting = Preferences.getBoolean("displayGooglePlusByDefault");
                 if (displayGplusPreviousSetting === true) {
                     Preferences.set("defaultDisplayAction", "gplus");
                 }
@@ -45,21 +45,21 @@ module AlienTube {
             "2.5": function () {
                 /* In 2.5 AlienTube now uses the youtube channel ID not the display name for setting AlienTube or Google+ as default per channel.
                 We will attempt to migrate existing entries using the YouTube API  */
-                var previousDisplayActions = Preferences.getObject("channelDisplayActions");
+                let previousDisplayActions = Preferences.getObject("channelDisplayActions");
                 if (previousDisplayActions) {
-                    var migratedDisplayActions = {};
-                    var channelNameMigrationTasks = [];
+                    let migratedDisplayActions = {};
+                    let channelNameMigrationTasks = [];
                     
                     /* Iterate over the collection of previous display actions. We have to perform an asynchronous web request to the YouTube API 
                     for each channel, we will make each request a Promise so we can be informed when they have all been completed,
                     and work with the final result. */
                     Object.keys(previousDisplayActions).forEach((channelName) => {
                         if (previousDisplayActions.hasOwnProperty(channelName)) {
-                            var promise = new Promise((fulfill, reject) => { 
-                                var encodedChannelName = encodeURIComponent(channelName);
-                                var reqUrl = `https://www.googleapis.com/youtube/v3/search?part=id&q=${encodedChannelName}&type=channel&key=${APIKeys.youtubeAPIKey}`;
+                            let promise = new Promise((fulfill, reject) => { 
+                                let encodedChannelName = encodeURIComponent(channelName);
+                                let reqUrl = `https://www.googleapis.com/youtube/v3/search?part=id&q=${encodedChannelName}&type=channel&key=${APIKeys.youtubeAPIKey}`;
                                 new HttpRequest(reqUrl, RequestType.GET, (data) => {
-                                    var results = JSON.parse(data);
+                                    let results = JSON.parse(data);
                                     if (results.items.length > 0) {
                                         /* We found a match for the display name. We will migrate the old value to the new channel id. */
                                         migratedDisplayActions[results.items[0].id.channelId] = previousDisplayActions[channelName];

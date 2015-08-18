@@ -16,14 +16,12 @@ module AlienTube {
         private static acceptableResponseTypes = [200, 201, 202, 301, 302, 303, 0];
 
         constructor(url: string, type: RequestType, callback: any, postData?: any, errorHandler?: any) {
-            var uuid, listener, xhr, query, key, postData;
-
-            if (Utilities.getCurrentBrowser() === Browser.SAFARI && safari.self.addEventListener) {
+             if (Utilities.getCurrentBrowser() === Browser.SAFARI && safari.self.addEventListener) {
                 /* Generate a unique identifier to identify our request and response through Safari's message system. */
-                uuid = HttpRequest.generateUUID();
+                let uuid = HttpRequest.generateUUID();
                 
                 /* Message the global page to have it perform a web request for us. */
-                listener = safari.self.addEventListener('message', function listenerFunction(event) {
+                let listener = safari.self.addEventListener('message', function listenerFunction(event) {
                     if (event.message.uuid !== uuid) return;
                     
                     if (event.message.data && callback) {
@@ -42,7 +40,7 @@ module AlienTube {
                 });
                 
             } else {
-                xhr = new XMLHttpRequest();
+                let xhr = new XMLHttpRequest();
                 xhr.open(RequestType[type], url, true);
                 xhr.withCredentials = true;
                 if (type === RequestType.POST) {
@@ -50,7 +48,7 @@ module AlienTube {
                 }
 
                 xhr.onerror = (e) => {
-                    if (errorHandler) errorHandler(e.target.status);
+                    if (errorHandler) errorHandler(xhr.status);
                 }
                 xhr.onload = () => {
                     if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
@@ -66,8 +64,8 @@ module AlienTube {
                 
                 /* Convert the post data array to a query string. */
                 if (type === RequestType.POST) {
-                    query = [];
-                    for (key in postData) {
+                    let query = [];
+                    for (let key in postData) {
                         query.push(encodeURIComponent(key) + '=' + encodeURIComponent(postData[key]));
                     }
                     xhr.send(query.join('&'));
@@ -86,7 +84,7 @@ module AlienTube {
         */
         private static generateUUID(): string {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                var r = Math.random() * 16 | 0,
+                let r = Math.random() * 16 | 0,
                     v = c === 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });

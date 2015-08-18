@@ -17,35 +17,31 @@ module AlienTube {
         userIsSignedIn: boolean;
 
         constructor(currentVideoIdentifier: string) {
-            var templateLink, loadingScreen, videoSearchString;
-
             this.threadCollection = new Array();
             this.storedTabCollection = new Array();
 
             // Make sure video identifier is not null. If it is null we are not on a video page so we will just time out.
             if (currentVideoIdentifier) {
                 // Load the html5 template file from disk and wait for it to load.
-                templateLink = document.createElement("link");
+                let templateLink = document.createElement("link");
                 templateLink.id = "alientubeTemplate";
                 Application.getExtensionTemplates((templateContainer) => {
                     this.template = templateContainer;
 
                     // Set Loading Screen
-                    loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Application.localisationManager.get("loading_search_message"));
+                    let loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Application.localisationManager.get("loading_search_message"));
                     this.set(loadingScreen.HTMLElement);
                     // Open a search request to Reddit for the video identfiier
-                    videoSearchString = encodeURI(`(url:3D${currentVideoIdentifier} OR url:${currentVideoIdentifier}) (site:youtube.com OR site:youtu.be)`);
+                    let videoSearchString = encodeURI(`(url:3D${currentVideoIdentifier} OR url:${currentVideoIdentifier}) (site:youtube.com OR site:youtu.be)`);
                     new AlienTube.Reddit.Request("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (results) => {
-                        var searchResults, finalResultCollection, preferredPost, preferredSubreddit, commentLinks, getExcludedSubreddits, sortedResultCollection;
-                        var tabContainer, tabContainerTemplate, ApplicationContainer, linkElement, url, match;
                         var mRegex = /(?:http|https):\/\/(.[^/]+)\/r\/([A-Za-z0-9][A-Za-z0-9_]{2,20})(?:\/comments\/)?([A-Za-z0-9]*)/g;
 
                         // There are a number of ways the Reddit API can arbitrarily explode, here are some of them.
                         if (results === {} || results.kind !== 'Listing' || results.data.children.length === 0) {
                             this.returnNoResults();
                         } else {
-                            searchResults = results.data.children;
-                            finalResultCollection = [];
+                            let searchResults = results.data.children;
+                            let finalResultCollection = [];
 
                             /* Filter out Reddit threads that do not lead to the video. Additionally, remove ones that have passed the 6
                             month threshold for Reddit posts and are in preserved mode, but does not have any comments. */
@@ -54,16 +50,17 @@ module AlienTube {
                                     finalResultCollection.push(result.data);
                                 }
                             });
-
+                            
+                            let preferredPost, preferredSubreddit;
                             if (finalResultCollection.length > 0) {
                                 /* Scan the YouTube comment sections for references to subreddits or reddit threads.
                                 These will be prioritised and loaded first.  */
-                                commentLinks = document.querySelectorAll("#eow-description a");
+                                let commentLinks = document.querySelectorAll("#eow-description a");
                                 for (var b = 0, coLen = commentLinks.length; b < coLen; b += 1) {
-                                    linkElement = <HTMLElement>commentLinks[b];
-                                    url = linkElement.getAttribute("href");
+                                    let linkElement = <HTMLElement>commentLinks[b];
+                                    let url = linkElement.getAttribute("href");
                                     if (typeof (url) !== 'undefined') {
-                                        match = mRegex.exec(url);
+                                        let match = mRegex.exec(url);
                                         if (match) {
                                             preferredSubreddit = match[2];
                                             if (match[3].length > 0) preferredPost = match[3];
@@ -73,8 +70,8 @@ module AlienTube {
                                 }
     	                       
                                 // Sort threads into array groups by what subreddit they are in.
-                                getExcludedSubreddits = Preferences.enforcedExludedSubreddits.concat(Preferences.getArray("excludedSubredditsSelectedByUser"));
-                                sortedResultCollection = {};
+                                let getExcludedSubreddits = Preferences.enforcedExludedSubreddits.concat(Preferences.getArray("excludedSubredditsSelectedByUser"));
+                                let sortedResultCollection = {};
                                 finalResultCollection.forEach(function(thread) {
                                     if (getExcludedSubreddits.indexOf(thread.subreddit.toLowerCase()) !== -1) return;
                                     if (thread.score < Preferences.getNumber("hiddenPostScoreThreshold")) return;
@@ -85,7 +82,7 @@ module AlienTube {
 
                                 // Sort posts into collections by what subreddit they appear in.
                                 this.threadCollection = [];
-                                for (var subreddit in sortedResultCollection) {
+                                for (let subreddit in sortedResultCollection) {
                                     if (sortedResultCollection.hasOwnProperty(subreddit)) {
                                         this.threadCollection.push(sortedResultCollection[subreddit].reduce((a, b) => {
                                             return ((this.getConfidenceForRedditThread(b) - this.getConfidenceForRedditThread(a)) || b.id === preferredPost) ? a : b;
@@ -99,9 +96,9 @@ module AlienTube {
                                         return this.getConfidenceForRedditThread(b) - this.getConfidenceForRedditThread(a);
                                     });
                                     
-                                    for (var i = 0, len = this.threadCollection.length; i < len; i += 1) {
+                                    for (let i = 0, len = this.threadCollection.length; i < len; i += 1) {
                                         if (this.threadCollection[i].subreddit === preferredSubreddit) {
-                                            var threadDataForFirstTab = this.threadCollection[i];
+                                            let threadDataForFirstTab = this.threadCollection[i];
                                             this.threadCollection.splice(i, 1);
                                             this.threadCollection.splice(0, 0, threadDataForFirstTab);
                                             break;
@@ -109,12 +106,12 @@ module AlienTube {
                                     }
 
                                     // Generate tabs.
-                                    tabContainerTemplate = Application.getExtensionTemplateItem(this.template, "tabcontainer");
-                                    tabContainer = <HTMLDivElement> tabContainerTemplate.querySelector("#at_tabcontainer");
+                                    let tabContainerTemplate = Application.getExtensionTemplateItem(this.template, "tabcontainer");
+                                    let tabContainer = <HTMLDivElement> tabContainerTemplate.querySelector("#at_tabcontainer");
                                     this.insertTabsIntoDocument(tabContainer, 0);
                                     window.addEventListener("resize", this.updateTabsToFitToBoundingContainer.bind(this), false);
 
-                                    ApplicationContainer = this.set(tabContainer);
+                                    let ApplicationContainer = this.set(tabContainer);
                                     ApplicationContainer.appendChild(tabContainerTemplate.querySelector("#at_comments"));
 
                                     // If the selected post is prioritised, marked it as such
@@ -140,7 +137,7 @@ module AlienTube {
             * @private
         */
         private showTab(threadData: any) {
-            var getTabById = this.storedTabCollection.filter(function(x) {
+            let getTabById = this.storedTabCollection.filter(function(x) {
                 return x[0].data.children[0].data.name === threadData.name;
             });
             if (getTabById.length > 0) {
@@ -155,14 +152,14 @@ module AlienTube {
             * @param threadData Data about the thread to download from a Reddit search page.
         */
         public downloadThread(threadData: any) {
-            var loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Application.localisationManager.get("loading_post_message"));
-            var alientubeCommentContainer = document.getElementById("at_comments");
+            let loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Application.localisationManager.get("loading_post_message"));
+            let alientubeCommentContainer = document.getElementById("at_comments");
             while (alientubeCommentContainer.firstChild) {
                 alientubeCommentContainer.removeChild(alientubeCommentContainer.firstChild);
             }
             alientubeCommentContainer.appendChild(loadingScreen.HTMLElement);
 
-            var requestUrl = `https://api.reddit.com/r/${threadData.subreddit}/comments/${threadData.id}.json?sort=${Preferences.getString("threadSortType")}`;
+            let requestUrl = `https://api.reddit.com/r/${threadData.subreddit}/comments/${threadData.id}.json?sort=${Preferences.getString("threadSortType")}`;
             new AlienTube.Reddit.Request(requestUrl, RequestType.GET, (responseObject) => {
                 // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
                 responseObject[0].data.children[0].data.official = threadData.official;
@@ -177,14 +174,12 @@ module AlienTube {
             * @param contents HTML DOM node or element to use.
         */
         public set(contents: Node) {
-            var bodyBackgroundColor, bodyBackgroundColorArray, bodyBackgroundColorAverage, redditButton, redditText, redditButtonTemplate;
-
-            var redditContainer = document.createElement("section");
+            let redditContainer = document.createElement("section");
             redditContainer.id = "alientube";
 
-            var commentsContainer = document.getElementById("watch7-content");
-            var previousRedditInstance = document.getElementById("alientube");
-            var googlePlusContainer = document.getElementById("watch-discussion");
+            let commentsContainer = document.getElementById("watch7-content");
+            let previousRedditInstance = document.getElementById("alientube");
+            let googlePlusContainer = document.getElementById("watch-discussion");
             if (previousRedditInstance) {
                 commentsContainer.removeChild(previousRedditInstance);
             }
@@ -203,9 +198,9 @@ module AlienTube {
 
             if (googlePlusContainer) {
                 /* Add the "switch to Reddit" button in the google+ comment section */
-                redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
+                let redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
                 if (!redditButton) {
-                    redditButtonTemplate = Application.getExtensionTemplateItem(this.template, "switchtoreddit");
+                    let redditButtonTemplate = Application.getExtensionTemplateItem(this.template, "switchtoreddit");
                     redditButton = <HTMLDivElement> redditButtonTemplate.querySelector("#at_switchtoreddit");
                     redditButton.addEventListener("click", this.onRedditClick, true);
                     googlePlusContainer.parentNode.insertBefore(redditButton, googlePlusContainer);
@@ -220,12 +215,12 @@ module AlienTube {
             }
             
             /* Set the setting for whether or not AlienTube should show itself on this YouTube channel */
-            var allowOnChannelContainer = document.getElementById("allowOnChannelContainer");
+            let allowOnChannelContainer = document.getElementById("allowOnChannelContainer");
             if (!allowOnChannelContainer) {
-                var youTubeActionsContainer = document.getElementById("watch7-user-header");
-                var allowOnChannel = Application.getExtensionTemplateItem(this.template, "allowonchannel");
+                let youTubeActionsContainer = document.getElementById("watch7-user-header");
+                let allowOnChannel = Application.getExtensionTemplateItem(this.template, "allowonchannel");
                 allowOnChannel.children[0].appendChild(document.createTextNode("Show AlienTube on this channel"));
-                var allowOnChannelCheckbox = allowOnChannel.querySelector("#allowonchannel");
+                let allowOnChannelCheckbox = allowOnChannel.querySelector("#allowonchannel");
                 allowOnChannelCheckbox.checked = (this.getDisplayActionForCurrentChannel() === "alientube");
                 allowOnChannelCheckbox.addEventListener("change", this.allowOnChannelChange, false);
                 youTubeActionsContainer.appendChild(allowOnChannel);
@@ -250,27 +245,25 @@ module AlienTube {
             * @private
         */
         private static validateItemFromResultSet(itemFromResultSet: any, currentVideoIdentifier: string): Boolean {
-            var urlSearch, requestItems, requestPair, component, shareRequestPair, shareRequestItems, urlSearch, obj;
-
             if (Utilities.isRedditPreservedPost(itemFromResultSet) && itemFromResultSet.num_comments < 1) {
                 return false;
             }
 
             if (itemFromResultSet.domain === "youtube.com") {
                 // For urls based on the full youtube.com domain, retrieve the value of the "v" query parameter and compare it.
-                urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.indexOf("?") + 1);
-                requestItems = urlSearch.split('&');
-                for (var i = 0, len = requestItems.length; i < len; i += 1) {
-                    var requestPair = requestItems[i].split("=");
+                let urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.indexOf("?") + 1);
+                let requestItems = urlSearch.split('&');
+                for (let i = 0, len = requestItems.length; i < len; i += 1) {
+                    let requestPair = requestItems[i].split("=");
                     if (requestPair[0] === "v" && requestPair[1] === currentVideoIdentifier) {
                         return true;
                     }
                     if (requestPair[0] === "amp;u") {
-                        component = decodeURIComponent(requestPair[1]);
+                        let component = decodeURIComponent(requestPair[1]);
                         component = component.replace("/watch?", "");
-                        var shareRequestItems = component.split('&');
-                        for (var j = 0, slen = shareRequestItems.length; j < slen; j += 1) {
-                            var shareRequestPair = shareRequestItems[j].split("=");
+                        let shareRequestItems = component.split('&');
+                        for (let j = 0, slen = shareRequestItems.length; j < slen; j += 1) {
+                            let shareRequestPair = shareRequestItems[j].split("=");
                             if (shareRequestPair[0] === "v" && shareRequestPair[1] === currentVideoIdentifier) {
                                 return true;
                             }
@@ -279,8 +272,8 @@ module AlienTube {
                 }
             } else if (itemFromResultSet.domain === "youtu.be") {
                 // For urls based on the shortened youtu.be domain, retrieve everything the path after the domain and compare it.
-                urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.lastIndexOf("/") + 1);
-                obj = urlSearch.split('?');
+                let urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.lastIndexOf("/") + 1);
+                let obj = urlSearch.split('?');
                 if (obj[0] === currentVideoIdentifier) {
                     return true;
                 }
@@ -296,12 +289,11 @@ module AlienTube {
             * @param [selectTabAtIndex] The tab to be in active / selected status.
         */
         public insertTabsIntoDocument(tabContainer: HTMLElement, selectTabAtIndex?: number) {
-            var overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
-            var len = this.threadCollection.length;
-            var maxWidth = document.getElementById("watch7-content").offsetWidth - 80;
-            var width = (21 + this.threadCollection[0].subreddit.length * 7);
-            var i = 0;
-            var tab, tabLink, overflowContainerMenu, menuItem, itemName, selectedTab;
+            let overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
+            let len = this.threadCollection.length;
+            let maxWidth = document.getElementById("watch7-content").offsetWidth - 80;
+            let width = (21 + this.threadCollection[0].subreddit.length * 7);
+            let i = 0;
 
             /* Calculate the width of tabs and determine how many you can fit without breaking the bounds of the comment section. */
             if (len > 0) {
@@ -310,10 +302,10 @@ module AlienTube {
                     if (width >= maxWidth) {
                         break;
                     }
-                    tab = document.createElement("button");
+                    let tab = document.createElement("button");
                     tab.className = "at_tab";
                     tab.setAttribute("data-value", this.threadCollection[i].subreddit);
-                    tabLink = document.createElement("a");
+                    let tabLink = document.createElement("a");
                     tabLink.textContent = this.threadCollection[i].subreddit;
                     tabLink.setAttribute("href", "http://reddit.com/r/" + this.threadCollection[i].subreddit);
                     tabLink.setAttribute("target", "_blank");
@@ -328,23 +320,23 @@ module AlienTube {
 
                     /* Click handler for the overflow menu button, displays the overflow menu. */
                     overflowContainer.addEventListener("click", () => {
-                        overflowContainerMenu = <HTMLUListElement> overflowContainer.querySelector("ul");
+                        let overflowContainerMenu = <HTMLUListElement> overflowContainer.querySelector("ul");
                         overflowContainer.classList.add("show");
                     }, false);
 
                     /* Document body click handler that closes the overflow menu when the user clicks outside of it.
                     by defining event bubbling in the third argument we are preventing clicks on the menu from triggering this event */
                     document.body.addEventListener("click", () => {
-                        overflowContainerMenu = <HTMLUListElement> overflowContainer.querySelector("ul");
+                        let overflowContainerMenu = <HTMLUListElement> overflowContainer.querySelector("ul");
                         overflowContainer.classList.remove("show");
                     }, true);
 
                     /* Continue iterating through the items we couldn't fit into tabs and populate the overflow menu. */
                     for (i = i; i < len; i += 1) {
-                        menuItem = document.createElement("li");
+                        let menuItem = document.createElement("li");
                         menuItem.setAttribute("data-value", this.threadCollection[i].subreddit);
                         menuItem.addEventListener("click", this.onSubredditOverflowItemClick.bind(this), false);
-                        itemName = document.createTextNode(this.threadCollection[i].subreddit);
+                        let itemName = document.createTextNode(this.threadCollection[i].subreddit);
                         menuItem.appendChild(itemName);
                         overflowContainer.children[1].appendChild(menuItem);
                     }
@@ -365,7 +357,7 @@ module AlienTube {
 
             // Set the active tab if provided
             if (selectTabAtIndex != null) {
-                selectedTab = <HTMLButtonElement>tabContainer.children[selectTabAtIndex];
+                let selectedTab = <HTMLButtonElement>tabContainer.children[selectTabAtIndex];
                 selectedTab.classList.add("active");
             }
         }
@@ -375,29 +367,27 @@ module AlienTube {
             * @private
         */
         private returnNoResults() {
-            var template, message, googlePlusText, googlePlusButton, googlePlusContainer, redditButton;
-
-            template = Application.getExtensionTemplateItem(this.template, "noposts");
-            message = template.querySelector(".single_line");
+            let template = Application.getExtensionTemplateItem(this.template, "noposts");
+            let message = template.querySelector(".single_line");
             message.textContent = Application.localisationManager.get("post_label_noresults");
 
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
-            googlePlusButton = template.querySelector("#at_switchtogplus");
+            let googlePlusButton = template.querySelector("#at_switchtogplus");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
+
+            let googlePlusContainer = document.getElementById("watch-discussion");
             
-            if (Preferences.getBoolean("showGooglePlusButton") === false ||  googlePlusContainer === null) {
+            if (Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
                 googlePlusButton.style.display = "none";
             }
 
             this.set(template);
 
-            googlePlusContainer = document.getElementById("watch-discussion");
-
             if (Preferences.getBoolean("showGooglePlusWhenNoPosts") && googlePlusContainer) {
                 googlePlusContainer.style.display = "block";
                 document.getElementById("alientube").style.display = "none";
 
-                redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
+                let redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
                 if (redditButton) {
                     redditButton.classList.add("noresults");
                 }
@@ -410,13 +400,11 @@ module AlienTube {
          * @private
          */
         private onRedditClick(eventObject: Event) {
-            var googlePlusContainer, alienTubeContainer, redditButton;
-
-            googlePlusContainer = document.getElementById("watch-discussion");
+            let googlePlusContainer = document.getElementById("watch-discussion");
             googlePlusContainer.style.display = "none";
-            alienTubeContainer = document.getElementById("alientube");
+            let alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "block";
-            redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
+            let redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
             redditButton.style.display = "none";
         }
     	
@@ -426,13 +414,11 @@ module AlienTube {
             * @private
          */
         private onGooglePlusClick(eventObject: Event) {
-            var googlePlusContainer, alienTubeContainer, redditButton;
-
-            alienTubeContainer = document.getElementById("alientube");
+            let alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "none";
-            googlePlusContainer = document.getElementById("watch-discussion");
+            let googlePlusContainer = document.getElementById("watch-discussion");
             googlePlusContainer.style.display = "block";
-            redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
+            let redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
             redditButton.style.display = "block";
         }
 
@@ -444,19 +430,18 @@ module AlienTube {
             /* Only perform the resize operation when we have a new frame to work on by the browser, any animation beyond this will not
             be rendered and is pointless. */
             window.requestAnimationFrame(() => {
-                var tabContainer, overflowContainer, tabElement, currentActiveTabIndex, i, len;
-                tabContainer = document.getElementById("at_tabcontainer");
+                let tabContainer = document.getElementById("at_tabcontainer");
 
                 if (!tabContainer) {
                     return;
                 }
-                overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
+                let overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
 
                 /* Iterate over the tabs until we find the one that is currently selected, and store its value. */
-                for (i = 0, len = tabContainer.children.length; i < len; i += 1) {
-                    tabElement = <HTMLButtonElement> tabContainer.children[i];
+                for (let i = 0, len = tabContainer.children.length; i < len; i += 1) {
+                    let tabElement = <HTMLButtonElement> tabContainer.children[i];
                     if (tabElement.classList.contains("active")) {
-                        currentActiveTabIndex = i;
+                        let currentActiveTabIndex = i;
 
                         /* Remove all tabs and overflow ites, then render them over again using new size dimensions. */
                         this.clearTabsFromTabContainer();
@@ -471,14 +456,12 @@ module AlienTube {
             * Remove all tabs and overflow items from the DOM.
          */
         public clearTabsFromTabContainer() {
-            var tabContainer, overflowContainer, childElement, overflowListElement;
-
-            tabContainer = document.getElementById("at_tabcontainer");
-            overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
+            let tabContainer = document.getElementById("at_tabcontainer");
+            let overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
 
             /* Iterate over the tab elements and remove them all. Stopping short off the overflow button. */
             while (tabContainer.firstElementChild) {
-                childElement = <HTMLUnknownElement> tabContainer.firstElementChild;
+                let childElement = <HTMLUnknownElement> tabContainer.firstElementChild;
                 if (childElement.classList.contains("at_tab")) {
                     tabContainer.removeChild(tabContainer.firstElementChild);
                 } else {
@@ -487,7 +470,7 @@ module AlienTube {
             }
 
             /* Iterate over the overflow items, removing them all. */
-            overflowListElement = <HTMLUListElement> overflowContainer.querySelector("ul");
+            let overflowListElement = <HTMLUListElement> overflowContainer.querySelector("ul");
             while (overflowListElement.firstElementChild) {
                 overflowListElement.removeChild(overflowListElement.firstElementChild);
             }
@@ -499,17 +482,16 @@ module AlienTube {
             * @private
         */
         private onSubredditTabClick(eventObject: Event) {
-            var tabElementClickedByUser, tabContainer, currentIndexOfNewTab, i, len, tabElement;
-            tabElementClickedByUser = <HTMLButtonElement> eventObject.target;
+            let tabElementClickedByUser = <HTMLButtonElement> eventObject.target;
 
             /* Only continue if the user did not click a tab that is already selected. */
             if (!tabElementClickedByUser.classList.contains("active") && tabElementClickedByUser.tagName === "BUTTON") {
-                tabContainer = document.getElementById("at_tabcontainer");
-                currentIndexOfNewTab = 0;
+                let tabContainer = document.getElementById("at_tabcontainer");
+                let currentIndexOfNewTab = 0;
 
                 /* Iterate over the tabs to find the currently selected one and remove its selected status */
-                for (i = 0, len = tabContainer.children.length; i < len; i += 1) {
-                    tabElement = <HTMLButtonElement> tabContainer.children[i];
+                for (let i = 0, len = tabContainer.children.length; i < len; i += 1) {
+                    let tabElement = <HTMLButtonElement> tabContainer.children[i];
                     if (tabElement === tabElementClickedByUser) currentIndexOfNewTab = i;
                     tabElement.classList.remove("active");
                 }
@@ -526,23 +508,21 @@ module AlienTube {
             * @private
         */
         private onSubredditOverflowItemClick(eventObject: Event) {
-            var listOfExistingOverflowItems, i, overflowElement, threadDataForNewTab, len;
-
-            var tabContainer = document.getElementById("at_tabcontainer");
-            var overflowItemClickedByUser = <HTMLLIElement> eventObject.target;
-            var currentIndexOfNewTab = 0;
+            let tabContainer = document.getElementById("at_tabcontainer");
+            let overflowItemClickedByUser = <HTMLLIElement> eventObject.target;
+            let currentIndexOfNewTab = 0;
 
             /* Iterate over the current overflow items to find the index of the one that was just clicked. */
-            listOfExistingOverflowItems = <HTMLUListElement> overflowItemClickedByUser.parentNode;
-            for (i = 0, len = listOfExistingOverflowItems.children.length; i < len; i += 1) {
-                overflowElement = <HTMLLIElement> listOfExistingOverflowItems.children[i];
+            let listOfExistingOverflowItems = <HTMLUListElement> overflowItemClickedByUser.parentNode;
+            for (let i = 0, len = listOfExistingOverflowItems.children.length; i < len; i += 1) {
+                let overflowElement = <HTMLLIElement> listOfExistingOverflowItems.children[i];
                 if (overflowElement === overflowItemClickedByUser) currentIndexOfNewTab = i;
             }
 
             /* Derive the total index of the item in the subreddit list from the number we just calculated added
              with the total length of the visible non overflow tabs */
             currentIndexOfNewTab = (tabContainer.children.length) + currentIndexOfNewTab - 1;
-            threadDataForNewTab = this.threadCollection[currentIndexOfNewTab];
+            let threadDataForNewTab = this.threadCollection[currentIndexOfNewTab];
 
             /* Move the new item frontmost in the array so it will be the first tab, and force a re-render of the tab control. */
             this.threadCollection.splice(currentIndexOfNewTab, 1);
@@ -561,9 +541,9 @@ module AlienTube {
             * @private
          */
         private allowOnChannelChange(eventObject: Event) {
-            var allowedOnChannel = (<HTMLInputElement>eventObject.target).checked;
-            var channelId = document.querySelector("meta[itemprop='channelId']").getAttribute("content");
-            var channelDisplayActions = Preferences.getObject("channelDisplayActions");
+            let allowedOnChannel = (<HTMLInputElement>eventObject.target).checked;
+            let channelId = document.querySelector("meta[itemprop='channelId']").getAttribute("content");
+            let channelDisplayActions = Preferences.getObject("channelDisplayActions");
             channelDisplayActions[channelId] = allowedOnChannel ? "alientube" : "gplus";
             Preferences.set("channelDisplayActions", channelDisplayActions);
         }
@@ -573,8 +553,8 @@ module AlienTube {
          * @private
          */
         private getDisplayActionForCurrentChannel() {
-            var channelId = document.querySelector("meta[itemprop='channelId']").getAttribute("content");
-            var displayActionByUser = Preferences.getObject("channelDisplayActions")[channelId];
+            let channelId = document.querySelector("meta[itemprop='channelId']").getAttribute("content");
+            let displayActionByUser = Preferences.getObject("channelDisplayActions")[channelId];
             if (displayActionByUser) {
                 return displayActionByUser;
             }
@@ -586,9 +566,9 @@ module AlienTube {
          * @private
          */
         private getConfidenceForRedditThread(thread : any) : number {
-            var order = Math.log(Math.max(Math.abs(thread.score), 1));
+            let order = Math.log(Math.max(Math.abs(thread.score), 1));
             
-            var sign;
+            let sign;
             if (thread.score > 0) {
                 sign = 1;
             } else if (thread.score < 0) {
@@ -597,17 +577,15 @@ module AlienTube {
                 sign = 0;
             }
             
-            var seconds = <number> Math.floor(((new Date()).getTime() / 1000) - thread.created_utc) - 1134028003;
+            let seconds = <number> Math.floor(((new Date()).getTime() / 1000) - thread.created_utc) - 1134028003;
             return Math.round((order + sign*seconds / 4500) * 10000000) / 10000000;
         }
         
         private checkEnvironmentDarkModestatus(alientubeContainer : any) {
-            var bodyBackgroundColour, bodyBackgroundColourArray, bodyBackgroundColourAverage;
-            
-            bodyBackgroundColour = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
-            bodyBackgroundColourArray = bodyBackgroundColour.substring(4, bodyBackgroundColour.length - 1).replace(/ /g, '').split(',');
-            bodyBackgroundColourAverage = 0;
-            for (var i = 0; i < 3; i += 1) {
+            let bodyBackgroundColour = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
+            let bodyBackgroundColourArray = bodyBackgroundColour.substring(4, bodyBackgroundColour.length - 1).replace(/ /g, '').split(',');
+            let bodyBackgroundColourAverage = 0;
+            for (let i = 0; i < 3; i += 1) {
                 bodyBackgroundColourAverage = bodyBackgroundColourAverage + parseInt(bodyBackgroundColourArray[i], 10);
             }
             bodyBackgroundColourAverage = bodyBackgroundColourAverage / 3;

@@ -36,8 +36,6 @@ module AlienTube {
 
         constructor() {
             this.localisationManager = new LocalisationManager(() => {
-                var i, len, label, inputElement, selectValue, optionElementIndex;
-                
                 /* Get the element for inputs we need to specifically modify. */
                 this.defaultDisplayActionElement = document.getElementById("defaultDisplayAction");
 
@@ -66,24 +64,24 @@ module AlienTube {
                     }
                     
                     /* Go over every setting in the options panel. */
-                    for (i = 0, len = Options.preferenceKeyList.length; i < len; i += 1) {
+                    for (let i = 0, len = Options.preferenceKeyList.length; i < len; i += 1) {
                         /* Set the localised text for every setting. */
-                        label = <HTMLLabelElement> document.querySelector("label[for='" + Options.preferenceKeyList[i] + "']");
+                        let label = <HTMLLabelElement> document.querySelector("label[for='" + Options.preferenceKeyList[i] + "']");
                         label.textContent = this.localisationManager.get("options_label_" + Options.preferenceKeyList[i]);
                         
                         /* Get the control for the setting. */
-                        inputElement = document.getElementById(Options.preferenceKeyList[i]);
+                        let inputElement = document.getElementById(Options.preferenceKeyList[i]);
                         if (inputElement.tagName === "SELECT") {
                             /* This control is a select/dropdown element. Retreive the existing setting for this. */
-                            inputElement = <HTMLSelectElement> inputElement;
-                            selectValue = Preferences.getString(Options.preferenceKeyList[i]);
+                            var selectInputElement = <HTMLSelectElement> inputElement;
+                            var selectValue = Preferences.getString(Options.preferenceKeyList[i]);
                             
                             /* Go over every dropdown item to find the one we need to set as selected. Unfortunately NodeList does not inherit from 
                                Array and does not have forEach. Therefor we will force an iteration over it by calling Array.prototype.forEach.call */
-                            optionElementIndex = 0;
-                            Array.prototype.forEach.call(inputElement.options, (optionElement) => {
+                            var optionElementIndex = 0;
+                            Array.prototype.forEach.call(selectInputElement.options, (optionElement) => {
                                 if (optionElement.value === selectValue) {
-                                    inputElement.selectedIndex = optionElementIndex;
+                                    selectInputElement.selectedIndex = optionElementIndex;
                                 }
                                 optionElementIndex += 1;
                             });
@@ -91,19 +89,22 @@ module AlienTube {
                             /* Call the settings changed event when the user has selected a different dropdown item.*/
                             inputElement.addEventListener("change", this.saveUpdatedSettings, false);
                         } else if (inputElement.getAttribute("type") === "number") {
+                            let numberInputElement = <HTMLInputElement>inputElement;
                             /* This control is a number input element. Retreive the existing setting for this. */
-                            inputElement.value = Preferences.getNumber(Options.preferenceKeyList[i]);
+                            numberInputElement.value = Preferences.getNumber(Options.preferenceKeyList[i]).toString();
                             
                             /* Call the settings changed event when the user has pushed a key, cut to clipboard, or pasted, from clipboard */
                             inputElement.addEventListener("keyup", this.saveUpdatedSettings, false);
                             inputElement.addEventListener("cut", this.saveUpdatedSettings, false);
                             inputElement.addEventListener("paste", this.saveUpdatedSettings, false);
                         } else if (inputElement.getAttribute("type") === "checkbox") {
+                            let checkboxInputElement = <HTMLInputElement> inputElement;
+                            
                             /* This control is a checkbox. Retreive the existing setting for this. */
-                            inputElement.checked = Preferences.getBoolean(Options.preferenceKeyList[i]);
+                            checkboxInputElement.checked = Preferences.getBoolean(Options.preferenceKeyList[i]);
                             
                             /* Call the settings changed event when the user has changed the state of the checkbox. */
-                            inputElement.addEventListener("change", this.saveUpdatedSettings, false);
+                            checkboxInputElement.addEventListener("change", this.saveUpdatedSettings, false);
                         }
                     }
 
@@ -147,7 +148,7 @@ module AlienTube {
          * @private
          */
         private saveUpdatedSettings(event: Event) {
-            var inputElement = <HTMLInputElement> event.target;
+            let inputElement = <HTMLInputElement> event.target;
             if (inputElement.getAttribute("type") === "number") {
                 if (inputElement.value.match(/[0-9]+/)) {
                     inputElement.removeAttribute("invalidInput");
@@ -182,16 +183,16 @@ module AlienTube {
          */
         private addSubredditExclusionItem(subreddit: string, animate?: boolean) {
             /* Create the list item and set the name of the subreddit. */
-            var subredditElement = document.createElement("div");
+            let subredditElement = document.createElement("div");
             subredditElement.setAttribute("subreddit", subreddit);
             
             /* Create and populate the label that contains the name of the subreddit. */
-            var subredditLabel = document.createElement("span");
+            let subredditLabel = document.createElement("span");
             subredditLabel.textContent = subreddit;
             subredditElement.appendChild(subredditLabel);
             
             /* Create the remove item button and set the event handler. */
-            var removeButton = document.createElement("button");
+            let removeButton = document.createElement("button");
             removeButton.textContent = '╳';
             subredditElement.appendChild(removeButton);
             removeButton.addEventListener("click", this.removeSubredditFromExcludeList.bind(this), false);
@@ -226,7 +227,7 @@ module AlienTube {
          * @private
          */
         private validateExcludeField(event: Event): boolean {
-            var textfield = <HTMLInputElement>event.target;
+            let textfield = <HTMLInputElement>event.target;
             
             /* Check that the text field contents is a valid subreddit name. */
             if (textfield.value.match(/([A-Za-z0-9_]+|[reddit.com]){3}/) !== null) {
@@ -244,7 +245,7 @@ module AlienTube {
          */
         private addItemToExcludeList(event: Event) {
             /* Retrieve the subreddit name from the text field, and add it to the list. */
-            var subredditName = this.excludeSubredditsField.value;
+            let subredditName = this.excludeSubredditsField.value;
             this.addSubredditExclusionItem(subredditName, true);
             
             /* Add the subreddit name to the list in preferences. */
@@ -265,7 +266,7 @@ module AlienTube {
          */
         private removeSubredditFromExcludeList(event: Event) {
             /* Retrieve the subreddit item that will be removed. */
-            var subredditElement = <HTMLDivElement>(<HTMLButtonElement> event.target).parentNode;
+            let subredditElement = <HTMLDivElement>(<HTMLButtonElement> event.target).parentNode;
             
             /* Remove the item from the preferences file. */
             this.excludedSubreddits.splice(this.excludedSubreddits.indexOf(subredditElement.getAttribute("subreddit")), 1);
@@ -283,7 +284,7 @@ module AlienTube {
          * @private
          */
         private static getExtensionVersionNumber(): string {
-            var version = "";
+            let version = "";
             switch (Utilities.getCurrentBrowser()) {
                 case Browser.CHROME:
                     version = chrome.app.getDetails().version;

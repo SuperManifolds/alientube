@@ -54,7 +54,7 @@ module AlienTube {
                 case Browser.SAFARI:
                     if (safari.self.addEventListener) {
                         /* Make a request to the global page to retreive the settings */
-                        var listener = safari.self.addEventListener('message', function listenerFunction(event) {
+                        let listener = safari.self.addEventListener('message', function listenerFunction(event) {
                             if (event.name === "preferences") {
                                 Preferences.preferenceCache = event.message;
     
@@ -68,10 +68,10 @@ module AlienTube {
                             callback();
                         }
                     } else {
-                        var preferences = {};
-                        var numKeys = localStorage.length;
-                        for (var i = 0; i < numKeys; i++) {
-                            var keyName = localStorage.key(i);
+                        let preferences = {};
+                        let numKeys = localStorage.length;
+                        for (let i = 0; i < numKeys; i++) {
+                            let keyName = localStorage.key(i);
                             preferences[keyName] = localStorage.getItem(keyName);
                         }
                         Preferences.preferenceCache = preferences;

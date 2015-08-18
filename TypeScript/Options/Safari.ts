@@ -28,10 +28,10 @@ module AlienTube {
             } else if (event.name == "setPreference") {
                 localStorage.setItem(event.message.key, event.message.value);
             } else if (event.name === "getPreferences") {
-                var preferences = {};
-                var numKeys = localStorage.length;
-                for (var i = 0; i < numKeys; i++) {
-                    var keyName = localStorage.key(i);
+                let preferences = {};
+                let numKeys = localStorage.length;
+                for (let i = 0; i < numKeys; i++) {
+                    let keyName = localStorage.key(i);
                     preferences[keyName] = localStorage.getItem(keyName);
                 }
                 event.target.page.dispatchMessage("preferences", preferences);

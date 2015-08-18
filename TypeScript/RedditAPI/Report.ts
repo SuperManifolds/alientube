@@ -16,10 +16,7 @@ module AlienTube.Reddit {
         private reportContainer;
 
         constructor(thing: string, commentThread: CommentThread, isThread: boolean) {
-            var reportTemplate, report_spam, report_vote_manipulation, report_personal_information, report_sexualising_minors, report_breaking_reddit, report_other;
-            var submitButton, cancelButton, reportOtherButton, reportOtherField, radioButtonControllers, i, len, parentContainer, commentApplication;
-
-            reportTemplate = Application.getExtensionTemplateItem(commentThread.commentSection.template, "report");
+            let reportTemplate = Application.getExtensionTemplateItem(commentThread.commentSection.template, "report");
             this.reportContainer = reportTemplate.querySelector(".at_report");
             
             /* Set localisation text for the various report reasons */
@@ -37,20 +34,20 @@ module AlienTube.Reddit {
             });
 
             /* Set localisation text for the submit button */
-            submitButton = this.reportContainer.querySelector(".at_report_submit");
+            let submitButton = this.reportContainer.querySelector(".at_report_submit");
             submitButton.appendChild(document.createTextNode(Application.localisationManager.get("report_dialog_button_submit")));
 
             /* Set localisation text for the cancel button */
-            cancelButton = this.reportContainer.querySelector(".at_report_cancel");
+            let cancelButton = this.reportContainer.querySelector(".at_report_cancel");
             cancelButton.appendChild(document.createTextNode(Application.localisationManager.get("report_dialog_button_cancel")));
 
             /* Assign an event listener to all the buttons, checking if the one that is being selected is the "other" button.
             If so, re-enable the "other reason" text field, if not, disable it. */
-            reportOtherButton = this.reportContainer.querySelector("#report_other");
-            reportOtherField = this.reportContainer.querySelector("#report_otherfield");
+            let reportOtherButton = this.reportContainer.querySelector("#report_other");
+            let reportOtherField = this.reportContainer.querySelector("#report_otherfield");
 
             var radioButtonControllers = this.reportContainer.querySelectorAll("input[type=radio]");
-            for (i = 0, len = radioButtonControllers.length; i < len; i += 1) {
+            for (let i = 0, len = radioButtonControllers.length; i < len; i += 1) {
                 radioButtonControllers[i].addEventListener("change", () => {
                     if (reportOtherButton.checked) {
                         reportOtherField.disabled = false;
@@ -63,11 +60,9 @@ module AlienTube.Reddit {
             /* Submit button click event. Check if the currently selected radio button is the "other" button, if so retrieve it's text
             field value. If not, use the value from whatever radio button is selected.  */
             submitButton.addEventListener("click", () => {
-                var activeRadioButton, reportReason, otherReason;
-
-                activeRadioButton = this.getCurrentSelectedRadioButton();
-                reportReason = "";
-                otherReason = "";
+                let activeRadioButton = this.getCurrentSelectedRadioButton();
+                let reportReason = "";
+                let otherReason = "";
                 if (activeRadioButton) {
                     if (activeRadioButton === reportOtherButton) {
                         reportReason = "other";
@@ -121,10 +116,10 @@ module AlienTube.Reddit {
 
             /* Append the report screen to the appropriate location. */
             if (isThread) {
-                parentContainer = document.querySelector("header .info");
+                let parentContainer = document.querySelector("header .info");
                 parentContainer.appendChild(this.reportContainer);
             } else {
-                commentApplication = document.querySelector(`article[data-reddit-id='${thing.substring(3)}'] .at_commentApplication`);
+                let commentApplication = document.querySelector(`article[data-reddit-id='${thing.substring(3)}'] .at_commentApplication`);
                 commentApplication.appendChild(this.reportContainer);
             }
         }

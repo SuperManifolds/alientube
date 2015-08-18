@@ -46,7 +46,7 @@ module AlienTube.Reddit {
             /* Kick of a 3 second timer that will confirm to the user that the loading process is taking unusually long, unless cancelled
             by a successful load (or an error) */
             this.loadTimer = setTimeout(() => {
-                var loadingText = document.getElementById("at_loadingtext");
+                let loadingText = document.getElementById("at_loadingtext");
                 loadingText.textContent = Application.localisationManager.get("loading_slow_message");
             }, 3000);
 
@@ -65,8 +65,6 @@ module AlienTube.Reddit {
          * @param responseText the response from the Reddit API.
          */
         private onSuccess(responseText) {
-            var responseObject;
-
             /* Cancel the slow load timer */
             clearTimeout(this.loadTimer);
             
@@ -76,7 +74,7 @@ module AlienTube.Reddit {
             /* Dismiss the loading screen, perform the callback and clear ourselves out of memory. */
             this.loadingScreen.updateProgress(LoadingState.COMPLETE);
             try {
-                responseObject = JSON.parse(responseText);
+                let responseObject = JSON.parse(responseText);
                 this.finalCallback(responseObject);
             } catch (e) {
                 if (e.toString().indexOf("SyntaxError: Unexpected end of input") !== -1) {

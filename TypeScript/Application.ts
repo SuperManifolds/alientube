@@ -15,8 +15,6 @@ module AlienTube {
         currentVideoIdentifier: string;
 
         constructor() {
-            var observer, config;
-
             // Load preferences from disk.
             Preferences.initialise(() => {
                 // Check if a version migration is necessary.
@@ -41,8 +39,8 @@ module AlienTube {
                 }
 
                 // Start observer to detect when a new video is loaded.
-                observer = new MutationObserver(this.mutationObserver);
-                config = { attributes: true, childList: true, characterData: true };
+                let observer = new MutationObserver(this.mutationObserver);
+                let config = { attributes: true, childList: true, characterData: true };
                 observer.observe(document.getElementById("content"), config);
 
                 // Start a new comment section.
@@ -61,11 +59,9 @@ module AlienTube {
         */
         private mutationObserver(mutations: Array<MutationRecord>) {
             mutations.forEach((mutation) => {
-                var target, reportedVideoId;
-
-                target = <HTMLElement>mutation.target;
+                let target = <HTMLElement>mutation.target;
                 if (target.classList.contains("yt-card") ||  target.id === "content") {
-                    reportedVideoId = Application.getCurrentVideoId();
+                    let reportedVideoId = Application.getCurrentVideoId();
                     if (reportedVideoId !== this.currentVideoIdentifier) {
                         this.currentVideoIdentifier = reportedVideoId;
                         if (Utilities.isYouTubeVideoPage) {
@@ -81,13 +77,11 @@ module AlienTube {
         * @returns YouTube video identifier.
         */
         public static getCurrentVideoId(): string {
-            var s, requestObjects, i, len, obj;
-
             if (window.location.search.length > 0) {
-                s = window.location.search.substring(1);
-                requestObjects = s.split('&');
-                for (i = 0, len = requestObjects.length; i < len; i += 1) {
-                    obj = requestObjects[i].split('=');
+                let s = window.location.search.substring(1);
+                let requestObjects = s.split('&');
+                for (let i = 0, len = requestObjects.length; i < len; i += 1) {
+                    let obj = requestObjects[i].split('=');
                     if (obj[0] === "v") {
                         return obj[1];
                     }
@@ -102,12 +96,10 @@ module AlienTube {
         * @returns A string with a human readable time.
         */
         public static getHumanReadableTimestamp(epochTime: number): string {
-            var secs, timeUnits, timeUnit;
-
-            secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
+            let secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
             secs = Math.abs(secs);
 
-            timeUnits = {
+            let timeUnits = {
                 Year:   Math.floor(secs / 60 / 60 / 24 / 365.27),
                 Month:  Math.floor(secs / 60 / 60 / 24 / 30),
                 Day:    Math.floor(secs / 60 / 60 / 24),
@@ -118,7 +110,7 @@ module AlienTube {
 
             /* Retrieve the most relevant number by retrieving the first one that is "1" or more.
             Decide if it is plural and retrieve the correct localisation */
-            for (timeUnit in timeUnits) {
+            for (let timeUnit in timeUnits) {
                 if (timeUnits.hasOwnProperty(timeUnit) && timeUnits[timeUnit] >= 1) {
                     if (timeUnits[timeUnit] > 1) {
                         return Application.localisationManager.get("timestamp_format", [
@@ -162,12 +154,10 @@ module AlienTube {
             * @param callback A callback to be called when the extension templates has been loaded.
         */
         public static getExtensionTemplates(callback: any) {
-            var template, handlebarHTML, templateLink;
-
             switch (Application.getCurrentBrowser()) {
                 case Browser.FIREFOX:
-                    template = document.createElement("div");
-                    handlebarHTML = Handlebars.compile(self.options.template);
+                    let template = document.createElement("div");
+                    let handlebarHTML = Handlebars.compile(self.options.template);
                     template.innerHTML = handlebarHTML();
 
                     if (callback) {
@@ -177,8 +167,8 @@ module AlienTube {
 
                 case Browser.SAFARI:
                     new HttpRequest(Application.getExtensionRessourcePath("templates.html"), RequestType.GET, (data) => {
-                        template = document.createElement("div");
-                        handlebarHTML = Handlebars.compile(data);
+                        let template = document.createElement("div");
+                        let handlebarHTML = Handlebars.compile(data);
                         template.innerHTML = handlebarHTML();
     
                         if (callback) {
@@ -188,7 +178,7 @@ module AlienTube {
                     break;
 
                 case Browser.CHROME:
-                    templateLink = document.createElement("link");
+                    let templateLink = document.createElement("link");
                     templateLink.id = "alientubeTemplate";
                     templateLink.onload = () => {
                         if (callback) {
@@ -207,7 +197,7 @@ module AlienTube {
          * @public
          */
         public static version(): string {
-            var version = "";
+            let version = "";
             switch (Application.getCurrentBrowser()) {
                 case Browser.CHROME:
                     version = chrome.runtime.getManifest()["version"];

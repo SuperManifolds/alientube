@@ -22,11 +22,9 @@ module AlienTube {
         ];
 
         constructor(callback?) {
-            var localisation;
-
             switch (Utilities.getCurrentBrowser()) {
                 case Browser.SAFARI:
-                    localisation = navigator.language.split('-')[0];
+                    let localisation = navigator.language.split('-')[0];
                     if (this.supportedLocalisations.indexOf(localisation) === -1) {
                         localisation = "en";
                     }
@@ -61,8 +59,6 @@ module AlienTube {
             * @returns The requested language string.
         */
         public get(key: string, placeholders?: Array<string>) {
-            var localisationItem, message, placeholder, placeHolderArgumentIndex;
-
             switch (Utilities.getCurrentBrowser()) {
                 case Browser.CHROME:
                     if (placeholders) {
@@ -75,12 +71,12 @@ module AlienTube {
                 case Browser.SAFARI:
                 case Browser.FIREFOX:
                     if (placeholders) {
-                        localisationItem = this.localisationData[key];
+                        let localisationItem = this.localisationData[key];
                         if (localisationItem) {
-                            message = localisationItem.message;
-                            for (placeholder in localisationItem.placeholders) {
+                            let message = localisationItem.message;
+                            for (let placeholder in localisationItem.placeholders) {
                                 if (localisationItem.placeholders.hasOwnProperty(placeholder)) {
-                                    placeHolderArgumentIndex = parseInt(localisationItem.placeholders[placeholder].content.substring(1), 10);
+                                    let placeHolderArgumentIndex = parseInt(localisationItem.placeholders[placeholder].content.substring(1), 10);
                                     message = message.replace("$" + placeholder.toUpperCase() + "$", placeholders[placeHolderArgumentIndex - 1]);
                                 }
                             }

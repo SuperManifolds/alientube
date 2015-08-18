@@ -18,7 +18,7 @@ module AlienTube {
         private loadingAttempts: number;
 
         constructor(commentSection: CommentSection, initialState?: LoadingState, alternativeText?: string) {
-            var loadingState = initialState || LoadingState.LOADING;
+            let loadingState = initialState || LoadingState.LOADING;
             this.representedHTMLElement = Application.getExtensionTemplateItem(commentSection.template, "loading");
             this.updateProgress(loadingState, alternativeText);
         }
@@ -36,7 +36,6 @@ module AlienTube {
          * @param [alternativeText] A custom message to put on the loading screen for the user.
          */
         public updateProgress(state: LoadingState, alternativeText?: string) {
-            var parentNode;
             this.currentProgressState = state;
             var loadingText = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingtext");
             var loadingHeader = <HTMLParagraphElement> this.representedHTMLElement.querySelector("#at_loadingheader");
@@ -58,7 +57,7 @@ module AlienTube {
 
                 case LoadingState.ERROR:
                 case LoadingState.COMPLETE:
-                    parentNode = this.representedHTMLElement.parentNode;
+                    let parentNode = this.representedHTMLElement.parentNode;
                     if (parentNode) {
                         this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
                     }
