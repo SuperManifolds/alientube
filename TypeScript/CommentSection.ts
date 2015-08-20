@@ -34,7 +34,6 @@ module AlienTube {
                     // Open a search request to Reddit for the video identfiier
                     let videoSearchString = encodeURI(`(url:3D${currentVideoIdentifier} OR url:${currentVideoIdentifier}) (site:youtube.com OR site:youtu.be)`);
                     new AlienTube.Reddit.Request("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, function (results) {
-                        var mRegex = /(?:http|https):\/\/(.[^/]+)\/r\/([A-Za-z0-9][A-Za-z0-9_]{2,20})(?:\/comments\/)?([A-Za-z0-9]*)/g;
 
                         // There are a number of ways the Reddit API can arbitrarily explode, here are some of them.
                         if (results === {} || results.kind !== 'Listing' || results.data.children.length === 0) {
@@ -55,6 +54,9 @@ module AlienTube {
                             if (finalResultCollection.length > 0) {
                                 /* Scan the YouTube comment sections for references to subreddits or reddit threads.
                                 These will be prioritised and loaded first.  */
+                                
+                                let mRegex = /(?:http|https):\/\/(.[^/]+)\/r\/([A-Za-z0-9][A-Za-z0-9_]{2,20})(?:\/comments\/)?([A-Za-z0-9]*)/g;
+                                
                                 let commentLinks = document.querySelectorAll("#eow-description a");
                                 for (var b = 0, coLen = commentLinks.length; b < coLen; b += 1) {
                                     let linkElement = <HTMLElement>commentLinks[b];
