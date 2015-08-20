@@ -95,7 +95,7 @@ module AlienTube {
         * @param epochTime Epoch timestamp to calculate from.
         * @returns A string with a human readable time.
         */
-        public static getHumanReadableTimestamp(epochTime: number): string {
+        public static getHumanReadableTimestamp(epochTime: number, localisationString = "timestamp_format"): string {
             let secs = Math.floor(((new Date()).getTime() / 1000) - epochTime);
             secs = Math.abs(secs);
 
@@ -112,13 +112,13 @@ module AlienTube {
             Decide if it is plural and retrieve the correct localisation */
             for (let timeUnit in timeUnits) {
                 if (timeUnits.hasOwnProperty(timeUnit) && timeUnits[timeUnit] >= 1) {
-                   return Application.localisationManager.get("timestamp_format", [
+                   return Application.localisationManager.get(localisationString, [
                        timeUnits[timeUnit],
                        Application.localisationManager.getWithLocalisedPluralisation(`timestamp_format_${ timeUnit.toLowerCase() }`, timeUnits[timeUnit])
                    ]);
                 }
             }
-            return Application.localisationManager.get("timestamp_format", [
+            return Application.localisationManager.get(localisationString, [
                 "0",
                 Application.localisationManager.getWithLocalisedPluralisation('timestamp_format_second', 0)
             ]);
