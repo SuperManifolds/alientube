@@ -107,14 +107,14 @@ echo
 
 echo ${standout}Compiling TypeScript Files.${normal}
 if [ "$1" == "--debug" ]; then
-    echo Compiling Options page TypeScript in ES5 compatibility mode without comments with with source map.
+    echo Compiling Options page TypeScript in ES5 compatibility mode without comments with source map.
     tsc --target ES5 --out lib/options-es5.js TypeScript/typings/es5-compatibility.ts TypeScript/Options/Options.ts --removeComments --sourcemap
-    echo Compiling Application TypeScript in ES5 compatibility mode without comments with with source map.
+    echo Compiling Application TypeScript in ES5 compatibility mode without comments with source map.
     tsc --target ES5 --out lib/script-es5.js TypeScript/typings/es5-compatibility.ts TypeScript/index.ts --removeComments --sourcemap
     
-    echo Compiling Options page TypeScript file without comments with with source map.
+    echo Compiling Options page TypeScript file without comments with source map.
     tsc --target ES6 --out lib/options.js TypeScript/Options/Options.ts --removeComments --sourcemap
-    echo Compiling Application TypeScript file without comments with with source map.
+    echo Compiling Application TypeScript file without comments with source map.
     tsc --target ES6 --out lib/script.js TypeScript/index.ts --removeComments --sourcemap
 else
     echo Compiling Options page TypeScript in ES5 compatibility mode with comments.
@@ -129,10 +129,10 @@ else
 fi
 echo
 echo Copying TypeScript Files
-cp -vf lib/options.js Chrome/res/options.js
+cp -vf lib/options-es5.js Chrome/res/options.js
 cp -vf lib/options-es5.js Firefox/data/options.js
 cp -vf lib/options-es5.js Safari.safariextension/res/options.js
-cp -vf lib/script.js Chrome/js/script.js
+cp -vf lib/script-es5.js Chrome/js/script.js
 cp -vf lib/script-es5.js Safari.safariextension/js/script.js
 cp -vf lib/script-es5.js Firefox/data/script.js
 echo
