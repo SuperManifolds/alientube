@@ -75,9 +75,15 @@ module AlienTube {
             score.textContent = (this.commentObject.score + scorePointsText);
 
             /* Set the timestamp of the comment */
-            let timestamp = this.representedHTMLElement.querySelector(".at_timestamp");
+            let timestamp = <HTMLSpanElement> this.representedHTMLElement.querySelector(".at_timestamp");
             timestamp.textContent = Application.getHumanReadableTimestamp(this.commentObject.created_utc);
             timestamp.setAttribute("timestamp", new Date(this.commentObject.created_utc).toISOString());
+            
+            /* If the post has been edited, display the edit time next to the timestamp. */
+            if (this.commentObject.edited) {
+                timestamp.classList.add("edited");
+                timestamp.title = `${Application.getHumanReadableTimestamp(this.commentObject.edited, "edited_timestamp_format")}`;
+            }
 
             /* Render the markdown and set the actual comement messsage of the comment */
             let contentTextOfComment = this.representedHTMLElement.querySelector(".at_commentcontent");
@@ -129,11 +135,6 @@ module AlienTube {
             let giveGoldToUser = this.representedHTMLElement.querySelector(".giveGold");
             giveGoldToUser.setAttribute("href", "http://www.reddit.com/gold?goldtype=gift&months=1&thing=" + this.commentObject.name);
             giveGoldToUser.textContent = Application.localisationManager.get("post_button_gold");
-
-            /* Add the little astreix on the comment if it has been edited at some point */
-            if (this.commentObject.edited) {
-                this.representedHTMLElement.classList.add("edited");
-            }
 
             let reportToAdministrators = this.representedHTMLElement.querySelector(".report");
             let editPost = this.representedHTMLElement.querySelector(".at_edit");

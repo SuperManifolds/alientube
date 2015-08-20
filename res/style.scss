@@ -405,10 +405,8 @@ body {
             }
         }
 
-        &.edited {
-            & > .at_commentmain > .info > .at_timestamp:after {
-                content: "*";
-            }
+        & .at_timestamp.edited:after {
+            content: " (*"attr(title)")";
         }
     }
 

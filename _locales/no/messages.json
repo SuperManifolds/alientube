@@ -65,6 +65,20 @@
       }
     }
   },
+  "edited_timestamp_format": {
+        "message": "sist endret $TIME_INTERVAL$ $UNIT$ siden",
+        "description": "Format of timestamps",
+        "placeholders": {
+            "time_interval": {
+                "content": "$1",
+                "example": "4"
+            },
+            "unit": {
+                "content": "$2",
+                "example": "hours"
+            }
+        }
+    },
   "post_submitted_timestamp_text": {
     "message": "sendt inn ",
     "description": "Prefix describing that the following time description will say when the post was submitted"

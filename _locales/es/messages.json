@@ -65,6 +65,20 @@
       }
     }
   },
+  "edited_timestamp_format": {
+        "message": "última edición hace $TIME_INTERVAL$ $UNIT$",
+        "description": "Format of timestamps",
+        "placeholders": {
+            "time_interval": {
+                "content": "$1",
+                "example": "4"
+            },
+            "unit": {
+                "content": "$2",
+                "example": "hours"
+            }
+        }
+    },
   "post_submitted_timestamp_text": {
     "message": "enviado ",
     "description": "Prefix describing that the following time description will say when the post was submitted"
