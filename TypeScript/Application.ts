@@ -112,22 +112,15 @@ module AlienTube {
             Decide if it is plural and retrieve the correct localisation */
             for (let timeUnit in timeUnits) {
                 if (timeUnits.hasOwnProperty(timeUnit) && timeUnits[timeUnit] >= 1) {
-                    if (timeUnits[timeUnit] > 1) {
-                        return Application.localisationManager.get("timestamp_format", [
-                            timeUnits[timeUnit],
-                            Application.localisationManager.get(`timestamp_format_${ timeUnit.toLowerCase() }_plural`)
-                        ]);
-                    } else {
-                        return Application.localisationManager.get("timestamp_format", [
-                            timeUnits[timeUnit],
-                            Application.localisationManager.get("timestamp_format_" + timeUnit.toLowerCase())
-                        ]);
-                    }
+                   return Application.localisationManager.get("timestamp_format", [
+                       timeUnits[timeUnit],
+                       Application.localisationManager.getWithLocalisedPluralisation(`timestamp_format_${ timeUnit.toLowerCase() }`, timeUnits[timeUnit])
+                   ]);
                 }
             }
             return Application.localisationManager.get("timestamp_format", [
                 "0",
-                Application.localisationManager.get("timestamp_format_second_plural")
+                Application.localisationManager.getWithLocalisedPluralisation('timestamp_format_second', 0)
             ]);
         }
 
