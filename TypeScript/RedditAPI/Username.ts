@@ -3,16 +3,16 @@
     * Namespace for requests to the Reddit API operations.
     * @namespace AlienTube.Reddit
 */
-"use strict";
 module AlienTube.Reddit {
     /**
         Perform a request to Reddit asking for the user's username so we can save and display it.
         @class RetreiveUsernameRequest
     */
+    "use strict";
     export class RetreiveUsernameRequest {
         constructor() {
             let url = "https://api.reddit.com/api/me.json";
-            new HttpRequest(url, RequestType.GET, (responseText) => {
+            new HttpRequest(url, RequestType.GET, function (responseText) {
                 let responseData = JSON.parse(responseText);
                 Preferences.set("username", responseData.data.name);
 

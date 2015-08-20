@@ -14,12 +14,12 @@ module AlienTube {
     export class Safari {
 		constructor(event) {
             if (event.name == 'XHR') {
-                new HttpRequest(event.message.url, event.message.requestType, (data) => {
+                new HttpRequest(event.message.url, event.message.requestType, function (data) {
                     event.target.page.dispatchMessage("POST", {
                         'uuid': event.message.uuid,
                         'data': data
                     });
-                }, event.message.postData, (error) => {
+                }, event.message.postData, function (error) {
                    event.target.page.dispatchMessage("POST", {
                         'uuid': event.message.uuid,
                         'error': error

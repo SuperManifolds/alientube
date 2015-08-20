@@ -10,6 +10,7 @@ module AlienTube {
         * @param commentData Object containing the comment data from the Reddit API.
         * @param commentThread CommentThread object representing the container of the comment.
     */
+    "use strict";
     export class Comment {
         representedHTMLElement: HTMLDivElement;
         commentObject: any;
@@ -171,7 +172,7 @@ module AlienTube {
             /* Continue traversing down and populate the replies to this comment. */
             if (this.commentObject.replies) {
                 let replyContainer = this.representedHTMLElement.querySelector(".at_replies");
-                this.commentObject.replies.data.children.forEach((commentObject) => {
+                this.commentObject.replies.data.children.forEach(function (commentObject) {
                     if (commentObject.kind === "more") {
                         let readmore = new LoadMore(commentObject.data, this, commentThread);
                         this.children.push(readmore);
@@ -181,7 +182,7 @@ module AlienTube {
                         this.children.push(comment);
                         replyContainer.appendChild(comment.representedHTMLElement);
                     }
-                });
+                }.bind(this));
             }
         }
     	
@@ -193,7 +194,7 @@ module AlienTube {
         private onSaveButtonClick(eventObject: Event) {
             let saveButton = <HTMLSpanElement> eventObject.target;
             let savedType = saveButton.getAttribute("saved") ? AlienTube.Reddit.SaveType.UNSAVE : AlienTube.Reddit.SaveType.SAVE;
-            new AlienTube.Reddit.SaveRequest(this.commentObject.name, savedType, () => {
+            new AlienTube.Reddit.SaveRequest(this.commentObject.name, savedType, function () {
                 if (savedType === AlienTube.Reddit.SaveType.SAVE) {
                     saveButton.setAttribute("saved", "true");
                     saveButton.textContent = Application.localisationManager.get("post_button_unsave");
@@ -333,7 +334,7 @@ module AlienTube {
             let confirmation = window.confirm(Application.localisationManager.get("post_delete_confirm"));
             if (confirmation) {
                 var url = "https://api.reddit.com/api/del";
-                new HttpRequest(url, RequestType.POST, () => {
+                new HttpRequest(url, RequestType.POST, function () {
                     this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
                     let getIndexInParentList = this.commentThread.children.indexOf(this);
                     if (getIndexInParentList !== -1) {

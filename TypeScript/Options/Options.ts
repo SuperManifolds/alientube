@@ -35,7 +35,7 @@ module AlienTube {
         private excludedSubreddits;
 
         constructor() {
-            this.localisationManager = new LocalisationManager(() => {
+            this.localisationManager = new LocalisationManager(function () {
                 /* Get the element for inputs we need to specifically modify. */
                 this.defaultDisplayActionElement = document.getElementById("defaultDisplayAction");
 
@@ -54,7 +54,7 @@ module AlienTube {
                 /* Set the page title */
                 window.document.title = this.localisationManager.get("options_label_title");
 
-                Preferences.initialise((preferences) => {
+                Preferences.initialise(function (preferences) {
                     // Check if a version migration is necessary.
                     if (Preferences.getString("lastRunVersion") !== Options.getExtensionVersionNumber()) {
                         new Migration(Preferences.getString("lastRunVersion"));
@@ -79,7 +79,7 @@ module AlienTube {
                             /* Go over every dropdown item to find the one we need to set as selected. Unfortunately NodeList does not inherit from 
                                Array and does not have forEach. Therefor we will force an iteration over it by calling Array.prototype.forEach.call */
                             var optionElementIndex = 0;
-                            Array.prototype.forEach.call(selectInputElement.options, (optionElement) => {
+                            Array.prototype.forEach.call(selectInputElement.options, function (optionElement) {
                                 if (optionElement.value === selectValue) {
                                     selectInputElement.selectedIndex = optionElementIndex;
                                 }
@@ -125,7 +125,7 @@ module AlienTube {
                     }
                     
                     /* Populate the excluded subreddit list. */
-                    this.excludedSubreddits.forEach((subreddit) => {
+                    this.excludedSubreddits.forEach(function (subreddit) {
                         this.addSubredditExclusionItem(subreddit);
                     });
                     
@@ -200,7 +200,7 @@ module AlienTube {
             /* If requested, place the list item on top of the input field and css transition it to the top of the list. */
             if (animate) {
                 subredditElement.classList.add("new");
-                setTimeout(() => {
+                setTimeout(function () {
                     subredditElement.classList.remove("new");
                 }, 100);
             }
@@ -253,7 +253,7 @@ module AlienTube {
             Preferences.set("excludedSubredditsSelectedByUser", this.excludedSubreddits);
             
             /* Remove the contents of the text field and reset the submit button state. */
-            setTimeout(() => {
+            setTimeout(function () {
                 this.addToExcludeButton.disabled = true;
                 this.excludeSubredditsField.value = "";
             }, 150);
@@ -274,7 +274,7 @@ module AlienTube {
             
             /* Remove the item from the list on the options page and animate its removal. */
             subredditElement.classList.add("removed");
-            setTimeout(() => {
+            setTimeout(function () {
                 this.excludeListContainer.removeChild(subredditElement);
             }, 500);
         }

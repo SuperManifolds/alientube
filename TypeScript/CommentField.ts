@@ -3,7 +3,6 @@
     * Namespace for All AlienTube operations.
     * @namespace AlienTube
 */
-"use strict";
 module AlienTube {
     /**
         * The representation and management of an AlienTube loading screen.
@@ -12,6 +11,7 @@ module AlienTube {
         * @param insertionPoint The DOM element in which the loading screen should be appended to as a child.
         * @param [initialState] An optional initial state for the loading screen, the default is "Loading"
     */
+    "use strict";
     export class CommentField {
         private representedHTMLElement: HTMLDivElement;
         private parentHTMLElement: HTMLDivElement;
@@ -95,7 +95,7 @@ module AlienTube {
 
             if (this.edit) {
                 /* Send the edit comment request to reddit */
-                new AlienTube.Reddit.EditCommentRequest(thing_id, inputField.value, (responseText) => {
+                new AlienTube.Reddit.EditCommentRequest(thing_id, inputField.value, function (responseText) {
                     this.parentClass.commentObject.body = inputField.value;
                     let editedCommentBody = this.parentClass.representedHTMLElement.querySelector(".at_commentcontent");
                     editedCommentBody.innerHTML = SnuOwnd.getParser().render(inputField.value);
@@ -107,7 +107,7 @@ module AlienTube {
                 });
             } else {
                 /* Send the comment to Reddit */
-                new AlienTube.Reddit.CommentRequest(thing_id, inputField.value, (responseText) => {
+                new AlienTube.Reddit.CommentRequest(thing_id, inputField.value, function (responseText) {
                     let responseObject = JSON.parse(responseText);
                     let comment = new Comment(responseObject.json.data.things[0].data, this.commentThread);
                     this.parentClass.children.push(comment);

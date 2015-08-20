@@ -3,7 +3,6 @@
     * Namespace for requests to the Reddit API operations.
     * @namespace AlienTube.Reddit
 */
-"use strict";
 module AlienTube.Reddit {
     /**
         Perform a request to Reddit to either save or unsave an item.
@@ -12,6 +11,7 @@ module AlienTube.Reddit {
         @param type Whether to save or unsave
         @param callback Callback handler for the event when loaded.
     */
+    "use strict";
     export class SaveRequest {
         constructor(thing: string, type: SaveType, callback: any) {
             let url = "https://api.reddit.com/api/" + SaveType[type].toLowerCase();

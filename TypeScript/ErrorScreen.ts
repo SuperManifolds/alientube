@@ -3,7 +3,6 @@
     * Namespace for All AlienTube operations.
     * @namespace AlienTube
 */
-"use strict";
 module AlienTube {
     /**
         * The representation and management of an AlienTube loading screen.
@@ -12,6 +11,7 @@ module AlienTube {
         * @param errorState The error state of the error screen, defines what visuals and titles will be displayed.
         * @param [message] Optional message to be displayed if the error state is set to regular "ERROR"
     */
+    "use strict";
     export class ErrorScreen {
         private representedHTMLElement: HTMLDivElement;
 

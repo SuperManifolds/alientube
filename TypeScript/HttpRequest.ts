@@ -2,7 +2,6 @@
     * Namespace for All AlienTube operations.
     * @namespace AlienTube
 */
-"use strict";
 module AlienTube {
     /**
         * HttpRequest interface across Browsers.
@@ -12,6 +11,7 @@ module AlienTube {
         * @param callback Callback handler for the event when loaded.
         * @param [postdata] Key-Value object containing POST data.
     */
+    "use strict";
     export class HttpRequest {
         private static acceptableResponseTypes = [200, 201, 202, 301, 302, 303, 0];
 
@@ -47,10 +47,11 @@ module AlienTube {
                     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 }
 
-                xhr.onerror = (e) => {
+                xhr.onerror = function (e) {
                     if (errorHandler) errorHandler(xhr.status);
-                }
-                xhr.onload = () => {
+                }.bind(this);
+                
+                xhr.onload = function () {
                     if (HttpRequest.acceptableResponseTypes.indexOf(xhr.status) !== -1) {
                         /* This is an acceptable response, we can now call the callback and end successfuly. */
                         if (callback) {
@@ -60,7 +61,7 @@ module AlienTube {
                         /* There was an error */
                         if (errorHandler) errorHandler(xhr.status);
                     }
-                }
+                }.bind(this);
                 
                 /* Convert the post data array to a query string. */
                 if (type === RequestType.POST) {

@@ -3,7 +3,6 @@
     * Namespace for requests to the Reddit API operations.
     * @namespace AlienTube.Reddit
 */
-"use strict";
 module AlienTube.Reddit {
     /**
         Report a post or comment to moderators.
@@ -12,6 +11,7 @@ module AlienTube.Reddit {
         @param commentThread CommentThread object representing the container of the comment.
         @param isThread Whether the thing being reported is an entire thread.
     */
+    "use strict";
     export class Report {
         private reportContainer;
 
@@ -48,7 +48,7 @@ module AlienTube.Reddit {
 
             var radioButtonControllers = this.reportContainer.querySelectorAll("input[type=radio]");
             for (let i = 0, len = radioButtonControllers.length; i < len; i += 1) {
-                radioButtonControllers[i].addEventListener("change", () => {
+                radioButtonControllers[i].addEventListener("change", function () {
                     if (reportOtherButton.checked) {
                         reportOtherField.disabled = false;
                     } else {
@@ -59,7 +59,7 @@ module AlienTube.Reddit {
 
             /* Submit button click event. Check if the currently selected radio button is the "other" button, if so retrieve it's text
             field value. If not, use the value from whatever radio button is selected.  */
-            submitButton.addEventListener("click", () => {
+            submitButton.addEventListener("click", function () {
                 let activeRadioButton = this.getCurrentSelectedRadioButton();
                 let reportReason = "";
                 let otherReason = "";
@@ -73,7 +73,7 @@ module AlienTube.Reddit {
                 }
 
                 /* Send the report to Reddit*/
-                new HttpRequest("https://api.reddit.com/api/report", RequestType.POST, () => {
+                new HttpRequest("https://api.reddit.com/api/report", RequestType.POST, function () {
                     var threadCollection, i, len, tabContainer, comment;
 
                     if (isThread) {
@@ -110,7 +110,7 @@ module AlienTube.Reddit {
             }, false);
 
             /* Cancel event listener, will merely just get rid of the report screen. */
-            cancelButton.addEventListener("click", () => {
+            cancelButton.addEventListener("click", function () {
                 this.reportContainer.parentNode.removeChild(this.reportContainer);
             }, false);
 

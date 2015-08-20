@@ -16,7 +16,7 @@ module AlienTube {
 
         constructor() {
             // Load preferences from disk.
-            Preferences.initialise(() => {
+            Preferences.initialise(function () {
                 // Check if a version migration is necessary.
                 if (Preferences.getString("lastRunVersion") !== Application.version()) {
                     new Migration(Preferences.getString("lastRunVersion"));
@@ -27,10 +27,10 @@ module AlienTube {
             });
             
             // Load language files. 
-            Application.localisationManager = new LocalisationManager(() => {
+            Application.localisationManager = new LocalisationManager(function () {
                 // Load stylesheet
                 if (Application.getCurrentBrowser() === Browser.SAFARI) {
-                    new HttpRequest(Application.getExtensionRessourcePath("style.css"), RequestType.GET, (data) => {
+                    new HttpRequest(Application.getExtensionRessourcePath("style.css"), RequestType.GET, function (data) {
                         var stylesheet = document.createElement("style");
                         stylesheet.setAttribute("type", "text/css");
                         stylesheet.textContent = data;
@@ -48,7 +48,7 @@ module AlienTube {
                 if (Utilities.isYouTubeVideoPage) {
                     Application.commentSection = new CommentSection(this.currentVideoIdentifier);
                 }
-            });
+            }.bind(this));
 
         }
 
@@ -58,7 +58,7 @@ module AlienTube {
             * @private
         */
         private mutationObserver(mutations: Array<MutationRecord>) {
-            mutations.forEach((mutation) => {
+            mutations.forEach(function (mutation) {
                 let target = <HTMLElement>mutation.target;
                 if (target.classList.contains("yt-card") ||  target.id === "content") {
                     let reportedVideoId = Application.getCurrentVideoId();
@@ -166,7 +166,7 @@ module AlienTube {
                     break;
 
                 case Browser.SAFARI:
-                    new HttpRequest(Application.getExtensionRessourcePath("templates.html"), RequestType.GET, (data) => {
+                    new HttpRequest(Application.getExtensionRessourcePath("templates.html"), RequestType.GET, function (data) {
                         let template = document.createElement("div");
                         let handlebarHTML = Handlebars.compile(data);
                         template.innerHTML = handlebarHTML();
@@ -174,17 +174,17 @@ module AlienTube {
                         if (callback) {
                             callback(template);
                         }
-                    }, null, null);
+                    }.bind(this), null, null);
                     break;
 
                 case Browser.CHROME:
                     let templateLink = document.createElement("link");
                     templateLink.id = "alientubeTemplate";
-                    templateLink.onload = () => {
+                    templateLink.onload = function () {
                         if (callback) {
                             callback(templateLink.import);
                         }
-                    }
+                    }.bind(this);
                     templateLink.setAttribute("rel", "import");
                     templateLink.setAttribute("href", Application.getExtensionRessourcePath("templates.html"));
                     document.head.appendChild(templateLink);

@@ -3,7 +3,6 @@
     * Namespace for requests to the Reddit API operations.
     * @namespace AlienTube.Reddit
 */
-"use strict";
 module AlienTube.Reddit {
     /**
         Perform a request to Reddit with embedded error handling.
@@ -14,6 +13,7 @@ module AlienTube.Reddit {
         * @param [postData] Eventual HTTP POST data to send with the request.
         * @param [loadingScreen] A LoadingScreen object to use for updating the progress of the request.
     */
+    "use strict";
     export class Request {
         private requestUrl: string;
         private requestType: RequestType;
@@ -45,14 +45,14 @@ module AlienTube.Reddit {
 
             /* Kick of a 3 second timer that will confirm to the user that the loading process is taking unusually long, unless cancelled
             by a successful load (or an error) */
-            this.loadTimer = setTimeout(() => {
+            this.loadTimer = setTimeout(function () {
                 let loadingText = document.getElementById("at_loadingtext");
                 loadingText.textContent = Application.localisationManager.get("loading_slow_message");
             }, 3000);
 
             /* Kick of a 30 second timer that will cancel the connection attempt and display an error to the user letting them know
             something is probably blocking the connection. */
-            this.timeoutTimer = setTimeout(() => {
+            this.timeoutTimer = setTimeout(function () {
                 new ErrorScreen(Application.commentSection, ErrorState.CONNECTERROR);
             }, 30000);
 
@@ -80,7 +80,7 @@ module AlienTube.Reddit {
                 if (e.toString().indexOf("SyntaxError: Unexpected end of input") !== -1) {
                     new ErrorScreen(Application.commentSection, ErrorState.CONNECTERROR);
                 } else {
-                    new ErrorScreen(Application.commentSection, ErrorState.ERROR, e.toString());
+                    new ErrorScreen(Application.commentSection, ErrorState.ERROR, e.stack);
                 }
             }
         }

@@ -4,13 +4,13 @@
     * Namespace for All AlienTube operations.
     * @namespace AlienTube
 */
-"use strict";
 module AlienTube {
     /**
         * Starts a new instance of the Localisation Manager, for handling language.
         * @class LocalisationManager
         * @param [callback] a callback method to be called after the localisation files has been loaded.
     */
+    "use strict";
     export class LocalisationManager {
         private localisationData: any;
         private supportedLocalisations = [
@@ -29,12 +29,12 @@ module AlienTube {
                         localisation = "en";
                     }
                     
-                    new HttpRequest(`${safari.extension.baseURI}_locales/${localisation}/messages.json`, RequestType.GET, (data) => {
+                    new HttpRequest(`${safari.extension.baseURI}_locales/${localisation}/messages.json`, RequestType.GET, function (data)  {
                         this.localisationData = JSON.parse(data);
                         if (callback) {
                             requestAnimationFrame(callback);
                         }
-                    });
+                    }.bind(this));
                     break;
 
                 case Browser.FIREFOX:

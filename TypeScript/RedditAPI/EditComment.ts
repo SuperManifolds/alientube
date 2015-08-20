@@ -3,7 +3,6 @@
     * Namespace for requests to the Reddit API operations.
     * @namespace AlienTube.Reddit
 */
-"use strict";
 module AlienTube.Reddit {
     /**
         Perform a request to Reddit to edit an existing comment.
@@ -12,6 +11,7 @@ module AlienTube.Reddit {
         @param comment A markdown string containing the user's new comment
         @param callback Callback handler for the event when loaded.
     */
+    "use strict";
     export class EditCommentRequest {
         constructor(thing: string, comment: string, callback?: any) {
             let url = "https://api.reddit.com/api/editusertext";

@@ -3,7 +3,6 @@
     * Namespace for All AlienTube operations.
     * @namespace AlienTube
 */
-"use strict";
 module AlienTube {
     /**
         * A class representation and container of a single Reddit comment.
@@ -11,6 +10,7 @@ module AlienTube {
         * @param data Object containing the "load more comments" links.
         * @param commentThread CommentThread object representing the container of the load more link.
     */
+    "use strict";
     export class LoadMore {
         representedHTMLElement: HTMLDivElement;
         private data: any;
@@ -48,7 +48,7 @@ module AlienTube {
 
             let generateRequestUrl = `https://api.reddit.com/r/${this.commentThread.threadInformation.subreddit}"/comments/${this.commentThread.threadInformation.id}/z/${this.data.id}.json`;
 
-            new HttpRequest(generateRequestUrl, RequestType.GET, (responseData) => {
+            new HttpRequest(generateRequestUrl, RequestType.GET, function (responseData) {
                 /* Remove "loading comments" text */
                 let getParentNode = loadingText.parentNode.parentNode;
                 getParentNode.removeChild(loadingText.parentNode);
@@ -56,7 +56,7 @@ module AlienTube {
                 /* Traverse the retrieved comments and append them to the comment section */
                 let commentItems = JSON.parse(responseData)[1].data.children;
                 if (commentItems.length > 0) {
-                    commentItems.forEach((commentObject) => {
+                    commentItems.forEach(function (commentObject) {
                         var readmore, comment;
                         if (commentObject.kind === "more") {
                             readmore = new LoadMore(commentObject.data, this.referenceParent, this.commentThread);

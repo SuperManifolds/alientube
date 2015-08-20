@@ -3,12 +3,12 @@
     * Namespace for All AlienTube operations.
     * @namespace AlienTube
 */
-"use strict";
 module AlienTube {
     /**
         * Manages the Preferences across browsers.
         * @class Preferences
     */
+    "use strict";
     export class Preferences {
         private static preferenceCache: Object;
 
@@ -35,7 +35,7 @@ module AlienTube {
             switch (Utilities.getCurrentBrowser()) {
                 case Browser.CHROME:
                     /* Get the Chrome cloud sync preferences stored for AlienTube. */
-                    chrome.storage.sync.get(null, (settings) => {
+                    chrome.storage.sync.get(null, function (settings) {
                         Preferences.preferenceCache = settings;
                         if (callback) {
                             callback();

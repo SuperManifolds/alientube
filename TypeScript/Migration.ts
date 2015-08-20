@@ -2,13 +2,13 @@
     * Namespace for All AlienTube operations.
     * @namespace AlienTube
 */
-"use strict";
 module AlienTube {
     /**
         * Version migration of preferences and other necessary conversions.
         * @class Migration
         * @param lastVersion The version of AlienTube the last time the extension was run.
     */
+    "use strict";
     export class Migration {
         constructor(lastVersion : string) {
             /* If lastVersion is not set, we will assume the version is 2.2. */
@@ -28,7 +28,7 @@ module AlienTube {
             versions.splice(0, positionOfPreviousVersion);
             
             /* Call the migrations to newer versions in sucession. */
-            versions.forEach((version) => {
+            versions.forEach(function (version) {
                 this.migrations[version].call(this, null);
             });
 		}
@@ -53,19 +53,19 @@ module AlienTube {
                     /* Iterate over the collection of previous display actions. We have to perform an asynchronous web request to the YouTube API 
                     for each channel, we will make each request a Promise so we can be informed when they have all been completed,
                     and work with the final result. */
-                    Object.keys(previousDisplayActions).forEach((channelName) => {
+                    Object.keys(previousDisplayActions).forEach(function (channelName) {
                         if (previousDisplayActions.hasOwnProperty(channelName)) {
-                            let promise = new Promise((fulfill, reject) => { 
+                            let promise = new Promise(function (fulfill, reject) { 
                                 let encodedChannelName = encodeURIComponent(channelName);
                                 let reqUrl = `https://www.googleapis.com/youtube/v3/search?part=id&q=${encodedChannelName}&type=channel&key=${APIKeys.youtubeAPIKey}`;
-                                new HttpRequest(reqUrl, RequestType.GET, (data) => {
+                                new HttpRequest(reqUrl, RequestType.GET, function (data) {
                                     let results = JSON.parse(data);
                                     if (results.items.length > 0) {
                                         /* We found a match for the display name. We will migrate the old value to the new channel id. */
                                         migratedDisplayActions[results.items[0].id.channelId] = previousDisplayActions[channelName];
                                     }
                                     fulfill();
-                                }, null, (error) => {
+                                }, null, function (error) {
                                     /* The request could not be completed, we will fail the migration and try again next time. */
                                     reject(error);
                                 });
@@ -74,10 +74,10 @@ module AlienTube {
                         }
                     });
                     
-                    Promise.all(channelNameMigrationTasks).then(() => {
+                    Promise.all(channelNameMigrationTasks).then(function () {
                         /* All requests were successful, we will save the resul and move on. */
                         Preferences.set("channelDisplayActions", migratedDisplayActions);
-                    }, () => {
+                    }, function () {
                         /* One of the requests has failed, the transition will be discarded. We will set our last run version to the previous 
                         version so AlienTube will attempt the migration again next time. */
                         Preferences.set("lastRunVersion", "2.4");

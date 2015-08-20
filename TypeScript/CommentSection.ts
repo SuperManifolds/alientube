@@ -3,13 +3,13 @@
     * Namespace for All AlienTube operations.
     * @namespace AlienTube
 */
-"use strict";
 module AlienTube {
     /**
         * Starts a new instance of the AlienTube comment section and adds it to DOM.
         * @class CommentSection
         * @param currentVideoIdentifier YouTube Video query identifier.
     */
+    "use strict";
     export class CommentSection {
         template: HTMLDocument;
         threadCollection: Array<any>;
@@ -25,7 +25,7 @@ module AlienTube {
                 // Load the html5 template file from disk and wait for it to load.
                 let templateLink = document.createElement("link");
                 templateLink.id = "alientubeTemplate";
-                Application.getExtensionTemplates((templateContainer) => {
+                Application.getExtensionTemplates(function (templateContainer) {
                     this.template = templateContainer;
 
                     // Set Loading Screen
@@ -33,7 +33,7 @@ module AlienTube {
                     this.set(loadingScreen.HTMLElement);
                     // Open a search request to Reddit for the video identfiier
                     let videoSearchString = encodeURI(`(url:3D${currentVideoIdentifier} OR url:${currentVideoIdentifier}) (site:youtube.com OR site:youtu.be)`);
-                    new AlienTube.Reddit.Request("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, (results) => {
+                    new AlienTube.Reddit.Request("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, function (results) {
                         var mRegex = /(?:http|https):\/\/(.[^/]+)\/r\/([A-Za-z0-9][A-Za-z0-9_]{2,20})(?:\/comments\/)?([A-Za-z0-9]*)/g;
 
                         // There are a number of ways the Reddit API can arbitrarily explode, here are some of them.
@@ -84,17 +84,17 @@ module AlienTube {
                                 this.threadCollection = [];
                                 for (let subreddit in sortedResultCollection) {
                                     if (sortedResultCollection.hasOwnProperty(subreddit)) {
-                                        this.threadCollection.push(sortedResultCollection[subreddit].reduce((a, b) => {
+                                        this.threadCollection.push(sortedResultCollection[subreddit].reduce(function (a, b) {
                                             return ((this.getConfidenceForRedditThread(b) - this.getConfidenceForRedditThread(a)) || b.id === preferredPost) ? a : b;
-                                        }));
+                                        }.bind(this)));
                                     }
                                 }
 
                                 if (this.threadCollection.length > 0) {
                                     // Sort subreddits so there is only one post per subreddit, and that any subreddit or post that is linked to in the description appears first.
-                                    this.threadCollection.sort((a, b) => {
+                                    this.threadCollection.sort(function (a, b) {
                                         return this.getConfidenceForRedditThread(b) - this.getConfidenceForRedditThread(a);
-                                    });
+                                    }.bind(this));
                                     
                                     for (let i = 0, len = this.threadCollection.length; i < len; i += 1) {
                                         if (this.threadCollection[i].subreddit === preferredSubreddit) {
@@ -126,8 +126,8 @@ module AlienTube {
                             }
                             this.returnNoResults();
                         }
-                    }, null, loadingScreen);
-                });
+                    }.bind(this), null, loadingScreen);
+                }.bind(this));
             }
         }
 
@@ -160,13 +160,13 @@ module AlienTube {
             alientubeCommentContainer.appendChild(loadingScreen.HTMLElement);
 
             let requestUrl = `https://api.reddit.com/r/${threadData.subreddit}/comments/${threadData.id}.json?sort=${Preferences.getString("threadSortType")}`;
-            new AlienTube.Reddit.Request(requestUrl, RequestType.GET, (responseObject) => {
+            new AlienTube.Reddit.Request(requestUrl, RequestType.GET, function (responseObject) {
                 // Remove previous tab from memory if preference is unchecked; will require a download on tab switch.
                 responseObject[0].data.children[0].data.official = threadData.official;
 
                 new CommentThread(responseObject, this);
                 this.storedTabCollection.push(responseObject);
-            }, null, loadingScreen);
+            }.bind(this), null, loadingScreen);
         }
 
         /**
@@ -190,7 +190,7 @@ module AlienTube {
             
             /* Since there is no implicit event for a css property has changed, I have set a small transition on the body background colour.
                this transition will trigger the transitionend event and we can use that to check if the background colour has changed, thereby activating dark mode. */
-            document.body.addEventListener("transitionend", (e : TransitionEvent) => {
+            document.body.addEventListener("transitionend", function (e : TransitionEvent) {
                 if (e.propertyName === "background-color" && e.srcElement.tagName === "BODY") {
                     this.checkEnvironmentDarkModestatus(document.getElementById("alientube"));
                 }
@@ -319,14 +319,14 @@ module AlienTube {
                     overflowContainer.style.display = "block";
 
                     /* Click handler for the overflow menu button, displays the overflow menu. */
-                    overflowContainer.addEventListener("click", () => {
+                    overflowContainer.addEventListener("click", function () {
                         let overflowContainerMenu = <HTMLUListElement> overflowContainer.querySelector("ul");
                         overflowContainer.classList.add("show");
                     }, false);
 
                     /* Document body click handler that closes the overflow menu when the user clicks outside of it.
                     by defining event bubbling in the third argument we are preventing clicks on the menu from triggering this event */
-                    document.body.addEventListener("click", () => {
+                    document.body.addEventListener("click", function () {
                         let overflowContainerMenu = <HTMLUListElement> overflowContainer.querySelector("ul");
                         overflowContainer.classList.remove("show");
                     }, true);
@@ -429,7 +429,7 @@ module AlienTube {
         private updateTabsToFitToBoundingContainer() {
             /* Only perform the resize operation when we have a new frame to work on by the browser, any animation beyond this will not
             be rendered and is pointless. */
-            window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(function () {
                 let tabContainer = document.getElementById("at_tabcontainer");
 
                 if (!tabContainer) {

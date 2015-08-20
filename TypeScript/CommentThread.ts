@@ -3,7 +3,6 @@
     * Namespace for All AlienTube operations.
     * @namespace AlienTube
 */
-"use strict";
 module AlienTube {
     /**
         * Creates a new instance of a Comment Thread and adds it to DOM.
@@ -11,6 +10,7 @@ module AlienTube {
         * @param threadData JavaScript object containing all information about the Reddit thread.
         * @param commentSection The comment section object the thread exists within.
     */
+    "use strict";
     export class CommentThread {
         commentSection: CommentSection;
         threadInformation: any;
@@ -119,8 +119,8 @@ module AlienTube {
 
             /* Set the button text and the event handler for the "refresh" button */
             let refreshCommentThread = this.threadContainer.querySelector(".refresh");
-            refreshCommentThread.addEventListener("click", () => {
-                this.commentSection.threadCollection.forEach((item) => {
+            refreshCommentThread.addEventListener("click", function () {
+                this.commentSection.threadCollection.forEach(function (item) {
                     if (item.id === this.threadInformation.id) {
                         this.commentSection.downloadThread(item);
                     }
@@ -144,10 +144,10 @@ module AlienTube {
                 sortController.children[sortIndex].textContent = Application.localisationManager.get("post_sort_" + this.sortingTypes[sortIndex]);
             }
             sortController.selectedIndex = this.sortingTypes.indexOf(Preferences.getString("threadSortType"));
-            sortController.addEventListener("change", () => {
+            sortController.addEventListener("change", function () {
                 Preferences.set("threadSortType", sortController.children[sortController.selectedIndex].getAttribute("value"));
 
-                this.commentSection.threadCollection.forEach((item) => {
+                this.commentSection.threadCollection.forEach(function (item) {
                     if (item.id === this.threadInformation.id) {
                         this.commentSection.downloadThread(item);
                     }
@@ -193,7 +193,7 @@ module AlienTube {
             }
 
             /* Start iterating the top level comments in the comment section */
-            this.commentData.forEach((commentObject) => {
+            this.commentData.forEach(function (commentObject) {
                 if (commentObject.kind === "more") {
                     let readmore = new LoadMore(commentObject.data, this, this);
                     this.children.push(readmore);
@@ -203,7 +203,7 @@ module AlienTube {
                     this.children.push(comment);
                     this.threadContainer.appendChild(comment.representedHTMLElement);
                 }
-            });
+            }.bind(this));
 
             this.set(this.threadContainer);
         }
@@ -229,7 +229,7 @@ module AlienTube {
         private onSaveButtonClick(eventObject: Event) {
             let saveButton = <HTMLSpanElement> eventObject.target;
             let savedType = saveButton.getAttribute("saved") ? AlienTube.Reddit.SaveType.UNSAVE : AlienTube.Reddit.SaveType.SAVE;
-            new AlienTube.Reddit.SaveRequest(this.threadInformation.name, savedType, () => {
+            new AlienTube.Reddit.SaveRequest(this.threadInformation.name, savedType, function () {
                 if (savedType === AlienTube.Reddit.SaveType.SAVE) {
                     saveButton.setAttribute("saved", "true");
                     saveButton.textContent = Application.localisationManager.get("post_button_unsave");

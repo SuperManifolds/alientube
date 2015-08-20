@@ -3,7 +3,6 @@
     * Namespace for All AlienTube operations.
     * @namespace AlienTube
 */
-"use strict";
 module AlienTube {
     /**
         * The representation and management of an AlienTube loading screen.
@@ -12,6 +11,7 @@ module AlienTube {
         * @param insertionPoint The DOM element in which the loading screen should be appended to as a child.
         * @param [initialState] An optional initial state for the loading screen, the default is "Loading"
     */
+    "use strict";
     export class LoadingScreen {
         private representedHTMLElement: HTMLDivElement;
         private currentProgressState: LoadingState;

@@ -6,8 +6,8 @@
     * Namespace for All AlienTube operations.
     * @namespace AlienTube
 */
-"use strict";
 module AlienTube {
+    "use strict";
     export class Utilities {
         
         /**
