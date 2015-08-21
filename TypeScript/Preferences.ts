@@ -220,20 +220,14 @@ module AlienTube {
          */
         public static get enforcedExludedSubreddits() {
             return [
-                "beatingcripples",
-                "rapingwomen",
-                "beatingchildren",
                 "theredpill",
                 "redpillwomen",
                 "whiterights",
-                "blackcrime",
                 "whiterightsuk",
                 "northwestfront",
                 "gdnews",
                 "polistan",
                 "retardedcripples",
-                "killingboys",
-                "coontown",
                 "arandabottest"
             ];
         }
