@@ -26,8 +26,8 @@ module AlienTube {
         /**
             Determine whether the current url of the tab is a YouTube video page.
         */
-        static isYouTubeVideoPage() {
-            return (window.location.pathname === "watch");
+        static isVideoPage() {
+            return (window.location.pathname === "watch" || document.querySelector("meta[og:type]").getAttribute("content") === "video");
         }
         
         static parseBoolean(arg) {

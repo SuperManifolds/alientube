@@ -6,7 +6,6 @@ body {
 
 #alientube {
     font-family: -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", "Helvetica", Arial, sans-serif;
-    margin-top: 30px;
     padding-bottom: 20px;
     width: 100%;
     position: relative;
@@ -162,6 +161,7 @@ body {
     }
 
     & .options {
+        margin-top: 0;
         width: 100%;
         font-size: 80%;
         font-weight: bold;
@@ -551,6 +551,7 @@ body {
 
 .at_tab {
     @include flex-grow(1);
+    border: 0;
     font-family: -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", "Helvetica", Arial, sans-serif !important;
     padding-left: 10px;
     padding-right: 10px;
@@ -570,6 +571,7 @@ body {
     & > a {
         color: #a2a2a2 !important;
         pointer-events: none;
+        font-weight: 400;
     }
 
     &:hover {
@@ -584,11 +586,9 @@ body {
         cursor: default;
         background-image: none;
         padding-bottom: 0;
-        border-bottom: 5px solid #fd4040;
 
         & > a {
             pointer-events: auto;
-            color: #fd4040 !important;
         }
         
         &:hover {
@@ -691,6 +691,11 @@ body {
         bottom: 0;
         right: 0;
         margin: auto;
+        border: 1px solid transparent;
+        border-top-color: #333;
+        border-width: 4px 4px 0;
+        width: 0;
+        height: 0;
     }
 
     & ul {
@@ -717,7 +722,6 @@ body {
             color: #a2a2a2;
 
             &:hover {
-                background: #fd4040;
                 color: #fff;
             }
         }
@@ -818,7 +822,6 @@ a[href$="/spoiler"]::before {
 @-webkit-keyframes load6 {
     0% {
         @include transform(rotate(0deg));
-        -webkit-transform: rotate(0deg);
         box-shadow: 0 -0.415em 0 -0.2em #fd4040, 0 -0.415em 0 -0.21em #fd4040, 0 -0.415em 0 -0.22em #fd4040, 0 -0.415em 0 -0.23em #fd4040, 0 -0.415em 0 -0.2375em #fd4040;
     }
     5%,
@@ -842,8 +845,7 @@ a[href$="/spoiler"]::before {
 }
 @keyframes load6 {
     0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
+        @include transform(rotate(0deg));
         box-shadow: 0 -0.415em 0 -0.2em #fd4040, 0 -0.415em 0 -0.21em #fd4040, 0 -0.415em 0 -0.22em #fd4040, 0 -0.415em 0 -0.23em #fd4040, 0 -0.415em 0 -0.2375em #fd4040;
     }
     5%,
@@ -861,8 +863,7 @@ a[href$="/spoiler"]::before {
         box-shadow: 0 -0.415em 0 -0.4em #fd4040, -0.1885em -0.37em 0 -0.21em #fd4040, -0.3225em -0.261em 0 -0.22em #fd4040, -0.3775em -0.1335em 0 -0.23em #fd4040, -0.41em -0.045em 0 -0.2385em #fd4040;
     }
     100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
+        @include transform(rotate(360deg));
         box-shadow: 0 -0.415em 0 -0.2em #fd4040, 0 -0.415em 0 -0.21em #fd4040, 0 -0.415em 0 -0.22em #fd4040, 0 -0.415em 0 -0.23em #fd4040, 0 -0.415em 0 -0.2385em #fd4040;
     }
 }
@@ -935,11 +936,6 @@ a[href$="/spoiler"]::before {
 
         &.active {
             padding-bottom: 0;
-            border-bottom: 5px solid #ff5353;
-
-            & a {
-                color: #0066aa !important;
-            }
             
             &:hover {
                 background: #242424 !important;
@@ -985,3 +981,56 @@ a[href$="/spoiler"]::before {
 #allowOnChannelContainer {
     margin-left: 15px;
 }
+
+#alientube[service='YouTube'] {
+    margin-top: 30px;
+    
+    & .at_tab.active {
+        border-bottom: 5px solid #fd4040;
+
+        & > a {
+            pointer-events: auto;
+            color: #fd4040 !important;
+        }
+    }
+    
+    &.darkmode .at_tab.active {
+        border-bottom: 5px solid #ff5353;
+
+        & a {
+            color: #0066aa !important;
+        }
+    }
+    
+    #at_overflow > ul > li:hover {
+        background: #fd4040;
+    }
+}
+
+#alientube[service='Vimeo'] {
+    box-shadow: none;
+    border: 0;
+    
+    & .at_tab.active {
+        border-bottom: 5px solid #4bf;
+
+        & > a {
+            pointer-events: auto;
+            color: #4bf !important;
+        }
+    }
+    
+    &.darkmode .at_tab.active {
+        border-bottom: 5px solid #4bf;
+
+        & a {
+            color: #4bf !important;
+        }
+    }
+    
+    #at_overflow > ul > li:hover {
+        background: #4bf;
+    }
+}
+
+

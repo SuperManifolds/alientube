@@ -37,54 +37,87 @@ module AlienTube {
                         document.head.appendChild(stylesheet);
                     });
                 }
-
-                // Start observer to detect when a new video is loaded.
-                let observer = new MutationObserver(this.mutationObserver);
-                let config = { attributes: true, childList: true, characterData: true };
-                observer.observe(document.getElementById("content"), config);
-
-                // Start a new comment section.
-                this.currentVideoIdentifier = Application.getCurrentVideoId();
-                if (Utilities.isYouTubeVideoPage) {
-                    Application.commentSection = new CommentSection(this.currentVideoIdentifier);
+                
+                if (Application.currentMediaService() === Service.YouTube) {
+                    // Start observer to detect when a new video is loaded.
+                    let observer = new MutationObserver(this.youtubeMutationObserver);
+                    let config = { attributes: true, childList: true, characterData: true };
+                    observer.observe(document.getElementById("content"), config);
+                    
+                    // Start a new comment section.
+                    this.currentVideoIdentifier = Application.getCurrentVideoId();
+                    if (Utilities.isVideoPage) {
+                        Application.commentSection = new CommentSection(this.currentVideoIdentifier);
+                    }
+                } else if (Application.currentMediaService() === Service.Vimeo) {
+                    // Start observer to detect when a new video is loaded.
+                    let observer = new MutationObserver(this.vimeoMutationObserver);
+                    let config = { attributes: true, childList: true, characterData: true };
+                    observer.observe(document.querySelector(".extras_wrapper"), config);
                 }
+
+
             }.bind(this));
 
         }
 
         /**
-            * Mutation Observer for monitoring for whenver the user changes to a new "page"
+            * Mutation Observer for monitoring for whenver the user changes to a new "page" on YouTube
             * @param mutations A collection of mutation records
             * @private
         */
-        private mutationObserver(mutations: Array<MutationRecord>) {
+        private youtubeMutationObserver(mutations: Array<MutationRecord>) {
             mutations.forEach(function (mutation) {
                 let target = <HTMLElement>mutation.target;
                 if (target.classList.contains("yt-card") ||  target.id === "content") {
                     let reportedVideoId = Application.getCurrentVideoId();
                     if (reportedVideoId !== this.currentVideoIdentifier) {
                         this.currentVideoIdentifier = reportedVideoId;
-                        if (Utilities.isYouTubeVideoPage) {
+                        if (Utilities.isVideoPage) {
                             Application.commentSection = new CommentSection(this.currentVideoIdentifier);
                         }
                     }
                 }
-            });
+            }.bind(this));
+        }
+        
+        /**
+            * Mutation Observer for monitoring for whenver the user changes to a new "page" on YouTube
+            * @param mutations A collection of mutation records
+            * @private
+        */
+        private vimeoMutationObserver(mutations: Array<MutationRecord>) {
+            mutations.forEach(function (mutation) {
+                let target = <HTMLElement>mutation.target;
+                let reportedVideoId = Application.getCurrentVideoId();
+                if (reportedVideoId !== this.currentVideoIdentifier) {
+                    this.currentVideoIdentifier = reportedVideoId;
+                    if (Utilities.isVideoPage) {
+                        Application.commentSection = new CommentSection(this.currentVideoIdentifier);
+                    }
+                }
+            }.bind(this));
         }
 
         /**
-        * Get the current YouTube video identifier of the window.
-        * @returns YouTube video identifier.
+        * Get the current video identifier of the window.
+        * @returns video identifier.
         */
         public static getCurrentVideoId(): string {
-            if (window.location.search.length > 0) {
-                let s = window.location.search.substring(1);
-                let requestObjects = s.split('&');
-                for (let i = 0, len = requestObjects.length; i < len; i += 1) {
-                    let obj = requestObjects[i].split('=');
-                    if (obj[0] === "v") {
-                        return obj[1];
+            if (Application.currentMediaService() === Service.YouTube) {
+                if (window.location.search.length > 0) {
+                    let s = window.location.search.substring(1);
+                    let requestObjects = s.split('&');
+                    for (let i = 0, len = requestObjects.length; i < len; i += 1) {
+                        let obj = requestObjects[i].split('=');
+                        if (obj[0] === "v") {
+                            return obj[1];
+                        }
                     }
+                }
+            } else if (Application.currentMediaService() === Service.Vimeo) {
+                if (window.location.pathname.length > 1) {
+                    return window.location.pathname.substring(1);
                 }
             }
             return null;
@@ -211,6 +244,7 @@ module AlienTube {
          * Get an element from the template collection.
          * @param templateCollection The template collection to use.
          * @param id The id of the element you want to retreive.
+         * @returns DOM node of a template section.
          */
         public static getExtensionTemplateItem(templateCollection: any, id: string) {
             switch (Application.getCurrentBrowser()) {
@@ -225,6 +259,24 @@ module AlienTube {
             }
         }
         
+        /**
+         * Get the current media website that AlienTube is on
+         * @returns A "Service" enum value representing a media service.
+         */
+        public static currentMediaService() : Service {
+            if (window.location.host === "www.youtube.com") {
+                return Service.YouTube;
+            }
+            else if (window.location.host === "vimeo.com") {
+                return Service.Vimeo;
+            }
+            return null;
+        }
+        
+        /**
+         * Retrieve the current browser that AlienTube is running on.
+         * @returns A "Browser" enum value representing a web browser.
+         */
         static getCurrentBrowser() {
             if (typeof (chrome) !== 'undefined') return Browser.CHROME;
             else if (typeof (self.on) !== 'undefined') return Browser.FIREFOX;
@@ -234,4 +286,9 @@ module AlienTube {
             }
         }
     }
+}
+
+enum Service {
+    YouTube,
+    Vimeo
 }

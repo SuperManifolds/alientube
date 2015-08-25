@@ -32,7 +32,7 @@ module AlienTube {
                     let loadingScreen = new LoadingScreen(this, LoadingState.LOADING, Application.localisationManager.get("loading_search_message"));
                     this.set(loadingScreen.HTMLElement);
                     // Open a search request to Reddit for the video identfiier
-                    let videoSearchString = encodeURI(`(url:3D${currentVideoIdentifier} OR url:${currentVideoIdentifier}) (site:youtube.com OR site:youtu.be)`);
+                    let videoSearchString = this.getVideoSearchString(currentVideoIdentifier);
                     new AlienTube.Reddit.Request("https://api.reddit.com/search.json?q=" + videoSearchString, RequestType.GET, function (results) {
 
                         // There are a number of ways the Reddit API can arbitrarily explode, here are some of them.
@@ -52,21 +52,22 @@ module AlienTube {
                             
                             let preferredPost, preferredSubreddit;
                             if (finalResultCollection.length > 0) {
-                                /* Scan the YouTube comment sections for references to subreddits or reddit threads.
-                                These will be prioritised and loaded first.  */
-                                
-                                let mRegex = /(?:http|https):\/\/(.[^/]+)\/r\/([A-Za-z0-9][A-Za-z0-9_]{2,20})(?:\/comments\/)?([A-Za-z0-9]*)/g;
-                                
-                                let commentLinks = document.querySelectorAll("#eow-description a");
-                                for (var b = 0, coLen = commentLinks.length; b < coLen; b += 1) {
-                                    let linkElement = <HTMLElement>commentLinks[b];
-                                    let url = linkElement.getAttribute("href");
-                                    if (typeof (url) !== 'undefined') {
-                                        let match = mRegex.exec(url);
-                                        if (match) {
-                                            preferredSubreddit = match[2];
-                                            if (match[3].length > 0) preferredPost = match[3];
-                                            break;
+                                if (Application.currentMediaService() === Service.YouTube) {
+                                    /* Scan the YouTube comment sections for references to subreddits or reddit threads.
+                                    These will be prioritised and loaded first.  */
+                                    let mRegex = /(?:http|https):\/\/(.[^/]+)\/r\/([A-Za-z0-9][A-Za-z0-9_]{2,20})(?:\/comments\/)?([A-Za-z0-9]*)/g;
+                                    
+                                    let commentLinks = document.querySelectorAll("#eow-description a");
+                                    for (var b = 0, coLen = commentLinks.length; b < coLen; b += 1) {
+                                        let linkElement = <HTMLElement>commentLinks[b];
+                                        let url = linkElement.getAttribute("href");
+                                        if (typeof (url) !== 'undefined') {
+                                            let match = mRegex.exec(url);
+                                            if (match) {
+                                                preferredSubreddit = match[2];
+                                                if (match[3].length > 0) preferredPost = match[3];
+                                                break;
+                                            }
                                         }
                                     }
                                 }
@@ -178,10 +179,18 @@ module AlienTube {
         public set(contents: Node) {
             let redditContainer = document.createElement("section");
             redditContainer.id = "alientube";
-
-            let commentsContainer = document.getElementById("watch7-content");
+            
+            let commentsContainer;
+            let serviceCommentsContainer;
+            if (Application.currentMediaService() === Service.YouTube) {
+                commentsContainer = document.getElementById("watch7-content");
+                serviceCommentsContainer = document.getElementById("watch-discussion");
+            } else if (Application.currentMediaService() === Service.Vimeo) {
+                commentsContainer = document.querySelector(".comments_container");
+                serviceCommentsContainer = document.querySelector(".comments_hide");
+            }
+            
             let previousRedditInstance = document.getElementById("alientube");
-            let googlePlusContainer = document.getElementById("watch-discussion");
             if (previousRedditInstance) {
                 commentsContainer.removeChild(previousRedditInstance);
             }
@@ -198,37 +207,43 @@ module AlienTube {
                 }
             }, false);
 
-            if (googlePlusContainer) {
+            if (serviceCommentsContainer) {
                 /* Add the "switch to Reddit" button in the google+ comment section */
                 let redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
                 if (!redditButton) {
                     let redditButtonTemplate = Application.getExtensionTemplateItem(this.template, "switchtoreddit");
                     redditButton = <HTMLDivElement> redditButtonTemplate.querySelector("#at_switchtoreddit");
                     redditButton.addEventListener("click", this.onRedditClick, true);
-                    googlePlusContainer.parentNode.insertBefore(redditButton, googlePlusContainer);
+                    serviceCommentsContainer.parentNode.insertBefore(redditButton, serviceCommentsContainer);
                 }
 
                 if (this.getDisplayActionForCurrentChannel() === "gplus") {
                     redditContainer.style.display = "none"
                     redditButton.style.display = "block";
                 } else {
-                    googlePlusContainer.style.display = "none";
+                    serviceCommentsContainer.style.display = "none";
                 }
             }
             
             /* Set the setting for whether or not AlienTube should show itself on this YouTube channel */
             let allowOnChannelContainer = document.getElementById("allowOnChannelContainer");
             if (!allowOnChannelContainer) {
-                let youTubeActionsContainer = document.getElementById("watch7-user-header");
+                let actionsContainer;
+                if (Application.currentMediaService() === Service.YouTube) {
+                    actionsContainer = document.getElementById("watch7-user-header");
+                } else if (Application.currentMediaService() === Service.Vimeo) {
+                    actionsContainer = document.querySelector(".video_meta .byline");
+                }
                 let allowOnChannel = Application.getExtensionTemplateItem(this.template, "allowonchannel");
-                allowOnChannel.children[0].appendChild(document.createTextNode("Show AlienTube on this channel"));
+                allowOnChannel.children[0].appendChild(document.createTextNode(Application.localisationManager.get("options_label_showReddit")));
                 let allowOnChannelCheckbox = allowOnChannel.querySelector("#allowonchannel");
                 allowOnChannelCheckbox.checked = (this.getDisplayActionForCurrentChannel() === "alientube");
                 allowOnChannelCheckbox.addEventListener("change", this.allowOnChannelChange, false);
-                youTubeActionsContainer.appendChild(allowOnChannel);
+                actionsContainer.appendChild(allowOnChannel);
             }
 
             /* Add AlienTube contents */
+            redditContainer.setAttribute("service", Service[Application.currentMediaService()]);
             redditContainer.appendChild(contents);
             commentsContainer.appendChild(redditContainer);
             return redditContainer;
@@ -272,7 +287,7 @@ module AlienTube {
                         }
                     }
                 }
-            } else if (itemFromResultSet.domain === "youtu.be") {
+            } else if (itemFromResultSet.domain === "youtu.be" || itemFromResultSet.domain === "vimeo.com") {
                 // For urls based on the shortened youtu.be domain, retrieve everything the path after the domain and compare it.
                 let urlSearch = itemFromResultSet.url.substring(itemFromResultSet.url.lastIndexOf("/") + 1);
                 let obj = urlSearch.split('?');
@@ -293,7 +308,13 @@ module AlienTube {
         public insertTabsIntoDocument(tabContainer: HTMLElement, selectTabAtIndex?: number) {
             let overflowContainer = <HTMLDivElement> tabContainer.querySelector("#at_overflow");
             let len = this.threadCollection.length;
-            let maxWidth = document.getElementById("watch7-content").offsetWidth - 80;
+            let maxWidth;
+            if (Application.currentMediaService() === Service.YouTube) {
+                maxWidth = document.getElementById("watch7-content").offsetWidth - 80;
+            } else if (Application.currentMediaService() === Service.Vimeo) {
+                maxWidth = document.getElementById("comments").offsetWidth - 80;
+            }
+            
             let width = (21 + this.threadCollection[0].subreddit.length * 7);
             let i = 0;
 
@@ -555,7 +576,12 @@ module AlienTube {
          * @private
          */
         private getDisplayActionForCurrentChannel() {
-            let channelId = document.querySelector("meta[itemprop='channelId']").getAttribute("content");
+            let channelId;
+            if (Application.currentMediaService() === Service.YouTube) {
+                channelId = document.querySelector("meta[itemprop='channelId']").getAttribute("content");
+            } else if (Application.currentMediaService() === Service.Vimeo) {
+                channelId = document.querySelector("a[rel='author']").getAttribute("href").substring(1);
+            }
             let displayActionByUser = Preferences.getObject("channelDisplayActions")[channelId];
             if (displayActionByUser) {
                 return displayActionByUser;
@@ -565,6 +591,7 @@ module AlienTube {
         
         /**
          * Get the confidence vote of a thread using Reddit's 'hot' sorting algorithm.
+         * @param thread An object from the Reddit API containing thread information.
          * @private
          */
         private getConfidenceForRedditThread(thread : any) : number {
@@ -583,6 +610,11 @@ module AlienTube {
             return Math.round((order + sign*seconds / 4500) * 10000000) / 10000000;
         }
         
+        /**
+         * Check whether the website is currently using a "dark mode" plugin, and change AlienTube's style to comply.
+         * @param alienTubeContainer DOM node of an AlienTube section element to apply the style to.
+         * @private
+         */
         private checkEnvironmentDarkModestatus(alientubeContainer : any) {
             let bodyBackgroundColour = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
             let bodyBackgroundColourArray = bodyBackgroundColour.substring(4, bodyBackgroundColour.length - 1).replace(/ /g, '').split(',');
@@ -595,6 +627,20 @@ module AlienTube {
                 alientubeContainer.classList.add("darkmode");
             } else {
                 alientubeContainer.classList.remove("darkmode");
+            }
+        }
+        
+        /**
+         * Get the Reddit search string to perform.
+         * @param videoID The YouTube or Vimeo video id to make a search for.
+         * @returns A search string to send to the Reddit search API.
+         * @private
+         */
+        private getVideoSearchString(videoID : string) {
+            if (Application.currentMediaService() === Service.YouTube) {
+                return encodeURI(`(url:3D${videoID} OR url:${videoID}) (site:youtube.com OR site:youtu.be)`);
+            } else if (Application.currentMediaService() === Service.Vimeo) {
+                return encodeURI(`url:https://vimeo.com/${videoID} OR url:http://vimeo.com/${videoID}`);
             }
         }
     }

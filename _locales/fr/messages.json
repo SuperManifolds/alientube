@@ -374,5 +374,9 @@
     "options_label_alientube": {
         "message": "Reddit",
         "description": "AlienTube option for the default display option"
+    },
+    "options_label_showReddit": {
+        "message": "Voir les commentaires de Reddit sur ce profil",
+        "description": "AlienTube option on wheter to show Reddit comments by default on this channel"
     }
 }
