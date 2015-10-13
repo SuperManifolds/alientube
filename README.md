@@ -15,3 +15,8 @@ TODO
 
 
 ![Image of the extension in action](https://lh5.googleusercontent.com/PdAptwghLGNmtw_N93qkotTDMjYNbc-2vXadlWBSBr0QNLXOQ7__Ndkn9icmkDDgUkXw50fLOXs=s640-h400-e365-rw)
+     
+	     
+   
+   
+The Safari version of AlienTube is signed by and distributed under the name of Codeux Software, LLC to help with its availability. AlienTube is not maintained in anyway by this organization.
