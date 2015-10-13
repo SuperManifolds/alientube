@@ -55,10 +55,7 @@ module AlienTube {
                     let config = { attributes: true, childList: true, characterData: true };
                     observer.observe(document.querySelector(".extras_wrapper"), config);
                 }
-
-
             }.bind(this));
-
         }
 
         /**

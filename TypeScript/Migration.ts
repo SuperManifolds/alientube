@@ -30,7 +30,7 @@ module AlienTube {
             /* Call the migrations to newer versions in sucession. */
             versions.forEach(function (version) {
                 this.migrations[version].call(this, null);
-            });
+            }.bind(this));
 		}
         
         private migrations = {

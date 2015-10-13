@@ -138,8 +138,8 @@ module AlienTube {
                     /* Set the extension version label. */
                     document.getElementById("versiontext").textContent = this.localisationManager.get("options_label_version");
                     document.getElementById('version').textContent = Options.getExtensionVersionNumber();
-                });
-            });
+                }.bind(this));
+            }.bind(this));
         }
         
         /**
