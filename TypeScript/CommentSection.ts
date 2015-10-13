@@ -96,7 +96,7 @@ module AlienTube {
                                 if (this.threadCollection.length > 0) {
                                     // Sort subreddits so there is only one post per subreddit, and that any subreddit or post that is linked to in the description appears first.
                                     this.threadCollection.sort(function (a, b) {
-                                        return this.getConfidenceForRedditThread(b) - this.getConfidenceForRedditThread(a);
+                                        return b.score > a.score
                                     }.bind(this));
                                     
                                     for (let i = 0, len = this.threadCollection.length; i < len; i += 1) {
