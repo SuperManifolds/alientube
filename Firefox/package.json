@@ -6,7 +6,7 @@
     "description": "Reddit comments, in your YouTube!",
     "author": "Delexious",
     "license": "BSD 3",
-    "version": "2.5.0",
+    "version": "2.6.0",
     "main": "lib/main.js",
 
     "permissions": {
