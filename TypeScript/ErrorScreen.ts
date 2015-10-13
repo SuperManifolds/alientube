@@ -108,7 +108,8 @@ module AlienTube {
             var alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "none";
             var googlePlusContainer = document.getElementById("watch-discussion");
-            googlePlusContainer.style.display = "block";
+            googlePlusContainer.style.visibility = "visible";
+            googlePlusContainer.style.height = "auto";
             var redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
             redditButton.style.display = "block";
         }

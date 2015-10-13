@@ -257,7 +257,8 @@ module AlienTube {
             let alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "none";
             let googlePlusContainer = document.getElementById("watch-discussion");
-            googlePlusContainer.style.display = "block";
+            googlePlusContainer.style.visibility = "visible";
+            googlePlusContainer.style.height = "auto";
             let redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
             redditButton.style.display = "block";
 

@@ -221,7 +221,8 @@ module AlienTube {
                     redditContainer.style.display = "none"
                     redditButton.style.display = "block";
                 } else {
-                    serviceCommentsContainer.style.display = "none";
+                    serviceCommentsContainer.style.visibility = "collapse"
+                    serviceCommentsContainer.style.height = "0"
                 }
             }
             
@@ -407,7 +408,8 @@ module AlienTube {
             this.set(template);
 
             if (Preferences.getBoolean("showGooglePlusWhenNoPosts") && googlePlusContainer) {
-                googlePlusContainer.style.display = "block";
+                googlePlusContainer.style.visibility = "visible";
+            googlePlusContainer.style.height = "auto";
                 document.getElementById("alientube").style.display = "none";
 
                 let redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
@@ -424,7 +426,8 @@ module AlienTube {
          */
         private onRedditClick(eventObject: Event) {
             let googlePlusContainer = document.getElementById("watch-discussion");
-            googlePlusContainer.style.display = "none";
+            googlePlusContainer.style.visibility = "collapse";
+            googlePlusContainer.style.height = "0";
             let alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "block";
             let redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
@@ -440,7 +443,8 @@ module AlienTube {
             let alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "none";
             let googlePlusContainer = document.getElementById("watch-discussion");
-            googlePlusContainer.style.display = "block";
+            googlePlusContainer.style.visibility = "visible";
+            googlePlusContainer.style.height = "auto";
             let redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
             redditButton.style.display = "block";
         }
@@ -472,7 +476,7 @@ module AlienTube {
                         break;
                     }
                 }
-            });
+            }.bind(this));
         }
 
         /** 
