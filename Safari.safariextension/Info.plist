@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>Author</key>
-	<string>Delexious</string>
+	<string>Alex S. Glomsaas</string>
 	<key>Builder Version</key>
-	<string>11601.1.43</string>
+	<string>11601.2.4</string>
 	<key>CFBundleDisplayName</key>
 	<string>AlienTube</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.delexious.alientube</string>
+	<string>com.codeux.alientube</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
@@ -38,13 +38,13 @@
 		<array>
 			<string>http://www.youtube.com/*</string>
 			<string>https://www.youtube.com/*</string>
-			<string>http://alientube.co/</string>
+			<string>https://alientube.co/</string>
 		</array>
 	</dict>
 	<key>Description</key>
 	<string>Reddit comments on YouTube</string>
 	<key>DeveloperIdentifier</key>
-	<string>0000000000</string>
+	<string>8482Q6EPL6</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>
