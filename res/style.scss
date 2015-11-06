@@ -4,6 +4,10 @@ body {
     transition: background-color 1ms linear !important;
 }
 
+#watch-discussion {
+	overflow: hidden;
+}
+
 #alientube {
     font-family: -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", "Helvetica", Arial, sans-serif;
     padding-bottom: 20px;
@@ -12,6 +16,7 @@ body {
     box-sizing: border-box;
     background: #fff;
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    overflow: hidden;
 
     & a {
         color: #0066aa;
