@@ -100,7 +100,7 @@
         "description": "This button will cause the post to be reloaded/refreshed."
     },
     "post_button_gold": {
-        "message": "donner du gold",
+        "message": "Offrir reddit gold",
         "description": "This button will open up a donation window for the reddit gold membership feature to another user for this submission"
     },
     "post_button_comment": {
@@ -116,7 +116,7 @@
         "description": "This button will save this post to your list"
     },
     "post_button_unsave": {
-        "message": "libérer",
+        "message": "enlever",
         "description": "This button will remove this post from your list of saved posts"
     },
     "post_button_report": {
@@ -144,7 +144,7 @@
         "description": "This button will open up this post on reddit.com in a new window"
     },
     "post_button_parent": {
-        "message": "enlever",
+        "message": "parent",
         "description": "This button will open up the post this post is a reply to, in a new window"
     },
     "post_button_load_more": {
@@ -220,11 +220,11 @@
         "description": "This user has been posting child pornography or related materials to Reddit"
     },
     "report_dialog_breaking_reddit": {
-        "message": "reddit piratage",
+        "message": "piratage de reddit",
         "description": "This person has intentionally caused features or the layout of Reddit to break or misbehave"
     },
     "report_dialog_other": {
-        "message": "autre raison (maximum de 100 lettres)",
+        "message": "autre raison (maximum de 100 caractères)",
         "description": "This user has done something else that should be reported, you can maximum type 100 characters in here"
     },
     "report_dialog_button_submit": {
@@ -240,19 +240,19 @@
         "description": "Generic loading message to indicate to the user that content is being downloaded from Reddit"
     },
     "loading_search_message": {
-        "message": "Trouver les discussions..",
+        "message": "Recherche de discussions...",
         "description": "Message indicating that AlienTube is currently searching for Reddit posts that have linked to this video"
     },
     "loading_post_message": {
-        "message": "Discussion de chargement..",
+        "message": "Chargement de la discussion...",
         "description": "Message indicating that AlienTube is loading a specific post from Reddit"
     },
     "loading_slow_message": {
-        "message": "Chargement en cours prend exceptionnellement longue..",
+        "message": "Le chargement prends plus longtemps que prévu...",
         "description": "Message indicating that the download process is taking unusually long"
     },
     "loading_retry_message": {
-        "message": "Réessayer.. ($ATTEMPT$ de $TOTAL_ATTEMPTS$)",
+        "message": "Nouvel essai.. ($ATTEMPT$ de $TOTAL_ATTEMPTS$)",
         "description": "Message indicating that the download has failed once and we are automatically retrying for the Nth time.",
         "placeholders": {
             "attempt": {
@@ -290,7 +290,7 @@
         "description": "Message for error describing that comments failed because the connection timed out"
     },
     "error_header_interrupted": {
-        "message": "connexion empêché",
+        "message": "connexion interrompue",
         "description": "Title for error describing that comments failed because the connection was interrupted by something"
     },
     "error_message_interrupted": {
@@ -302,7 +302,7 @@
         "description": "Message describing that Reddit experienced an error, with humoristic implications jokingly implying that it is the user's fault."
     },
     "error_button_retry": {
-        "message": "réessayez",
+        "message": "réessayer",
         "description": "Button for attempting to load the comments again."
     },
     "commentfield_button_submit": {
@@ -318,7 +318,7 @@
         "description": "Label indicating that this panel shows a preview of how your text will look when it is posted"
     },
     "commentfield_label_author": {
-        "message": "Vous êtes connecté en tant: $AUTHOR$",
+        "message": "Vous êtes connecté en tant que: $AUTHOR$",
         "description": "Label under the comment field indicating who your comment will be submitted as.",
         "placeholders": {
             "author": {
@@ -328,7 +328,7 @@
         }
     },
     "options_label_hiddenPostScoreThreshold": {
-        "message": "Ne plus afficher de discussions avec moins de points que:",
+        "message": "Ne pas afficher de discussions avec moins de points que:",
         "description": "If the score for this Reddit post is less than the input, it will not be shown in the list"
     },
     "options_label_hiddenCommentScoreThreshold": {
@@ -336,7 +336,7 @@
         "description": "If the score for this comment is less than the input, it will not be shown in the comment section"
     },
     "options_label_showGooglePlusWhenNoPosts": {
-        "message": "Voir les commentaires de Google+ s'il n'y a pas de résultats",
+        "message": "Afficher les commentaires de Google+ s'il n'y a pas de résultats",
         "description": "Show the Google+ comments like usual if there are no Reddit comments to see"
     },
     "options_label_showGooglePlusButton": {
@@ -356,7 +356,7 @@
         "description": "Option page title"
     },
     "options_label_reset": {
-        "message": "Remettre les options par défaut",
+        "message": "Réinitialiser les options par défaut",
         "description": "Button to reset all settings to their factory default."
     },
     "options_button_add": {
