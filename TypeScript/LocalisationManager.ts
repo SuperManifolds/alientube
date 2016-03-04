@@ -18,7 +18,8 @@ module AlienTube {
             'en-US',
             'no',
             'es',
-            'fr'
+            'fr',
+            'de'
         ];
 
         constructor(callback?) {
