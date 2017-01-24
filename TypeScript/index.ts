@@ -44,3 +44,5 @@ if (document.readyState === "complete" || document.readyState === "interactive")
 } else {
     document.addEventListener("DOMContentLoaded", at_initialise, false);
 }
+// See http://youtube.github.io/spfjs/documentation/events/
+document.addEventListener("spfdone", at_initialise, false);
