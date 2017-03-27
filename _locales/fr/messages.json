@@ -244,11 +244,11 @@
         "description": "Message indicating that AlienTube is currently searching for Reddit posts that have linked to this video"
     },
     "loading_post_message": {
-        "message": "Discussion de chargement..",
+        "message": "Chargement de discussion...",
         "description": "Message indicating that AlienTube is loading a specific post from Reddit"
     },
     "loading_slow_message": {
-        "message": "Chargement en cours prend exceptionnellement longue..",
+        "message": "Le chargement est exceptionnellement long...",
         "description": "Message indicating that the download process is taking unusually long"
     },
     "loading_retry_message": {
