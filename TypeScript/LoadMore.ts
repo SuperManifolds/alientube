@@ -46,7 +46,7 @@ module AlienTube {
             loadingText.classList.add("loading");
             loadingText.textContent = Application.localisationManager.get("loading_generic_message");
 
-            let generateRequestUrl = `https://api.reddit.com/r/${this.commentThread.threadInformation.subreddit}"/comments/${this.commentThread.threadInformation.id}/z/${this.data.id}.json`;
+            let generateRequestUrl = `https://api.reddit.com/r/${this.commentThread.threadInformation.subreddit}/comments/${this.commentThread.threadInformation.id}/z/${this.data.id}.json`;
 
             new HttpRequest(generateRequestUrl, RequestType.GET, function (responseData) {
                 /* Remove "loading comments" text */
