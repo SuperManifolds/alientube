@@ -39,7 +39,7 @@ module AlienTube {
                 }
                 
                 if (Application.currentMediaService() === Service.YouTube) {
-                    // Start observer to detect when a new video is loaded.
+                    // Add event listener to detect when a new video is loaded.
                     // See http://youtube.github.io/spfjs/documentation/events/
                     document.addEventListener("spfdone", this.youtubeEventListener);
                     
