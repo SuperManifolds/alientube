@@ -39,10 +39,9 @@ module AlienTube {
                 }
                 
                 if (Application.currentMediaService() === Service.YouTube) {
-                    // Start observer to detect when a new video is loaded.
-                    let observer = new MutationObserver(this.youtubeMutationObserver);
-                    let config = { attributes: true, childList: true, characterData: true };
-                    observer.observe(document.getElementById("content"), config);
+                    // Add event listener to detect when a new video is loaded.
+                    // See http://youtube.github.io/spfjs/documentation/events/
+                    document.addEventListener("spfdone", this.youtubeEventListener);
                     
                     // Start a new comment section.
                     this.currentVideoIdentifier = Application.getCurrentVideoId();
@@ -59,27 +58,22 @@ module AlienTube {
         }
 
         /**
-            * Mutation Observer for monitoring for whenver the user changes to a new "page" on YouTube
-            * @param mutations A collection of mutation records
+            * Event listener for monitoring for whenever the user changes to a new "page" on YouTube
+            * @param event YouTube's internal page load event
             * @private
         */
-        private youtubeMutationObserver(mutations: Array<MutationRecord>) {
-            mutations.forEach(function (mutation) {
-                let target = <HTMLElement>mutation.target;
-                if (target.classList.contains("yt-card") ||  target.id === "content") {
-                    let reportedVideoId = Application.getCurrentVideoId();
-                    if (reportedVideoId !== this.currentVideoIdentifier) {
-                        this.currentVideoIdentifier = reportedVideoId;
-                        if (Utilities.isVideoPage) {
-                            Application.commentSection = new CommentSection(this.currentVideoIdentifier);
-                        }
-                    }
+        private youtubeEventListener(event: Event) {
+            let reportedVideoId = Application.getCurrentVideoId();
+            if (reportedVideoId !== this.currentVideoIdentifier) {
+                this.currentVideoIdentifier = reportedVideoId;
+                if (Utilities.isVideoPage) {
+                    Application.commentSection = new CommentSection(this.currentVideoIdentifier);
                 }
-            }.bind(this));
+            }
         }
         
         /**
-            * Mutation Observer for monitoring for whenver the user changes to a new "page" on YouTube
+            * Mutation Observer for monitoring for whenever the user changes to a new "page" on YouTube
             * @param mutations A collection of mutation records
             * @private
         */
