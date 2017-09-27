@@ -287,7 +287,7 @@ module AlienTube {
             let version = "";
             switch (Utilities.getCurrentBrowser()) {
                 case Browser.CHROME:
-                    version = chrome.app.getDetails().version;
+                    version = chrome.runtime.getManifest().version;
                     break;
 
                 case Browser.FIREFOX:

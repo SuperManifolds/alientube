@@ -1515,7 +1515,7 @@ declare module chrome.runtime {
     export function connect(extensionId: string, connectInfo?: ConnectInfo): Port;
     export function connectNative(application: string): Port;
     export function getBackgroundPage(callback: (backgroundPage?: Window) => void): void;
-    export function getManifest(): Object;
+    export function getManifest(): any;
     export function getPackageDirectoryEntry(callback: (directoryEntry: any) => void): void;
     export function getPlatformInfo(callback: (platformInfo: PlatformInfo) => void): void;
     export function getURL(path: string): string;

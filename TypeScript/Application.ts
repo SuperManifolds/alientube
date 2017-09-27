@@ -54,7 +54,6 @@ module AlienTube {
                     
                     // If page has loaded, create comments section
                     if (document.getElementById(Application.COMMENT_ELEMENT_ID)) {
-                        console.log("Make comments now");
                         this.youtubePageNav();
                     }
                 } else if (Application.currentMediaService() === Service.Vimeo) {
