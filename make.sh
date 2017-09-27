@@ -57,9 +57,9 @@ echo
 
 echo ${standout}Compiling SASS style files.${normal}
 echo Compiling Main SASS stylesheet.
-sass res/style.scss res/style.css
+sass res/style.scss > res/style.css
 echo Compiling Options SASS stylesheet
-sass res/options.scss res/options.css
+sass res/options.scss > res/options.css
 echo
 echo
 

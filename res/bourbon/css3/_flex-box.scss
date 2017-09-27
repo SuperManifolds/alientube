@@ -78,7 +78,7 @@
         display: flex;
     }
 
-    @elseif $value == "inline-flex" {
+    @else if $value == "inline-flex" {
         display: -webkit-inline-box;
         display: -moz-inline-box;
         display: inline-box;

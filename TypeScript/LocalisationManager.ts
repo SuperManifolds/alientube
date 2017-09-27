@@ -66,7 +66,6 @@ module AlienTube {
                     } else {
                         return chrome.i18n.getMessage(key);
                     }
-                    break;
 
                 case Browser.SAFARI:
                 case Browser.FIREFOX:

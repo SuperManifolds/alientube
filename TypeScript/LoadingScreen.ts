@@ -61,7 +61,7 @@ module AlienTube {
                     if (parentNode) {
                         this.representedHTMLElement.parentNode.removeChild(this.representedHTMLElement);
                     }
-                    delete this;
+                    //delete this;
                     break;
             }
         }
