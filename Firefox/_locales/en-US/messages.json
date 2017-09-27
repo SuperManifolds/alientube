@@ -1,0 +1,386 @@
+{
+  "api_header_message": {
+    "message": "Hello Reddit! This request was made by the AlienTube Browser Extension (http://alientube.co/) If you have noticed unusual or overloading traffic here, you can contact the developer at alex@sorlie.co.uk",
+    "description": "Message that is sent with every request to Reddit so they can identify our requests and potentially contact us should any issues arise"
+  },
+  "timestamp_format_year": {
+    "message": "year",
+    "description": "Singular form of the date unit 'Year' for timestamps."
+  },
+  "timestamp_format_year_plural": {
+    "message": "years",
+    "description": "Plural form of the date unit 'Year' for timestamps."
+  },
+  "timestamp_format_month": {
+    "message": "month",
+    "description": "Singular form of the date unit 'Month' for timestamps."
+  },
+  "timestamp_format_month_plural": {
+    "message": "months",
+    "description": "Plural form of the date unit 'Month' for timestamps."
+  },
+  "timestamp_format_day": {
+    "message": "day",
+    "description": "Singular form of the date unit 'Day' for timestamps."
+  },
+  "timestamp_format_day_plural": {
+    "message": "days",
+    "description": "Plural form of of the date unit 'Day' for timestamps."
+  },
+  "timestamp_format_hour": {
+    "message": "hour",
+    "description": "Singular form of the time unit 'Hour' for timestamps."
+  },
+  "timestamp_format_hour_plural": {
+    "message": "hours",
+    "description": "Plural form of the time unit 'Hour' for timestamps."
+  },
+  "timestamp_format_minute": {
+    "message": "minute",
+    "description": "Singular form of the time unit 'Minute' for timestamps."
+  },
+  "timestamp_format_minute_plural": {
+    "message": "minutes",
+    "description": "Plural form of the time unit 'Minute' for timestamps."
+  },
+  "timestamp_format_second": {
+    "message": "second",
+    "description": "Singular form of the time unit 'Second' for timestamps"
+  },
+  "timestamp_format_second_plural": {
+    "message": "seconds",
+    "description": "Plural form of the time unit 'Second' for timestamps."
+  },
+  "timestamp_format": {
+    "message": "$TIME_INTERVAL$ $UNIT$ ago",
+    "description": "Format of timestamps",
+    "placeholders": {
+      "time_interval": {
+        "content": "$1",
+        "example": "4"
+      },
+      "unit": {
+        "content": "$2",
+        "example": "hours"
+      }
+    }
+  },
+  "edited_timestamp_format": {
+        "message": "last edited $TIME_INTERVAL$ $UNIT$ ago",
+        "description": "Format of timestamps",
+        "placeholders": {
+            "time_interval": {
+                "content": "$1",
+                "example": "4"
+            },
+            "unit": {
+                "content": "$2",
+                "example": "hours"
+            }
+        }
+    },
+  "post_submitted_timestamp_text": {
+    "message": "submitted ",
+    "description": "Prefix describing that the following time description will say when the post was submitted"
+  },
+  "post_submitted_preposition": {
+    "message": " by ",
+    "description": "Prefix preposition describing that the following will be the author of this post"
+  },
+  "post_current_score": {
+    "message": " point",
+    "description": "Singular form describing that the previous number was the score of this post (points)"
+  },
+  "post_current_score_plural": {
+    "message": " points",
+    "description": "Plural form describing that the previous number was the score of this post (points)"
+  },
+  "post_button_refresh": {
+    "message": "refresh",
+    "description": "This button will cause the post to be reloaded/refreshed."
+  },
+  "post_button_gold": {
+    "message": "give gold",
+    "description": "This button will open up a donation window for the reddit gold membership feature to another user for this submission"
+  },
+  "post_button_comment": {
+    "message": "comment",
+    "description": "This button will open up a comment field to write in"
+  },
+  "post_button_source": {
+    "message": "source",
+    "description": "This button will display the original markdown source code that was used to create this post"
+  },
+  "post_button_save": {
+    "message": "save",
+    "description": "This button will save this post to your list"
+  },
+  "post_button_unsave": {
+    "message": "unsave",
+    "description": "This button will remove this post from your list of saved posts"
+  },
+  "post_button_report": {
+    "message": "report",
+    "description": "This button will open up a report dialog to report this user/post for terms of service violations or illegal activity"
+  },
+  "post_button_edit": {
+    "message": "edit",
+    "description": "This button will open up an edit post box for the user."
+  },
+  "post_button_delete": {
+    "message": "delete",
+    "description": "This button will delete the selected post"
+  },
+  "post_button_reply": {
+    "message": "reply",
+    "description": "This button will open up a reply field to write a comment reply in."
+  },
+  "post_button_comments": {
+    "message": "Comments",
+    "description": "Button for switching between the comment section of Reddit and Google+"
+  },
+  "post_button_permalink": {
+    "message": "permalink",
+    "description": "This button will open up this post on reddit.com in a new window"
+  },
+  "post_button_parent": {
+    "message": "parent",
+    "description": "This button will open up the post this post is a reply to, in a new window"
+  },
+  "post_button_load_more": {
+    "message": "load more comments",
+    "description": "This button will load more comments under this post"
+  },
+  "post_badge_NSFW": {
+    "message": "NSFW",
+    "description": "Badge text indicating that the content of this post is inappropriate/adult."
+  },
+  "post_badge_NSFW_message": {
+    "message": "Adult content: Not Safe for Work",
+    "description": "Longer message that displays on hover, explaining the badge."
+  },
+  "post_label_reply": {
+    "message": "reply",
+    "description": "Singular label describing how many replies this comment has"
+  },
+  "post_label_reply_plural": {
+    "message": "replies",
+    "description": "Plural label describing how many replies this comment has"
+  },
+  "post_label_noresults": {
+    "message": "No posts found",
+    "description": "Label describing that there were no results found"
+  },
+  "post_delete_confirm": {
+    "message": "Are you sure you want to delete this comment?",
+    "description": "Message asking the user whether they really want to delete this post."
+  },
+  "post_message_official": {
+    "message": "This is the official discussion for this video",
+    "description": "Message explaining to the user that this reddit thread is official, that is promoted or endorsed by the author"
+  },
+  "post_sort_confidence": {
+    "message": "best",
+    "description": "Label for the 'confidence' sort option"
+  },
+  "post_sort_top": {
+    "message": "top",
+    "description": "Label for the 'top' sort option"
+  },
+  "post_sort_new": {
+    "message": "new",
+    "description": "Label for the 'new' sort option"
+  },
+  "post_sort_controversial": {
+    "message": "controversial",
+    "description": "Label for the 'controversial' sort option"
+  },
+  "post_sort_old": {
+    "message": "old",
+    "description": "Label for the 'old' sort option"
+  },
+  "post_sort_qa": {
+    "message": "q&a",
+    "description": "Label for the 'q&a' sort option"
+  },
+  "report_dialog_spam": {
+    "message": "spam",
+    "description": "This user has been spamming (posted excessive advertisments without permission)"
+  },
+  "report_dialog_vote_manipulation": {
+    "message": "vote manipulation",
+    "description": "This user has been attempting to trick Reddit to give them more votes than people has actually given them"
+  },
+  "report_dialog_personal_information": {
+    "message": "personal information",
+    "description": "This user has been leaking out other peoples personal information on Reddit"
+  },
+  "report_dialog_seuxalising_minors": {
+    "message": "sexualizing minors",
+    "description": "This user has been posting child pornography or related materials to Reddit"
+  },
+  "report_dialog_breaking_reddit": {
+    "message": "breaking reddit",
+    "description": "This person has intentionally caused features or the layout of Reddit to break or misbehave"
+  },
+  "report_dialog_other": {
+    "message": "other (max 100 characters)",
+    "description": "This user has done something else that should be reported, you can maximum type 100 characters in here"
+  },
+  "report_dialog_button_submit": {
+    "message": "submit",
+    "description": "Submit this report to Reddit"
+  },
+  "report_dialog_button_cancel": {
+    "message": "cancel",
+    "description": "Cancel this report to Reddit"
+  },
+  "loading_generic_message": {
+    "message": "loading...",
+    "description": "Generic loading message to indicate to the user that content is being downloaded from Reddit"
+  },
+  "loading_generic_text": {
+    "message": "It's a thing in progress, respect the thing!",
+    "description": "Generic loading message, a joke Doctor Who reference."
+  },
+  "loading_search_message": {
+    "message": "Searching for Reddit posts..",
+    "description": "Message indicating that AlienTube is currently searching for Reddit posts that have linked to this video"
+  },
+  "loading_post_message": {
+    "message": "Loading post..",
+    "description": "Message indicating that AlienTube is loading a specific post from Reddit"
+  },
+  "loading_slow_message": {
+    "message": "This is taking longer than usual..",
+    "description": "Message indicating that the download process is taking unusually long"
+  },
+  "loading_retry_message": {
+    "message": "Retrying.. (Attempt $ATTEMPT$ of $TOTAL_ATTEMPTS$)",
+    "description": "Message indicating that the download has failed once and we are automatically retrying for the Nth time.",
+    "placeholders": {
+      "attempt": {
+        "content": "$1",
+        "example": "1"
+      },
+      "total_attempts": {
+        "content": "$2",
+        "example": "3"
+      }
+    }
+  },
+  "error_header_not_found": {
+    "message": "page not found",
+    "description": "Title for error describing that an attempt to load something failed because it went somewhere that does not exist (404)"
+  },
+  "error_message_not_found": {
+    "message": "the page you requested does not exist",
+    "description": "Message for error describing that an attempt to load something failed because it went somewhere that does not exist (404)"
+  },
+  "error_header_overloaded": {
+    "message": "reddit is under heavy load right now",
+    "description": "Title for error describing that comments failed to load because Reddit is too overloaded and couldn't give us what we wanted"
+  },
+  "error_message_overloaded": {
+    "message": "please try again in a few minutes",
+    "description": "Message describing that the user should wait a few minutes before trying again to give Reddi time to recover"
+  },
+  "error_header_timeout": {
+    "message": "connection timed out",
+    "description": "Title for error describing that comments failed because the connection timed out"
+  },
+  "error_message_timeout": {
+    "message": "The connection to Reddit timed out, please check your internet connection, browser settings, firewall, and browser extensions",
+    "description": "Message for error describing that comments failed because the connection timed out"
+  },
+  "error_header_interrupted": {
+    "message": "connection interrupted",
+    "description": "Title for error describing that comments failed because the connection was interrupted by something"
+  },
+  "error_message_interrupted": {
+    "message": "Something is interrupting the connection to reddit.com and we cannot proceed, if you use software or browser extensions to filter Internet traffic like Disconnect.me you may need to whitelist Reddit.",
+    "description": "Message for error describing that comments failed because the connection was interrupted by something"
+  },
+  "error_header_generic": {
+    "message": "You broke Reddit :(",
+    "description": "Message describing that Reddit experienced an error, with humoristic implications jokingly implying that it is the user's fault."
+  },
+  "error_button_retry": {
+    "message": "Try again",
+    "description": "Button for attempting to load the comments again."
+  },
+  "commentfield_button_submit": {
+    "message": "Submit",
+    "description": "Button for submitting the comment to Reddit"
+  },
+  "commentfield_button_cancel": {
+    "message": "Cancel",
+    "description": "Button for cancelling your comment and hiding the comment box"
+  },
+  "commentfield_label_preview": {
+    "message": "Preview",
+    "description": "Label indicating that this panel shows a preview of how your text will look when it is posted"
+  },
+  "commentfield_label_author": {
+    "message": "Commenting as: $AUTHOR$",
+    "description": "Label under the comment field indicating who your comment will be submitted as.",
+    "placeholders": {
+      "author": {
+        "content": "$1",
+        "example": "lexious"
+      }
+    }
+  },
+  "options_label_hiddenPostScoreThreshold": {
+    "message": "Do not display posts with a score less than:",
+    "description": "If the score for this Reddit post is less than the input, it will not be shown in the list"
+  },
+  "options_label_hiddenCommentScoreThreshold": {
+    "message": "Do not display comments with a score less than:",
+    "description": "If the score for this comment is less than the input, it will not be shown in the comment section"
+  },
+  "options_label_showGooglePlusWhenNoPosts": {
+    "message": "Display Google+ comments if no Reddit comments are found",
+    "description": "Show the Google+ comments like usual if there are no Reddit comments to see"
+  },
+  "options_label_showGooglePlusButton": {
+    "message": "Show the Google+ Comments Button",
+    "description": "This option will toggle the visibility of the Google+ comments button."
+  },
+  "options_label_defaultDisplayAction": {
+    "message": "By default show comments from:",
+    "description": "This option will set whether AlienTube or Google+ is shown by default."
+  },
+  "options_label_version": {
+    "message": "version",
+    "description": "Label for version number"
+  },
+  "options_label_title": {
+    "message": "AlienTube Options",
+    "description": "Option page title"
+  },
+  "options_label_reset": {
+    "message": "Reset to default",
+    "description": "Button to reset all settings to their factory default."
+  },
+  "options_button_add": {
+    "message": "Add",
+    "description": "Add item button."
+  },
+  "options_label_hide_following": {
+    "message": "Hide the following subreddits:",
+    "description": "Message explaining to the user that the list below is of subreddits that will not be shown"
+  },
+  "options_label_gplus": {
+    "message": "Google+",
+    "description": "Google+ option for the default display option"
+  },
+  "options_label_alientube": {
+    "message": "Reddit",
+    "description": "AlienTube option for the default display option"
+  },
+  "options_label_showReddit": {
+        "message": "Show Reddit comments on this channel",
+        "description": "AlienTube option on wheter to show Reddit comments by default on this channel"
+    }
+}

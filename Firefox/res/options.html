@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <link href="options.css" rel="stylesheet" type="text/css" media="screen" />
+        <meta charset="utf-8">
+    </head>
+    
+    <body>
+        <main>
+            <header>
+                <img src="icon128.png" style="width: 60px; height: auto;" id="logo" alt="AlienTube Logo" />
+                <h1>AlienTube</h1>
+                <div id="versionContainer">
+                    <span id="versiontext"></span>
+                    <span id="version"></span>
+                </div>
+            </header>
+            <section id="options">
+                <label for="hiddenPostScoreThreshold" class="label-number"></label>
+                <input type="number" name="hiddenPostScoreThreshold" id="hiddenPostScoreThreshold" />
+                <br/>
+                
+                <label for="hiddenCommentScoreThreshold" class="label-number"></label>
+                <input type="number" name="hiddenCommentScoreThreshold" id="hiddenCommentScoreThreshold" />
+                <br />
+                
+                <label for="defaultDisplayAction" class="label-select"></label>
+                <div class="selectContainer">
+                    <select name="defaultDisplayAction" id="defaultDisplayAction">
+                        <option value="alientube"></option>
+                        <option value="gplus"></option>
+                    </select>
+                </div>
+                <br />
+                
+                <input type="checkbox" class="checkbox" id="showGooglePlusWhenNoPosts" />
+                <label for="showGooglePlusWhenNoPosts" class="label-checkbox"></label>
+                <br />
+                
+                <input type="checkbox" class="checkbox" id="showGooglePlusButton" />
+                <label for="showGooglePlusButton" class="label-checkbox"></label>
+                <br />
+                <br />
+                <label for="addSubredditForExclusion" class=""></label>
+                <div id="exclusioncontainer">
+                    <input type="text" name="addSubredditsForExclusion" id="addSubredditsForExclusion"></input>
+                    <button id="addSubredditToList" disabled></button>
+                </div>
+                <div id="excludedSubreddits"></div>
+                
+                <button id="reset"></button>
+            </section>
+        </main>
+        <script type="text/javascript" src="options.js"></script>
+    </body>
+
+</html>

@@ -32,26 +32,26 @@ echo ${standout}Removing old files${normal}
 echo Removing TypeScript mapping folders.
 rm -rf Chrome/TypeScript
 rm -rf Safari.safariextension/TypeScript
-rm -rf Firefox/data/TypeScript
+rm -rf Firefox/TypeScript
 
 echo Removing TypeScript code-mapping file.
 rm -f Chrome/js/script.js.map
 rm -f Safari.safariextension/js/script.js.map
-rm -f Firefox/data/script.js.map
+rm -f Firefox/js/script.js.map
 rm -f lib/script.js.map
 rm -f lib/script-es5.js.map
 
 echo Removing options page TypeScript code-mapping file.
 rm -f Chrome/js/options.js.map
 rm -f Safari.safariextension/js/options.js.map
-rm -f Firefox/data/options.js.map
+rm -f Firefox/js/options.js.map
 rm -f lib/options.js.map
 rm -f lib/options-es5.js.map
 
 echo Removing SASS stylesheet code-mapping file.
 rm -f Chrome/res/style.css.map
 rm -f Safari.safariextension/res/style.css.map
-rm -f Firefox/data/style.css.map
+rm -f Firefox/res/style.css.map
 echo
 echo
 
@@ -86,20 +86,20 @@ cp -fr lib/snuownd.js Safari.safariextension/js
 cp -fr lib/handlebars-v3.0.3.js Safari.safariextension/js
 
 echo Copying Firefox Resources
-mkdir -pv Firefox/data
-cp -fr res/redditbroken.svg Firefox/data
-cp -fr res/redditoverload.svg Firefox/data
-cp -fr res/redditblocked.svg Firefox/data
-cp -fr res/icon128.png Firefox/data
-cp -fr res/options.css Firefox/data
-cp -fr lib/snuownd.js Firefox/data
-cp -fr lib/handlebars-v3.0.3.js Firefox/data
+mkdir -p Firefox/res
+mkdir -p Firefox/js
+cp -fr res/redditbroken.svg Firefox/res
+cp -fr res/redditoverload.svg Firefox/res
+cp -fr res/redditblocked.svg Firefox/res
+cp -fr res/icon128.png Firefox/res
+cp -fr res/options.css Firefox/res
+cp -fr lib/snuownd.js Firefox/js
 echo
 echo
 
 echo ${standout}Updating Options HTML Page${normal}
 cp -vf  options.html Chrome/res/options.html
-cp -vf options.html Firefox/data/options.html
+cp -vf options.html Firefox/res/options.html
 cp -vf options.html Safari.safariextension/res/options.html
 echo
 echo
@@ -130,24 +130,24 @@ fi
 echo
 echo Copying TypeScript Files
 cp -vf lib/options-es5.js Chrome/res/options.js
-cp -vf lib/options-es5.js Firefox/data/options.js
+cp -vf lib/options-es5.js Firefox/res/options.js
 cp -vf lib/options-es5.js Safari.safariextension/res/options.js
 cp -vf lib/script-es5.js Chrome/js/script.js
 cp -vf lib/script-es5.js Safari.safariextension/js/script.js
-cp -vf lib/script-es5.js Firefox/data/script.js
+cp -vf lib/script-es5.js Firefox/js/script.js
 echo
 echo
 
 echo ${standout}Copying Style Files${normal}
 cp -vf res/style.css Chrome/res/style.css
 cp -vf res/style.css Safari.safariextension/res/style.css
-cp -vf res/style.css Firefox/data/style.css
+cp -vf res/style.css Firefox/res/style.css
 echo
 
 echo ${standout}Copying Template Files${normal}
 cp -vf res/templates.html Chrome/res/templates.html
 cp -vf res/templates.html Safari.safariextension/res/templates.html
-cp -vf res/templates.html Firefox/data/templates.html
+cp -vf res/templates.html Firefox/res/templates.html
 echo
 echo
 
@@ -178,7 +178,7 @@ rsync -a --exclude=".*" _locales Chrome/
 echo Copying localisation files to Safari
 rsync -a --exclude=".*" _locales Safari.safariextension/
 echo Copying localisation files to Firefox
-rsync -a --exclude=".*" _locales Firefox/data/
+rsync -a --exclude=".*" _locales Firefox/
 
 if [ "$1" == "--debug" ] && [[ "$OSTYPE" == "darwin"* ]]; then
     echo ${standout}Reloading Development Browsers${normal}
