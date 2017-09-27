@@ -113,6 +113,7 @@ module AlienTube {
                                     let tabContainer = <HTMLDivElement> tabContainerTemplate.querySelector("#at_tabcontainer");
                                     this.insertTabsIntoDocument(tabContainer, 0);
                                     window.addEventListener("resize", this.updateTabsToFitToBoundingContainer.bind(this), false);
+                                    this.updateTabsToFitToBoundingContainer();
 
                                     let ApplicationContainer = this.set(tabContainer);
                                     ApplicationContainer.appendChild(tabContainerTemplate.querySelector("#at_comments"));
@@ -183,8 +184,8 @@ module AlienTube {
             let commentsContainer;
             let serviceCommentsContainer;
             if (Application.currentMediaService() === Service.YouTube) {
-                commentsContainer = document.getElementById("watch7-content");
-                serviceCommentsContainer = document.getElementById("watch-discussion");
+                commentsContainer = document.getElementById(Application.CONTENT_ELEMENT_ID);
+                serviceCommentsContainer = document.getElementById(Application.COMMENT_ELEMENT_ID);
             } else if (Application.currentMediaService() === Service.Vimeo) {
                 commentsContainer = document.querySelector(".comments_container");
                 serviceCommentsContainer = document.querySelector(".comments_hide");
@@ -231,7 +232,7 @@ module AlienTube {
             if (!allowOnChannelContainer) {
                 let actionsContainer;
                 if (Application.currentMediaService() === Service.YouTube) {
-                    actionsContainer = document.getElementById("watch7-user-header");
+                    actionsContainer = document.getElementById(Application.CHANNEL_CONTAINER_ID);
                 } else if (Application.currentMediaService() === Service.Vimeo) {
                     actionsContainer = document.querySelector(".video_meta .byline");
                 }
@@ -311,7 +312,7 @@ module AlienTube {
             let len = this.threadCollection.length;
             let maxWidth;
             if (Application.currentMediaService() === Service.YouTube) {
-                maxWidth = document.getElementById("watch7-content").offsetWidth - 80;
+                maxWidth = document.getElementById(Application.COMMENT_ELEMENT_ID).offsetWidth - 80;
             } else if (Application.currentMediaService() === Service.Vimeo) {
                 maxWidth = document.getElementById("comments").offsetWidth - 80;
             }
@@ -457,6 +458,8 @@ module AlienTube {
             /* Only perform the resize operation when we have a new frame to work on by the browser, any animation beyond this will not
             be rendered and is pointless. */
             window.requestAnimationFrame(function () {
+                var w = document.getElementById(Application.COMMENT_ELEMENT_ID).offsetWidth;
+                document.getElementById("alientube").style.width = w + "px";
                 let tabContainer = document.getElementById("at_tabcontainer");
 
                 if (!tabContainer) {
@@ -582,7 +585,7 @@ module AlienTube {
         private getDisplayActionForCurrentChannel() {
             let channelId;
             if (Application.currentMediaService() === Service.YouTube) {
-                channelId = document.querySelector("meta[itemprop='channelId']").getAttribute("content");
+                channelId = document.getElementById(Application.CHANNEL_ELEMENT_ID).innerText;
             } else if (Application.currentMediaService() === Service.Vimeo) {
                 channelId = document.querySelector("a[rel='author']").getAttribute("href").substring(1);
             }

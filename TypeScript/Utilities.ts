@@ -51,12 +51,6 @@ module AlienTube {
                 throw "Invalid Browser";
             }
         }
-        
-        static getContentElementId() {
-            // Old: "
-            return "main"
-        }
-        
     }
 }
 
