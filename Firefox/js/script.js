@@ -1023,7 +1023,7 @@ var AlienTube;
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
             var googlePlusButton = template.querySelector("#at_switchtogplus");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
-            var googlePlusContainer = document.getElementById("watch-discussion");
+            var googlePlusContainer = document.getElementById(AlienTube.Application.COMMENT_ELEMENT_ID);
             if (AlienTube.Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
                 googlePlusButton.style.display = "none";
             }
@@ -1044,7 +1044,7 @@ var AlienTube;
          * @private
          */
         CommentSection.prototype.onRedditClick = function (eventObject) {
-            var googlePlusContainer = document.getElementById("watch-discussion");
+            var googlePlusContainer = document.getElementById(AlienTube.Application.COMMENT_ELEMENT_ID);
             googlePlusContainer.style.visibility = "collapse";
             googlePlusContainer.style.height = "0";
             var alienTubeContainer = document.getElementById("alientube");
@@ -1060,7 +1060,7 @@ var AlienTube;
         CommentSection.prototype.onGooglePlusClick = function (eventObject) {
             var alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "none";
-            var googlePlusContainer = document.getElementById("watch-discussion");
+            var googlePlusContainer = document.getElementById(AlienTube.Application.COMMENT_ELEMENT_ID);
             googlePlusContainer.style.visibility = "visible";
             googlePlusContainer.style.height = "auto";
             var redditButton = document.getElementById("at_switchtoreddit");
@@ -1404,7 +1404,7 @@ var AlienTube;
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
             var googlePlusButton = this.threadContainer.querySelector("#at_switchtogplus");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
-            var googlePlusContainer = document.getElementById("watch-discussion");
+            var googlePlusContainer = document.getElementById(AlienTube.Application.COMMENT_ELEMENT_ID);
             if (AlienTube.Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
                 googlePlusButton.style.display = "none";
             }
@@ -1484,7 +1484,7 @@ var AlienTube;
         CommentThread.prototype.onGooglePlusClick = function (eventObject) {
             var alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "none";
-            var googlePlusContainer = document.getElementById("watch-discussion");
+            var googlePlusContainer = document.getElementById(AlienTube.Application.COMMENT_ELEMENT_ID);
             googlePlusContainer.style.visibility = "visible";
             googlePlusContainer.style.height = "auto";
             var redditButton = document.getElementById("at_switchtoreddit");
@@ -2312,7 +2312,7 @@ var AlienTube;
             /* Set the icon, text, and event listener for the button to switch to the Google+ comments. */
             var googlePlusButton = this.representedHTMLElement.querySelector("#at_switchtogplus");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
-            var googlePlusContainer = document.getElementById("watch-discussion");
+            var googlePlusContainer = document.getElementById(AlienTube.Application.COMMENT_ELEMENT_ID);
             if (AlienTube.Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
                 googlePlusButton.style.display = "none";
             }
@@ -2378,7 +2378,7 @@ var AlienTube;
         ErrorScreen.prototype.onGooglePlusClick = function (eventObject) {
             var alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "none";
-            var googlePlusContainer = document.getElementById("watch-discussion");
+            var googlePlusContainer = document.getElementById(AlienTube.Application.COMMENT_ELEMENT_ID);
             googlePlusContainer.style.visibility = "visible";
             googlePlusContainer.style.height = "auto";
             var redditButton = document.getElementById("at_switchtoreddit");

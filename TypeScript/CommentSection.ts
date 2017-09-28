@@ -400,7 +400,7 @@ module AlienTube {
             let googlePlusButton = template.querySelector("#at_switchtogplus");
             googlePlusButton.addEventListener("click", this.onGooglePlusClick, false);
 
-            let googlePlusContainer = document.getElementById("watch-discussion");
+            let googlePlusContainer = document.getElementById(Application.COMMENT_ELEMENT_ID);
             
             if (Preferences.getBoolean("showGooglePlusButton") === false || googlePlusContainer === null) {
                 googlePlusButton.style.display = "none";
@@ -426,7 +426,7 @@ module AlienTube {
          * @private
          */
         private onRedditClick(eventObject: Event) {
-            let googlePlusContainer = document.getElementById("watch-discussion");
+            let googlePlusContainer = document.getElementById(Application.COMMENT_ELEMENT_ID);
             googlePlusContainer.style.visibility = "collapse";
             googlePlusContainer.style.height = "0";
             let alienTubeContainer = document.getElementById("alientube");
@@ -443,7 +443,7 @@ module AlienTube {
         private onGooglePlusClick(eventObject: Event) {
             let alienTubeContainer = document.getElementById("alientube");
             alienTubeContainer.style.display = "none";
-            let googlePlusContainer = document.getElementById("watch-discussion");
+            let googlePlusContainer = document.getElementById(Application.COMMENT_ELEMENT_ID);
             googlePlusContainer.style.visibility = "visible";
             googlePlusContainer.style.height = "auto";
             let redditButton = <HTMLDivElement> document.getElementById("at_switchtoreddit");
