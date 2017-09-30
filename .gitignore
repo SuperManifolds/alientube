@@ -4,7 +4,9 @@ Chrome/_locales/*
 Chrome/TypeScript/*
 !Chrome/res/load_options.js
 
-Firefox/data/*
+Firefox/js/*
+Firefox/res/*
+Firefox/_locales/*
 Firefox/TypeScript/*
 
 Safari.safariextension/js/*
@@ -24,6 +26,7 @@ lib/options.js
 lib/options.d.ts
 
 res/style.css
+res/options.css
 .sass-cache/*
 
 reloadExtension.scpt
