@@ -314,7 +314,7 @@ module AlienTube {
             let len = this.threadCollection.length;
             let maxWidth;
             if (Application.currentMediaService() === Service.YouTube) {
-                maxWidth = document.getElementById(Application.VIDEO_ELEMENT_ID).offsetWidth - 80;
+                maxWidth = document.getElementById(Application.SIZE_REFERENCE_ELEMENT).offsetWidth - 80;
             } else if (Application.currentMediaService() === Service.Vimeo) {
                 maxWidth = document.getElementById("comments").offsetWidth - 80;
             }
@@ -488,8 +488,8 @@ module AlienTube {
          */
         private updateCommentsWidth() {
             window.requestAnimationFrame(function () {
-                // Set Alientube comment width to YouTube's video's width (comments haven't always loaded)
-                var w = document.getElementById(Application.VIDEO_ELEMENT_ID).offsetWidth;
+                // Set Alientube comment width to the size reference element's
+                var w = document.getElementById(Application.SIZE_REFERENCE_ELEMENT).offsetWidth;
                 document.getElementById("alientube").style.width = w + "px";
             }.bind(this));
         }
