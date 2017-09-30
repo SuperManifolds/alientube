@@ -51,7 +51,10 @@ module AlienTube {
                             });
                             
                             let preferredPost, preferredSubreddit;
-                            if (finalResultCollection.length > 0) {
+                            if (finalResultCollection.length === 0) {
+                                this.returnNoResults();
+                            }
+                            else {
                                 if (Application.currentMediaService() === Service.YouTube) {
                                     /* Scan the YouTube comment sections for references to subreddits or reddit threads.
                                     These will be prioritised and loaded first.  */
@@ -113,7 +116,6 @@ module AlienTube {
                                     let tabContainer = <HTMLDivElement> tabContainerTemplate.querySelector("#at_tabcontainer");
                                     this.insertTabsIntoDocument(tabContainer, 0);
                                     window.addEventListener("resize", this.updateTabsToFitToBoundingContainer.bind(this), false);
-                                    this.updateTabsToFitToBoundingContainer();
 
                                     let ApplicationContainer = this.set(tabContainer);
                                     ApplicationContainer.appendChild(tabContainerTemplate.querySelector("#at_comments"));
@@ -125,11 +127,11 @@ module AlienTube {
 
                                     // Load the first tab.
                                     this.downloadThread(this.threadCollection[0]);
-                                    return;
                                 }
                             }
-                            this.returnNoResults();
                         }
+                        window.addEventListener("resize", this.updateCommentsWidth.bind(this));
+                        this.updateCommentsWidth();
                     }.bind(this), null, loadingScreen);
                 }.bind(this));
             }
@@ -312,7 +314,7 @@ module AlienTube {
             let len = this.threadCollection.length;
             let maxWidth;
             if (Application.currentMediaService() === Service.YouTube) {
-                maxWidth = document.getElementById(Application.COMMENT_ELEMENT_ID).offsetWidth - 80;
+                maxWidth = document.getElementById(Application.VIDEO_ELEMENT_ID).offsetWidth - 80;
             } else if (Application.currentMediaService() === Service.Vimeo) {
                 maxWidth = document.getElementById("comments").offsetWidth - 80;
             }
@@ -458,8 +460,6 @@ module AlienTube {
             /* Only perform the resize operation when we have a new frame to work on by the browser, any animation beyond this will not
             be rendered and is pointless. */
             window.requestAnimationFrame(function () {
-                var w = document.getElementById(Application.COMMENT_ELEMENT_ID).offsetWidth;
-                document.getElementById("alientube").style.width = w + "px";
                 let tabContainer = document.getElementById("at_tabcontainer");
 
                 if (!tabContainer) {
@@ -479,6 +479,18 @@ module AlienTube {
                         break;
                     }
                 }
+            }.bind(this));
+        }
+
+        /**
+         * Update comment section to new size of the document
+         * @private
+         */
+        private updateCommentsWidth() {
+            window.requestAnimationFrame(function () {
+                // Set Alientube comment width to YouTube's video's width (comments haven't always loaded)
+                var w = document.getElementById(Application.VIDEO_ELEMENT_ID).offsetWidth;
+                document.getElementById("alientube").style.width = w + "px";
             }.bind(this));
         }
 

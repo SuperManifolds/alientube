@@ -18,6 +18,7 @@ module AlienTube {
         static CONTENT_ELEMENT_ID = "main";
         static COMMENT_ELEMENT_ID = "comments";
         static CHANNEL_ELEMENT_ID = "owner-name";
+        static VIDEO_ELEMENT_ID = "movie_player";
         static CHANNEL_CONTAINER_ID = "upload-info";
         static PAGE_NAV_EVENT = "yt-navigate-finish";
 
